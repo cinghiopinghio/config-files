@@ -144,3 +144,6 @@ let g:Tex_IgnoreLevel = 9
 set iskeyword+=:
 set noscrollbind
 diffoff
+
+
+call pathogen#infect()
