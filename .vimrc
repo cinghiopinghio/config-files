@@ -158,3 +158,7 @@ nnoremap <C-down> :resize +5<cr>
 nnoremap <C-up> :resize -5<cr>
 nnoremap <C-right> :vertical resize +5<cr>
 
+
+nnoremap <F2> :set invpaste paste?<CR>
+set pastetoggle=<F2>
+set showmode
