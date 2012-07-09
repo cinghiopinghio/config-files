@@ -86,7 +86,7 @@ select_flags=6
 quick_search_case_sensitive=2
 editor_backup_extension=~
 mcview_eof=
-skin=ovidiu
+skin=default
 keymap=mc.keymap
 auto_save_setup_panels=1
 
@@ -136,7 +136,7 @@ clipboard_store=
 clipboard_paste=
 
 [Colors]
-base_color=lightgray,green:normal=green,default:selected=white,gray:marked=yellow,default:markselect=yellow,gray:directory=blue,default:executable=brightgreen,default:link=cyan,default:device=brightmagenta,default:special=lightgray,default:errors=red,default:reverse=green,default:gauge=green,default:input=white,gray:dnormal=green,gray:dfocus=brightgreen,gray:dhotnormal=cyan,gray:dhotfocus=brightcyan,gray:menu=green,default:menuhot=cyan,default:menusel=green,gray:menuhotsel=cyan,default:helpnormal=cyan,default:editnormal=green,default:editbold=blue,default:editmarked=gray,blue:stalelink=red,default
+base_color=gray,black:normal=white,black:selected=black,brown:marked=black,lightgray:markselect=black,yellow:errors=white,red:menu=yellow,gray:reverse=brightmagenta,black:dnormal=black,lightgray:dfocus=black,cyan:dhotnormal=blue,lightgray:dhotfocus=blue,cyan:viewunderline=black,green:menuhot=red,gray:menusel=white,black:menuhotsel=yellow,black:helpnormal=black,lightgray:helpitalic=red,lightgray:helpbold=blue,lightgray:helplink=black,cyan:helpslink=yellow,blue:gauge=white,black:input=yellow,gray:directory=yellow,gray:executable=brightgreen,gray:link=brightcyan,gray:stalelink=brightred,blue:device=magenta,gray:core=red,blue:special=black,blue:editnormal=white,black:editbold=yellow,blue:editmarked=black,white:errdhotnormal=yellow,red:errdhotfocus=yellow,lightgray
 rxvt=
 color_terminals=
 
@@ -168,17 +168,6 @@ simple_swap=false
 
 show_mini_info=true
 torben_fj_mode=false
-
-[DiffView]
-show_symbols=false
-show_numbers=false
-tab_size=8
-diff_quality=0
-diff_ignore_tws=false
-diff_ignore_all_space=false
-diff_ignore_space_change=false
-diff_tab_expansion=false
-diff_ignore_case=false
 
 [Panelize]
 Find *.orig after patching=find . -name \\*.orig -print
