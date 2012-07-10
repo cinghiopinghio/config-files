@@ -24,5 +24,9 @@ set grid back ls 22
 #set arrow from graph 0,1 to graph 0,1.05 size screen 0.025,15,60 \
 #    filled ls 21
 
+# function to plot histograms:
+# usage:
+# p "filename" u (BIN($1,width)):(1.0) smooth freq with boxes
+BIN(X,WIDTH)=WIDTH*floor(X/WIDTH)+WIDTH/2
 
 
