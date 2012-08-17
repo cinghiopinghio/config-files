@@ -1,0 +1,47 @@
+[alias]
+  ci = commit -a
+  st = status
+  hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+[core]
+  editor = vim
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+    interactive = true
+
+; diff and merge
+[diff]
+  tool = vimdiff
+[difftool]
+  prompt = false
+[merge]
+  tool = vimdiff
+
+
+
+#; user identification
+#[github]
+#    user = /* GitHub User Name */
+#    token = /* GitHub Token https://github.com/account#admin_bucket */
+# 
+#; customizations
+#[alias]
+#    unstage = reset HEAD
+# 
+#; environment
+#[core]
+#    symlinks = false
+#    autocrlf = true
+#[http]
+#    postBuffer = 52428800
+#[pack]
+#    packSizeLimit = 2g
+# 
+#[diff]
+#    guitool = beyondcompare
+#[merge]
+#    tool = beyondcompare
+#[mergetool]
+#    keepBackup = false
+#    prompt = false
