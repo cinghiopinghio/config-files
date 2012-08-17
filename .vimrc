@@ -76,7 +76,7 @@ syntax on
 "set spellfile=~/.vim/dict-es.add
 set ruler
 
-map <F6> :setlocal spell! spelllang=en_gb<CR>
+map <F6> :setlocal spell! spelllang=en_us<CR>
 au Filetype mail setlocal spell
 au Filetype tex setlocal spell
 
