@@ -108,6 +108,7 @@ autocmd FileType    matlab set comments=:% expandtab foldmethod=indent
 autocmd FileType    matlab set formatoptions=crql expandtab
 autocmd FileType make setlocal noexpandtab foldmethod=indent
 autocmd FileType python setlocal foldmethod=indent autoindent smartindent
+autocmd FileType cpp setlocal foldmethod=syntax autoindent smartindent
 
 "wrapping
 set wrap
