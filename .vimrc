@@ -166,10 +166,12 @@ set pastetoggle=<F2>
 set showmode
 
 " change window with TAB
-map <Tab> <C-W>w
+vnoremap <Tab> <C-W>w
 
 " move through wrapped lines
 imap <silent> <Down> <C-o>gj
 imap <silent> <Up> <C-o>gk
 nmap <silent> <Down> gj
 nmap <silent> <Up> gk
+
+
