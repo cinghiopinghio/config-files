@@ -10,7 +10,7 @@ fi
 alias ll='ls -alFh'
 alias la='ls -A'
 alias l='ls -CF'
-alias mc='. /usr/share/mc/bin/mc-wrapper.sh'
+#alias mc='. /usr/lib/mc/mc-wrapper.csh'
 alias ml='matlab -nosplash -nodesktop'
 
 # Add an "alert" alias for long running commands.  Use like so:
