@@ -65,29 +65,6 @@ xterm*|rxvt*)
     ;;
 esac
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
-
-# some more ls aliases
-alias ll='ls -alFh'
-alias la='ls -A'
-alias l='ls -CF'
-#alias mc='. /usr/share/mc/bin/mc-wrapper.sh'
-alias ml='matlab -nosplash -nodesktop'
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -112,3 +89,8 @@ export SVN_EDITOR=vim
 
 
 export PATH=$PATH:~/.local/bin
+
+
+svnhist(){
+  svn log | awk 'BEGIN{OFS="\t";ls=80}{if($2=="|"){printf("%4s\033[1;31m%12s\033[0m: (%s)  ",$1,$3,$5)}else{if($0!=""){if (length($0)<ls){add=""}else{add="..."};print substr($0,1,ls) add}}}' | sed -e '/------/d'
+}

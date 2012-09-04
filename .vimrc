@@ -107,7 +107,8 @@ setlocal shiftwidth=2 softtabstop=2 expandtab smarttab
 autocmd FileType    matlab set comments=:% expandtab foldmethod=indent
 autocmd FileType    matlab set formatoptions=crql expandtab
 autocmd FileType make setlocal noexpandtab foldmethod=indent
-autocmd FileType python setlocal foldmethod=indent
+autocmd FileType python setlocal foldmethod=indent autoindent smartindent
+autocmd FileType cpp setlocal foldmethod=syntax autoindent smartindent
 
 "wrapping
 set wrap
@@ -148,7 +149,7 @@ let g:Tex_IgnoreLevel = 9
 " TIP: if you write your \label's as \label{fig:something}, then if you
 " type in \ref{fig: and press Ctrl-N you will automatically cycle through
 " all the figure labels. Very useful!
-set iskeyword+=:
+" set iskeyword+=:
 set noscrollbind
 diffoff
 
@@ -165,10 +166,12 @@ set pastetoggle=<F2>
 set showmode
 
 " change window with TAB
-map <Tab> <C-W>w
+vnoremap <Tab> <C-W>w
 
 " move through wrapped lines
 imap <silent> <Down> <C-o>gj
 imap <silent> <Up> <C-o>gk
 nmap <silent> <Down> gj
 nmap <silent> <Up> gk
+
+
