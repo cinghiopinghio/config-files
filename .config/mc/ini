@@ -101,6 +101,8 @@ ignore_ftp_chattr_errors=true
 preallocate_space=0
 editor_group_undo=0
 
+horizontal_split=0
+
 [Layout]
 message_visible=1
 keybar_visible=1
@@ -120,6 +122,9 @@ vertical_equal=1
 left_panel_size=75
 horizontal_equal=1
 top_panel_size=80
+
+equal_split=1
+first_panel_size=80
 
 [Misc]
 timeformat_recent=%b %e %H:%M
