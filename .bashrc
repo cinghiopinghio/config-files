@@ -94,3 +94,17 @@ export PATH=$PATH:~/.local/bin
 svnhist(){
   svn log | awk 'BEGIN{OFS="\t";ls=80}{if($2=="|"){printf("%4s\033[1;31m%12s\033[0m: (%s)  ",$1,$3,$5)}else{if($0!=""){if (length($0)<ls){add=""}else{add="..."};print substr($0,1,ls) add}}}' | sed -e '/------/d'
 }
+
+#save display variable in .env_var
+function save-vars {
+  VARS="SSH_CLIENT SSH_TTY SSH_AUTH_SOCK SSH_CONNECTION DISPLAY"
+  for var in ${VARS};
+  do
+    (eval echo $var=\$$var) |\
+        gawk 'BEGIN{FS="="}{if ($2!=""){print "export "$1"=\""$2"\""}}'
+  done 1> /tmp/envvars
+}
+
+[[ $TERM=='screen' && -e /tmp/envvars ]] && source /tmp/envvars;
+
+

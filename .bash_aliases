@@ -19,5 +19,5 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 alias ml='matlab -nodesktop -nosplash'
 alias isi='cd ~/curro/isi/'
-alias scr='screen -R'
+alias scr='save-vars; screen -R'
 
