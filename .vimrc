@@ -174,4 +174,4 @@ imap <silent> <Up> <C-o>gk
 nmap <silent> <Down> gj
 nmap <silent> <Up> gk
 
-
+let g:notes_directory = '~/docu/notes'
