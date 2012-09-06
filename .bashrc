@@ -51,28 +51,36 @@ fi
 
 if [ "$color_prompt" = yes ]; then
     lgrey="\033[00m"
-    blue="\033[01;34m"
+    dgrey="\033[00;30m"
+    dred="\033[00;31m"
+    dgreen="\033[00;32m"
+    dyellow="\033[00;33m"
+    dblue="\033[00;34m"
+    dlred="\033[00;35m"
+    dlblue="\033[00;36m"
+    dwhite="\033[00;37m"
+    grey="\033[01;30m"
+    red="\033[01;31m"
     green="\033[01;32m"
     yellow="\033[01;33m"
-    gray="\033[01;30m"
-    lblue="\033[01;36m"
+    blue="\033[01;34m"
     lred="\033[01;35m"
-    red="\033[01;31m"
+    lblue="\033[01;36m"
     white="\033[01;37m"
     case "$HOSTNAME" in
 	    arcinghio)
-		    prompt=$lred
+		    prompt=$red
 		    ;;
 	    mercurio)
 		    prompt=$green
 		    ;;
 	    *)
-		    prompt=$red
+		    prompt=$grey
 		    ;;
     esac
 
     #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-    PS1="${debian_chroot:+($debian_chroot)}${prompt}\u@\h${lgrey}:${blue}\w${lgrey}\$ "
+    PS1="${debian_chroot:+($debian_chroot)}${prompt}\u@\h${lgrey}:${dgreen}\w${lgrey}\$ "
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
