@@ -142,9 +142,10 @@ let g:Tex_IgnoredWarnings =
 \"Missing number, treated as zero.\n".
 \"There were undefined references\n".
 \"Citation %.%# undefined\n".
+\"Reference %.%# undefined\n".
 \'LaTeX Font Warning:'"
 " This number N says that latex-suite should ignore the first N of the above.
-let g:Tex_IgnoreLevel = 9
+let g:Tex_IgnoreLevel = 10
 
 " TIP: if you write your \label's as \label{fig:something}, then if you
 " type in \ref{fig: and press Ctrl-N you will automatically cycle through
