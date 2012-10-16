@@ -1,0 +1,48 @@
+Chiral Followup
+
+                                     * * *
+
+TODO 
+Communities:
+• Define communities (classically)
+• try different kind of networks (ad hoc)
+• optimization:
+   • shortest path
+   • END-neighbors
+   • ONE-phase
+
+Lieb Robinson Bound:
+• Write proof
+• run some simulation
+
+Google:
+• difference RW, QW, CQW 
+• run them on a biological system
+• pn=lim→inf 1/T int_0^T pn(t)dt
+
+Network Theory:
+• define centralities
+
+                                     * * *
+
+PLAN:
+• CQW: applications
+• Dynamical phases / Perfect transport
+• TRS breaking in quantum gates circuits
+• Quantum Page Rank (QPR)
+• Spectral analysis
+
+In particular:
+On the first point:
+• CQW on different graphs. for instance try the one-phase optimization; try to 
+explain how to direct through the shortest path
+• Lieb-Robinson bound (with only one-phase)
+• Dissipation vs Chirality
+• Currents
+• Exactely solvable models (perfect transfer)
+
+On the fourth point:
+• QPR for quantum mechanics
+• QPR with phases for Google
+
+
