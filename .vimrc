@@ -116,10 +116,9 @@ set linebreak
 set textwidth=80
 
 set background=dark
-"colorscheme slate
-"colorscheme ron
-"colorscheme ir_black
-colorscheme herald
+"slate ron ir_black herald advantage desert fruity
+"nature slate solarized soruby
+colorscheme nature
 
 
 
