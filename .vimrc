@@ -115,7 +115,13 @@ set wrap
 set linebreak
 set textwidth=80
 
-colorscheme ron
+set background=dark
+"colorscheme slate
+"colorscheme ron
+"colorscheme ir_black
+colorscheme herald
+
+
 
 set makeprg=make
 
