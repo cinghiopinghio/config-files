@@ -105,8 +105,9 @@ fi
 
 
 # svn editor variable:
-
-export SVN_EDITOR=vim
+export SVN_EDITOR=/usr/bin/vim
+# editor variable:
+export EDITOR=/usr/bin/vim
 
 
 export PATH=$PATH:~/.local/bin
