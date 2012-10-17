@@ -21,7 +21,7 @@ hi Folded guifg=#d98900 guibg=#54000e guisp=#54000e gui=NONE ctermfg=172 ctermbg
 hi PreCondit guifg=#104e8b guibg=NONE guisp=NONE gui=NONE ctermfg=24 ctermbg=NONE cterm=NONE
 hi Include guifg=#104e8b guibg=NONE guisp=NONE gui=NONE ctermfg=24 ctermbg=NONE cterm=NONE
 "hi TabLineSel -- no settings --
-hi StatusLineNC guifg=#666666 guibg=NONE guisp=NONE gui=NONE ctermfg=241 ctermbg=NONE cterm=NONE
+hi StatusLineNC guifg=#666666 guibg=grey10 guisp=NONE gui=NONE ctermfg=241 ctermbg=234 cterm=NONE
 "hi CTagsMember -- no settings --
 hi NonText guifg=#333333 guibg=NONE guisp=NONE gui=NONE ctermfg=236 ctermbg=NONE cterm=NONE
 "hi CTagsGlobalConstant -- no settings --
@@ -37,8 +37,8 @@ hi StorageClass guifg=#66cd00 guibg=NONE guisp=NONE gui=NONE ctermfg=76 ctermbg=
 hi Todo guifg=#1a1a1a guibg=#8b8b00 guisp=#8b8b00 gui=bold ctermfg=234 ctermbg=100 cterm=bold
 hi Special guifg=#a0522d guibg=NONE guisp=NONE gui=NONE ctermfg=137 ctermbg=NONE cterm=NONE
 hi LineNr guifg=#8b8b83 guibg=NONE guisp=NONE gui=NONE ctermfg=101 ctermbg=NONE cterm=NONE
-hi StatusLine guifg=#999999 guibg=NONE guisp=NONE gui=NONE ctermfg=246 ctermbg=NONE cterm=NONE
-hi Normal guifg=#fff8f0 guibg=NONE guisp=NONE gui=NONE ctermfg=230 ctermbg=NONE cterm=NONE
+hi StatusLine guifg=#999999 guibg=grey20 guisp=NONE gui=NONE ctermfg=246 ctermbg=237 cterm=NONE
+hi Normal guifg=#fff8f0 guibg=grey10 guisp=NONE gui=NONE ctermfg=230 ctermbg=NONE cterm=NONE
 hi Label guifg=#cdad00 guibg=NONE guisp=NONE gui=NONE ctermfg=178 ctermbg=NONE cterm=NONE
 "hi CTagsImport -- no settings --
 hi PMenuSel guifg=#242424 guibg=#949698 guisp=#949698 gui=NONE ctermfg=235 ctermbg=246 cterm=NONE
