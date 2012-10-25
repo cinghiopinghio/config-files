@@ -118,7 +118,7 @@ set textwidth=80
 set background=dark
 "ron ir_black herald advantage desert fruity
 "nature slate solarized soruby
-colorscheme mine
+colorscheme xinghio
 
 
 
