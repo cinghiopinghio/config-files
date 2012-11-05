@@ -136,6 +136,7 @@ let g:Tex_UseMakefile=0
 "let g:Tex_ViewRule_pdf='zathura'
 "let g:Tex_Menus=0
 "let g:Tex_FoldedCommands='ctable'
+let g:Tex_FoldedEnvironments=',frame'
 
 " Set the warning messages to ignore.
 let g:Tex_IgnoredWarnings =
