@@ -134,6 +134,7 @@ let g:Tex_FormatDependency_pdf = 'dvi,pdf'
 "let g:Tex_MultipleCompileFormats='dvi,pdf'
 let g:Tex_UseMakefile=0
 "let g:Tex_ViewRule_pdf='zathura'
+let g:Tex_ViewRuleComplete_pdf='zathura $*.pdf 2>>/dev/null &'
 "let g:Tex_Menus=0
 "let g:Tex_FoldedCommands='ctable'
 let g:Tex_FoldedEnvironments=',frame'
