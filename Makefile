@@ -11,6 +11,7 @@ install: ivim ibash igit iscreen
 
 ivim:
 	@$(call linking,${Local}/vimrc,~/.vimrc)
+	@$(call linking,${Local}/vim,~/.vim)
 
 ibash:
 	@$(call linking,${Local}/bashrc,~/.bashrc)
@@ -25,16 +26,17 @@ iscreen:
 help: main
 
 
-linking=			\
-	in=$1;			\
-	out=$2;			\
+linking=					\
+	in=$1;					\
+	out=$2;					\
 	echo "Installing $$out configuration files";\
-	if [ -f ${out} ];	\
-	then			\
-	  read -p "Remove $${out}? (y/n)";\
-	  [ "$${REPLY}" != "y" ] && exit 0;\
-	  rm -f $$out;		\
-	  ln -s $$in $$out;	\
-	else			\
-	  echo no;		\
+	already=$$(readlink $$out);		\
+	if [[ -f $${out} && $${already} != $${in} ]];\
+	then					\
+	  read -p "Remove $${out}? (y/n)";	\
+	  [ "$${REPLY}" != "y" ] && exit 0;	\
+	  rm -rf $$out;				\
+	  ln -s $$in $$out;			\
+	else					\
+	  echo "Already installed";		\
 	fi			

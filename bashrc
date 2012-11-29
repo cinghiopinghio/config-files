@@ -194,3 +194,8 @@ export PS1=$IBlack$Host$Red$GitBranch$Yellow$PathShort$Color_Off' \$ '
 #  # @2 - Prompt when not in GIT repo
 #  echo " '$Yellow$PathShort$Color_Off'\$ "; \
 #fi)'
+
+
+### prompt with right end side part
+#PS1=$(printf "%*s\r%s" $(( COLUMNS-1 )) "[$(git branch 2>/dev/null | grep '^*' | sed s/..//)] $(date +%H:%M:%S)" "$Host:$PathShort $ ")
+#export PS1=$(printf "$Red%*s\r$IBlack$Host$Yellow$PathShort$Color_Off $ " $(( COLUMNS-1 )) "[ $GitBranch ]")
