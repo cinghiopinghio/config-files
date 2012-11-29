@@ -7,11 +7,19 @@ main:
 	  make install\n\n\
 	Warning: this will delete all your config files\n"
 
-install:
+install: ivim ibash igit iscreen
+
+ivim:
 	@$(call linking,${Local}/vimrc,~/.vimrc)
+
+ibash:
 	@$(call linking,${Local}/bashrc,~/.bashrc)
 	@$(call linking,${Local}/bash_aliases,~/.bash_aliases)
+
+igit:
 	@$(call linking,${Local}/gitconfig,~/.gitconfig)
+
+iscreen:
 	@$(call linking,${Local}/screenrc,~/.screenrc)
 
 help: main
