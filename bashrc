@@ -175,8 +175,9 @@ command -v __git_ps1 >/dev/null 2>&1 && GitBranch='$(__git_ps1)' || GitBranch=''
 
 case ${HOSTNAME/.*/} in
   'arcinghio') HostColor=$IBlack ;;
-  'mercurio')  HostColor=$IBlue ;;
-  'terminus')  HostColor=$BIRed  ;;
+  'moma')      HostColor=$IGreen ;;
+  'mercurio')  HostColor=$IBlue  ;;
+  'terminus')  HostColor=$IRed   ;;
   'quantumcl') HostColor=$IYellow;;
   *)           HostColor=$On_Red ;;
 esac
