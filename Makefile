@@ -31,7 +31,7 @@ linking=					\
 	out=$2;					\
 	echo "Installing $$out configuration files";\
 	already=$$(readlink $$out);		\
-	if [[ -f $${out} && $${already} != $${in} ]];\
+	if [[ $${already} != $${in} ]];\
 	then					\
 	  read -p "Remove $${out}? (y/n)";	\
 	  [ "$${REPLY}" != "y" ] && exit 0;	\

@@ -61,8 +61,6 @@ fi
 export SVN_EDITOR=/usr/bin/vim
 # editor variable:
 export EDITOR=/usr/bin/vim
-
-
 export PATH=$PATH:~/.local/bin
 
 
@@ -173,29 +171,19 @@ NewLine="\n"
 Jobs="\j"
 User="\u"
 Host="\h"
-GitBranch='$(__git_ps1)'
+command -v __git_ps1 >/dev/null 2>&1 && GitBranch='$(__git_ps1)' || GitBranch=''
+
+case ${HOSTNAME/.*/} in
+  'arcinghio') HostColor=$IBlack ;;
+  'mercurio')  HostColor=$IBlue ;;
+  'terminus')  HostColor=$BIRed  ;;
+  'quantumcl') HostColor=$IYellow;;
+  *)           HostColor=$On_Red ;;
+esac
+
 
 # This PS1 snippet was adopted from code for MAC/BSD I saw from: http://allancraig.net/index.php?option=com_content&view=article&id=108:ps1-export-command-for-git&catid=45:general&Itemid=96
 # I tweaked it to work on UBUNTU 11.04 & 11.10 plus made it mo' better
 
-#export PS1=$IBlack$Time12h$Color_Off'$(git branch &>/dev/null;\
-export PS1=$IBlack$Host$Red$GitBranch$Yellow$PathShort$Color_Off' \$ '
-#export PS1=$IBlack$User@$Host$Color_Off'$(git branch &>/dev/null;\
-#if [ $? -eq 0 ]; then \
-#  echo "$(echo `git status` | grep "nothing to commit" > /dev/null 2>&1; \
-#  if [ "$?" -eq "0" ]; then \
-#    # @4 - Clean repository - nothing to commit
-#    echo "'$Green'"$(__git_ps1 " (%s)"); \
-#  else \
-#    # @5 - Changes to working tree
-#    echo "'$IRed'"$(__git_ps1 " {%s}"); \
-#  fi) '$BYellow$PathShort$Color_Off'\$ "; \
-#else \
-#  # @2 - Prompt when not in GIT repo
-#  echo " '$Yellow$PathShort$Color_Off'\$ "; \
-#fi)'
+export PS1=$HostColor$Host$Red$GitBranch' '$Yellow$PathShort$Color_Off' \$ '
 
-
-### prompt with right end side part
-#PS1=$(printf "%*s\r%s" $(( COLUMNS-1 )) "[$(git branch 2>/dev/null | grep '^*' | sed s/..//)] $(date +%H:%M:%S)" "$Host:$PathShort $ ")
-#export PS1=$(printf "$Red%*s\r$IBlack$Host$Yellow$PathShort$Color_Off $ " $(( COLUMNS-1 )) "[ $GitBranch ]")
