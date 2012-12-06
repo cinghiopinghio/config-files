@@ -6,12 +6,17 @@ if [ -x /usr/bin/dircolors ]; then
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
+
 # some more ls aliases
 alias ll='ls -alFh'
 alias la='ls -A'
-alias l='ls -CF'
-alias mc='. /usr/lib/mc/mc-wrapper.sh'
-alias ml='matlab -nosplash -nodesktop'
+alias l='ls -lFh'
+
+# MC exits in the same directory
+if [ -e /usr/lib/mc/mc-wrapper.sh ]; then
+  alias mc='. /usr/lib/mc/mc-wrapper.sh'
+fi
+
 alias :wq='exit'
 
 # Add an "alert" alias for long running commands.  Use like so:
