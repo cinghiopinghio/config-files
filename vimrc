@@ -183,3 +183,8 @@ nmap <silent> <Down> gj
 nmap <silent> <Up> gk
 
 let g:notes_directory = '~/docu/notes'
+
+" this let start NERDTree if no file name is given
+autocmd vimenter * if !argc() | NERDTree | endif
+
+
