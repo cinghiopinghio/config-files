@@ -7,3 +7,12 @@
 [submodule "vim/bundle/voom"]
 	path = vim/bundle/voom
 	url = https://github.com/vim-scripts/VOoM.git
+[submodule "vim/bundle/VimExplorer"]
+	path = vim/bundle/VimExplorer
+	url = git://github.com/mbbill/VimExplorer.git
+[submodule "vim/bundle/tagbar"]
+	path = vim/bundle/tagbar
+	url = git://github.com/majutsushi/tagbar.git
+[submodule "vim/bundle/syntastic"]
+	path = vim/bundle/syntastic
+	url = git://github.com/scrooloose/syntastic.git
