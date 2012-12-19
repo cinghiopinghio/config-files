@@ -166,6 +166,8 @@ nnoremap <C-left> :vertical resize -5<cr>
 nnoremap <C-down> :resize +5<cr>
 nnoremap <C-up> :resize -5<cr>
 nnoremap <C-right> :vertical resize +5<cr>
+" change window with TAB
+nnoremap <Tab> <C-W>w
 
 
 " paste from clipboard without indentation with F2
@@ -173,8 +175,6 @@ nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 set showmode
 
-" change window with TAB
-vnoremap <Tab> <C-W>w
 
 " move through wrapped lines
 imap <silent> <Down> <C-o>gj

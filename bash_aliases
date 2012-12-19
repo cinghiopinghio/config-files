@@ -24,6 +24,21 @@ alias :wq='exit'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 alias ml='matlab -nodesktop -nosplash'
-alias isi='cd ~/curro/isi/'
 alias scr='save-vars; screen -R'
 
+alias head1='head -1'
+alias tail1='tail -1'
+alias du='du -h'
+alias du1='du --max-depth=1 -h'
+alias du0='du --max-depth=0 -h'
+
+#zipped files
+ztail(){
+zcat $1 | tail
+}
+zhead(){
+zcat $1 | head
+}
+
+# python aliases
+alias ipynb='ipython2.7 notebook --pylab inline'
