@@ -188,3 +188,8 @@ let g:notes_directory = '~/docu/notes'
 autocmd vimenter * if !argc() | NERDTree | endif
 
 
+
+" use the mouse in vim:
+set mouse=a
+
+
