@@ -41,7 +41,7 @@ zcat $1 | head
 }
 
 # python aliases
-alias ipynb='ipython2.7 notebook --pylab inline'
+alias ipynb='ipython2 notebook --pylab inline'
 
 sh-colors(){
 for i in {1..255}; do echo -e "\e[38;5;${1};1m\e[48;5;${i}m    \e[0m\e[38;5;${i}m $i\e[0m"; done
