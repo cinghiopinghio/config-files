@@ -45,7 +45,7 @@
 #[mergetool]
 #    keepBackup = false
 #    prompt = false
-#[push]
-#	default = simple
+[push]
+	default = simple
 
 
