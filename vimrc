@@ -87,6 +87,7 @@ set clipboard+=unnamed  " yank and copy to X clipboard
 set ignorecase          " case-insensitive search
 set smartcase           " upper-case sensitive search
 
+map gf :tabe<cfile><CR>
 
 " Save folds automatically on close, and load them on opening the file
 au BufWinLeave *.* mkview
