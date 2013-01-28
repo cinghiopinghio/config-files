@@ -167,8 +167,6 @@ imap <silent> <Up> <C-o>gk
 nmap <silent> <Down> gj
 nmap <silent> <Up> gk
 
-let g:notes_directory = '~/docu/notes'
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => NERDTree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -192,8 +190,3 @@ nnoremap <C-c> :call Voom_DeleteOutline('bd')<CR>
 " use the mouse in vim:
 set mouse=a
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => VimWiki
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"let g:vimwiki_list = [{'path': '~/docu/wiki', 'path_html': '~/docu/wiki'}]
