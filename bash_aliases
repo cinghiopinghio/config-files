@@ -90,4 +90,6 @@ submodulepath=$1
 git rm --cached $submodulepath
 git config -f .git/config --remove-section submodule.$submodulepath
 git config -f .gitmodules --remove-section submodule.$submodulepath
+rm -Rf .git/modules/$submodulepath
+rm -Rf $submodulepath
 }
