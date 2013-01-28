@@ -46,6 +46,7 @@
 #    keepBackup = false
 #    prompt = false
 [push]
-	default = simple
+	default = current
+
 
 
