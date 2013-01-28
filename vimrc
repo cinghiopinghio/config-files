@@ -193,3 +193,7 @@ autocmd vimenter * if !argc() | NERDTree | endif
 set mouse=a
 
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => VimWiki
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:vimwiki_list = [{'path': '~/docu/wiki', 'path_html': '~/docu/wiki'}]
