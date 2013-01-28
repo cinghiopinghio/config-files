@@ -18,6 +18,7 @@ set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
+set ignorecase
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -58,7 +59,6 @@ if has("autocmd")
     \ if line("'\"") > 1 && line("'\"") <= line("$") |
     \   exe "normal! g`\"" |
     \ endif
-
   augroup END
 
 else
@@ -67,18 +67,17 @@ else
 
 endif " has("autocmd")
 
-set ignorecase
-"set spellfile=~/.vim/spell.add
-"set spell
-"set spelllang=en_gb
-syntax on
-"setlocal spell spelllang=es
-"set spellfile=~/.vim/dict-es.add
-set ruler
 
 map <F6> :setlocal spell! spelllang=en_us<CR>
 au Filetype mail setlocal spell
 au Filetype tex setlocal spell
+" tabulation
+setlocal shiftwidth=2 softtabstop=2 expandtab smarttab
+autocmd FileType    matlab set comments=:% expandtab foldmethod=indent
+autocmd FileType    matlab set formatoptions=crql expandtab
+autocmd FileType make setlocal noexpandtab foldmethod=indent
+autocmd FileType python setlocal foldmethod=indent autoindent smartindent
+autocmd FileType cpp setlocal foldmethod=syntax autoindent smartindent
 
 set pastetoggle=<F12> 
 set complete+=k         " enable dictionary completion
@@ -93,22 +92,8 @@ set smartcase           " upper-case sensitive search
 au BufWinLeave *.* mkview
 au BufWinEnter *.* silent loadview
 
-" Turn on line numbers:
-set number
-" Toggle line numbers and fold column for easy copying:
-nnoremap <F2> :set nonumber!<CR>:set foldcolumn=0<CR>
-set nonumber
 "toggle buffers
 nnoremap <F5> :buffers<CR>:buffer<Space> 
-
-filetype plugin indent on
-" tabulation
-setlocal shiftwidth=2 softtabstop=2 expandtab smarttab
-autocmd FileType    matlab set comments=:% expandtab foldmethod=indent
-autocmd FileType    matlab set formatoptions=crql expandtab
-autocmd FileType make setlocal noexpandtab foldmethod=indent
-autocmd FileType python setlocal foldmethod=indent autoindent smartindent
-autocmd FileType cpp setlocal foldmethod=syntax autoindent smartindent
 
 "wrapping
 set wrap
@@ -116,15 +101,15 @@ set linebreak
 set textwidth=80
 
 set background=dark
-"ron ir_black herald advantage desert fruity
-"nature slate solarized soruby
 colorscheme xinghio
 
-
-
 set makeprg=make
-
 set grepprg=grep\ -nH\ $*
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Latex
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 "let g:tex_flavor='latex'
 let g:Tex_CompileRule_dvi = 'latex -interaction=nonstopmode $*'
 "let g:Tex_CompileRule_ps  = 'ps2pdf $*'
@@ -184,10 +169,25 @@ nmap <silent> <Up> gk
 
 let g:notes_directory = '~/docu/notes'
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => NERDTree
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 " this let start NERDTree if no file name is given
 autocmd vimenter * if !argc() | NERDTree | endif
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => VOom
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+nnoremap <leader><leader> :Voom<CR>
+nnoremap <leader><leader>n :Voomunl<CR>
+nnoremap <C-c> :call Voom_DeleteOutline('bd')<CR>
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => MOUSE
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " use the mouse in vim:
 set mouse=a
@@ -196,4 +196,4 @@ set mouse=a
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VimWiki
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:vimwiki_list = [{'path': '~/docu/wiki', 'path_html': '~/docu/wiki'}]
+"let g:vimwiki_list = [{'path': '~/docu/wiki', 'path_html': '~/docu/wiki'}]

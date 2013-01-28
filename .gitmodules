@@ -1,9 +1,6 @@
 [submodule "vim/bundle/fugitive"]
 	path = vim/bundle/fugitive
 	url = http://github.com/tpope/vim-fugitive.git
-[submodule "vim/bundle/notes"]
-	path = vim/bundle/notes
-	url = https://github.com/xolox/vim-notes.git
 [submodule "vim/bundle/voom"]
 	path = vim/bundle/voom
 	url = https://github.com/vim-scripts/VOoM.git

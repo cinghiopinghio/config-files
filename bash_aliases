@@ -83,3 +83,11 @@ else
 #  exit 1
 fi
 }
+
+# git remove submodules
+rm_git_submodules(){
+submodulepath=$1
+git rm --cached $submodulepath
+git config -f .git/config --remove-section submodule.$submodulepath
+git config -f .gitmodules --remove-section submodule.$submodulepath
+}
