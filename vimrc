@@ -69,6 +69,7 @@ endif " has("autocmd")
 
 
 map <F6> :setlocal spell! spelllang=en_us<CR>
+
 au Filetype mail setlocal spell
 au Filetype tex setlocal spell
 " tabulation
@@ -89,12 +90,6 @@ set clipboard+=unnamed  " yank and copy to X clipboard
 set ignorecase          " case-insensitive search
 set smartcase           " upper-case sensitive search
 
-" open file under cursor on a tab
-map gf :tabe<cfile><CR>
-
-"toggle buffers
-nnoremap <F5> :buffers<CR>:buffer<Space> 
-
 "wrapping
 set wrap
 set linebreak
@@ -106,17 +101,29 @@ colorscheme xinghio
 set makeprg=make
 set grepprg=grep\ -nH\ $*
 
-" resize current buffer by +/- 5 
-nnoremap <C-left> :vertical resize -5<cr>
-nnoremap <C-down> :resize +5<cr>
-nnoremap <C-up> :resize -5<cr>
-nnoremap <C-right> :vertical resize +5<cr>
 
 " paste from clipboard without indentation with F2
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 set showmode
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Panes
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" open file under cursor on a tab
+map gf :tabe<cfile><CR>
+"toggle buffers
+nnoremap <F5> :buffers<CR>:buffer<Space> 
+" resize current buffer by +/- 5 
+nnoremap <C-left> :vertical resize -5<cr>
+nnoremap <C-down> :resize +5<cr>
+nnoremap <C-up> :resize -5<cr>
+nnoremap <C-right> :vertical resize +5<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Move
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " move through wrapped lines
 imap <silent> <Down> <C-o>gj
 imap <silent> <Up> <C-o>gk
@@ -129,7 +136,7 @@ nmap <silent> <Up> gk
 
 "let g:tex_flavor='latex'
 let g:Tex_CompileRule_dvi = 'latex -interaction=nonstopmode $*'
-"let g:Tex_CompileRule_ps  = 'ps2pdf $*'
+let g:Tex_CompileRule_ps  = 'ps2pdf $*'
 let g:Tex_CompileRule_pdf = 'dvipdf $*.dvi'
 let g:Tex_DefaultTargetFormat='pdf'
 let g:Tex_FormatDependency_pdf = 'dvi,pdf'
@@ -142,7 +149,7 @@ let g:Tex_ViewRuleComplete_pdf='zathura $*.pdf 2>>/dev/null &'
 let g:Tex_FoldedEnvironments=',frame'
 
 " Set the warning messages to ignore.
-let g:Tex_IgnoredWarnings =
+let g:Tex_IgnoredWarnings ='
 \"Underfull\n".
 \"Overfull\n".
 \"Float too large\n".
@@ -152,7 +159,7 @@ let g:Tex_IgnoredWarnings =
 \"There were undefined references\n".
 \"Citation %.%# undefined\n".
 \"Reference %.%# undefined\n".
-\'LaTeX Font Warning:'"
+\"LaTeX Font Warning:"'
 " This number N says that latex-suite should ignore the first N of the above.
 let g:Tex_IgnoreLevel = 10
 
@@ -162,7 +169,6 @@ let g:Tex_IgnoreLevel = 10
 " set iskeyword+=:
 set noscrollbind
 diffoff
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => NERDTree
@@ -180,8 +186,11 @@ nnoremap <leader><leader> :Voom<CR>
 nnoremap <leader><leader>n :Voomunl<CR>
 nnoremap <C-c> :call Voom_DeleteOutline('bd')<CR>
 autocmd FileType python   nnoremap <F7> :VoomToggle python<CR>
-autocmd FileType markdown nnoremap <F7> :VoomToggle markdown<CR>
+autocmd FileType markdown,pandoc nnoremap <F7> :VoomToggle markdown<CR>
 autocmd FileType latex    nnoremap <F7> :VoomToggle latex<CR>
+"let g:voom_tab_key = '<C-Tab>'
+"let g:voom_return_key = '<C-Return>'
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => TagBar
