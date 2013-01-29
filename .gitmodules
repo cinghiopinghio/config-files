@@ -19,3 +19,6 @@
 [submodule "vim/bundle/conque"]
 	path = vim/bundle/conque
 	url = git://github.com/vim-scripts/Conque-Shell.git
+[submodule "vim/bundle/markdown"]
+	path = vim/bundle/markdown
+	url = https://github.com/hallison/vim-markdown.git
