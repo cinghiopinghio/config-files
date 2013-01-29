@@ -73,13 +73,15 @@ au Filetype mail setlocal spell
 au Filetype tex setlocal spell
 " tabulation
 setlocal shiftwidth=2 softtabstop=2 expandtab smarttab
-autocmd FileType    matlab set comments=:% expandtab foldmethod=indent
-autocmd FileType    matlab set formatoptions=crql expandtab
-autocmd FileType make setlocal noexpandtab foldmethod=indent
-autocmd FileType python setlocal foldmethod=indent autoindent smartindent
-autocmd FileType cpp setlocal foldmethod=syntax autoindent smartindent
+autocmd FileType matlab set comments=:% expandtab foldmethod=indent
+autocmd FileType matlab set formatoptions=crql expandtab
+autocmd FileType make   set noexpandtab foldmethod=indent
+autocmd FileType python set foldmethod=indent autoindent smartindent
+autocmd FileType cpp    set foldmethod=syntax autoindent smartindent
+" Save folds automatically on close, and load them on opening the file
+au BufWinLeave *.* mkview
+au BufWinEnter *.* silent loadview
 
-set pastetoggle=<F12> 
 set complete+=k         " enable dictionary completion
 set completeopt+=longest
 set clipboard+=unnamed  " yank and copy to X clipboard
@@ -87,11 +89,8 @@ set clipboard+=unnamed  " yank and copy to X clipboard
 set ignorecase          " case-insensitive search
 set smartcase           " upper-case sensitive search
 
+" open file under cursor on a tab
 map gf :tabe<cfile><CR>
-
-" Save folds automatically on close, and load them on opening the file
-au BufWinLeave *.* mkview
-au BufWinEnter *.* silent loadview
 
 "toggle buffers
 nnoremap <F5> :buffers<CR>:buffer<Space> 
@@ -107,8 +106,25 @@ colorscheme xinghio
 set makeprg=make
 set grepprg=grep\ -nH\ $*
 
+" resize current buffer by +/- 5 
+nnoremap <C-left> :vertical resize -5<cr>
+nnoremap <C-down> :resize +5<cr>
+nnoremap <C-up> :resize -5<cr>
+nnoremap <C-right> :vertical resize +5<cr>
+
+" paste from clipboard without indentation with F2
+nnoremap <F2> :set invpaste paste?<CR>
+set pastetoggle=<F2>
+set showmode
+
+" move through wrapped lines
+imap <silent> <Down> <C-o>gj
+imap <silent> <Up> <C-o>gk
+nmap <silent> <Down> gj
+nmap <silent> <Up> gk
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Latex
+" => Latex SUITE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 "let g:tex_flavor='latex'
@@ -147,26 +163,6 @@ let g:Tex_IgnoreLevel = 10
 set noscrollbind
 diffoff
 
-" resize current buffer by +/- 5 
-nnoremap <C-left> :vertical resize -5<cr>
-nnoremap <C-down> :resize +5<cr>
-nnoremap <C-up> :resize -5<cr>
-nnoremap <C-right> :vertical resize +5<cr>
-" change window with TAB
-nnoremap <Tab> <C-W>w
-
-
-" paste from clipboard without indentation with F2
-nnoremap <F2> :set invpaste paste?<CR>
-set pastetoggle=<F2>
-set showmode
-
-
-" move through wrapped lines
-imap <silent> <Down> <C-o>gj
-imap <silent> <Up> <C-o>gk
-nmap <silent> <Down> gj
-nmap <silent> <Up> gk
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => NERDTree
@@ -174,6 +170,7 @@ nmap <silent> <Up> gk
 
 " this let start NERDTree if no file name is given
 autocmd vimenter * if !argc() | NERDTree | endif
+noremap <C-F7> :NERDTreeToggle<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VOom
@@ -182,13 +179,15 @@ autocmd vimenter * if !argc() | NERDTree | endif
 nnoremap <leader><leader> :Voom<CR>
 nnoremap <leader><leader>n :Voomunl<CR>
 nnoremap <C-c> :call Voom_DeleteOutline('bd')<CR>
-
+autocmd FileType python   nnoremap <F7> :VoomToggle python<CR>
+autocmd FileType markdown nnoremap <F7> :VoomToggle markdown<CR>
+autocmd FileType latex    nnoremap <F7> :VoomToggle latex<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => TagBar
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nmap <F8> :TagbarToggle<CR>
+nnoremap <F8> :TagbarToggle<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => MOUSE
