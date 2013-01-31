@@ -235,3 +235,4 @@ let g:vimwiki_folding = 1
 let g:vimwiki_use_calendar = 1
 " Use vimwiki syntax highlighting for all markdown (and media) files
 let g:vimwiki_ext2syntax = {'.md': 'markdown', '.mkd': 'markdown', '.mdown': 'markdown', '.markdown': 'markdown', '.wiki': 'media'}
+let g:vimwiki_custom_wiki2html='custom_md2html'

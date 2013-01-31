@@ -93,3 +93,27 @@ git config -f .gitmodules --remove-section submodule.$submodulepath
 rm -Rf .git/modules/$submodulepath
 rm -Rf $submodulepath
 }
+
+# vimwiki custom conversion to html
+custom_md2html (){
+# This script converts markdown into html, to be used with vimwiki's
+# "customwiki2html" option. Experiment with the two proposed methods by
+# commenting / uncommenting the relevant lines below.
+# Then, in your .vimrc file, set:
+#
+# g:vimwiki_customwiki2html=$HOME.'/.vim/autoload/vimwiki/customwiki2html.sh'
+PANDOC=pandoc
+
+FORCE="$1"
+SYNTAX="$2"
+EXTENSION="$3"
+OUTPUTDIR="$4"
+INPUT="$5"
+CSSFILE="$6"
+
+[ $FORCE -eq 0 ] || { FORCEFLAG="-f"; };
+[ $SYNTAX = "markdown" ] || { echo "Error: Unsupported syntax"; exit -2; };
+
+OUTPUT=$OUTPUTDIR/$(basename "$INPUT" .$EXTENSION).html
+$PANDOC --css $CSSFILE -o $OUTPUT $INPUT
+}

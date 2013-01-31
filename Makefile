@@ -19,6 +19,7 @@ ibash:
 
 igit:
 	@$(call linking,${Local}/gitconfig,~/.gitconfig)
+	@$(call linking,${Local}/gitignore,~/.gitignore)
 	@$(call linking,${Local}/git-prompt.sh,~/.git-prompt)
 
 iscreen:
