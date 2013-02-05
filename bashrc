@@ -171,8 +171,10 @@ NewLine="\n"
 Jobs="\j"
 User="\u"
 Host="\h"
-source ~/.git-prompt
+
+command -v git >/dev/null 2>&1 && source ~/.git-prompt
 command -v __git_ps1 >/dev/null 2>&1 && GitBranch='$(__git_ps1)' || GitBranch=''
+
 
 case ${HOSTNAME/.*/} in
   'arcinghio') HostColor=$IBlack ;;

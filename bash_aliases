@@ -115,5 +115,5 @@ CSSFILE="$6"
 [ $SYNTAX = "markdown" ] || { echo "Error: Unsupported syntax"; exit -2; };
 
 OUTPUT=$OUTPUTDIR/$(basename "$INPUT" .$EXTENSION).html
-$PANDOC --css $CSSFILE -o $OUTPUT $INPUT
+$PANDOC --css $CSSFILE --mathjax -o $OUTPUT $INPUT
 }

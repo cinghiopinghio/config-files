@@ -8,7 +8,7 @@ set nocompatible
 
 
 "call pathogen#runtime_append_all_bundles()
-"call pathogen#helptags()
+call pathogen#helptags()
 call pathogen#infect()
 
 " allow backspacing over everything in insert mode
@@ -19,6 +19,7 @@ set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
 set ignorecase
+
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -73,12 +74,12 @@ map <F6> :setlocal spell! spelllang=en_us<CR>
 au Filetype mail setlocal spell
 au Filetype tex setlocal spell
 " tabulation
-setlocal shiftwidth=2 softtabstop=2 expandtab smarttab
 autocmd FileType matlab set comments=:% expandtab foldmethod=indent
 autocmd FileType matlab set formatoptions=crql expandtab
 autocmd FileType make   set noexpandtab foldmethod=indent
 autocmd FileType python set foldmethod=indent autoindent smartindent
 autocmd FileType cpp    set foldmethod=syntax autoindent smartindent
+setlocal shiftwidth=2 softtabstop=2 expandtab smarttab
 " Save folds automatically on close, and load them on opening the file
 au BufWinLeave *.* mkview
 au BufWinEnter *.* silent loadview
@@ -106,6 +107,7 @@ set grepprg=grep\ -nH\ $*
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 set showmode
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Panes
@@ -175,19 +177,16 @@ diffoff
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " this let start NERDTree if no file name is given
-autocmd vimenter * if !argc() | NERDTree | endif
-noremap <C-F7> :NERDTreeToggle<CR>
+"autocmd vimenter * if !argc() | NERDTree | endif
+noremap <leader>n :NERDTreeToggle<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VOom
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nnoremap <leader><leader> :Voom<CR>
-nnoremap <leader><leader>n :Voomunl<CR>
-nnoremap <C-c> :call Voom_DeleteOutline('bd')<CR>
-autocmd FileType python   nnoremap <F7> :VoomToggle python<CR>
-autocmd FileType markdown,pandoc nnoremap <F7> :VoomToggle markdown<CR>
-autocmd FileType latex    nnoremap <F7> :VoomToggle latex<CR>
+autocmd FileType python   nnoremap <leader>y :VoomToggle python<CR>
+autocmd FileType markdown,pandoc,vimwiki nnoremap <leader>y :VoomToggle markdown<CR>
+autocmd FileType tex      nnoremap <leader>y :VoomToggle latex<CR>
 "let g:voom_tab_key = '<C-Tab>'
 "let g:voom_return_key = '<C-Return>'
 
@@ -196,7 +195,7 @@ autocmd FileType latex    nnoremap <F7> :VoomToggle latex<CR>
 " => TagBar
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nnoremap <F8> :TagbarToggle<CR>
+nnoremap <leader>t :TagbarToggle<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => MOUSE
@@ -236,3 +235,27 @@ let g:vimwiki_use_calendar = 1
 " Use vimwiki syntax highlighting for all markdown (and media) files
 let g:vimwiki_ext2syntax = {'.md': 'markdown', '.mkd': 'markdown', '.mdown': 'markdown', '.markdown': 'markdown', '.wiki': 'media'}
 let g:vimwiki_custom_wiki2html='custom_md2html'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Rainbow Parentesis
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+let g:rbpt_max = 16
+let g:rbpt_loadcmd_toggle =0
