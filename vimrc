@@ -84,6 +84,9 @@ setlocal shiftwidth=2 softtabstop=2 expandtab smarttab
 au BufWinLeave *.* mkview
 au BufWinEnter *.* silent loadview
 
+au FileType gnuplot map <leader>ll :!gnuplot %<CR>
+au FileType python  map <leader>ll :!python %<CR>
+
 set complete+=k         " enable dictionary completion
 set completeopt+=longest
 set clipboard+=unnamed  " yank and copy to X clipboard
@@ -107,7 +110,6 @@ set grepprg=grep\ -nH\ $*
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 set showmode
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Panes

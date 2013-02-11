@@ -45,6 +45,8 @@ alias ipynb='ipython2 notebook --pylab inline'
 
 alias uruake='urxvt -geometry 128x29+100+0 -pe kuake &'
 
+alias dm='dmenu_run -nb "#602B00" -nf "#6df4f4" -sb "#FF0000" -b -p dmenu:'
+
 ##################
 # bash functions #
 ##################
