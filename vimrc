@@ -78,11 +78,15 @@ autocmd FileType matlab set comments=:% expandtab foldmethod=indent
 autocmd FileType matlab set formatoptions=crql expandtab
 autocmd FileType make   set noexpandtab foldmethod=indent
 autocmd FileType python set foldmethod=indent autoindent smartindent
+autocmd FileType python set foldnestmax=2
 autocmd FileType cpp    set foldmethod=syntax autoindent smartindent
+set foldcolumn=2
+set foldlevelstart=0
 setlocal shiftwidth=2 softtabstop=2 expandtab smarttab
-" Save folds automatically on close, and load them on opening the file
-au BufWinLeave *.* mkview
-au BufWinEnter *.* silent loadview
+
+"" Save folds automatically on close, and load them on opening the file
+"au BufWinLeave *.* mkview
+"au BufWinEnter *.* silent loadview
 
 au FileType gnuplot map <leader>ll :!gnuplot %<CR>
 au FileType python  map <leader>ll :!python %<CR>
