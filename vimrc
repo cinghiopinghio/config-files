@@ -265,3 +265,13 @@ let g:rbpt_colorpairs = [
     \ ]
 let g:rbpt_max = 16
 let g:rbpt_loadcmd_toggle =0
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Latex Box Plugin
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:LatexBox_latexmk_options="-pdf"
+let g:LatexBox_output_type="pdf"
+let g:LatexBox_show_warnings=1
+let g:LatexBox_ignore_warnings =['Underfull', 'Overfull', 'specifier changed to', 'A float is stuck']
+let g:LatexBox_latexmk_options = "-pvc -pdfps"
