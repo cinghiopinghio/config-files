@@ -80,8 +80,8 @@ autocmd FileType make   set noexpandtab foldmethod=indent
 autocmd FileType python set foldmethod=indent autoindent smartindent
 autocmd FileType python set foldnestmax=2
 autocmd FileType cpp    set foldmethod=syntax autoindent smartindent
-set foldcolumn=2
-set foldlevelstart=0
+"set foldcolumn=2
+"set foldlevelstart=0
 setlocal shiftwidth=2 softtabstop=2 expandtab smarttab
 
 "" Save folds automatically on close, and load them on opening the file
