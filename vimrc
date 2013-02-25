@@ -135,12 +135,6 @@ nmap <silent> <Up> gk
 "autocmd vimenter * if !argc() | NERDTree | endif
 noremap <leader>n :NERDTreeToggle<CR>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => VOom
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-autocmd FileType markdown,pandoc nnoremap <leader>y :VoomToggle vimwiki<CR>
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => TagBar
@@ -184,7 +178,8 @@ let g:vimwiki_list = [s:wiki_1, s:wiki_2]
 let g:vimwiki_folding = 1
 let g:vimwiki_use_calendar = 1
 " Use vimwiki syntax highlighting for all markdown (and media) files
-let g:vimwiki_ext2syntax = {'.md': 'markdown', '.mkd': 'markdown', '.mdown': 'markdown', '.markdown': 'markdown'}
+let g:vimwiki_ext2syntax = {}
+"let g:vimwiki_ext2syntax = {'.md': 'markdown', '.mkd': 'markdown', '.mdown': 'markdown', '.markdown': 'markdown'}
 "let g:vimwiki_custom_wiki2html='custom_md2html'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
