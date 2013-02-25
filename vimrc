@@ -71,25 +71,13 @@ endif " has("autocmd")
 
 map <F6> :setlocal spell! spelllang=en_us<CR>
 
-au Filetype mail setlocal spell
-au Filetype tex setlocal spell
 " tabulation
-autocmd FileType matlab set comments=:% expandtab foldmethod=indent
-autocmd FileType matlab set formatoptions=crql expandtab
-autocmd FileType make   set noexpandtab foldmethod=indent
-autocmd FileType python set foldmethod=indent autoindent smartindent
-autocmd FileType python set foldnestmax=2
-autocmd FileType cpp    set foldmethod=syntax autoindent smartindent
-"set foldcolumn=2
-"set foldlevelstart=0
 setlocal shiftwidth=2 softtabstop=2 expandtab smarttab
 
 "" Save folds automatically on close, and load them on opening the file
 "au BufWinLeave *.* mkview
 "au BufWinEnter *.* silent loadview
 
-au FileType gnuplot map <leader>ll :!gnuplot %<CR>
-au FileType python  map <leader>ll :!python %<CR>
 
 set complete+=k         " enable dictionary completion
 set completeopt+=longest
@@ -138,45 +126,6 @@ imap <silent> <Up> <C-o>gk
 nmap <silent> <Down> gj
 nmap <silent> <Up> gk
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Latex SUITE
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"let g:tex_flavor='latex'
-let g:Tex_CompileRule_dvi = 'latex -interaction=nonstopmode $*'
-let g:Tex_CompileRule_ps  = 'ps2pdf $*'
-let g:Tex_CompileRule_pdf = 'dvipdf $*.dvi'
-let g:Tex_DefaultTargetFormat='pdf'
-let g:Tex_FormatDependency_pdf = 'dvi,pdf'
-"let g:Tex_MultipleCompileFormats='dvi,pdf'
-let g:Tex_UseMakefile=0
-"let g:Tex_ViewRule_pdf='zathura'
-let g:Tex_ViewRuleComplete_pdf='zathura $*.pdf 2>>/dev/null &'
-"let g:Tex_Menus=0
-"let g:Tex_FoldedCommands='ctable'
-let g:Tex_FoldedEnvironments=',frame'
-
-" Set the warning messages to ignore.
-let g:Tex_IgnoredWarnings ='
-\"Underfull\n".
-\"Overfull\n".
-\"Float too large\n".
-\"specifier changed to\n".
-\"You have requested\n".
-\"Missing number, treated as zero.\n".
-\"There were undefined references\n".
-\"Citation %.%# undefined\n".
-\"Reference %.%# undefined\n".
-\"LaTeX Font Warning:"'
-" This number N says that latex-suite should ignore the first N of the above.
-let g:Tex_IgnoreLevel = 10
-
-" TIP: if you write your \label's as \label{fig:something}, then if you
-" type in \ref{fig: and press Ctrl-N you will automatically cycle through
-" all the figure labels. Very useful!
-" set iskeyword+=:
-set noscrollbind
-diffoff
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => NERDTree
@@ -190,11 +139,7 @@ noremap <leader>n :NERDTreeToggle<CR>
 " => VOom
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-autocmd FileType python   nnoremap <leader>y :VoomToggle python<CR>
-autocmd FileType markdown,pandoc,vimwiki nnoremap <leader>y :VoomToggle markdown<CR>
-autocmd FileType tex      nnoremap <leader>y :VoomToggle latex<CR>
-"let g:voom_tab_key = '<C-Tab>'
-"let g:voom_return_key = '<C-Return>'
+autocmd FileType markdown,pandoc nnoremap <leader>y :VoomToggle vimwiki<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -218,18 +163,18 @@ set mouse=a
 let s:wiki_1           = {}
 let s:wiki_1.path      = '~/docu/wikis/lavoro'
 let s:wiki_1.path_html = '~/docu/wikis/lavoro/html'
-let s:wiki_1.ext       = '.md'
-let s:wiki_1.syntax    = 'markdown'
-let s:wiki_1.css_name  = 'markdown.css'
+let s:wiki_1.ext       = '.wiki'
+"let s:wiki_1.syntax    = 'vimwiki'
+let s:wiki_1.css_name  = 'wiki.css'
 let s:wiki_1.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'shell': 'sh'}
 
 " Personal Stuff related wiki
 let s:wiki_2           = {}
 let s:wiki_2.path      = '~/docu/wikis/vita'
 let s:wiki_2.path_html = '~/docu/wikis/vita/html'
-let s:wiki_2.ext       = '.md'
-let s:wiki_2.syntax    = 'markdown'
-let s:wiki_2.css_name  = 'markdown.css'
+let s:wiki_2.ext       = '.wiki'
+"let s:wiki_2.syntax    = 'vimwiki'
+let s:wiki_2.css_name  = 'wiki.css'
 let s:wiki_2.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'shell': 'sh'}
 
 let g:vimwiki_list = [s:wiki_1, s:wiki_2]
@@ -239,8 +184,8 @@ let g:vimwiki_list = [s:wiki_1, s:wiki_2]
 let g:vimwiki_folding = 1
 let g:vimwiki_use_calendar = 1
 " Use vimwiki syntax highlighting for all markdown (and media) files
-let g:vimwiki_ext2syntax = {'.md': 'markdown', '.mkd': 'markdown', '.mdown': 'markdown', '.markdown': 'markdown', '.wiki': 'media'}
-let g:vimwiki_custom_wiki2html='custom_md2html'
+let g:vimwiki_ext2syntax = {'.md': 'markdown', '.mkd': 'markdown', '.mdown': 'markdown', '.markdown': 'markdown'}
+"let g:vimwiki_custom_wiki2html='custom_md2html'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Rainbow Parentesis
@@ -265,13 +210,3 @@ let g:rbpt_colorpairs = [
     \ ]
 let g:rbpt_max = 16
 let g:rbpt_loadcmd_toggle =0
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Latex Box Plugin
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:LatexBox_latexmk_options="-pdf"
-let g:LatexBox_output_type="pdf"
-let g:LatexBox_show_warnings=1
-let g:LatexBox_ignore_warnings =['Underfull', 'Overfull', 'specifier changed to', 'A float is stuck']
-let g:LatexBox_latexmk_options = "-pvc -pdfps"
