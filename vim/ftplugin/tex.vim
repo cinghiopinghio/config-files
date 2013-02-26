@@ -1,4 +1,4 @@
-setlocal formatoptions+=wa
+setlocal formatoptions+=w
 imap <buffer> [[ \begin{
 imap <buffer> ]] <Plug>LatexCloseCurEnv
 nmap <buffer> <F5> <Plug>LatexChangeEnv

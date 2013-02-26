@@ -104,7 +104,7 @@ set pastetoggle=<F2>
 set showmode
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Panes
+" => Navigation
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " open file under cursor on a tab
@@ -117,9 +117,6 @@ nnoremap <C-down> :resize +5<cr>
 nnoremap <C-up> :resize -5<cr>
 nnoremap <C-right> :vertical resize +5<cr>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Move
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " move through wrapped lines
 imap <silent> <Down> <C-o>gj
 imap <silent> <Up> <C-o>gk
@@ -147,7 +144,7 @@ nnoremap <leader>t :TagbarToggle<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " use the mouse in vim:
-set mouse=a
+set mouse=vi
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VimWiki
