@@ -30,9 +30,6 @@
 	path = vim/bundle/pandoc
 	url = https://github.com/vim-pandoc/vim-pandoc.git
         ignore = dirty
-[submodule "vim/bundle/rainbow_parentheses"]
-	path = vim/bundle/rainbow_parentheses
-	url = https://github.com/kien/rainbow_parentheses.vim.git
 [submodule "vim/bundle/tlib"]
 	path = vim/bundle/tlib
 	url = https://github.com/tomtom/tlib_vim.git
