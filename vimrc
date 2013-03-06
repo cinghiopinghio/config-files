@@ -146,35 +146,3 @@ nnoremap <leader>t :TagbarToggle<CR>
 " use the mouse in vim:
 set mouse=vi
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => VimWiki
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Work related wiki
-let s:wiki_1           = {}
-let s:wiki_1.path      = '~/docu/wikis/lavoro'
-let s:wiki_1.path_html = '~/docu/wikis/lavoro/html'
-let s:wiki_1.ext       = '.wiki'
-"let s:wiki_1.syntax    = 'vimwiki'
-let s:wiki_1.css_name  = 'wiki.css'
-let s:wiki_1.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'shell': 'sh'}
-
-" Personal Stuff related wiki
-let s:wiki_2           = {}
-let s:wiki_2.path      = '~/docu/wikis/vita'
-let s:wiki_2.path_html = '~/docu/wikis/vita/html'
-let s:wiki_2.ext       = '.wiki'
-"let s:wiki_2.syntax    = 'vimwiki'
-let s:wiki_2.css_name  = 'wiki.css'
-let s:wiki_2.nested_syntaxes = {'python': 'python', 'c++': 'cpp', 'shell': 'sh'}
-
-let g:vimwiki_list = [s:wiki_1, s:wiki_2]
-
-"map <leader>tt <Plug>VimwikiToggleListItem
-"map <C-T> <Plug>VimwikiToggleListItem
-let g:vimwiki_folding = 1
-let g:vimwiki_use_calendar = 1
-" Use vimwiki syntax highlighting for all markdown (and media) files
-let g:vimwiki_ext2syntax = {}
-"let g:vimwiki_ext2syntax = {'.md': 'markdown', '.mkd': 'markdown', '.mdown': 'markdown', '.markdown': 'markdown'}
-"let g:vimwiki_custom_wiki2html='custom_md2html'
