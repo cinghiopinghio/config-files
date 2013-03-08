@@ -1,15 +1,55 @@
 " vimrc file.
 
+set nocompatible               " be iMproved
+filetype off                   " required!
+
+" call Vundle
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+" required! 
+Bundle 'gmarik/vundle'
+
+" My Bundles here:
+"
+" original repos on github
+Bundle 'tpope/vim-fugitive'
+Bundle 'vim-scripts/VOoM'
+Bundle 'mbbill/VimExplorer'
+Bundle 'majutsushi/tagbar'
+Bundle 'scrooloose/syntastic'
+Bundle 'scrooloose/nerdtree'
+Bundle 'vim-scripts/Conque-Shell'
+Bundle 'vim-pandoc/vim-pandoc'
+Bundle 'tomtom/tlib_vim'
+Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'honza/snipmate-snippets'
+Bundle 'garbas/vim-snipmate'
+Bundle 'LaTeX-Box-Team/LaTeX-Box'
+"Bundle 'Lokaltog/vim-easymotion'
+"Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+"Bundle 'tpope/vim-rails.git'
+" vim-scripts repos
+"Bundle 'L9'
+"Bundle 'FuzzyFinder'
+" non github repos
+"Bundle 'git://git.wincent.com/command-t.git'
+" ...
+
+filetype plugin indent on     " required!
+"
+" Brief help
+" :BundleList          - list configured bundles
+" :BundleInstall(!)    - install(update) bundles
+" :BundleSearch(!) foo - search(or refresh cache first) for foo
+" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+"
+" see :h vundle for more details or wiki for FAQ
+" NOTE: comments after Bundle command are not allowed..
 
 
-" Use Vim settings, rather then Vi settings (much better!).
-" This must be first, because it changes other options as a side effect.
-set nocompatible
 
-
-"call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
-call pathogen#infect()
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
@@ -20,6 +60,10 @@ set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
 set ignorecase
 
+nmap    <ESC>[5^    <C-PageUp>
+nmap    <ESC>[6^    <C-PageDown>
+"nnoremap <C-PageDown> :bn!<CR>
+"noremap <C-PageUp> :bp!<CR>
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -96,7 +140,6 @@ colorscheme xinghio
 
 set makeprg=make
 set grepprg=grep\ -nH\ $*
-
 
 " paste from clipboard without indentation with F2
 nnoremap <F2> :set invpaste paste?<CR>
