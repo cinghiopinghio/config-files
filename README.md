@@ -1,14 +1,17 @@
-# Config Files of My Machines
+# Config Files
 
-In this repository I mantain my dotfile for the following stuff:
+In this repository I mantain my dotfiles for the following apps:
 
 - vim
 - bash
 - git
 - gnuplot
 - screen 
+- latexmk
 
 ## Installation:
+
+Go to this folder and type:
 
 `make install`
 

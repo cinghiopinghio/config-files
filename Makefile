@@ -1,13 +1,12 @@
 SHELL := /bin/bash
 Local=${PWD}
 
-
 main: 
 	@echo "Usage:\n\
 	  make install\n\n\
 	Warning: this will delete all your config files\n"
 
-install: ivim ibash igit iscreen
+install: ivim ibash igit iscreen ilatex
 
 ivim:
 	@$(call linking,${Local}/vimrc,~/.vimrc)
@@ -24,6 +23,9 @@ igit:
 
 iscreen:
 	@$(call linking,${Local}/screenrc,~/.screenrc)
+
+ilatex:
+	@$(call linking,${Local}/latexmkrc,~/.latexmkrc)
 
 help: main
 
