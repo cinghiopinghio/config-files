@@ -15,4 +15,5 @@ Go to this folder and type:
 
 `make install`
 
-It will create links to your home directory. Any preexistent configuration file can be deleted.
+It will create links to your home directory. 
+Any preexistent configuration file can be deleted.
