@@ -1,6 +1,6 @@
 setlocal formatoptions+=w
-imap <buffer> [[ \begin{
-imap <buffer> ]] <Plug>LatexCloseCurEnv
+"imap <buffer> [[ \begin{
+"imap <buffer> ]] <Plug>LatexCloseCurEnv
 nmap <buffer> <F5> <Plug>LatexChangeEnv
 vmap <buffer> <F7> <Plug>LatexWrapSelection
 vmap <buffer> <S-F7> <Plug>LatexWrapSelectionEnv
@@ -19,8 +19,10 @@ let g:LatexBox_output_type="pdf"
 let g:LatexBox_show_warnings=1
 let g:LatexBox_ignore_warnings =['Underfull', 'Overfull', 'specifier changed to', 'A float is stuck']
 let g:LatexBox_latexmk_options = "-pvc -pdfdvi"
-let g:LatexBox_Folding = 'yes'
 let g:LatexBox_viewer = 'zathura'
+let g:LatexBox_Folding=1
+let g:LatexBox_fold_preamble=1 
+let g:LatexBox_fold_envs=1 
 
 
 "let g:Tex_CompileRule_dvi = 'latex -interaction=nonstopmode $*'
