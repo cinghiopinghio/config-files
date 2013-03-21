@@ -120,3 +120,25 @@ CSSFILE="$6"
 OUTPUT=$OUTPUTDIR/$(basename "$INPUT" .$EXTENSION).html
 $PANDOC --css $CSSFILE --mathjax -o $OUTPUT $INPUT
 }
+
+function trylinking {
+in=$1;\
+out=$2;\
+echo "Installing $out configuration files";\
+already=$(readlink $out);\
+if [[ ${already} != ${in} ]];\
+then\
+  if [[ ${already} == "" ]];\
+  then\
+    ln -s $in $out;\
+  else\
+    read -p "Remove ${out}? (y/n)";\
+    [ "${REPLY}" != "y" ] && exit 0;\
+    rm -rf $out;\
+    ln -s $in $out;\
+  fi;\
+  echo "Installed";\
+else\
+  echo "Already installed";\
+fi			
+}

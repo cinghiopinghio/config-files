@@ -26,21 +26,29 @@ iscreen:
 
 ilatex:
 	@$(call linking,${Local}/latexmkrc,~/.latexmkrc)
+	#@echo ${Local}/latexmkrc ~/.latexmkrc
+	#@trylinking ${Local}/latexmkrc ~/.latexmkrc
 
 help: main
 
 
-linking=					\
-	in=$1;					\
-	out=$2;					\
+linking=\
+	in=$1;\
+	out=$2;\
 	echo "Installing $$out configuration files";\
-	already=$$(readlink $$out);		\
+	already=$$(readlink $$out);\
 	if [[ $${already} != $${in} ]];\
-	then					\
-	  read -p "Remove $${out}? (y/n)";	\
-	  [ "$${REPLY}" != "y" ] && exit 0;	\
-	  rm -rf $$out;				\
-	  ln -s $$in $$out;			\
-	else					\
-	  echo "Already installed";		\
+	then\
+	  if [[ $${already} == "" ]];\
+	  then\
+	    ln -s $$in $$out;\
+	  else\
+	    read -p "Remove $${out}? (y/n)";\
+	    [ "$${REPLY}" != "y" ] && exit 0;\
+	    rm -rf $$out;\
+	    ln -s $$in $$out;\
+	  fi;\
+	  echo "Installed";\
+	else\
+	  echo "Already installed";\
 	fi			
