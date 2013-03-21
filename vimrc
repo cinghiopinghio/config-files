@@ -2,9 +2,10 @@
 
 set nocompatible               " be iMproved
 filetype off                   " required!
-
+""""""""""""""""""""
 " call Vundle
-let iCanHazVundle=1
+""""""""""""""""""""
+let iCanHazVundle=1 
 let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
 if !filereadable(vundle_readme)
     echo "Installing Vundle.."
@@ -31,14 +32,14 @@ Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdtree'
 Bundle 'vim-scripts/Conque-Shell'
 Bundle 'vim-pandoc/vim-pandoc'
-Bundle 'tomtom/tlib_vim'
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'honza/snipmate-snippets'
-Bundle 'garbas/vim-snipmate'
+"Bundle 'honza/snipmate-snippets'
+"Bundle 'tomtom/tlib_vim'
+"Bundle 'MarcWeber/vim-addon-mw-utils'
+"Bundle 'garbas/vim-snipmate'
+Bundle 'SirVer/ultisnips'
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
-"Bundle 'Lokaltog/vim-easymotion'
-"Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-"Bundle 'tpope/vim-rails.git'
+Bundle 'spolu/dwm.vim'
+
 " vim-scripts repos
 "Bundle 'L9'
 "Bundle 'FuzzyFinder'
@@ -52,6 +53,9 @@ if iCanHazVundle == 0
   :BundleInstall
 endif
 
+""""""""""""""""""""
+"""end"vundle"stuff"
+""""""""""""""""""""
 
 filetype plugin indent on     " required!
 "
@@ -205,3 +209,15 @@ nnoremap <leader>t :TagbarToggle<CR>
 " use the mouse in vim:
 set mouse=vi
 
+""""""""""""""""""""""""""""""
+" this is here because otherwise it won't be read by the plugin
+let g:LatexBox_Folding=1
+""""""""""""""""""""""""""""""
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => DWM
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let g:dwm_map_keys=1
+let g:dwm_master_pane_width="66%"

@@ -2,7 +2,7 @@ SHELL := /bin/bash
 Local=${PWD}
 
 main: 
-	@echo "Usage:\n\
+	@echo -e "Usage:\n\
 	  make install\n\n\
 	Warning: this will delete all your config files\n"
 

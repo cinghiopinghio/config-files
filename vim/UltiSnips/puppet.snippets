@@ -1,0 +1,223 @@
+# Snippets for use with VIM and http://www.vim.org/scripts/script.php?script_id=2540
+#
+# Please contact R.I.Pienaar <rip@devco.net> for additions and feedback, 
+# see it in action @ http://www.devco.net/archives/2009/09/22/vim_and_puppet.php
+# Language Constructs
+snippet class "class"
+class ${1:`!v Filename('', 'name')`} {
+	${2}
+}
+endsnippet
+
+snippet node "node"
+node "${1:`!v Filename('', 'fqdn')`}" {
+	${2}
+}
+endsnippet
+
+snippet case "case"
+case $${1:variable} {
+	default: { ${2} }
+}
+endsnippet
+
+snippet ife "ife"
+if $${1:variable} {
+	${2}
+} else {
+	${3}
+}
+endsnippet
+
+snippet if "if"
+if $${1:variable} {
+	${2}
+} 
+endsnippet
+
+snippet else "else"
+else {
+	${1}
+}
+endsnippet
+
+snippet ? "?"
+? {
+	'${1}'	=> ${2}
+  }
+endsnippet
+
+# 
+# blocks etc and general syntax sugar
+snippet [ "["
+[ ${1} ]${2}
+endsnippet
+
+snippet > ">"
+${1}	=> ${2}
+endsnippet
+
+snippet p: "p:"
+"puppet://puppet/${1:module name}/${2:file name}"
+endsnippet
+
+#
+# Functions
+snippet alert "alert"
+alert("${1:message}")${2}
+endsnippet
+
+snippet crit "crit"
+crit("${1:message}")${2}
+endsnippet
+
+snippet debug "debug"
+debug("${1:message}")${2}
+endsnippet
+
+snippet defined "defined"
+defined(${1:Resource}["${2:name}"])${3}
+endsnippet
+
+snippet emerg "emerg"
+emerg("${1:message}")${2}
+endsnippet
+
+snippet extlookup "Simple extlookup "
+extlookup("${1:variable}")${2}
+endsnippet
+
+snippet extlookup "Extlookup with defaults"
+extlookup("${1:variable}", "${2:default}")${3}
+endsnippet
+
+snippet extlookup "Extlookup with defaults and custom data file"
+extlookup("${1:variable}", "${2:default}", "${3:data source}")${4}
+endsnippet
+
+snippet fail "fail"
+fail("${1:message}")${2}
+endsnippet
+
+snippet info "info"
+info("${1:message}")${2}
+endsnippet
+
+snippet inline_template "inline_template"
+inline_template("<%= ${1} %>")${2}
+endsnippet
+
+snippet notice "notice"
+notice("${1:message}")${2}
+endsnippet
+
+snippet realize "realize"
+realize(${1:Resource}[${2:name}])${3}
+endsnippet
+
+snippet regsubst "regsubst"
+regsubst(${1:hay stack}, ${2:needle}, "${3:replacement}")${4}
+endsnippet
+
+snippet inc "inc"
+include ${1:classname}${2}
+endsnippet
+
+snippet split "split"
+split(${1:hay stack}, "${2:patten}")${3}
+endsnippet
+
+snippet versioncmp "versioncmp"
+versioncmp("${1:version}", "${2:version}")${3}
+endsnippet
+
+snippet warning "warning"
+warning("${1:message}")${2}
+endsnippet
+
+#
+# Types
+snippet cron "cron"
+cron{ "${1:name}":
+	command	=> "${2}",
+	user	=> "${3:root}",
+	${4}	=> ${5}
+}
+endsnippet
+
+snippet exec "exec"
+exec{ "${1:name}":
+	command	=> "${2:$1}",
+	user	=> "${3:root}",
+	${4}	=> ${5}
+}
+endsnippet
+
+snippet user "user"
+user{ "${1:user}":
+	comment		=> "${2:$1}",
+	ensure		=> present,
+	managehome	=> true,
+	home		=> "${3:/home/$1}"
+}
+endsnippet
+
+snippet group "group"
+group{ "${1:group}":
+	ensure	=> ${2:present}
+}
+endsnippet
+
+snippet host "host"
+host{ "${1:hostname}":
+	ip	=> ${2:127.0.0.1}
+}
+endsnippet
+
+snippet mailalias "mailalias"
+mailalias{ "${1:localpart}":
+	recipient	=> "${2:recipient}"
+}
+endsnippet
+
+snippet mount "mount"
+mount{ "${1:destination path}":
+	ensure	=> ${2:mounted},
+	device	=> "${3:device name or path}"
+}
+endsnippet
+
+snippet package "package"
+package{ "${1:package name}":
+	ensure	=> ${2:present}
+}
+endsnippet
+
+snippet yumrepo "yumrepo"
+yumrepo{ "${1:repo name}":
+	descr	=> "${2:$1}",
+	enabled	=> ${3:1}
+}
+endsnippet
+
+snippet define "define"
+define ${1} (${2}) {
+	${3}
+}
+endsnippet
+
+snippet service "service"
+service{ "${1:service}":
+	enable		=> ${2:true},
+	ensure		=> ${3:running},
+	hasstatus	=> true,
+}
+endsnippet
+
+snippet file "file"
+file{ "${1:path}":
+	${2}	=> ${3}
+}
+endsnippet
+
+
