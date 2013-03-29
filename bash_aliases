@@ -19,6 +19,7 @@ fi
 
 alias :wq='exit'
 alias vim='vim --servername vim'
+alias ve='vim -c "VE ."'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert

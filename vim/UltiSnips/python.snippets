@@ -1,7 +1,3 @@
-snippet #! "#!"
-#!/usr/bin/env python
-endsnippet
-
 snippet imp "imp"
 import ${1:module}
 endsnippet
@@ -123,56 +119,9 @@ snippet . "."
 self.
 endsnippet
 
-snippet try "Try/Except"
-try:
-	${1:# TODO: write code...}
-except ${2:Exception}, ${3:e}:
-	${4:raise $3}
-endsnippet
-
-snippet try "Try/Except/Else"
-try:
-	${1:# TODO: write code...}
-except ${2:Exception}, ${3:e}:
-	${4:raise $3}
-else:
-	${5:# TODO: write code...}
-endsnippet
-
-snippet try "Try/Except/Finally"
-try:
-	${1:# TODO: write code...}
-except ${2:Exception}, ${3:e}:
-	${4:raise $3}
-finally:
-	${5:# TODO: write code...}
-endsnippet
-
-snippet try "Try/Except/Else/Finally"
-try:
-	${1:# TODO: write code...}
-except ${2:Exception}, ${3:e}:
-	${4:raise $3}
-else:
-	${5:# TODO: write code...}
-finally:
-	${6:# TODO: write code...}
-endsnippet
-
-# if __name__ == '__main__':
-snippet ifmain "ifmain"
-if __name__ == '__main__':
-	${1:main()}
-endsnippet
-
 # __magic__
 snippet _ "_"
 __${1:init}__${2}
-endsnippet
-
-# python debugger (pdb)
-snippet pdb "pdb"
-import pdb; pdb.set_trace()
 endsnippet
 
 # ipython debugger (ipdb)
@@ -199,13 +148,6 @@ endsnippet
 snippet test "test"
 def test_${1:description}(${2:`!v indent('.') ? 'self' : ''`}):
 	${3:# TODO: write code...}
-endsnippet
-
-# test case
-snippet testcase "testcase"
-class ${1:ExampleCase}(unittest.TestCase):
-	def test_${2:description}(self):
-		${3:# TODO: write code...}
 endsnippet
 
 snippet fut "fut"
