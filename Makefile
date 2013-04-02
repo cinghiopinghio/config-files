@@ -14,7 +14,7 @@ ivim:
 
 ibash:
 	@$(call linking,${Local}/bashrc,~/.bashrc)
-	@$(call linking,${Local}/bash_aliases,~/.bash_aliases)
+	@$(call linking,${Local}/aliases,~/.aliases)
 
 igit:
 	@$(call linking,${Local}/gitconfig,~/.gitconfig)

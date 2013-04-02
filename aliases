@@ -18,6 +18,7 @@ if [ -e /usr/lib/mc/mc-wrapper.sh ]; then
 fi
 
 alias :wq='exit'
+alias ..='cd ..'
 alias vim='vim --servername vim'
 alias ve='vim -c "VE ."'
 

@@ -20,8 +20,26 @@ setopt SH_WORD_SPLIT
 setopt nohup
 
 # PS1 and PS2
-export PS1="$(print '%{\e[1;34m%}%n%{\e[0m%}'):$(print '%{\e[0;34m%}%~%{\e[0m%}')$ "
+setopt prompt_subst
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' actionformats '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
+zstyle ':vcs_info:*' formats       '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{5}]%f '
+zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r'
+
+zstyle ':vcs_info:*' enable git cvs svn
+
+# or use pre_cmd, see man zshcontrib
+vcs_info_wrapper() {
+  vcs_info
+  if [ -n "$vcs_info_msg_0_" ]; then
+    echo "%F{grey}${vcs_info_msg_0_}%f$del"
+  fi
+}
+RPROMPT=$'$(vcs_info_wrapper)'
+Host="%m"
 export PS2="$(print '%{\e[0;34m%}>%{\e[0m%}')"
+#export RPS1="%F{red}$(git_prompt)%f"
+export PS1="%F{blue}$Host%F{yellow} %~%f: "
 
 # Vars used later on by Zsh
 export EDITOR="vim"
@@ -83,29 +101,13 @@ alias -s java=$EDITOR
 alias -s txt=$EDITOR
 alias -s PKGBUILD=$EDITOR
 
-# Normal aliases
-alias ls='ls --color=auto -F'
-alias lsd='ls -ld *(-/DN)'
-alias lsa='ls -ld .*'
-alias f='find |grep'
-alias c="clear"
-alias dir='ls -1'
-alias gvim='gvim -geom 82x35'
-alias ..='cd ..'
-alias nicotine='/home/paul/downloads/nicotine-1.0.8rc1/nicotine'
-alias ppp-on='sudo /usr/sbin/ppp-on'
-alias ppp-off='sudo /usr/sbin/ppp-off'
-alias firestarter='sudo su -c firestarter'
-alias mpg123='mpg123 -o oss'
-alias mpg321='mpg123 -o oss'
-alias vba='/home/paul/downloads/VisualBoyAdvance -f 4'
-alias hist="grep '$1' /home/paul/.zsh_history"
-alias irssi="irssi -c irc.freenode.net -n yyz"
-alias mem="free -m"
-alias msn="tmsnc -l hutchy@subdimension.com"
-
 # command L equivalent to command |less
 alias -g L='|less' 
 
 # command S equivalent to command &> /dev/null &
 alias -g S='&> /dev/null &'
+
+if [ -f ~/.aliases ];
+then 
+  source ~/.aliases
+fi
