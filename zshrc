@@ -24,9 +24,9 @@ setopt prompt_subst
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' actionformats '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
 zstyle ':vcs_info:*' formats       '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{5}]%f '
-zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r'
+zstyle ':vcs_info:svn:*' branchformat '%b%F{1}:%F{3}%r'
 
-zstyle ':vcs_info:*' enable git cvs svn
+zstyle ':vcs_info:*' enable git svn
 
 # or use pre_cmd, see man zshcontrib
 vcs_info_wrapper() {
@@ -35,17 +35,17 @@ vcs_info_wrapper() {
     echo "%F{grey}${vcs_info_msg_0_}%f$del"
   fi
 }
-RPROMPT=$'$(vcs_info_wrapper)'
+export RPROMPT='$(vcs_info_wrapper)'
 Host="%m"
+export PS1="%F{blue}$Host%F{yellow} %~%f "
 export PS2="$(print '%{\e[0;34m%}>%{\e[0m%}')"
-#export RPS1="%F{red}$(git_prompt)%f"
-export PS1="%F{blue}$Host%F{yellow} %~%f: "
 
 # Vars used later on by Zsh
 export EDITOR="vim"
 export BROWSER="firefox"
 export XTERM="aterm +sb -geometry 80x29 -fg black -bg lightgoldenrodyellow -fn -xos4-terminus-medium-*-normal-*-14-*-*-*-*-*-iso8859-15"
 
+path+=(~/.local/bin)
 ##################################################################
 # Stuff to make my life easier
 
@@ -60,6 +60,11 @@ zstyle ':completion:*:kill:*' force-list always
 
 # cd not select parent dir
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
+
+# ssh completion
+hosts=$(awk '/^Host / {printf("%s ",$2)}' ~/.ssh/config 2>/dev/null)
+zstyle ':completion:*:hosts' hosts $hosts
+
 
 ##################################################################
 # Key bindings
@@ -107,6 +112,7 @@ alias -g L='|less'
 # command S equivalent to command &> /dev/null &
 alias -g S='&> /dev/null &'
 
+# normal aliases
 if [ -f ~/.aliases ];
 then 
   source ~/.aliases
