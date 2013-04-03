@@ -21,21 +21,24 @@ setopt nohup
 
 # PS1 and PS2
 setopt prompt_subst
-autoload -Uz vcs_info
-zstyle ':vcs_info:*' actionformats '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
-zstyle ':vcs_info:*' formats       '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{5}]%f '
-zstyle ':vcs_info:svn:*' branchformat '%b%F{1}:%F{3}%r'
-
-zstyle ':vcs_info:*' enable git svn
+#autoload -Uz vcs_info
+#zstyle ':vcs_info:*' actionformats '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
+#zstyle ':vcs_info:*' formats       '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{5}]%f '
+#zstyle ':vcs_info:svn:*' branchformat '%b%F{1}:%F{3}%r'
+#
+#zstyle ':vcs_info:*' enable git svn
 
 # or use pre_cmd, see man zshcontrib
-vcs_info_wrapper() {
-  vcs_info
-  if [ -n "$vcs_info_msg_0_" ]; then
-    echo "%F{grey}${vcs_info_msg_0_}%f$del"
+vcs_prompt(){
+  if [ -e ./.git ];
+  then
+    echo 'git'
+  elif [ -e ./.svn ];
+  then
+    echo 'svn'
   fi
 }
-export RPROMPT='$(vcs_info_wrapper)'
+export RPROMPT='%F{red}$(vcs_prompt)%f'
 Host="%m"
 export PS1="%F{blue}$Host%F{yellow} %~%f "
 export PS2="$(print '%{\e[0;34m%}>%{\e[0m%}')"
