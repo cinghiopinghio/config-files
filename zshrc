@@ -1,9 +1,14 @@
 ###########################################################        
 # Options for Zsh
 
+# History
 export HISTFILE=~/.zsh_history
 export HISTSIZE=50000
 export SAVEHIST=50000
+setopt HIST_REDUCE_BLANKS
+setopt HIST_IGNORE_SPACE
+setopt HIST_IGNORE_ALL_DUPS # ignore duplicates in history
+
 eval `dircolors -b`
 
 autoload -U compinit compinit
@@ -14,31 +19,24 @@ setopt ignoreeof
 setopt interactivecomments
 setopt nobanghist
 setopt noclobber
-setopt HIST_REDUCE_BLANKS
-setopt HIST_IGNORE_SPACE
 setopt SH_WORD_SPLIT
 setopt nohup
 
 # PS1 and PS2
 setopt prompt_subst
-#autoload -Uz vcs_info
-#zstyle ':vcs_info:*' actionformats '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
-#zstyle ':vcs_info:*' formats       '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{5}]%f '
-#zstyle ':vcs_info:svn:*' branchformat '%b%F{1}:%F{3}%r'
-#
-#zstyle ':vcs_info:*' enable git svn
 
-# or use pre_cmd, see man zshcontrib
 vcs_prompt(){
-  if [ -e ./.git ];
+  while [[ ! -d .git && ! -d .svn && ! `pwd` = "/" ]]; do cd ..; done
+  if [ -e ./.git ];   
   then
-    echo 'git'
-  elif [ -e ./.svn ];
-  then
-    echo 'svn'
+    BRANCH=$(awk -F'/' '{print $NF}' .git/HEAD)
+    echo '%F{red}[git]%f - %F{yellow}'$BRANCH'%f'
+  elif [ -e ./.svn ]; 
+  then 
+    echo '%F{red}[svn]%f'
   fi
 }
-export RPROMPT='%F{red}$(vcs_prompt)%f'
+export RPROMPT='$(vcs_prompt)'
 Host="%m"
 export PS1="%F{blue}$Host%F{yellow} %~%f "
 export PS2="$(print '%{\e[0;34m%}>%{\e[0m%}')"

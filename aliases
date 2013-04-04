@@ -1,6 +1,6 @@
 
 # enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
+if [[ -x /usr/bin/dircolors ]]; then
   alias ls='ls --color=auto'
   alias grep='grep --color=auto'
   alias fgrep='fgrep --color=auto'
@@ -19,7 +19,8 @@ fi
 
 alias :wq='exit'
 alias ..='cd ..'
-alias vim='vim --servername vim'
+MYHOST=$(hostname -s)
+[[ $MYHOST != 'quantumcl' && $MYHOST != 'terminus' ]] && alias vim='vim --servername vim'
 alias ve='vim -c "VE ."'
 
 # Add an "alert" alias for long running commands.  Use like so:
@@ -123,30 +124,19 @@ custom_md2html (){
   $PANDOC --css $CSSFILE --mathjax -o $OUTPUT $INPUT
 }
 
-vcs(){
-#  #get infos about vesrioning systems
-  while [[ ! -d .git && ! -d .svn && ! `pwd` = "/" ]]; do cd ..; done
-  if [[ -d .git ]];
-  then
-    BRANCH=$(awk -F'/' '{print $NF}' .git/HEAD)
-    echo "[git]-"$BRANCH
-  elif [[ -d .svn ]];
-  then 
-    echo "[svn]"
-  fi
-}
-
 pdf_booklet (){
   #convert pdf to a booklet format to be printable
   # usage: pdf_booklet infile.pdf outfile.pdf
   # print to a4 papersize.
   INFILE="$1"
   OUTFILE="$2"
-  PAPER=$(pdfinfo $INFILE | grep 'Page size' | sed 's/.*(\(.*\)).*/\1/' | tr '[A-Z]' '[a-z]')
+  PAPER=$(pdfinfo $INFILE | grep -e 'Page size*(*)*' | sed 's/.*(\(.*\)).*/\1/' | tr '[A-Z]' '[a-z]')
+  echo $PAPER
   pdftops -level3 $INFILE - |\
     ps2ps - - |\
     psbook |\
-    psnup -2 -pa4 -P$PAPER |\
+    psnup -2 -pa4|\
+   # -P$PAPER |\
     ps2pdf - $OUTFILE
 }
 
