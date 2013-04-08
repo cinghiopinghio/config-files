@@ -26,8 +26,6 @@ iscreen:
 
 ilatex:
 	@$(call linking,${Local}/latexmkrc,~/.latexmkrc)
-	#@echo ${Local}/latexmkrc ~/.latexmkrc
-	#@trylinking ${Local}/latexmkrc ~/.latexmkrc
 
 izsh:
 	@$(call linking,${Local}/zshrc,~/.zshrc)
