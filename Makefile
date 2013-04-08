@@ -6,7 +6,7 @@ main:
 	  make install\n\n\
 	Warning: this will delete all your config files\n"
 
-install: ivim ibash igit iscreen ilatex
+install: ivim ibash igit iscreen ilatex izsh
 
 ivim:
 	@$(call linking,${Local}/vimrc,~/.vimrc)
@@ -14,7 +14,7 @@ ivim:
 
 ibash:
 	@$(call linking,${Local}/bashrc,~/.bashrc)
-	@$(call linking,${Local}/bash_aliases,~/.bash_aliases)
+	@$(call linking,${Local}/aliases,~/.aliases)
 
 igit:
 	@$(call linking,${Local}/gitconfig,~/.gitconfig)
@@ -28,6 +28,9 @@ ilatex:
 	@$(call linking,${Local}/latexmkrc,~/.latexmkrc)
 	#@echo ${Local}/latexmkrc ~/.latexmkrc
 	#@trylinking ${Local}/latexmkrc ~/.latexmkrc
+
+izsh:
+	@$(call linking,${Local}/zshrc,~/.zshrc)
 
 help: main
 
