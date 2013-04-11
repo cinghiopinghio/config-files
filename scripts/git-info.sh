@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
  
 # author: Duane Johnson
 # email: duane.johnson@gmail.com
