@@ -185,7 +185,7 @@ imap <silent> <Down> <C-o>gj
 imap <silent> <Up> <C-o>gk
 nmap <silent> <Down> gj
 nmap <silent> <Up> gk
-
+" prova
 
 " reload vimrc
 nmap <leader><leader><leader> :source ~/.vimrc<cr>
