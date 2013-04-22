@@ -40,6 +40,7 @@ Bundle 'SirVer/ultisnips'
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
 Bundle 'spolu/dwm.vim'
 Bundle 'Shougo/neocomplcache'
+Bundle 'tpope/vim-surround'
 
 " vim-scripts repos
 "Bundle 'L9'
@@ -189,6 +190,12 @@ nmap <silent> <Up> gk
 
 " reload vimrc
 nmap <leader><leader><leader> :source ~/.vimrc<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => VOOM
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:voom_tab_key='<C-Tab>'
+let g:voom_return_key = '<C-Return>'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

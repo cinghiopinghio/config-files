@@ -180,7 +180,7 @@ snippet itd "itd"
 endsnippet
 
 snippet figure "figure"
-${1:Figure}~\ref{${2:fig:}}${3}
+${1:Figure}~\ref{${2:fig:}}${0}
 endsnippet
 
 snippet table "table"
@@ -251,14 +251,15 @@ snippet ft "ft"
 \footnote{${1:text}}
 endsnippet
 
-snippet fig "fig"
+snippet fig "Figure env" b
 \begin{figure}
 \begin{center}
-    \includegraphics[scale=${1}]{Figures/${2}}
+    \includegraphics[width=${1}\textwidth]{${2}}
 \end{center}
 \caption{${3}}
 \label{fig:${4}}
 \end{figure}
+$0
 endsnippet
 
 snippet tikz "tikz"
