@@ -11,10 +11,11 @@ setopt HIST_IGNORE_ALL_DUPS # ignore duplicates in history
 
 eval `dircolors -b`
 
-autoload -U compinit compinit
+autoload -U compinit 
+compinit
 setopt autopushd pushdminus pushdsilent pushdtohome
 setopt autocd
-setopt cdablevars
+#setopt cdablevars
 setopt ignoreeof
 setopt interactivecomments
 setopt nobanghist

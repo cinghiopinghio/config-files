@@ -18,7 +18,7 @@ nnoremap <leader>y :VoomToggle latex<CR>
 let g:LatexBox_output_type="pdf"
 let g:LatexBox_show_warnings=1
 let g:LatexBox_ignore_warnings =['Underfull', 'Overfull', 'specifier changed to', 'A float is stuck']
-let g:LatexBox_latexmk_options = "-pvc -pdfdvi"
+let g:LatexBox_latexmk_options = "-pdfdvi"
 let g:LatexBox_viewer = 'zathura'
 let g:LatexBox_Folding=1
 let g:LatexBox_fold_preamble=1 
