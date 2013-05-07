@@ -10,3 +10,5 @@ $pdf_previewer="start zathura %O %S";
 #try to continue compiling if there is some minor error
 $force_mode=1;
 
+#use shell escape
+$latex = 'latex --shell-escape %O %S';
