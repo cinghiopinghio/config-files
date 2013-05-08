@@ -41,6 +41,7 @@ Bundle 'LaTeX-Box-Team/LaTeX-Box'
 Bundle 'spolu/dwm.vim'
 Bundle 'Shougo/neocomplcache'
 Bundle 'tpope/vim-surround'
+Bundle 'istib/vifm.vim'
 
 " vim-scripts repos
 "Bundle 'L9'
@@ -238,9 +239,9 @@ let g:dwm_master_pane_width="66%"
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-""Neocomplete
+""Neocomplcache
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"
+
 "" Disable AutoComplPop. Comment out this line if AutoComplPop is not installed.
 ""let g:acp_enableAtStartup = 0
 "" Launches neocomplcache automatically on vim startup.
