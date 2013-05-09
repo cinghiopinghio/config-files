@@ -61,7 +61,8 @@ fi
 export SVN_EDITOR=/usr/bin/vim
 # editor variable:
 export EDITOR=/usr/bin/vim
-export PATH=$PATH:~/.local/bin
+# add to PATH .local/bin and subdirectories
+export PATH=$PATH:$(find -L ~/.local/bin -type d | tr '\n' ':' | sed 's/:$//')
 
 
 svnhist(){
