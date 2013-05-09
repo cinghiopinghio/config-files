@@ -195,6 +195,10 @@ nmap <silent> <Up> gk
 " reload vimrc
 nmap <leader><leader><leader> :source ~/.vimrc<cr>
 
+" svn commands
+command -nargs=0 SvnUp :!svn up
+command -nargs=+ SvnCi :!svn ci -m \'<q-args>\'
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VOOM
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
