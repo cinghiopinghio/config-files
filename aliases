@@ -74,21 +74,21 @@ cleantex(){
   fi
 }
 
-# Multiple skypes
-skp(){
-  PROGNAME=$FUNCNAME
-  USER=$1
-  if [[ "$USER" == mauro || "$USER" == cinghio ]];
-  then
-    DBDIR=~/.config/Skype-$USER
-    skype --dbpath=$DBDIR
-  else
-    echo $PROGNAME: user $USER unknown 1>&2
-    echo Usage: $PROGNAME username
-    echo username = mauro / cinghio
-  #  exit 1
-  fi
-}
+## Multiple skypes
+#skp(){
+#  PROGNAME=$FUNCNAME
+#  USER=$1
+#  if [[ "$USER" == mauro || "$USER" == cinghio ]];
+#  then
+#    DBDIR=~/.config/Skype-$USER
+#    skype --dbpath=$DBDIR
+#  else
+#    echo $PROGNAME: user $USER unknown 1>&2
+#    echo Usage: $PROGNAME username
+#    echo username = mauro / cinghio
+#  #  exit 1
+#  fi
+#}
 
 # git remove submodules
 rm_git_submodules(){
