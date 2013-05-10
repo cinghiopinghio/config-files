@@ -3,5 +3,5 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VOom
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <leader>y :VoomToggle markdown<CR>
+"nnoremap <leader>y :VoomToggle markdown<CR>
 

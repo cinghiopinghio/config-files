@@ -9,7 +9,7 @@ vmap <buffer> <S-F7> <Plug>LatexWrapSelectionEnv
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VOom
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <leader>y :VoomToggle latex<CR>
+"nnoremap <leader>y :VoomToggle latex<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Latex Box Plugin

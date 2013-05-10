@@ -7,4 +7,4 @@ nmap <leader>pt :!pandoc -t latex -Ss -o %:r.tex % <CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VOom
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nnoremap <leader>y :VoomToggle markdown<CR>
+"nnoremap <leader>y :VoomToggle markdown<CR>

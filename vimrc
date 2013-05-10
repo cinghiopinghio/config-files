@@ -202,8 +202,10 @@ command! -b -nargs=+ SvnCi :!svn ci -m \'<q-args>\'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VOOM
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+nnoremap <leader>y :VoomToggle<CR>
 let g:voom_tab_key='<C-Tab>'
 let g:voom_return_key = '<C-Return>'
+let g:voom_ft_modes = {'markdown': 'markdown', 'pandoc': 'markdown', 'python': 'python', 'tex': 'latex'}
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
