@@ -42,6 +42,7 @@ Bundle 'spolu/dwm.vim'
 Bundle 'Shougo/neocomplcache'
 Bundle 'tpope/vim-surround'
 Bundle 'istib/vifm.vim'
+Bundle 'benmills/vimux'
 
 " vim-scripts repos
 "Bundle 'L9'
