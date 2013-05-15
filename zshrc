@@ -39,8 +39,9 @@ vcs_prompt(){
 }
 export RPROMPT='$(vcs_prompt)'
 Host="%m"
-export PS1="%F{blue}$Host%F{yellow} %~%f "
-export PS2="$(print '%{\e[0;34m%}>%{\e[0m%}')"
+Folder="%f"
+export PS1="%F{blue}$Host%F{yellow} %~$Folder "
+export PS2="%F{blue}>%F{white}"
 
 # Vars used later on by Zsh
 export EDITOR="vim"
