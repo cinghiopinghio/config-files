@@ -35,6 +35,13 @@ alias tail1='tail -1'
 alias du='du -h'
 alias du1='du --max-depth=1 -h'
 alias du0='du --max-depth=0 -h'
+alias df='df -h'
+
+# GIT + SVN
+
+svnhist(){
+  svn log | awk 'BEGIN{OFS="\t";ls=80}{if($2=="|"){printf("%4s\033[1;31m%12s\033[0m: (%s)  ",$1,$3,$5)}else{if($0!=""){if (length($0)<ls){add=""}else{add="..."};print substr($0,1,ls) add}}}' | sed -e '/------/d'
+}
 
 #zipped files
 ztail(){
