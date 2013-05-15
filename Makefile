@@ -6,7 +6,7 @@ main:
 	  make install\n\n\
 	Warning: this will delete all your config files\n"
 
-install: ivim ibash igit iscreen ilatex izsh iscripts
+install: ivim ibash igit iscreen ilatex izsh iscripts ivifm
 
 ivim:
 	@$(call linking,${Local}/vimrc,~/.vimrc)
@@ -32,6 +32,10 @@ izsh:
 iscripts:
 	@$(call linking,${Local}/scripts,~/.local/bin/scripts)
 
+ivifm:
+	@$(call linking,${Local}/vifm/vifmrc,~/.vifm/vifmrc)
+	@$(call linking,${Local}/vifm/colorschemes,~/.vifm/colorschemes)
+
 help: main
 
 
@@ -42,13 +46,13 @@ linking=\
 	already=$$(readlink $$out);\
 	if [[ $${already} != $${in} ]];\
 	then\
-	  if [[ $${already} == "" ]];\
+	  if [[ -e $${out} ]];\
 	  then\
-	    ln -s $$in $$out;\
-	  else\
 	    read -p "Remove $${out}? (y/n)";\
 	    [ "$${REPLY}" != "y" ] && exit 0;\
 	    rm -rf $$out;\
+	    ln -s $$in $$out;\
+	  else\
 	    ln -s $$in $$out;\
 	  fi;\
 	  echo "Installed";\
