@@ -198,7 +198,7 @@ nmap <leader><leader><leader> :source ~/.vimrc<cr>
 
 " svn commands
 command! -b -nargs=0 SvnUp :!svn up
-command! -b -nargs=+ SvnCi :!svn ci -m \'<q-args>\'
+command! -b -nargs=+ SvnCi :!svn ci -m <q-args>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VOOM
