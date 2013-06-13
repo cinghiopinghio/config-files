@@ -1,0 +1,5 @@
+alias tmp='cd /tmp'
+alias config='cd ~/codes/config-files/'
+
+# vim: set ft=sh:
+# vim: set fdm=indent:
