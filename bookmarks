@@ -1,5 +1,6 @@
 alias tmp='cd /tmp'
 alias config='cd ~/codes/config-files/'
+alias mypy='cd ~/codes/mypy'
 
 # vim: set ft=sh:
 # vim: set fdm=indent:

@@ -2,7 +2,7 @@
 setlocal foldmethod=indent autoindent smartindent
 setlocal foldnestmax=2
 
-map <leader>ll :!python %<CR>
+map <buffer> <localleader>ll :!python %<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VOom

@@ -1,2 +1,2 @@
 
-map <leader>ll :!gnuplot %<CR>
+map <buffer> <localleader>ll :!gnuplot %<CR>
