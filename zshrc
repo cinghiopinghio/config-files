@@ -102,6 +102,7 @@ alias -s png=feh
 alias -s jpg=feh
 alias -s gif=feg
 alias -s pdf=zathura
+alias -s eps=evince
 alias -s sxw=abiword
 alias -s doc=abiword
 alias -s gz='tar -xzvf'
