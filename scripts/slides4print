@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # this take slides in ps and put them (2 per page) in a a4paper in pdf format
 # usage:
 #     slides4print infile.ps [outfile.pdf]
