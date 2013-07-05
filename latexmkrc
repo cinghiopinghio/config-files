@@ -1,7 +1,7 @@
 ## latexmk options
 
 
-#output is pdf through dvipdf
+#output is pdf through ps2pdf
 $pdf_mode=2;
 
 #use this pdf previewer

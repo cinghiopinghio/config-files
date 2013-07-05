@@ -53,6 +53,10 @@ path+=($(find -L ~/.local/bin -type d))
 ##################################################################
 # Stuff to make my life easier
 
+# comand-extension completione
+#zstyle ':completion::*:(vi|vim):*' file-patterns '*.tex' '*' '*'
+#zstyle ':completion::*:(vi|vim):*' file-patterns '*~*.(aux|dvi|log|idx|pdf|rel|out)' '*'
+
 # allow approximate
 zstyle ':completion:*' completer _complete _match _approximate
 zstyle ':completion:*:match:*' original only
@@ -68,7 +72,6 @@ zstyle ':completion:*:cd:*' ignore-parents parent pwd
 # ssh completion
 hosts=$(awk '/^Host / {printf("%s ",$2)}' ~/.ssh/config 2>/dev/null)
 zstyle ':completion:*:hosts' hosts $hosts
-
 
 ##################################################################
 # Key bindings
@@ -105,6 +108,7 @@ alias -s pdf=zathura
 alias -s eps=evince
 alias -s sxw=abiword
 alias -s doc=abiword
+alias -s tex=$EDITOR
 alias -s gz='tar -xzvf'
 alias -s bz2='tar -xjvf'
 alias -s java=$EDITOR
