@@ -176,7 +176,7 @@ if has("wildmenu")
     set wildignore+=.DS_Store,.git,.hg,.svn
     set wildignore+=*~,*.swp,*.tmp
     set wildmenu
-    set wildmode=longest,list
+    set wildmode=longest,full
 endif
 
 au FilterWritePre * if &diff | set wrap | endif

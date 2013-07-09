@@ -25,7 +25,7 @@ hi StatusLineNC guifg=#666666 guibg=grey10 guisp=NONE gui=NONE ctermfg=241 cterm
 "hi CTagsMember -- no settings --
 hi NonText guifg=#333333 guibg=NONE guisp=NONE gui=NONE ctermfg=236 ctermbg=NONE cterm=NONE
 "hi CTagsGlobalConstant -- no settings --
-hi DiffText guifg=NONE guibg=#cd0000 guisp=#cd0000 gui=bold ctermfg=NONE ctermbg=160 cterm=bold
+hi DiffText guifg=NONE guibg=#cd0000 guisp=#cd0000 gui=bold ctermfg=230 ctermbg=160 cterm=bold
 hi ErrorMsg guifg=#ffffff guibg=#cd0000 guisp=#cd0000 gui=NONE ctermfg=15 ctermbg=160 cterm=NONE
 hi Ignore guifg=#737373 guibg=NONE guisp=NONE gui=NONE ctermfg=243 ctermbg=NONE cterm=NONE
 hi Debug guifg=#a0522d guibg=NONE guisp=NONE gui=NONE ctermfg=137 ctermbg=NONE cterm=NONE
