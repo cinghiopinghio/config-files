@@ -26,7 +26,7 @@ Bundle 'gmarik/vundle'
 " original repos on github
 Bundle 'tpope/vim-fugitive'
 Bundle 'vim-scripts/VOoM'
-Bundle 'mbbill/VimExplorer'
+"Bundle 'mbbill/VimExplorer'
 Bundle 'majutsushi/tagbar'
 Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdtree'
