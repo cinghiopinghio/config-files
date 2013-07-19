@@ -3,7 +3,7 @@ setlocal formatoptions+=w
 "imap <buffer> ]] <Plug>LatexCloseCurEnv
 nmap <buffer> <F5> <Plug>LatexChangeEnv
 vmap <buffer> <F7> <Plug>LatexWrapSelection
-vmap <buffer> <S-F7> <Plug>LatexWrapSelectionEnv
+vmap <buffer> <S-F7> <Plug>LatexEnvWrapSelection
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -16,11 +16,9 @@ vmap <buffer> <S-F7> <Plug>LatexWrapSelectionEnv
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "let g:LatexBox_latexmk_options="-pdf"
 let g:LatexBox_output_type="pdf"
-let g:LatexBox_show_warnings=1
-let g:LatexBox_ignore_warnings =['Underfull', 'Overfull', 'specifier changed to', 'A float is stuck']
+let g:LatexBox_show_warnings=2
 let g:LatexBox_latexmk_options = "-pdfps"
 let g:LatexBox_viewer = 'zathura'
-let g:LatexBox_Folding=1
 let g:LatexBox_fold_preamble=1 
 let g:LatexBox_fold_envs=1 
 

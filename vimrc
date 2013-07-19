@@ -240,9 +240,14 @@ nnoremap <leader>t :TagbarToggle<CR>
 " use the mouse in vim:
 set mouse=vi
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Latex-Box
 """"""""""""""""""""""""""""""
 " this is here because otherwise it won't be read by the plugin
 let g:LatexBox_Folding=1
+let g:LatexBox_ignore_warnings =['Underfull', 'Overfull',
+			\'specifier changed to', 'A float is stuck',
+			\'Label(s) may have changed']
 """"""""""""""""""""""""""""""
 
 
