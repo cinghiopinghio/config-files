@@ -36,6 +36,7 @@ iscripts:
 ivifm:
 	@$(call linking,${Local}/vifm/vifmrc,~/.vifm/vifmrc)
 	@$(call linking,${Local}/vifm/colorschemes,~/.vifm/colorschemes)
+	@$(call linking,${Local}/vifm/colors,~/.vifm/colors)
 
 ignuplot:
 	@$(call linking,${Local}/gnuplotting,~/.gnuplotting)
