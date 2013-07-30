@@ -1,8 +1,12 @@
 [alias]
-    ci = commit -a
-    co = checkout
-    st = status
-    hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+  ci = commit -a
+  cim = commit -a -m
+  co = checkout
+  st = status
+  br = branch
+  unstage = reset HEAD --
+  last = log -1 HEAD
+  hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 [core]
     editor = vim
 	excludesfile = ~/.gitignore
