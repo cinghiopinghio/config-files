@@ -73,6 +73,11 @@ zstyle ':completion:*:cd:*' ignore-parents parent pwd
 hosts=$(awk '/^Host / {printf("%s ",$2)}' ~/.ssh/config 2>/dev/null)
 zstyle ':completion:*:hosts' hosts $hosts
 
+autoload -U url-quote-magic
+zle -N self-insert url-quote-magic
+zstyle -e :urlglobber url-other-schema \
+'[[ $words[1] == scp ]] && reply=("*") || reply=(http https ftp)'
+
 ##################################################################
 # Key bindings
 # http://mundy.yazzy.org/unix/zsh.php
