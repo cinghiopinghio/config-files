@@ -66,6 +66,7 @@ export SVN_EDITOR=/usr/bin/vim
 export EDITOR=/usr/bin/vim
 # add to PATH .local/bin and subdirectories
 export PATH=$PATH:$(find -L ~/.local/bin -type d | tr '\n' ':' | sed 's/:$//')
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 
 
 #save display variable in .env_var
