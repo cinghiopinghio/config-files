@@ -43,6 +43,7 @@ Bundle 'spolu/dwm.vim'
 Bundle 'tpope/vim-surround'
 Bundle 'istib/vifm.vim'
 Bundle 'benmills/vimux'
+Bundle 'mattn/emmet-vim'
 
 " vim-scripts repos
 "Bundle 'L9'

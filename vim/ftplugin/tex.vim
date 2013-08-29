@@ -16,12 +16,12 @@ vmap <buffer> <S-F7> <Plug>LatexEnvWrapSelection
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:LatexBox_output_type="pdf"
 let g:LatexBox_show_warnings=2
-let g:LatexBox_latexmk_options = "-pdf"
+let g:LatexBox_latexmk_options = "-pdfps"
 let g:LatexBox_viewer = 'zathura'
 let g:LatexBox_fold_preamble=1 
 let g:LatexBox_fold_envs=1 
 let g:LatexBox_latexmk_async=0
-let g:LatexBox_latexmk_preview_continuously=1
+let g:LatexBox_latexmk_preview_continuously=0
 
 
 "let g:Tex_CompileRule_dvi = 'latex -interaction=nonstopmode $*'
