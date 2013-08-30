@@ -60,7 +60,7 @@ alias ipynb='ipython2 notebook --pylab inline'
 
 alias uruake='urxvt -geometry 128x29+100+0 -pe kuake &'
 
-alias dm='dmenu_run -nb "#602B00" -nf "#6df4f4" -sb "#FF0000" -b -p dmenu:'
+alias dm='dmenu_run -i -nb "#666" -nf "#6ff" -sb "#c22" -fn "-*-dejavu sans mono-medium-r-normal--*-100-*-*-*-*-iso10646-1" -p dmenu:'
 
 ##################
 # bash functions #
@@ -79,7 +79,7 @@ cleantex(){
     echo "Folder already clean, bye."
     exit 0
   else
-    echo $RMFILES
+     $RMFILES
     read -p 'Do you want me to swip out those files??? [Y/n]'
     [ "$REPLY" == "y" ] && rm $RMFILES || echo "OK, bye!"
   fi
