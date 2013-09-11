@@ -258,3 +258,11 @@ let g:LatexBox_ignore_warnings =['Underfull', 'Overfull',
 
 let g:dwm_map_keys=1
 let g:dwm_master_pane_width="66%"
+" Show syntax highlighting groups for word under cursor
+nmap <C-S-P> :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
