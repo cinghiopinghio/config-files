@@ -44,6 +44,9 @@ Bundle 'tpope/vim-surround'
 Bundle 'istib/vifm.vim'
 Bundle 'benmills/vimux'
 Bundle 'mattn/emmet-vim'
+Bundle 'Shougo/unite.vim'
+Bundle 'Shougo/unite-outline'
+
 
 " vim-scripts repos
 "Bundle 'L9'

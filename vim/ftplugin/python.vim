@@ -1,5 +1,6 @@
 
 setlocal foldmethod=indent autoindent smartindent
+setlocal shiftwidth=4 softtabstop=4
 setlocal foldnestmax=2
 
 map <buffer> <localleader>ll :!python %<CR>
