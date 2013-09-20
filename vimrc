@@ -39,13 +39,14 @@ Bundle 'vim-pandoc/vim-pandoc'
 Bundle 'SirVer/ultisnips'
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
 Bundle 'spolu/dwm.vim'
-"Bundle 'Shougo/neocomplcache'
 Bundle 'tpope/vim-surround'
 Bundle 'istib/vifm.vim'
 Bundle 'benmills/vimux'
 Bundle 'mattn/emmet-vim'
+"Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/unite-outline'
+Bundle 'maciakl/vim-neatstatus'
 
 
 " vim-scripts repos
