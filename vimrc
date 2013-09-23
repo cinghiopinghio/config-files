@@ -30,13 +30,14 @@ Bundle 'vim-scripts/VOoM'
 Bundle 'majutsushi/tagbar'
 Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdtree'
-Bundle 'vim-scripts/Conque-Shell'
-Bundle 'vim-pandoc/vim-pandoc'
+"Bundle 'vim-scripts/Conque-Shell'
+"Bundle 'vim-pandoc/vim-pandoc'
 "Bundle 'honza/snipmate-snippets'
 "Bundle 'tomtom/tlib_vim'
 "Bundle 'MarcWeber/vim-addon-mw-utils'
 "Bundle 'garbas/vim-snipmate'
-Bundle 'SirVer/ultisnips'
+Bundle 'MarcWeber/ultisnips'
+Bundle 'honza/vim-snippets'
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
 Bundle 'spolu/dwm.vim'
 Bundle 'tpope/vim-surround'
@@ -214,6 +215,9 @@ nmap <leader><leader><leader> :source ~/.vimrc<cr>
 command! -b -nargs=0 SvnUp :!svn up
 command! -b -nargs=+ SvnCi :!svn ci -m <q-args>
 
+"Open files
+nmap <leader>uf :Unite file buffer<cr>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VOOM
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -262,7 +266,10 @@ let g:LatexBox_ignore_warnings =['Underfull', 'Overfull',
 
 let g:dwm_map_keys=1
 let g:dwm_master_pane_width="66%"
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Show syntax highlighting groups for word under cursor
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <C-S-P> :call <SID>SynStack()<CR>
 function! <SID>SynStack()
   if !exists("*synstack")
@@ -270,3 +277,4 @@ function! <SID>SynStack()
   endif
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
+
