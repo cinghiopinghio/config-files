@@ -47,6 +47,7 @@ Bundle 'mattn/emmet-vim'
 "Bundle 'Shougo/neocomplcache'
 Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/unite-outline'
+Bundle 'Shougo/vimproc.vim'
 Bundle 'maciakl/vim-neatstatus'
 
 
@@ -216,7 +217,10 @@ command! -b -nargs=0 SvnUp :!svn up
 command! -b -nargs=+ SvnCi :!svn ci -m <q-args>
 
 "Open files
-nmap <leader>uf :Unite file buffer<cr>
+nmap <leader>uf :Unite -no-split file buffer<cr>
+nmap <leader>ub :Unite -no-split buffer<cr>
+nmap <leader>ur :Unite -no-split file_mru<cr>
+nmap <leader>uo :Unite -vertical outline<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VOOM
