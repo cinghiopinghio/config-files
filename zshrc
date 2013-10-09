@@ -136,10 +136,15 @@ if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
     zle -N zle-line-init
     zle -N zle-line-finish
 
+# nice java fonts
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 
 fi
 
+# print the current directory in the terminal title
+function precmd() {
+    print -Pn "\e]2;..%2d\a"
+}
 ##################################################################
 # My aliases
 

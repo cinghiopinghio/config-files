@@ -41,6 +41,10 @@ alias du1='du --max-depth=1 -h'
 alias du0='du --max-depth=0 -h'
 alias df='df -h'
 
+if [[ -e /usr/bin/mutt-patched ]]; then
+  alias mutt=mutt-patched
+fi
+
 # GIT + SVN
 
 svnhist(){

@@ -24,31 +24,41 @@ Bundle 'gmarik/vundle'
 " My Bundles here:
 "
 " original repos on github
+" git
 Bundle 'tpope/vim-fugitive'
+" outliner
 Bundle 'vim-scripts/VOoM'
-"Bundle 'mbbill/VimExplorer'
 Bundle 'majutsushi/tagbar'
+" syntax checker
 Bundle 'scrooloose/syntastic'
+" folder navigation
 Bundle 'scrooloose/nerdtree'
-"Bundle 'vim-scripts/Conque-Shell'
-"Bundle 'vim-pandoc/vim-pandoc'
+Bundle 'istib/vifm.vim'
+" snippets
 "Bundle 'honza/snipmate-snippets'
-"Bundle 'tomtom/tlib_vim'
-"Bundle 'MarcWeber/vim-addon-mw-utils'
 "Bundle 'garbas/vim-snipmate'
 Bundle 'MarcWeber/ultisnips'
 Bundle 'honza/vim-snippets'
+" LaTeX
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
+" window splits control
 Bundle 'spolu/dwm.vim'
+" parenthesis change
 Bundle 'tpope/vim-surround'
-Bundle 'istib/vifm.vim'
 Bundle 'benmills/vimux'
+"HTML
 Bundle 'mattn/emmet-vim'
-"Bundle 'Shougo/neocomplcache'
+Bundle 'othree/html5.vim'
+" unite
 Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/unite-outline'
 Bundle 'Shougo/vimproc.vim'
+" statusbar
 Bundle 'maciakl/vim-neatstatus'
+" vertical alignement
+Bundle 'vim-scripts/Align'
+"Bundle 'Shougo/neocomplcache'
+
 
 
 " vim-scripts repos
@@ -203,10 +213,10 @@ nnoremap <C-up> :resize -5<cr>
 nnoremap <C-right> :vertical resize +5<cr>
 
 " move through wrapped lines
-imap <silent> <Down> <C-o>gj
-imap <silent> <Up> <C-o>gk
-nmap <silent> <Down> gj
-nmap <silent> <Up> gk
+"imap <silent> <Down> <C-o>gj
+"imap <silent> <Up> <C-o>gk
+"nmap <silent> <Down> gj
+"nmap <silent> <Up> gk
 " prova
 
 " reload vimrc
