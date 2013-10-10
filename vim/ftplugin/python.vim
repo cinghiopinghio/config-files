@@ -1,9 +1,9 @@
 
-setlocal foldmethod=indent autoindent smartindent
+setlocal foldmethod=indent autoindent
 setlocal shiftwidth=4 softtabstop=4
 setlocal foldnestmax=2
 
-map <buffer> <localleader>ll :!python %<CR>
+map <buffer> <localleader>ll :!python2.7 %<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VOom
