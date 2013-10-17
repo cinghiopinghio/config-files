@@ -6,7 +6,7 @@ main:
 	  make install\n\n\
 	Warning: this will delete all your config files\n"
 
-install: ivim ibash igit iscreen ilatex izsh iscripts ivifm ignuplot isvn
+install: ivim ibash igit iscreen ilatex izsh iscripts ivifm ignuplot isvn imutt
 
 ivim:
 	@$(call linking,${Local}/vimrc,~/.vimrc)
@@ -45,6 +45,11 @@ ignuplot:
 
 isvn:
 	@$(call linking,${Local}/svnconfig,~/.subversion/config)
+
+imutt:
+	@$(call linking,${Local}/mutt,~/.config/mutt)
+	@$(call linking,${Local}/muttrc,~/.muttrc)
+
 
 
 help: main

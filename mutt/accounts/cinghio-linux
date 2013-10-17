@@ -1,0 +1,23 @@
+set realname = "Mauro"
+set from = "cinghio@linuxmail.org"
+
+# Alternate email addresses.
+alternates = "cinghiopinghio@atheist.com"
+
+# Other special folders.
+set mbox      = "+cinghio-linux/archive"
+set postponed = "+cinghio-linux/drafts"
+
+# Use a signature
+#set signature="~/.signature"
+
+set sendmail    = "msmtp -a cinghio-linux"
+set record = "+cinghio-linux/Sent"
+
+macro index D \
+    "<save-message>+cinghio-linux/Trash<enter>" \
+    "move message to the trash"
+
+macro index S \
+    "<save-message>+cinghio-linux/Spam<enter>"  \
+        "mark message as spam"

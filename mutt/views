@@ -1,0 +1,75 @@
+
+# Index View Options ---------------------------------
+set date_format = "%d-%m-%Y"
+set index_format = "[%Z]  %D  %-20.20F %2M %s"
+set folder_format = "%2C %t %N %F %2l %-8.8u %-8.8g %d %f"
+set sort = threads                         # like gmail
+set sort_aux = reverse-last-date-received  # like gmail
+set uncollapse_jump                        # don't collapse on an unread message
+set sort_re                                # thread based on regex
+set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+
+auto_view text/html      # view html email with nicer viewer
+set xterm_set_titles = yes  # let mutt set your xterm title
+set xterm_title = "Mutt%?n? [%n NEW] ?%?b?*?" # Mutt [n NEW]*
+
+# Status Bar -----------------------------------------
+set status_chars  = " *%A"
+set status_format = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+
+# Header Options -------------------------------------
+ignore *                                # ignore all headers
+unignore from: to: cc: date: subject:   # show only these
+unhdr_order *                           # some distros order things by default
+hdr_order from: to: cc: date: subject:  # and in this order
+
+# Mailboxes to show in the sidebar.-------------------
+
+mailboxes +mauro-gmail/Bifi \
+          +mauro-gmail/INBOX \
+          +mauro-gmail/Isi \
+          +mauro-gmail/Isi.12spins \
+          +mauro-gmail/Isi.barcelona \
+          +mauro-gmail/Isi.canada \
+          +mauro-gmail/Isi.communities \
+          +mauro-gmail/Isi.cpf-kyoto \
+          +mauro-gmail/Isi.fqxi \
+          +mauro-gmail/Isi.prx-degree \
+          +mauro-gmail/Isi.qatar \
+          +mauro-gmail/Isi.scirep-chirality \
+          +mauro-gmail/Isi.scirep-chirality.blog \
+          +mauro-gmail/sent \
+          +cinghio-linux/INBOX \
+          +cinghio-linux/INBOX.vankiglia \
+          +cinghio-linux/INBOX.vankiglia.castagno-2013 \
+          +cinghio-linux/Sent \
+          +cinghiopinghio-yahoo/Inbox \
+          +cinghiopinghio-yahoo/Sent \
+          +cinghiopinghio-yahoo/Y!\ Conversations \
+
+# Pager View Options ---------------------------------
+set pager_index_lines = 10 # number of index lines to show
+set pager_context = 3      # number of context lines to show
+set pager_stop             # don't go to next message automatically
+set menu_scroll            # scroll in menus
+set tilde                  # show tildes like in vim
+unset markers              # no ugly plus signs
+
+set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
+#alternative_order text/plain text/enriched text/html
+
+# Compose View Options -------------------------------
+set envelope_from                    # which from?
+set sig_dashes                       # dashes before sig
+set edit_headers                     # show headers when composing
+set fast_reply                       # skip to compose when replying
+set askcc                            # ask for CC:
+set fcc_attach                       # save attachments with the body
+unset mime_forward                   # forward attachments as part of body
+set forward_format = "Fwd: %s"       # format of subject when forwarding
+set forward_decode                   # decode when forwarding
+set attribution = "On %d, %n wrote:" # format of quoting header
+set reply_to                         # reply to Reply to: field
+set reverse_name                     # reply as whomever it was to
+set include                          # include message in replies
+set forward_quote                    # include message in forwards

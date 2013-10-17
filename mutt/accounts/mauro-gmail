@@ -1,0 +1,23 @@
+set realname = "Mauro Faccin"
+set from = "mauro.fccn@gmail.com"
+
+# Alternate email addresses.
+alternates = "mauro.faccin@isi.it"
+
+# Other special folders.
+set mbox      = "+mauro-gmail/archive"
+set postponed = "+mauro-gmail/drafts"
+
+# Use a signature
+#set signature="~/.signature"
+
+set sendmail    = "msmtp -a mauro-gmail"
+unset record # Gmail already save it to Sent
+
+macro index D \
+    "<save-message>+mauro-gmail/Trash<enter>" \
+    "move message to the trash"
+
+macro index S \
+    "<save-message>+mauro-gmail/Spam<enter>"  \
+        "mark message as spam"

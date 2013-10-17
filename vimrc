@@ -60,6 +60,7 @@ Bundle 'vim-scripts/Align'
 Bundle 'Raimondi/delimitMate'
 
 Bundle 'cinghiopinghio/abook-vim'
+Bundle 'caio/querycommandcomplete.vim'
 "Bundle 'Shougo/neocomplcache'
 
 
@@ -234,7 +235,6 @@ nmap <leader>uf :Unite -no-split file buffer<cr>
 nmap <leader>ub :Unite -no-split buffer<cr>
 nmap <leader>ur :Unite -no-split file_mru<cr>
 nmap <leader>uo :Unite -vertical outline<cr>
-inoremap <c-a> <ESC>:Unite abook<CR>
 let g:unite_enable_start_insert = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

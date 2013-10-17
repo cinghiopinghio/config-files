@@ -1,0 +1,20 @@
+set realname = "Mauro"
+set from = "cinghiopinghio-yahoo"
+
+# Other special folders.
+set mbox      = "+cinghiopinghio-yahoo/archive"
+set postponed = "+cinghiopinghio-yahoo/drafts"
+
+# Use a signature
+#set signature="~/.signature"
+
+set sendmail    = "msmtp -a cinghiopinghio-yahoo"
+set record = "+cinghiopinghio-yahoo/Sent"
+
+macro index D \
+    "<save-message>+cinghiopinghio-yahoo/Trash<enter>" \
+    "move message to the trash"
+
+macro index S \
+    "<save-message>+cinghiopinghio-yahoo/Spam<enter>"  \
+        "mark message as spam"

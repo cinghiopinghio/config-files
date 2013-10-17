@@ -1,0 +1,15 @@
+# MS Word documents
+application/msword  ; libreoffice %s                       ; copiousoutput        ; 
+
+# Images
+image/*             ; feh %s                               ; copiousoutput        ; 
+
+# PDFs
+application/pdf     ; zathura %s                           ; copiousoutput        ; 
+
+# HTML
+#text/html           ; firefox %s
+#text/html           ; elinks -dump %s                      ; nametemplate=%s.html ; copiousoutput ; 
+text/html           ; lynx -display_charset=utf-8 -dump %s ; nametemplate=%s.html ; copiousoutput
+audio/*             ; mplayer %s                           ; copiousoutput
+video/*             ; mplayer %s                           ; copiousoutput

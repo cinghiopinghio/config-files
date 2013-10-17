@@ -1,0 +1,6 @@
+
+# Sidebar Patch --------------------------------------
+set sidebar_delim                 = '|' # sidebar delimiter
+set sidebar_visible               = yes # show sidebar
+set sidebar_width                 = 40  # sidebar char width
+color sidebar_new yellow default        # maildirs with new masseges color

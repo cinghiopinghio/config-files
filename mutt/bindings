@@ -1,0 +1,56 @@
+
+# Index Key Bindings ---------------------------------
+bind index gg       first-entry
+bind index G        last-entry
+
+bind index R        group-reply
+bind index <tab>    sync-mailbox
+bind index <space>  collapse-thread
+
+# Ctrl-R to mark all as read
+macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
+
+# Sync email
+macro index O "<shell-escape>offlineimap<enter>"           "run offlineimap to sync all mail"
+macro index o "<shell-escape>offlineimap -qf INBOX<enter>" "run offlineimap to sync inbox"
+
+# Saner copy/move dialogs
+macro index C "<copy-message>?<toggle-mailboxes>" "copy a message to a mailbox"
+macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
+
+
+# Sidebar Navigation ---------------------------------
+macro index b '<enter-command>toggle sidebar_visible<enter><refresh>'
+macro pager b '<enter-command>toggle sidebar_visible<enter><redraw-screen>'
+bind index,pager \ej  sidebar-next
+bind index,pager \ek  sidebar-prev
+bind index,pager \eo  sidebar-open
+
+# Pager Key Bindings ---------------------------------
+bind pager k  previous-line
+bind pager j  next-line
+bind pager gg top
+bind pager G  bottom
+
+bind pager R  group-reply
+
+# View attachments properly.
+bind attach <return> view-mailcap
+
+# NotMuch macros
+macro index <F8> \
+                 "<enter-command>unset wait_key<enter><shell-escape>notmuch-mutt -r --prompt search<enter><change-folder-readonly>~/.cache/notmuch/mutt/results<enter>" \
+                 "notmuch: search mail"
+macro index <F9> \
+                 "<enter-command>unset wait_key<enter><pipe-message>notmuch-mutt -r thread<enter><change-folder-readonly>~/.cache/notmuch/mutt/results<enter><enter-command>set wait_key<enter>" \
+                 "notmuch: reconstruct thread"
+macro index <F6> \
+                 "<enter-command>unset wait_key<enter><pipe-message>notmuch-mutt tag -- -inbox<enter>" \
+                 "notmuch: remove message from inbox"
+
+# View HTML in $BROWSER (i.e. firefox)
+macro attach 'V' "<pipe-entry>cat >/tmp/mail.html && $BROWSER /tmp/mail.html<enter>"
+
+# Address book ABOOK binding
+macro index,pager  A "<pipe-message>abook --add-email<return>" "Add this sender to Abook"
+bind editor        <Tab> complete-query
