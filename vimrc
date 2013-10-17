@@ -57,6 +57,9 @@ Bundle 'Shougo/vimproc.vim'
 Bundle 'maciakl/vim-neatstatus'
 " vertical alignement
 Bundle 'vim-scripts/Align'
+Bundle 'Raimondi/delimitMate'
+
+Bundle 'cinghiopinghio/abook-vim'
 "Bundle 'Shougo/neocomplcache'
 
 
@@ -203,7 +206,7 @@ au FilterWritePre * if &diff | set wrap | endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " open file under cursor on a tab
-map gf :tabe<cfile><CR>
+"map gf :tabe<cfile><CR>
 "toggle buffers
 nnoremap <F5> :buffers<CR>:buffer<Space> 
 " resize current buffer by +/- 5 
@@ -231,6 +234,8 @@ nmap <leader>uf :Unite -no-split file buffer<cr>
 nmap <leader>ub :Unite -no-split buffer<cr>
 nmap <leader>ur :Unite -no-split file_mru<cr>
 nmap <leader>uo :Unite -vertical outline<cr>
+inoremap <c-a> <ESC>:Unite abook<CR>
+let g:unite_enable_start_insert = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VOOM
@@ -291,4 +296,3 @@ function! <SID>SynStack()
   endif
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
-
