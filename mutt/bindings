@@ -34,6 +34,13 @@ bind pager G  bottom
 
 bind pager R  group-reply
 
+# Folder Navigation
+macro index,pager,attach g* "<change-folder>+mauro-gmail/INBOX<enter>" "Go to inbox"
+macro index,pager,attach gb "<change-folder>+mauro-gmail/Bifi<enter>" "Go to all mail"
+macro index,pager,attach gi "<change-folder>+mauro-gmail/Isi<enter>" "Go to all mail"
+macro index,pager,attach gl "<change-folder>+cinghio-linux/INBOX<enter>" "Go to all mail"
+macro index,pager,attach gv "<change-folder>+cinghio-linux/INBOX.vankiglia<enter>" "Go to all mail"
+macro index,pager,attach gy "<change-folder>+cinghiopinghio-yahoo/INBOX<enter>" "Go to all mail"
 # View attachments properly.
 bind attach <return> view-mailcap
 
@@ -47,6 +54,8 @@ macro index <F9> \
 macro index <F6> \
                  "<enter-command>unset wait_key<enter><pipe-message>notmuch-mutt tag -- -inbox<enter>" \
                  "notmuch: remove message from inbox"
+# 'A' shows all messages again (supersedes default <alias> binding)
+macro index a "<limit>all\n" "show all messages (undo limit)"
 
 # View HTML in $BROWSER (i.e. firefox)
 macro attach 'V' "<pipe-entry>cat >/tmp/mail.html && $BROWSER /tmp/mail.html<enter>"

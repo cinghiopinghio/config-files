@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Get input file
+INFILE=$1
+INEXT=$(echo $INFILE | awk -F\. '{print $NF}')
+
+# Get file type
+MIME=$2
+
+# Copy to temporary directory
+TMPFILE=$(mktemp --tmpdir attch-XXXXX.$INEXT)
+cp $INFILE $TMPFILE
+
+# Open tmp file
+case "$MIME" in
+  "pdf")
+    zathura $TMPFILE > /dev/null 2>1 &
+    ;;
+  "image")
+    feh $TMPFILE > /dev/null 2>1 &
+    ;;
+esac
+
+sleep 3

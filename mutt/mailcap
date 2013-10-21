@@ -2,10 +2,10 @@
 application/msword  ; libreoffice %s                       ; copiousoutput        ; 
 
 # Images
-image/*             ; feh %s                               ; copiousoutput        ; 
+image/*         ; open_attachment %s image ; copiousoutput ; 
 
 # PDFs
-application/pdf     ; zathura %s                           ; copiousoutput        ; 
+application/pdf ; open_attachment %s pdf   ; copiousoutput ; 
 
 # HTML
 #text/html           ; firefox %s
