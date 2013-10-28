@@ -11,7 +11,8 @@ bind index <space>  collapse-thread
 macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
 
 # Sync email
-macro index O "<shell-escape>offlineimap<enter>"           "run offlineimap to sync all mail"
+#macro index O "<shell-escape>offlineimap<enter>"           "run offlineimap to sync all mail"
+macro index O "<shell-escape>get_mail &<enter>"           "run offlineimap to sync all mail"
 macro index o "<shell-escape>offlineimap -qf INBOX<enter>" "run offlineimap to sync inbox"
 
 # Saner copy/move dialogs
@@ -35,12 +36,12 @@ bind pager G  bottom
 bind pager R  group-reply
 
 # Folder Navigation
-macro index,pager,attach g* "<change-folder>+mauro-gmail/INBOX<enter>" "Go to inbox"
+macro index,pager,attach g, "<change-folder>+mauro-gmail/INBOX<enter>" "Go to inbox"
 macro index,pager,attach gb "<change-folder>+mauro-gmail/Bifi<enter>" "Go to all mail"
 macro index,pager,attach gi "<change-folder>+mauro-gmail/Isi<enter>" "Go to all mail"
 macro index,pager,attach gl "<change-folder>+cinghio-linux/INBOX<enter>" "Go to all mail"
 macro index,pager,attach gv "<change-folder>+cinghio-linux/INBOX.vankiglia<enter>" "Go to all mail"
-macro index,pager,attach gy "<change-folder>+cinghiopinghio-yahoo/INBOX<enter>" "Go to all mail"
+macro index,pager,attach gy "<change-folder>+cinghiopinghio-yahoo/Inbox<enter>" "Go to all mail"
 # View attachments properly.
 bind attach <return> view-mailcap
 

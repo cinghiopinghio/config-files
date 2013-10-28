@@ -5,7 +5,6 @@ offlineimap -l $TMP_FILE 2>/dev/null
 
 new_mails=$(grep -s Copy $TMP_FILE | wc -l)
 del_mails=$(grep -s Deleting $TMP_FILE | wc -l)
-rm -f i$TMP_FILE
 
 message=""
 if [[ ! $new_mails == "0" ]];
@@ -19,7 +18,7 @@ fi
 
 if [[ ! $message == "" ]];
 then
-  notify-send "$message"
+  notify-send  -i "pass" --hint=int:transient:1 "MAIL:" "$message"
 fi
 
-notmuch new
+notmuch new >/dev/null 2>1

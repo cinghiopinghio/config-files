@@ -1,15 +1,16 @@
 # MS Word documents
-application/msword  ; libreoffice %s                       ; copiousoutput        ; 
+application/msword       ; libreoffice %s                       ; copiousoutput
+application/vnd.ms-excel ; libreoffice %s                       ; copiousoutput
 
 # Images
-image/*         ; open_attachment %s image ; copiousoutput ; 
+image/*                  ; open_attachment %s image             ; copiousoutput        ; 
 
 # PDFs
-application/pdf ; open_attachment %s pdf   ; copiousoutput ; 
+application/pdf          ; open_attachment %s pdf               ; copiousoutput        ; 
 
 # HTML
-#text/html           ; firefox %s
-#text/html           ; elinks -dump %s                      ; nametemplate=%s.html ; copiousoutput ; 
-text/html           ; lynx -display_charset=utf-8 -dump %s ; nametemplate=%s.html ; copiousoutput
-audio/*             ; mplayer %s                           ; copiousoutput
-video/*             ; mplayer %s                           ; copiousoutput
+#text/html               ; firefox %s
+#text/html               ; elinks -dump %s                      ; nametemplate=%s.html ; copiousoutput ; 
+text/html                ; lynx -display_charset=utf-8 -dump %s ; nametemplate=%s.html ; copiousoutput
+audio/*                  ; mplayer %s                           ; copiousoutput
+video/*                  ; mplayer %s                           ; copiousoutput
