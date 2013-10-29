@@ -1,5 +1,7 @@
 #!/usr/bin/env zsh
 
+echo 'Getting Mails (offlineimap)'
+
 TMP_FILE=$(mktemp --tmpdir offlineimap-XXXXXX.tmp)
 offlineimap -l $TMP_FILE 2>/dev/null
 

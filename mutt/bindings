@@ -59,7 +59,7 @@ macro index <F6> \
 macro index a "<limit>all\n" "show all messages (undo limit)"
 
 # View HTML in $BROWSER (i.e. firefox)
-macro attach 'V' "<pipe-entry>cat >/tmp/mail.html && $BROWSER /tmp/mail.html<enter>"
+macro attach 'V' "<pipe-entry>cat >/tmp/mail.html && firefox /tmp/mail.html<enter>"
 
 # Address book ABOOK binding
 macro index,pager  A "<pipe-message>abook --add-email<return>" "Add this sender to Abook"

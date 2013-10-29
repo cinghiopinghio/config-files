@@ -2,7 +2,7 @@
 
 INPUT=$1
 OPENWITH=zathura
-MPOPTIONS="-P A4 -F Helvetica -2 -p -"
+MPOPTIONS="-P A4 -F Helvetica -p -"
 TMPPDF=$(mktemp --tmpdir mutt-XXXXXX.pdf)
 
 muttprint $MPOPTIONS | ps2pdf - $TMPPDF >/dev/null
