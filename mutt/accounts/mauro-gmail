@@ -1,5 +1,5 @@
 set realname = "Mauro Faccin"
-set from = "mauro.fccn@gmail.com"
+set from = `pyastore -i mauro-gmail`
 
 # Alternate email addresses.
 alternates = "mauro.faccin@isi.it"
@@ -11,7 +11,7 @@ set postponed = "+mauro-gmail/drafts"
 # Use a signature
 #set signature="~/.signature"
 
-set sendmail    = "msmtp -a mauro-gmail"
+set sendmail    = `pyastore -m mauro-gmail`
 unset record # Gmail already save it to Sent
 
 macro index D \

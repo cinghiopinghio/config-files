@@ -1,18 +1,15 @@
 set realname = "Mauro"
-set from = "cinghio@linuxmail.org"
-
-# Alternate email addresses.
-alternates = "cinghiopinghio@atheist.com"
+set from = `pyastore -i cinghio-linux`
 
 # Other special folders.
 set mbox      = "+cinghio-linux/archive"
 set postponed = "+cinghio-linux/drafts"
+set record    = "+cinghio-linux/Sent"
 
 # Use a signature
 #set signature="~/.signature"
 
-set sendmail    = "msmtp -a cinghio-linux"
-set record = "+cinghio-linux/Sent"
+set sendmail = `pyastore -m cinghio-linux`
 
 macro index D \
     "<save-message>+cinghio-linux/Trash<enter>" \

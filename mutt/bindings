@@ -64,3 +64,6 @@ macro attach 'V' "<pipe-entry>cat >/tmp/mail.html && firefox /tmp/mail.html<ente
 # Address book ABOOK binding
 macro index,pager  A "<pipe-message>abook --add-email<return>" "Add this sender to Abook"
 bind editor        <Tab> complete-query
+
+# send message to clipboard
+macro pager x '<pipe-message>xclip<return>' "Send message to clipboard"

@@ -8,8 +8,9 @@ set mailcap_path     = ~/.config/mutt/mailcap      # entries for filetypes
 set tmpdir           = /tmp                        # where to keep temp files
 set signature        = ~/.config/mutt/sig          # my signature file
 
-subscribe gap_comitatoquartierevanchiglia@googlegroups.com 
-subscribe comitatovanchiglia_operativi@googlegroups.com
+lists gap_comitatoquartierevanchiglia comitatovanchiglia_operativi 
+#subscribe gap_comitatoquartierevanchiglia@googlegroups.com 
+#subscribe comitatovanchiglia_operativi@googlegroups.com
 # Basic Options --------------------------------------
 set wait_key = no        # shut up, mutt
 set mbox_type = Maildir  # mailbox type

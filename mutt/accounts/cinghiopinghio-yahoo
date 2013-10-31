@@ -1,15 +1,15 @@
 set realname = "Mauro"
-set from = "cinghiopinghio-yahoo"
+set from = `pyastore -i cinghiopinghio-yahoo`
 
 # Other special folders.
 set mbox      = "+cinghiopinghio-yahoo/archive"
 set postponed = "+cinghiopinghio-yahoo/drafts"
+set record    = "+cinghiopinghio-yahoo/Sent"
 
 # Use a signature
 #set signature="~/.signature"
 
-set sendmail    = "msmtp -a cinghiopinghio-yahoo"
-set record = "+cinghiopinghio-yahoo/Sent"
+set sendmail    = `pyastore -m cinghiopinghio-yahoo`
 
 macro index D \
     "<save-message>+cinghiopinghio-yahoo/Trash<enter>" \
