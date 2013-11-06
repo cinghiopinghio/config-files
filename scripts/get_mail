@@ -3,24 +3,25 @@
 #echo 'Getting Mails (offlineimap)'
 
 TMP_FILE=$(mktemp --tmpdir offlineimap-XXXXXX.tmp)
-offlineimap -l $TMP_FILE 2>/dev/null
+offlineimap -o -u quiet >/dev/null 2>/dev/null
+notmuch new >$TMP_FILE 2>/dev/null
 
-new_mails=$(grep -s Copy $TMP_FILE | wc -l)
-del_mails=$(grep -s Deleting $TMP_FILE | wc -l)
+message=$(sed -e 's/\. /.\n/g' $TMP_FILE | grep -e "Added\|Removed" | awk '{print $1,$2}' | sed -e 's/\\n/ /g')
 
-message=""
-if [[ ! $new_mails == "0" ]];
-then
-  message="$message  New mails: $new_mails"
-fi
-if [[ ! $del_mails == "0" ]];
-then
-  message="$message Removed mails: $del_mails"
-fi
+#del_mails=$(sed -e 's/\. /.\n/g' $TMP_FILE | grep -s Removed | awk '{print $2}')
+#
+#message=""
+#if [[ ! $new_mails == "" ]];
+#then
+#  message="$message  New mails: $new_mails"
+#fi
+#if [[ ! $del_mails == "" ]];
+#then
+#  message="$message Removed mails: $del_mails"
+#fi
 
 if [[ ! $message == "" ]];
 then
   notify-send  -i "pass" --hint=int:transient:1 "MAIL:" "$message"
 fi
 
-notmuch new >/dev/null 2>1
