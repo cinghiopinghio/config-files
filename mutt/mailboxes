@@ -1,6 +1,18 @@
-mailboxes +mauro-gmail/Bifi \
-          +mauro-gmail/drafts \
-          +mauro-gmail/flagged \
+mailboxes +cinghio-linux/Drafts \
+          +cinghio-linux/INBOX \
+          +cinghio-linux/INBOX.troscos \
+          +cinghio-linux/INBOX.vankiglia \
+          +cinghio-linux/INBOX.vankiglia.castagno-2013 \
+          +cinghio-linux/OUTBOX \
+          +cinghio-linux/SavedIMs \
+          +cinghio-linux/Sent \
+          +cinghiopinghio-yahoo/Bulk Mail \
+          +cinghiopinghio-yahoo/Draft \
+          +cinghiopinghio-yahoo/Drafts \
+          +cinghiopinghio-yahoo/Inbox \
+          +cinghiopinghio-yahoo/Sent \
+          +cinghiopinghio-yahoo/Y! Conversations \
+          +mauro-gmail/Bifi \
           +mauro-gmail/INBOX \
           +mauro-gmail/Isi \
           +mauro-gmail/Isi.12spins \
@@ -15,20 +27,8 @@ mailboxes +mauro-gmail/Bifi \
           +mauro-gmail/Isi.scirep-chirality.blog \
           +mauro-gmail/Personal \
           +mauro-gmail/Receipts \
-          +mauro-gmail/sent \
           +mauro-gmail/Travel \
           +mauro-gmail/Work \
-          +cinghiopinghio-yahoo/Bulk Mail \
-          +cinghiopinghio-yahoo/Draft \
-          +cinghiopinghio-yahoo/Drafts \
-          +cinghiopinghio-yahoo/Inbox \
-          +cinghiopinghio-yahoo/Sent \
-          +cinghiopinghio-yahoo/Y! Conversations \
-          +cinghio-linux/Drafts \
-          +cinghio-linux/INBOX \
-          +cinghio-linux/INBOX.troscos \
-          +cinghio-linux/INBOX.vankiglia \
-          +cinghio-linux/INBOX.vankiglia.castagno-2013 \
-          +cinghio-linux/OUTBOX \
-          +cinghio-linux/SavedIMs \
-          +cinghio-linux/Sent
+          +mauro-gmail/drafts \
+          +mauro-gmail/flagged \
+          +mauro-gmail/sent

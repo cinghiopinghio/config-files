@@ -49,7 +49,8 @@ export BROWSER="firefox"
 export XTERM="aterm +sb -geometry 80x29 -fg black -bg lightgoldenrodyellow -fn -xos4-terminus-medium-*-normal-*-14-*-*-*-*-*-iso8859-15"
 
 # add to PATH .local/bin and subdirectories
-#path+=($(find -L ~/.local/bin -type d))
+path+=($(find -L ~/.local/bin -type d))
+
 ##################################################################
 # Stuff to make my life easier
 
