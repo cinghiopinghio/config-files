@@ -1,4 +1,4 @@
-SHELL := /bin/bash
+SHELL:=/bin/bash
 Local=${PWD}
 
 main: 

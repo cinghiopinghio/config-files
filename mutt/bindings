@@ -36,12 +36,12 @@ bind pager G  bottom
 bind pager R  group-reply
 
 # Folder Navigation
-macro index,pager,attach g, "<change-folder>+mauro-gmail/INBOX<enter>" "Go to inbox"
-macro index,pager,attach gb "<change-folder>+mauro-gmail/Bifi<enter>" "Go to all mail"
-macro index,pager,attach gi "<change-folder>+mauro-gmail/Isi<enter>" "Go to all mail"
-macro index,pager,attach gl "<change-folder>+cinghio-linux/INBOX<enter>" "Go to all mail"
-macro index,pager,attach gv "<change-folder>+cinghio-linux/INBOX.vankiglia<enter>" "Go to all mail"
-macro index,pager,attach gy "<change-folder>+cinghiopinghio-yahoo/Inbox<enter>" "Go to all mail"
+macro index,pager,attach g, "<change-folder>+gmail/INBOX<enter>" "Go to inbox"
+macro index,pager,attach gb "<change-folder>+gmail/Bifi<enter>" "Go to all mail"
+macro index,pager,attach gi "<change-folder>+gmail/Isi<enter>" "Go to all mail"
+macro index,pager,attach gl "<change-folder>+linux/INBOX<enter>" "Go to all mail"
+macro index,pager,attach gv "<change-folder>+linux/INBOX.vankiglia<enter>" "Go to all mail"
+macro index,pager,attach gy "<change-folder>+yahoo/Inbox<enter>" "Go to all mail"
 # View attachments properly.
 bind attach <return> view-mailcap
 

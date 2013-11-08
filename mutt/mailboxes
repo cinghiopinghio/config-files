@@ -1,34 +1,34 @@
-mailboxes +mauro-gmail/Bifi \
-          +mauro-gmail/drafts \
-          +mauro-gmail/flagged \
-          +mauro-gmail/INBOX \
-          +mauro-gmail/Isi \
-          +mauro-gmail/Isi.12spins \
-          +mauro-gmail/Isi.barcelona \
-          +mauro-gmail/Isi.canada \
-          +mauro-gmail/Isi.communities \
-          +mauro-gmail/Isi.cpf-kyoto \
-          +mauro-gmail/Isi.fqxi \
-          +mauro-gmail/Isi.prx-degree \
-          +mauro-gmail/Isi.qatar \
-          +mauro-gmail/Isi.scirep-chirality \
-          +mauro-gmail/Isi.scirep-chirality.blog \
-          +mauro-gmail/Personal \
-          +mauro-gmail/Receipts \
-          +mauro-gmail/sent \
-          +mauro-gmail/Travel \
-          +mauro-gmail/Work \
-          +cinghiopinghio-yahoo/Bulk Mail \
-          +cinghiopinghio-yahoo/Draft \
-          +cinghiopinghio-yahoo/Drafts \
-          +cinghiopinghio-yahoo/Inbox \
-          +cinghiopinghio-yahoo/Sent \
-          +cinghiopinghio-yahoo/Y! Conversations \
-          +cinghio-linux/Drafts \
-          +cinghio-linux/INBOX \
-          +cinghio-linux/INBOX.troscos \
-          +cinghio-linux/INBOX.vankiglia \
-          +cinghio-linux/INBOX.vankiglia.castagno-2013 \
-          +cinghio-linux/OUTBOX \
-          +cinghio-linux/SavedIMs \
-          +cinghio-linux/Sent
+mailboxes +linux/Drafts \
+          +linux/INBOX \
+          +linux/INBOX.troscos \
+          +linux/INBOX.vankiglia \
+          +linux/INBOX.vankiglia.castagno-2013 \
+          +linux/OUTBOX \
+          +linux/SavedIMs \
+          +linux/Sent \
+          +yahoo/Bulk Mail \
+          +yahoo/Draft \
+          +yahoo/Drafts \
+          +yahoo/Inbox \
+          +yahoo/Sent \
+          +yahoo/Y! Conversations \
+          +gmail/Bifi \
+          +gmail/drafts \
+          +gmail/flagged \
+          +gmail/INBOX \
+          +gmail/Isi \
+          +gmail/Isi.12spins \
+          +gmail/Isi.barcelona \
+          +gmail/Isi.canada \
+          +gmail/Isi.communities \
+          +gmail/Isi.cpf-kyoto \
+          +gmail/Isi.fqxi \
+          +gmail/Isi.prx-degree \
+          +gmail/Isi.qatar \
+          +gmail/Isi.scirep-chirality \
+          +gmail/Isi.scirep-chirality.blog \
+          +gmail/Personal \
+          +gmail/Receipts \
+          +gmail/sent \
+          +gmail/Travel \
+          +gmail/Work

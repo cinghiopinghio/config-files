@@ -1,0 +1,20 @@
+set realname = "Mauro"
+set from = `pyastore -f linux`
+
+# Other special folders.
+set mbox      = "+linux/archive"
+set postponed = "+linux/drafts"
+set record    = "+linux/Sent"
+
+# Use a signature
+#set signature="~/.signature"
+
+set sendmail = `pyastore -m linux`
+
+macro index D \
+    "<save-message>+linux/Trash<enter>" \
+    "move message to the trash"
+
+macro index S \
+    "<save-message>+linux/Spam<enter>"  \
+        "mark message as spam"

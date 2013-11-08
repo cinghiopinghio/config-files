@@ -6,7 +6,7 @@ TMP_FILE=$(mktemp --tmpdir offlineimap-XXXXXX.tmp)
 offlineimap -o -u quiet >/dev/null 2>/dev/null
 notmuch new >$TMP_FILE 2>/dev/null
 
-message=$(sed -e 's/\. /.\n/g' $TMP_FILE | grep -e "Added\|Removed" | awk '{print $1,$2}' | sed -e 's/\\n/ /g')
+message=$(sed -e 's/\. /.\n/g' $TMP_FILE | grep -e "Added\|Removed" | awk 'BEGIN{ORS=". "}{print $1,$2}')
 
 #del_mails=$(sed -e 's/\. /.\n/g' $TMP_FILE | grep -s Removed | awk '{print $2}')
 #
@@ -22,6 +22,6 @@ message=$(sed -e 's/\. /.\n/g' $TMP_FILE | grep -e "Added\|Removed" | awk '{prin
 
 if [[ ! $message == "" ]];
 then
-  notify-send  -i "pass" --hint=int:transient:1 "MAIL:" "$message"
+  notify-send  -i "mutt" -t 1000 --hint=int:transient:1 "MAIL:" "$message"
 fi
 

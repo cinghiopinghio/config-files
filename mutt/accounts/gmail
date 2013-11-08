@@ -1,0 +1,20 @@
+set realname = "Mauro Faccin"
+set from = `pyastore -f gmail`
+
+# Other special folders.
+set mbox      = "+gmail/archive"
+set postponed = "+gmail/drafts"
+
+# Use a signature
+#set signature="~/.signature"
+
+set sendmail    = `pyastore -m gmail`
+unset record # Gmail already save it to Sent
+
+macro index D \
+    "<save-message>+gmail/Trash<enter>" \
+    "move message to the trash"
+
+macro index S \
+    "<save-message>+gmail/Spam<enter>"  \
+        "mark message as spam"

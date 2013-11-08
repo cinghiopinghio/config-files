@@ -1,10 +1,10 @@
 " vimrc file.
 
-set nocompatible               " be iMproved
-filetype off                   " required!
 """"""""""""""""""""
 " call Vundle
 """"""""""""""""""""
+set nocompatible               " be iMproved
+filetype off                   " required!
 "{{{
 let iCanHazVundle=1 
 let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
@@ -83,7 +83,6 @@ endif
 """end"vundle"stuff"
 """"""""""""""""""""
 "}}}
-
 filetype plugin indent on     " required!
 
 
@@ -103,8 +102,6 @@ if has("autocmd")
 
   " set wrap in vimdiff
   au FilterWritePre * if &diff | set wrap | endif
-  " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=75
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
@@ -123,6 +120,9 @@ else
 
 endif " has("autocmd")}}}
 
+
+"SET
+"{{{
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
 set history=50                 " keep 50 lines of command line history
 set ruler                      " show the cursor position all the time
@@ -138,7 +138,7 @@ set clipboard+=unnamed  " yank and copy to X clipboard
 "wrapping
 set wrap
 set linebreak
-set textwidth=78
+set textwidth=75
 set background=dark
 colorscheme xinghio
 set makeprg=make
@@ -154,6 +154,10 @@ if has("wildmenu")
     set wildmenu
     set wildmode=longest,full
 endif
+"}}}
+
+"MAP
+"{{{"
 " open file under cursor on a tab
 "map gf :tabe<cfile><CR>
 "toggle buffers
@@ -186,17 +190,23 @@ map <F6> :setlocal spell! spelllang=en_us<CR>
 
 " reload vimrc
 nmap <leader><leader><leader> :source ~/.vimrc<cr>
+"}}}"
 
+"COMMANDS
+"{{{"
 " svn commands
 command! -b -nargs=0 SvnUp :!svn up
 command! -b -nargs=+ SvnCi :!svn ci -m <q-args>
+"}}}"
 
-"Open files
+"UNITE
+"{{{
 nmap <leader>uf :Unite -no-split file buffer<cr>
 nmap <leader>ub :Unite -no-split buffer<cr>
 nmap <leader>ur :Unite -no-split file_mru<cr>
 nmap <leader>uo :Unite -vertical outline<cr>
 let g:unite_enable_start_insert = 1
+"}}}"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VOOM
