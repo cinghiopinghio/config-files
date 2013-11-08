@@ -29,13 +29,13 @@ set thorough_search      # strip headers and eval mimes before searching
 # Account Settings -----------------------------------
 
 # Default inbox.
-set spoolfile = "+mauro-gmail/INBOX"
-source ~/.config/mutt/accounts/mauro-gmail
+set spoolfile = "+gmail/INBOX"
+source ~/.config/mutt/accounts/gmail
 
 # change profile while changing maildirs
-folder-hook mauro-gmail/*          source ~/.config/mutt/accounts/mauro-gmail
-folder-hook cinghio-linux/*        source ~/.config/mutt/accounts/cinghio-linux
-folder-hook cinghiopinghio-yahoo/* source ~/.config/mutt/accounts/cinghiopinghio-yahoo
+folder-hook gmail/* source ~/.config/mutt/accounts/gmail
+folder-hook linux/* source ~/.config/mutt/accounts/linux
+folder-hook yahoo/* source ~/.config/mutt/accounts/yahoo
 folder-hook . "exec collapse-all"  # collapse all threads when entering a maildir
 
 

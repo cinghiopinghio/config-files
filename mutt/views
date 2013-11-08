@@ -25,27 +25,27 @@ hdr_order from: to: cc: date: subject:  # and in this order
 
 # Mailboxes to show in the sidebar.-------------------
 
-mailboxes +mauro-gmail/Bifi \
-          +mauro-gmail/INBOX \
-          +mauro-gmail/Isi \
-          +mauro-gmail/Isi.12spins \
-          +mauro-gmail/Isi.barcelona \
-          +mauro-gmail/Isi.canada \
-          +mauro-gmail/Isi.communities \
-          +mauro-gmail/Isi.cpf-kyoto \
-          +mauro-gmail/Isi.fqxi \
-          +mauro-gmail/Isi.prx-degree \
-          +mauro-gmail/Isi.qatar \
-          +mauro-gmail/Isi.scirep-chirality \
-          +mauro-gmail/Isi.scirep-chirality.blog \
-          +mauro-gmail/sent \
-          +cinghio-linux/INBOX \
-          +cinghio-linux/INBOX.vankiglia \
-          +cinghio-linux/INBOX.vankiglia.castagno-2013 \
-          +cinghio-linux/Sent \
-          +cinghiopinghio-yahoo/Inbox \
-          +cinghiopinghio-yahoo/Sent \
-          +cinghiopinghio-yahoo/Y!\ Conversations \
+mailboxes +gmail/Bifi \
+          +gmail/INBOX \
+          +gmail/Isi \
+          +gmail/Isi.12spins \
+          +gmail/Isi.barcelona \
+          +gmail/Isi.canada \
+          +gmail/Isi.communities \
+          +gmail/Isi.cpf-kyoto \
+          +gmail/Isi.fqxi \
+          +gmail/Isi.prx-degree \
+          +gmail/Isi.qatar \
+          +gmail/Isi.scirep-chirality \
+          +gmail/Isi.scirep-chirality.blog \
+          +gmail/sent \
+          +linux/INBOX \
+          +linux/INBOX.vankiglia \
+          +linux/INBOX.vankiglia.castagno-2013 \
+          +linux/Sent \
+          +yahoo/Inbox \
+          +yahoo/Sent \
+          +yahoo/Y!\ Conversations \
 
 # Pager View Options ---------------------------------
 set pager_index_lines = 10 # number of index lines to show
