@@ -1,0 +1,143 @@
+#####################################################3
+
+[general]
+#ui = quiet
+ui = ttyui
+maxsyncaccounts = 1
+accounts = gmail,linux,yahoo
+pythonfile = ~/codes/mail_utils/utils.py
+fsync = False
+
+#####################################################3
+
+[Account gmail]
+localrepository = gmail-Local
+remoterepository = gmail-Remote
+status_backend = sqlite
+# Minutes between syncs
+#autorefresh = 3
+# Number of quick-syncs between autorefreshes. Quick-syncs do not update if the
+# only changes were to IMAP flags
+#quick = 10
+
+
+[Repository gmail-Local]
+type = Maildir
+localfolders = ~/.mail/gmail
+nametrans = nt_local
+
+[Repository gmail-Remote]
+maxconnections = 1
+type = Gmail
+remoteusereval = get_user('gmail')
+remotepasseval = get_password('gmail')
+realdelete = True
+nametrans = nt_remote
+folderfilter = exclude(['trash', '[Gmail]/Trash', '[Gmail]/Spam','[Gmail]/Important','[Gmail]/All Mail'])
+# Necessary as of OfflineIMAP 6.5.4
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+# Instead of closing the connection once a sync is complete, offlineimap will
+# send empty data to the server to hold the connection open. A value of 60
+# attempts to hold the connection for a minute between syncs (both quick and
+# autorefresh).This setting has no effect if autorefresh and holdconnectionopen
+# are not both set.
+#keepalive = 60
+# OfflineIMAP normally closes IMAP server connections between refreshes if
+# the global option autorefresh is specified.  If you wish it to keep the
+# connection open, set this to true. This setting has no effect if autorefresh
+# is not set.
+#holdconnectionopen = yes
+
+#####################################################3
+
+[Account linux]
+localrepository = linux-Local
+remoterepository = linux-Remote
+status_backend = sqlite
+# Minutes between syncs
+#autorefresh = 5
+# Number of quick-syncs between autorefreshes. Quick-syncs do not update if the
+# only changes were to IMAP flags
+#quick = 10
+
+
+[Repository linux-Local]
+type = Maildir
+localfolders = ~/.mail/linux
+#nametrans = nt_local
+
+[Repository linux-Remote]
+maxconnections = 1
+type = IMAP
+remotehost = imap.mail.com
+realdelete = True
+remoteusereval = get_user('linux')
+remotepasseval = get_password('linux')
+#nametrans = nt_remote
+folderfilter = exclude(['trash', 'Trash', 'Spam','Important'])
+# Necessary as of OfflineIMAP 6.5.4
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+# Instead of closing the connection once a sync is complete, offlineimap will
+# send empty data to the server to hold the connection open. A value of 60
+# attempts to hold the connection for a minute between syncs (both quick and
+# autorefresh).This setting has no effect if autorefresh and holdconnectionopen
+# are not both set.
+#keepalive = 60
+# OfflineIMAP normally closes IMAP server connections between refreshes if
+# the global option autorefresh is specified.  If you wish it to keep the
+# connection open, set this to true. This setting has no effect if autorefresh
+# is not set.
+#holdconnectionopen = yes
+
+
+#####################################################3
+
+[Account yahoo]
+localrepository = yahoo-Local
+remoterepository = yahoo-Remote
+status_backend = sqlite
+# Minutes between syncs
+#autorefresh = 5
+# Number of quick-syncs between autorefreshes. Quick-syncs do not update if the
+# only changes were to IMAP flags
+#quick = 10
+
+
+[Repository yahoo-Local]
+type = Maildir
+localfolders = ~/.mail/yahoo
+#nametrans = nt_local
+
+[Repository yahoo-Remote]
+maxconnections = 1
+type = IMAP
+remoteusereval = get_user('yahoo')
+remotepasseval = get_password('yahoo')
+remotehost = imap.mail.yahoo.com
+realdelete = True
+ssl = yes
+#nametrans = nt_remote
+folderfilter = exclude(['trash', 'Trash', 'Spam','Important'])
+# Necessary as of OfflineIMAP 6.5.4
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+# Instead of closing the connection once a sync is complete, offlineimap will
+# send empty data to the server to hold the connection open. A value of 60
+# attempts to hold the connection for a minute between syncs (both quick and
+# autorefresh).This setting has no effect if autorefresh and holdconnectionopen
+# are not both set.
+#keepalive = 60
+# OfflineIMAP normally closes IMAP server connections between refreshes if
+# the global option autorefresh is specified.  If you wish it to keep the
+# connection open, set this to true. This setting has no effect if autorefresh
+# is not set.
+#holdconnectionopen = yes
+
+#####################################################3
+
+[mbnames]
+enabled = yes
+filename = ~/.config/mutt/mailboxes
+header = "mailboxes "
+peritem = +%(accountname)s/%(foldername)s
+sep = " \\\n          "
+footer = "\n"
