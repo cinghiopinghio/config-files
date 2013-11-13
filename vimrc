@@ -40,7 +40,7 @@ Bundle 'istib/vifm.vim'
 "Bundle 'garbas/vim-snipmate'
 "Bundle 'MarcWeber/ultisnips'
 Bundle 'SirVer/ultisnips'
-Bundle 'honza/vim-snippets'
+"Bundle 'honza/vim-snippets'
 " LaTeX
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
 " window splits control
@@ -274,3 +274,5 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 "}}}
+
+
