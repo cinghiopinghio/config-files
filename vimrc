@@ -38,7 +38,8 @@ Bundle 'istib/vifm.vim'
 " snippets
 "Bundle 'honza/snipmate-snippets'
 "Bundle 'garbas/vim-snipmate'
-Bundle 'MarcWeber/ultisnips'
+"Bundle 'MarcWeber/ultisnips'
+Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 " LaTeX
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
