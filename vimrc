@@ -40,6 +40,7 @@ Bundle 'istib/vifm.vim'
 "Bundle 'garbas/vim-snipmate'
 "Bundle 'MarcWeber/ultisnips'
 Bundle 'SirVer/ultisnips'
+Bundle 'ervandew/supertab'
 "Bundle 'honza/vim-snippets'
 " LaTeX
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
@@ -274,5 +275,13 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 "}}}
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" SuperTab 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{"
+" use OmniComplete function 
+let g:SuperTabDefaultCompletionType = "context"
+"}}}"
 
 

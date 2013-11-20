@@ -30,5 +30,7 @@ mailboxes +linux/Drafts \
           +gmail/Personal \
           +gmail/Receipts \
           +gmail/sent \
+          +gmail/Trash \
+          +gmail/trash \
           +gmail/Travel \
           +gmail/Work

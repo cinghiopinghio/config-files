@@ -12,9 +12,9 @@ set record    = "+linux/Sent"
 set sendmail = `pyastore -m linux`
 
 macro index D \
-    "<save-message>+linux/Trash<enter>" \
+    "<save-message>+linux/trash<enter>" \
     "move message to the trash"
 
 macro index S \
-    "<save-message>+linux/Spam<enter>"  \
+    "<save-message>+linux/spam<enter>"  \
         "mark message as spam"
