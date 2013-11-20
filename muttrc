@@ -55,7 +55,7 @@ source ~/.config/mutt/views
 # editor
 set editor           = "vim"                       # Use terminal Vim to compose email.
 # Address book: Abook
-set query_command= "pyabook --mutt-query '%s'"
+set query_command= "abook --mutt-query '%s'"
 # Print option
 #set print_command="muttprint -P A4 -F Helvetica -2 -p - | ps2pdf - /tmp/muttprint_xxx.pdf && zathura /tmp/muttprint_xxx.pdf" 
 set print_command="mail2pdf"
