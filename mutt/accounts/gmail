@@ -12,9 +12,9 @@ set sendmail    = `pyastore -m gmail`
 unset record # Gmail already save it to Sent
 
 macro index D \
-    "<save-message>+gmail/Trash<enter>" \
+    "<save-message>+gmail/trash<enter>" \
     "move message to the trash"
 
 macro index S \
-    "<save-message>+gmail/Spam<enter>"  \
+    "<save-message>+gmail/spam<enter>"  \
         "mark message as spam"

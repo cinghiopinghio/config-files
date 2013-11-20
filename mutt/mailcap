@@ -1,19 +1,59 @@
-# MS Word documents
-application/msword       ; libreoffice %s                       ; copiousoutput
-application/vnd.ms-excel ; libreoffice %s                       ; copiousoutput
+
+# Office  documents
+application/msword            ; open_attachment %s word
+
+application/x-msexcel         ; open_attachment %s spreadsheet
+application/ms-exc            ; open_attachment %s spreadsheet
+application/excel             ; open_attachment %s spreadsheet
+application/msexcel           ; open_attachment %s spreadsheet
+application/vnd.ms-exc        ; open_attachment %s spreadsheet
+application/vnd.ms-excel      ; open_attachment %s spreadsheet
 
 # Images
-image/*                  ; open_attachment %s image             ; copiousoutput        ; 
+image/*                       ; open_attachment %s image
 
 # PDFs
-application/pdf          ; open_attachment %s pdf               ; copiousoutput        ; 
+application/pdf               ; open_attachment %s pdf
 
 # Text
-#text/html               ; firefox %s
-#text/html               ; elinks -dump %s                      ; nametemplate=%s.html ; copiousoutput ; 
-text/html                ; lynx -display_charset=utf-8 -dump %s ; nametemplate=%s.html ; copiousoutput
-text/plain               ; less %s                              ; copiousoutput
+#text/html                    ; firefox %s
+#text/html                    ; elinks -dump %s                      ; nametemplate=%s.html ; copiousoutput ; 
+text/html                     ; lynx -display_charset=utf-8 -dump %s ; nametemplate=%s.html ; copiousoutput
+text/plain                    ; less %s                              ; copiousoutput
 
 # Media Files
-audio/*                  ; mplayer %s                           ; copiousoutput
-video/*                  ; mplayer %s                           ; copiousoutput
+audio/*                       ; mplayer %s
+video/*                       ; mplayer %s
+
+# Compressed
+application/zip               ; open_attachment %s zip
+application/x-zip             ; open_attachment %s zip
+application/gzip              ; open_attachment %s gzip
+application/x-gzip            ; open_attachment %s gzip
+application/gunzip            ; open_attachment %s gzip
+application/x-gunzip          ; open_attachment %s gzip
+application/tar               ; open_attachment %s tar
+application/x-tar             ; open_attachment %s tar
+application/tar-gz            ; open_attachment %s tar
+application/x-tar-gz          ; open_attachment %s tar
+#application/x-arj-compressed
+application/zip               ; unzip -l %s             ; copiousoutput
+application/x-zip             ; unzip -l %s             ; copiousoutput
+application/tar               ; tar tvf %s              ; copiousoutput
+application/x-tar             ; tar tvf %s              ; copiousoutput
+application/tar-gz            ; tar tvf %s              ; copiousoutput
+application/x-tar-gz          ; tar tvf %s              ; copiousoutput
+#application/pgp-signature
+#application/pgp
+#application/octet-stream 
+#application/ms-tnef
+#application/x-perl
+#application/x-sh
+#application/x-tcl
+#application/x-delphi-source
+#application/emacs-lisp
+#text/x-patch
+#text/x-vcard
+#text/x-script.elisp
+#text/x-lisp
+#text/x-diff

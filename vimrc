@@ -38,8 +38,10 @@ Bundle 'istib/vifm.vim'
 " snippets
 "Bundle 'honza/snipmate-snippets'
 "Bundle 'garbas/vim-snipmate'
-Bundle 'MarcWeber/ultisnips'
-Bundle 'honza/vim-snippets'
+"Bundle 'MarcWeber/ultisnips'
+Bundle 'SirVer/ultisnips'
+Bundle 'ervandew/supertab'
+"Bundle 'honza/vim-snippets'
 " LaTeX
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
 " window splits control
@@ -273,3 +275,13 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 "}}}
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" SuperTab 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{"
+" use OmniComplete function 
+let g:SuperTabDefaultCompletionType = "context"
+"}}}"
+
+

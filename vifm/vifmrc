@@ -113,6 +113,9 @@ filetype *.jpeg,*.jpg,*.png feh,geeqie,eog
 " :filetype extensions FUSE_MOUNT|some_mount_command using %SOURCE_FILE and %DESTINATION_DIR variables
 " %SOURCE_FILE and %DESTINATION_DIR are filled in by vifm at runtime.
 " A sample line might look like this:
+filev *.zip unzip -l %c
+filev *.tar,*.tar.gz tar tvf %c
+filev *.gzip gunzip -l %c
 " :filetype *.zip,*.jar,*.war,*.ear FUSE_MOUNT|fuse-zip %SOURCE_FILE %DESTINATION_DIR
 "
 " :filetype extensions FUSE_MOUNT2|some_mount_command using %PARAM and %DESTINATION_DIR variables
