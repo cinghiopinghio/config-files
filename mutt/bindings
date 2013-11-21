@@ -42,6 +42,11 @@ macro index,pager,attach gi "<change-folder>+gmail/Isi<enter>" "Go to all mail"
 macro index,pager,attach gl "<change-folder>+linux/INBOX<enter>" "Go to all mail"
 macro index,pager,attach gv "<change-folder>+linux/INBOX.vankiglia<enter>" "Go to all mail"
 macro index,pager,attach gy "<change-folder>+yahoo/Inbox<enter>" "Go to all mail"
+
+macro index,pager,attach mg "<change-folder>+gmail/INBOX<enter><mail>" "Go to inbox"
+macro index,pager,attach mi "<change-folder>+gmail/Isi<enter><mail>" "Go to all mail"
+macro index,pager,attach ml "<change-folder>+linux/INBOX<enter><mail>" "Go to all mail"
+macro index,pager,attach my "<change-folder>+yahoo/Inbox<enter><mail>" "Go to all mail"
 # View attachments properly.
 bind attach <return> view-mailcap
 
@@ -67,3 +72,6 @@ bind editor        <Tab> complete-query
 
 # send message to clipboard
 macro pager x '<pipe-message>xclip<return>' "Send message to clipboard"
+
+
+# vim: ft=muttrc
