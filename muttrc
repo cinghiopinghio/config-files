@@ -33,9 +33,10 @@ set spoolfile = "+gmail/INBOX"
 source ~/.config/mutt/accounts/gmail
 
 # change profile while changing maildirs
-folder-hook gmail/* source ~/.config/mutt/accounts/gmail
-folder-hook linux/* source ~/.config/mutt/accounts/linux
-folder-hook yahoo/* source ~/.config/mutt/accounts/yahoo
+folder-hook gmail/*     source ~/.config/mutt/accounts/gmail
+folder-hook gmail/Isi/* source ~/.config/mutt/accounts/isi
+folder-hook linux/*     source ~/.config/mutt/accounts/linux
+folder-hook yahoo/*     source ~/.config/mutt/accounts/yahoo
 folder-hook . "exec collapse-all"  # collapse all threads when entering a maildir
 
 
