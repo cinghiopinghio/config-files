@@ -50,6 +50,7 @@ imutt:
 	@$(call linking,${Local}/mutt,~/.config/mutt)
 	@$(call linking,${Local}/muttrc,~/.muttrc)
 	@$(call linking,${Local}/offlineimaprc,~/.offlineimaprc)
+	@$(call linking,${Local}/msmtprc,~/.msmtprc)
 
 
 

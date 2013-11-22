@@ -13,8 +13,9 @@ auto_view text/html \
           application/zip \
           application/tar \
           application/tar-gz
-set xterm_set_titles = yes  # let mutt set your xterm title
-set xterm_title = "Mutt%?n? [%n NEW] ?%?b?*?" # Mutt [n NEW]*
+#set xterm_set_titles = yes  # let mutt set your xterm title
+#set xterm_title = "Mutt%?n? [%n NEW] ?%?b?*?" # Mutt [n NEW]*
+set my_init=`/bin/echo -en "\033]0;-Mutt-\007" >/proc/$PPID/fd/1 `
 
 # Status Bar -----------------------------------------
 set status_chars  = " *%A"
