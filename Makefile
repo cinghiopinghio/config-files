@@ -51,6 +51,7 @@ imutt:
 	@$(call linking,${Local}/muttrc,~/.muttrc)
 	@$(call linking,${Local}/offlineimaprc,~/.offlineimaprc)
 	@$(call linking,${Local}/msmtprc,~/.msmtprc)
+	@$(call linking,${Local}/urlview,~/.urlview)
 
 
 
