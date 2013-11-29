@@ -36,17 +36,20 @@ bind pager G  bottom
 bind pager R  group-reply
 
 # Folder Navigation
-macro index,pager,attach g, "<change-folder>+gmail/INBOX<enter>" "Go to inbox"
-macro index,pager,attach gb "<change-folder>+gmail/Bifi<enter>" "Go to all mail"
-macro index,pager,attach gi "<change-folder>+gmail/Isi<enter>" "Go to all mail"
-macro index,pager,attach gl "<change-folder>+linux/INBOX<enter>" "Go to all mail"
-macro index,pager,attach gv "<change-folder>+linux/INBOX.vankiglia<enter>" "Go to all mail"
-macro index,pager,attach gy "<change-folder>+yahoo/Inbox<enter>" "Go to all mail"
+macro index,pager g, "<change-folder>+gmail/INBOX<enter>" "Go to inbox"
+macro index,pager gb "<change-folder>+gmail/Bifi<enter>" "Go to all mail"
+macro index,pager gi "<change-folder>+gmail/Isi<enter>" "Go to all mail"
+macro index,pager gl "<change-folder>+linux/INBOX<enter>" "Go to all mail"
+macro index,pager gv "<change-folder>+linux/INBOX.vankiglia<enter>" "Go to all mail"
+macro index,pager gy "<change-folder>+yahoo/Inbox<enter>" "Go to all mail"
 
-macro index,pager,attach mg "<change-folder>+gmail/INBOX<enter><mail>" "Go to inbox"
-macro index,pager,attach mi "<change-folder>+gmail/Isi<enter><mail>" "Go to all mail"
-macro index,pager,attach ml "<change-folder>+linux/INBOX<enter><mail>" "Go to all mail"
-macro index,pager,attach my "<change-folder>+yahoo/Inbox<enter><mail>" "Go to all mail"
+# Send Message with specific account
+# (move to specific folder befor sending to use the hooks)
+macro index,pager mg "<change-folder>+gmail/INBOX<enter><mail>" "Go to inbox"
+macro index,pager mi "<change-folder>+gmail/Isi<enter><mail>" "Go to all mail"
+macro index,pager ml "<change-folder>+linux/INBOX<enter><mail>" "Go to all mail"
+macro index,pager my "<change-folder>+yahoo/Inbox<enter><mail>" "Go to all mail"
+
 # View attachments properly.
 bind attach <return> view-mailcap
 

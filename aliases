@@ -33,6 +33,7 @@ VLESS=$(find /usr/share/vim -name 'less.sh')
 if [ ! -z $VLESS ]; then
   alias vless=$VLESS
 fi
+alias vimrc='vim ~/.vimrc'
 
 alias head1='head -1'
 alias tail1='tail -1'

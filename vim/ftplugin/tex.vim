@@ -1,10 +1,12 @@
-setlocal formatoptions+=w
+setlocal shiftwidth=2 softtabstop=2 expandtab smarttab
+"setlocal formatoptions+=w
 "imap <buffer> [[ \begin{
 "imap <buffer> ]] <Plug>LatexCloseCurEnv
 nmap <buffer> <F5> <Plug>LatexChangeEnv
 vmap <buffer> <F7> <Plug>LatexWrapSelection
 vmap <buffer> <S-F7> <Plug>LatexEnvWrapSelection
 
+imap <C-p> <C-O>gqip
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VOom

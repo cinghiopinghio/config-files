@@ -6,7 +6,7 @@
 set nocompatible               " be iMproved
 filetype off                   " required!
 "{{{
-let iCanHazVundle=1 
+let iCanHazVundle=1
 let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
 if !filereadable(vundle_readme)
     echo "Installing Vundle.."
@@ -19,7 +19,7 @@ set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " let Vundle manage Vundle
-" required! 
+" required!
 Bundle 'gmarik/vundle'
 
 " My Bundles here:
@@ -56,8 +56,11 @@ Bundle 'othree/html5.vim'
 Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/unite-outline'
 Bundle 'Shougo/vimproc.vim'
+" colors
+Bundle 'tomasr/molokai'
 " statusbar
-Bundle 'maciakl/vim-neatstatus'
+"Bundle 'maciakl/vim-neatstatus'
+Bundle 'bling/vim-airline'
 " vertical alignement
 Bundle 'vim-scripts/Align'
 Bundle 'Raimondi/delimitMate'
@@ -97,28 +100,28 @@ endif
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
-  "{{{
-  " Put these in an autocmd group, so that we can delete them easily.
-  augroup vimrcEx
-  au!
+"{{{
+" Put these in an autocmd group, so that we can delete them easily.
+augroup vimrcEx
+au!
 
-  " set wrap in vimdiff
-  au FilterWritePre * if &diff | set wrap | endif
+" set wrap in vimdiff
+au FilterWritePre * if &diff | set wrap | endif
 
-  " When editing a file, always jump to the last known cursor position.
-  " Don't do it when the position is invalid or when inside an event handler
-  " (happens when dropping a file on gvim).
-  " Also don't do it when the mark is in the first line, that is the default
-  " position when opening a file.
-  autocmd BufReadPost *
-    \ if line("'\"") > 1 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
-  augroup END
+" When editing a file, always jump to the last known cursor position.
+" Don't do it when the position is invalid or when inside an event handler
+" (happens when dropping a file on gvim).
+" Also don't do it when the mark is in the first line, that is the default
+" position when opening a file.
+autocmd BufReadPost *
+  \ if line("'\"") > 1 && line("'\"") <= line("$") |
+  \   exe "normal! g`\"" |
+  \ endif
+augroup END
 
 else
 
-  set autoindent		" always set autoindenting on
+set autoindent		" always set autoindenting on
 
 endif " has("autocmd")}}}
 
@@ -142,6 +145,7 @@ set wrap
 set linebreak
 set textwidth=75
 set background=dark
+"colorscheme molokai
 colorscheme xinghio
 set makeprg=make
 set grepprg=grep\ -nH\ $*
@@ -149,13 +153,15 @@ set pastetoggle=<F2>
 set showmode
 " Wildmenu
 if has("wildmenu")
-    set wildignore+=*.a,*.o
-    set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
-    set wildignore+=.DS_Store,.git,.hg,.svn
-    set wildignore+=*~,*.swp,*.tmp
-    set wildmenu
-    set wildmode=longest,full
+  set wildignore+=*.a,*.o
+  set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
+  set wildignore+=.DS_Store,.git,.hg,.svn
+  set wildignore+=*~,*.swp,*.tmp
+  set wildmenu
+  set wildmode=longest,full
 endif
+set ls=2  " show statusline always (airline)
+set ttimeoutlen=50 " fast exit from INSERT (airline)
 "}}}
 
 "MAP
@@ -163,8 +169,8 @@ endif
 " open file under cursor on a tab
 "map gf :tabe<cfile><CR>
 "toggle buffers
-nnoremap <F5> :buffers<CR>:buffer<Space> 
-" resize current buffer by +/- 5 
+nnoremap <F5> :buffers<CR>:buffer<Space>
+" resize current buffer by +/- 5
 nnoremap <C-left> :vertical resize -5<cr>
 nnoremap <C-down> :resize +5<cr>
 nnoremap <C-up> :resize -5<cr>
@@ -251,8 +257,8 @@ set mouse=vi
 " this is here because otherwise it won't be read by the plugin
 let g:LatexBox_Folding=1
 let g:LatexBox_ignore_warnings =['Underfull', 'Overfull',
-			\'specifier changed to', 'A float is stuck',
-			\'Label(s) may have changed']
+                          \'specifier changed to', 'A float is stuck',
+                          \'Label(s) may have changed']
 "}}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -277,11 +283,21 @@ endfunc
 "}}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" SuperTab 
+" SuperTab
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{"
-" use OmniComplete function 
+" use OmniComplete function
 let g:SuperTabDefaultCompletionType = "context"
 "}}}"
 
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" AirLine
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"{{{ " see the theme file for the color definition
+let g:airline_right_sep=''
+let g:airline_left_sep=''
+let g:airline#extensions#default#layout = [
+                  \ [ 'a', 'b', 'c'],
+                  \ [ 'x', 'y', 'z', 'warning']]
+let g:airline#extensions#whitespace#enabled = 0
+"}}}
