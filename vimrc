@@ -57,7 +57,7 @@ Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/unite-outline'
 Bundle 'Shougo/vimproc.vim'
 " colors
-Bundle 'tomasr/molokai'
+" Bundle 'tomasr/molokai'
 " statusbar
 "Bundle 'maciakl/vim-neatstatus'
 Bundle 'bling/vim-airline'
@@ -89,6 +89,9 @@ endif
 """"""""""""""""""""
 "}}}
 filetype plugin indent on     " required!
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+  \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+  \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 
 " Switch syntax highlighting on, when the terminal has colors
@@ -161,12 +164,12 @@ if has("wildmenu")
   set wildmode=longest,full
 endif
 set ls=2  " show statusline always (airline)
-set ttimeoutlen=50 " fast exit from INSERT (airline)
+set ttimeoutlen=50 " fast exit from INSERT (airlin
 "}}}
 
 "MAP
-"{{{"
-" open file under cursor on a tab
+"{{{
+""" open file under cursor on a tab
 "map gf :tabe<cfile><CR>
 "toggle buffers
 nnoremap <F5> :buffers<CR>:buffer<Space>
