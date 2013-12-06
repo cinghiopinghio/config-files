@@ -42,6 +42,7 @@ Bundle 'istib/vifm.vim'
 "Bundle 'MarcWeber/ultisnips'
 Bundle 'SirVer/ultisnips'
 Bundle 'ervandew/supertab'
+"Bundle 'Valloric/YouCompleteMe'
 "Bundle 'honza/vim-snippets'
 " LaTeX
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
@@ -59,6 +60,7 @@ Bundle 'Shougo/unite-outline'
 Bundle 'Shougo/vimproc.vim'
 " colors
 " Bundle 'tomasr/molokai'
+Bundle 'cinghiopinghio/xinghio-color.vim'
 " statusbar
 "Bundle 'maciakl/vim-neatstatus'
 Bundle 'bling/vim-airline'
@@ -90,10 +92,6 @@ endif
 """"""""""""""""""""
 "}}}
 filetype plugin indent on     " required!
-map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-  \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-  \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
@@ -201,7 +199,7 @@ map <F6> :setlocal spell! spelllang=en_us<CR>
 "nnoremap <F2> :set invpaste paste?<CR>
 
 " reload vimrc
-nmap <leader><leader><leader> :source ~/.vimrc<cr>
+nmap <leader><leader><leader> :so $MYVIMRC<cr>
 "}}}"
 
 "COMMANDS
@@ -213,10 +211,10 @@ command! -b -nargs=+ SvnCi :!svn ci -m <q-args>
 
 "UNITE
 "{{{
-nmap <leader>uf :Unite -no-split file buffer<cr>
-nmap <leader>ub :Unite -no-split buffer<cr>
-nmap <leader>ur :Unite -no-split file_mru<cr>
-nmap <leader>uo :Unite -vertical outline<cr>
+nmap <localleader>uf :Unite -no-split file buffer<cr>
+nmap <localleader>ub :Unite -no-split buffer<cr>
+nmap <localleader>ur :Unite -no-split file_mru<cr>
+nmap <localleader>uo :Unite -vertical outline<cr>
 let g:unite_enable_start_insert = 1
 "}}}"
 
@@ -224,7 +222,7 @@ let g:unite_enable_start_insert = 1
 " => VOOM
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
-nnoremap <leader>y :VoomToggle<CR>
+nnoremap <localleader>y :VoomToggle<CR>
 let g:voom_tab_key='<C-Tab>'
 let g:voom_return_key = '<C-Return>'
 let g:voom_ft_modes = {'markdown': 'markdown', 'pandoc': 'markdown', 'python': 'python', 'tex': 'latex'}
@@ -236,14 +234,14 @@ let g:voom_ft_modes = {'markdown': 'markdown', 'pandoc': 'markdown', 'python': '
 "{{{
 " this let start NERDTree if no file name is given
 "autocmd vimenter * if !argc() | NERDTree | endif
-noremap <leader>n :NERDTreeToggle<CR>
+noremap <localleader>n :NERDTreeToggle<CR>
 "}}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => TagBar
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
-nnoremap <leader>t :TagbarToggle<CR>
+nnoremap <localleader>t :TagbarToggle<CR>
 "}}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
