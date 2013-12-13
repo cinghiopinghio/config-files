@@ -41,9 +41,11 @@ Bundle 'istib/vifm.vim'
 "Bundle 'garbas/vim-snipmate'
 "Bundle 'MarcWeber/ultisnips'
 Bundle 'SirVer/ultisnips'
+"Bundle 'honza/vim-snippets'
+" AutoCompletion
 Bundle 'ervandew/supertab'
 "Bundle 'Valloric/YouCompleteMe'
-"Bundle 'honza/vim-snippets'
+"Bundle 'Shougo/neocomplete.vim'
 " LaTeX
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
 " window splits control
@@ -102,31 +104,27 @@ endif
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
-"{{{
-" Put these in an autocmd group, so that we can delete them easily.
-augroup vimrcEx
-au!
+  "{{{
+  " Put these in an autocmd group, so that we can delete them easily.
+  augroup vimrcEx
+  au!
 
-" set wrap in vimdiff
-au FilterWritePre * if &diff | set wrap | endif
+  " set wrap in vimdiff
+  au FilterWritePre * if &diff | set wrap | endif
 
-" When editing a file, always jump to the last known cursor position.
-" Don't do it when the position is invalid or when inside an event handler
-" (happens when dropping a file on gvim).
-" Also don't do it when the mark is in the first line, that is the default
-" position when opening a file.
-autocmd BufReadPost *
-  \ if line("'\"") > 1 && line("'\"") <= line("$") |
-  \   exe "normal! g`\"" |
-  \ endif
-augroup END
-
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it when the position is invalid or when inside an event handler
+  " (happens when dropping a file on gvim).
+  " Also don't do it when the mark is in the first line, that is the default
+  " position when opening a file.
+  autocmd BufReadPost *
+    \ if line("'\"") > 1 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
+  augroup END
 else
-
-set autoindent		" always set autoindenting on
-
+  set autoindent		" always set autoindenting on
 endif " has("autocmd")}}}
-
 
 "SET
 ""{{{
@@ -303,3 +301,6 @@ let g:airline#extensions#default#layout = [
                   \ [ 'x', 'y', 'z', 'warning']]
 let g:airline#extensions#whitespace#enabled = 0
 "}}}
+
+
+
