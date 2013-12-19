@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# use offlineimap to get emails
+offlineimap -o -u quiet >/dev/null 2>/dev/null
