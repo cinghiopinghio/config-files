@@ -41,8 +41,11 @@ Bundle 'istib/vifm.vim'
 "Bundle 'garbas/vim-snipmate'
 "Bundle 'MarcWeber/ultisnips'
 Bundle 'SirVer/ultisnips'
-Bundle 'ervandew/supertab'
 "Bundle 'honza/vim-snippets'
+" AutoCompletion
+Bundle 'ervandew/supertab'
+"Bundle 'Valloric/YouCompleteMe'
+"Bundle 'Shougo/neocomplete.vim'
 " LaTeX
 Bundle 'LaTeX-Box-Team/LaTeX-Box'
 " window splits control
@@ -58,7 +61,8 @@ Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/unite-outline'
 Bundle 'Shougo/vimproc.vim'
 " colors
-Bundle 'tomasr/molokai'
+" Bundle 'tomasr/molokai'
+Bundle 'cinghiopinghio/xinghio-color.vim'
 " statusbar
 "Bundle 'maciakl/vim-neatstatus'
 Bundle 'bling/vim-airline'
@@ -92,7 +96,6 @@ endif
 "}}}
 filetype plugin indent on     " required!
 
-
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
 if &t_Co > 2 || has("gui_running")
@@ -102,31 +105,27 @@ endif
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
-"{{{
-" Put these in an autocmd group, so that we can delete them easily.
-augroup vimrcEx
-au!
+  "{{{
+  " Put these in an autocmd group, so that we can delete them easily.
+  augroup vimrcEx
+  au!
 
-" set wrap in vimdiff
-au FilterWritePre * if &diff | set wrap | endif
+  " set wrap in vimdiff
+  au FilterWritePre * if &diff | set wrap | endif
 
-" When editing a file, always jump to the last known cursor position.
-" Don't do it when the position is invalid or when inside an event handler
-" (happens when dropping a file on gvim).
-" Also don't do it when the mark is in the first line, that is the default
-" position when opening a file.
-autocmd BufReadPost *
-  \ if line("'\"") > 1 && line("'\"") <= line("$") |
-  \   exe "normal! g`\"" |
-  \ endif
-augroup END
-
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it when the position is invalid or when inside an event handler
+  " (happens when dropping a file on gvim).
+  " Also don't do it when the mark is in the first line, that is the default
+  " position when opening a file.
+  autocmd BufReadPost *
+    \ if line("'\"") > 1 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
+  augroup END
 else
-
-set autoindent		" always set autoindenting on
-
+  set autoindent		" always set autoindenting on
 endif " has("autocmd")}}}
-
 
 "SET
 ""{{{
@@ -163,12 +162,12 @@ if has("wildmenu")
   set wildmode=longest,full
 endif
 set ls=2  " show statusline always (airline)
-set ttimeoutlen=50 " fast exit from INSERT (airline)
+set ttimeoutlen=50 " fast exit from INSERT (airlin
 "}}}
 
 "MAP
-"{{{"
-" open file under cursor on a tab
+"{{{
+""" open file under cursor on a tab
 "map gf :tabe<cfile><CR>
 "toggle buffers
 nnoremap <F5> :buffers<CR>:buffer<Space>
@@ -199,7 +198,7 @@ map <F6> :setlocal spell! spelllang=en_us<CR>
 "nnoremap <F2> :set invpaste paste?<CR>
 
 " reload vimrc
-nmap <leader><leader><leader> :source ~/.vimrc<cr>
+nmap <leader><leader><leader> :so $MYVIMRC<cr>
 "}}}"
 
 "COMMANDS
@@ -211,10 +210,10 @@ command! -b -nargs=+ SvnCi :!svn ci -m <q-args>
 
 "UNITE
 "{{{
-nmap <leader>uf :Unite -no-split file buffer<cr>
-nmap <leader>ub :Unite -no-split buffer<cr>
-nmap <leader>ur :Unite -no-split file_mru<cr>
-nmap <leader>uo :Unite -vertical outline<cr>
+nmap <localleader>uf :Unite -no-split file buffer<cr>
+nmap <localleader>ub :Unite -no-split buffer<cr>
+nmap <localleader>ur :Unite -no-split file_mru<cr>
+nmap <localleader>uo :Unite -vertical outline<cr>
 let g:unite_enable_start_insert = 1
 "}}}"
 
@@ -222,7 +221,7 @@ let g:unite_enable_start_insert = 1
 " => VOOM
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
-nnoremap <leader>y :VoomToggle<CR>
+nnoremap <localleader>y :VoomToggle<CR>
 let g:voom_tab_key='<C-Tab>'
 let g:voom_return_key = '<C-Return>'
 let g:voom_ft_modes = {'markdown': 'markdown', 'pandoc': 'markdown', 'python': 'python', 'tex': 'latex'}
@@ -234,14 +233,14 @@ let g:voom_ft_modes = {'markdown': 'markdown', 'pandoc': 'markdown', 'python': '
 "{{{
 " this let start NERDTree if no file name is given
 "autocmd vimenter * if !argc() | NERDTree | endif
-noremap <leader>n :NERDTreeToggle<CR>
+noremap <localleader>n :NERDTreeToggle<CR>
 "}}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => TagBar
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
-nnoremap <leader>t :TagbarToggle<CR>
+nnoremap <localleader>t :TagbarToggle<CR>
 "}}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -305,3 +304,6 @@ let g:airline#extensions#default#layout = [
                   \ [ 'x', 'y', 'z', 'warning']]
 let g:airline#extensions#whitespace#enabled = 0
 "}}}
+
+
+

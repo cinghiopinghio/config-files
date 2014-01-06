@@ -3,10 +3,12 @@
 #echo 'Getting Mails (offlineimap)'
 
 TMP_FILE=$(mktemp --tmpdir offlineimap-XXXXXX.tmp)
-offlineimap -o -u quiet >/dev/null 2>/dev/null
+#offlineimap -o -u quiet >/dev/null 2>/dev/null
 notmuch new >$TMP_FILE 2>/dev/null
 
 message=$(sed -e 's/\. /.\n/g' $TMP_FILE | grep -e "Added\|Removed" | awk 'BEGIN{ORS=". "}{print $1,$2}')
+
+rm $TMP_FILE
 
 #del_mails=$(sed -e 's/\. /.\n/g' $TMP_FILE | grep -s Removed | awk '{print $2}')
 #

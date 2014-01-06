@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+notmuch tag +troskos -unread -inbox -- subject:"IA Aragón" and tag:unread
+notmuch tag +com_vank -- subject:"comitatovanchiglia_operativi" and tag:unread
+notmuch tag +gap_vank -- subject:"gap_comitatoquartierevanchiglia" and tag:unread
+notmuch tag +com_vank -- subject:"comitatovanchiglia_news" and tag:unread
+
+notmuch tag +deleted -- folder:Trash and not tag:deleted
+notmuch tag +deleted -- folder:trash and not tag:deleted
+notmuch tag +draft -- folder:Drafts and not tag:draft
+notmuch tag +draft -- folder:drafts and not tag:draft
+notmuch tag +sent -- folder:Sent and not tag:sent
+notmuch tag +sent -- folder:sent and not tag:sent
+
+

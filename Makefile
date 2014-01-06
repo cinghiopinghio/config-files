@@ -52,6 +52,8 @@ imutt:
 	@$(call linking,${Local}/offlineimaprc,~/.offlineimaprc)
 	@$(call linking,${Local}/msmtprc,~/.msmtprc)
 	@$(call linking,${Local}/urlview,~/.urlview)
+	@$(call linking,${Local}/notmuch/hooks/pre-new,~/.mail/.notmuch/hooks/pre-new)
+	@$(call linking,${Local}/notmuch/hooks/post-new,~/.mail/.notmuch/hooks/post-new)
 
 
 

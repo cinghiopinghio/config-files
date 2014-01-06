@@ -43,7 +43,9 @@ alias du0='du --max-depth=0 -h'
 alias df='df -h'
 
 if [[ -e /usr/bin/mutt-patched ]]; then
-  alias mutt=mutt-patched
+  alias mutt='mutt-patched; notmuch new --no-hooks'
+else
+  alias mutt='mutt; notmuch new --no-hooks'
 fi
 
 # GIT + SVN
