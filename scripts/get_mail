@@ -22,6 +22,6 @@ message=$(sed -e 's/\. /.\n/g' $TMP_FILE | grep -e "Added\|Removed" | awk 'BEGIN
 
 if [[ ! $message == "" ]];
 then
-  notify-send  -i "mutt" -t 1000 --hint=int:transient:1 "MAIL:" "$message"
+  notify-send  -i "mutt" -t 3000 --hint=int:transient:1 "MAIL:" "$message"
 fi
 

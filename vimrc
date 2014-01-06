@@ -69,7 +69,8 @@ Bundle 'Raimondi/delimitMate'
 Bundle 'cinghiopinghio/abook-vim'
 Bundle 'caio/querycommandcomplete.vim'
 "Bundle 'Shougo/neocomplcache'
-
+" calendar for vim
+Bundle 'mattn/calendar-vim'
 
 
 " vim-scripts repos
@@ -288,7 +289,9 @@ endfunc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{"
 " use OmniComplete function
-let g:SuperTabDefaultCompletionType = "context"
+"let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabDefaultCompletionType = "<C-x><C-o>"
+let g:SuperTabContextDefaultCompletionType = "<C-x><C-o>"
 "}}}"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
