@@ -76,6 +76,8 @@ Bundle 'caio/querycommandcomplete.vim'
 " calendar for vim
 Bundle 'mattn/calendar-vim'
 
+"Bundle 'terryma/vim-multiple-cursors'
+
 
 " vim-scripts repos
 "Bundle 'L9'

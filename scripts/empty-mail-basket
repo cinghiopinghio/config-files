@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+notmuch search --output=files tag:deleted OR tag:killed | xargs -L 1 -d '\n' rm

@@ -13,7 +13,7 @@ application/vnd.ms-excel      ; open_attachment %s spreadsheet
 image/*                       ; open_attachment %s image
 
 # PDFs
-application/pdf               ; open_attachment %s pdf
+application/pdf               ; open_attachment %s pdf; nametemplate=%s.pdf ;
 
 # Text
 #text/html                    ; firefox %s
