@@ -13,7 +13,7 @@ notmuch tag +sent -- folder:Sent and not tag:sent
 notmuch tag +sent -- folder:sent and not tag:sent
 
 
-s=$(notmuch search --format=json tag:new | notify-mail); 
+s=$(notmuch search --format=json tag:new AND tag:inbox | notify-mail); 
 if [ "$s" != "" ];
 then
   notify-send MAIL "$s"

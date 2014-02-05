@@ -5,5 +5,5 @@ import sys
 trds=json.load(sys.stdin)
 
 for trd in trds:
-    S = u'{0:s}: {1:s}'.format(trd['authors'][:15],trd['subject'][:20])
+    S = u'<b>{0:s}:</b> <i>{1:s}</i>'.format(trd['authors'][:15],trd['subject'][:20])
     print (S)
