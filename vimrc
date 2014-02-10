@@ -165,6 +165,7 @@ if has("wildmenu")
 endif
 set ls=2  " show statusline always (airline)
 set ttimeoutlen=50 " fast exit from INSERT (airlin
+set dir=/tmp//,/var/tmp//,.
 "}}}
 
 "MAP
