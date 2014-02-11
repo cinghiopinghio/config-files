@@ -9,11 +9,12 @@ application/msexcel           ; open_attachment %s spreadsheet
 application/vnd.ms-exc        ; open_attachment %s spreadsheet
 application/vnd.ms-excel      ; open_attachment %s spreadsheet
 
-# Images
-image/*                       ; open_attachment %s image
-
 # PDFs
 application/pdf               ; open_attachment %s pdf; nametemplate=%s.pdf ;
+image/pdf               ; open_attachment %s pdf; nametemplate=%s.pdf ;
+
+# Images
+image/*                       ; open_attachment %s image
 
 # Text
 #text/html                    ; firefox %s
