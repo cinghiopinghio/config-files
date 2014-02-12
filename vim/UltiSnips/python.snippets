@@ -2,10 +2,6 @@ snippet imp "imp"
 import ${1:module}
 endsnippet
 
-snippet from "from"
-from ${1:package} import ${2:module}
-endsnippet
-
 # Module Docstring
 snippet docs "docs"
 '''
@@ -33,23 +29,7 @@ with ${1:expr} as ${2:var}:
 	${3:# TODO: write code...}
 endsnippet
 
-# New Class
-snippet cl "cl"
-class ${1:ClassName}(${2:object}):
-	"""${3:docstring for $1}"""
-	def __init__(self, ${4:arg}):
-		${5:super($1, self).__init__()}
-		self.$4 = $4
-		${6}
-endsnippet
-
 # New Function
-snippet def "def"
-def ${1:fname}(${2:`!v indent('.') ? 'self' : ''`}):
-	"""${3:docstring for $1}"""
-	${4:# TODO: write code...}
-endsnippet
-
 snippet deff "deff"
 def ${1:fname}(${2:`!v indent('.') ? 'self' : ''`}):
 	${3:# TODO: write code...}
@@ -73,28 +53,6 @@ def ${1:foo}():
 		${5:del self._$1}
 	return locals()
 $1 = property(**$1())
-endsnippet
-
-# Ifs
-snippet if "if"
-if ${1:condition}:
-	${2:# TODO: write code...}
-endsnippet
-
-snippet el "el"
-else:
-	${1:# TODO: write code...}
-endsnippet
-
-snippet ei "ei"
-elif ${1:condition}:
-	${2:# TODO: write code...}
-endsnippet
-
-# For
-snippet for "for"
-for ${1:item} in ${2:items}:
-	${3:# TODO: write code...}
 endsnippet
 
 # Encodes
