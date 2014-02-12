@@ -1,6 +1,6 @@
 ## latexmk options
 
-
+$dvips_pdf_switch='';
 #output is pdf through ps2pdf
 $pdf_mode=2;
 
