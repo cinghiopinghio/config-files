@@ -8,7 +8,7 @@ then
   files=$(notmuch search --output=files tag:deleted OR tag:killed)
   if [[ $files != '' ]]
   then 
-    echo $files | xargs -L 1 -d '\n' rm
+    echo "$files" | xargs -L 1 -d '\n' rm
     echo '+++ Updating database +++'
     notmuch new --no-hooks
   else
