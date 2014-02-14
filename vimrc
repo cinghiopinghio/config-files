@@ -36,17 +36,17 @@ Bundle 'scrooloose/syntastic'
 """""""" folder navigation
 Bundle 'scrooloose/nerdtree'
 Bundle 'istib/vifm.vim'
+""""""" AutoCompletion
+Bundle 'ervandew/supertab'
+"Bundle 'Valloric/YouCompleteMe'
+"Bundle 'Shougo/neocomplete.vim'
+"Bundle 'Shougo/neocomplcache'
 """"""" snippets
 "Bundle 'honza/snipmate-snippets'
 "Bundle 'garbas/vim-snipmate'
 "Bundle 'MarcWeber/ultisnips'
 Bundle 'SirVer/ultisnips'
 "Bundle 'honza/vim-snippets'
-""""""" AutoCompletion
-Bundle 'ervandew/supertab'
-"Bundle 'Valloric/YouCompleteMe'
-"Bundle 'Shougo/neocomplete.vim'
-"Bundle 'Shougo/neocomplcache'
 """"""" window splits control
 Bundle 'spolu/dwm.vim'
 """"""" parenthesis change
