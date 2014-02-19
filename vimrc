@@ -26,55 +26,58 @@ Bundle 'gmarik/vundle'
 " My Bundles here:
 "
 " original repos on github
-" git
-Bundle 'tpope/vim-fugitive'
-" outliner
+"""""""" git
+" Bundle 'tpope/vim-fugitive'
+"""""""" outliner
 Bundle 'vim-scripts/VOoM'
-Bundle 'majutsushi/tagbar'
-" syntax checker
+" Bundle 'majutsushi/tagbar'
+"""""""" syntax checker
 Bundle 'scrooloose/syntastic'
-" folder navigation
+"""""""" folder navigation
 Bundle 'scrooloose/nerdtree'
 Bundle 'istib/vifm.vim'
-" snippets
+""""""" AutoCompletion
+Bundle 'ervandew/supertab'
+"Bundle 'Valloric/YouCompleteMe'
+"Bundle 'Shougo/neocomplete.vim'
+"Bundle 'Shougo/neocomplcache'
+""""""" snippets
 "Bundle 'honza/snipmate-snippets'
 "Bundle 'garbas/vim-snipmate'
 "Bundle 'MarcWeber/ultisnips'
 Bundle 'SirVer/ultisnips'
 "Bundle 'honza/vim-snippets'
-" AutoCompletion
-Bundle 'ervandew/supertab'
-"Bundle 'Valloric/YouCompleteMe'
-"Bundle 'Shougo/neocomplete.vim'
-" LaTeX
-Bundle 'LaTeX-Box-Team/LaTeX-Box'
-" window splits control
+""""""" window splits control
 Bundle 'spolu/dwm.vim'
-" parenthesis change
+""""""" parenthesis change
 Bundle 'tpope/vim-surround'
 Bundle 'benmills/vimux'
-"HTML
-Bundle 'mattn/emmet-vim'
-Bundle 'othree/html5.vim'
-" unite
+""""""" unite
 Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/unite-outline'
 Bundle 'Shougo/vimproc.vim'
-" colors
+""""""" colors
 " Bundle 'tomasr/molokai'
 Bundle 'cinghiopinghio/xinghio-color.vim'
-" statusbar
+""""""" statusbar
 "Bundle 'maciakl/vim-neatstatus'
 Bundle 'bling/vim-airline'
-" vertical alignement
+""""""" vertical alignement
 Bundle 'vim-scripts/Align'
 Bundle 'Raimondi/delimitMate'
 
 Bundle 'cinghiopinghio/abook-vim'
 Bundle 'caio/querycommandcomplete.vim'
-"Bundle 'Shougo/neocomplcache'
-" calendar for vim
+""""""" calendar for vim
 Bundle 'mattn/calendar-vim'
+""""""" filetype plugins
+""""""" CSV
+Bundle 'chrisbra/csv.vim'
+""""""" HTML
+Bundle 'mattn/emmet-vim'
+Bundle 'othree/html5.vim'
+""""""" LaTeX
+Bundle 'LaTeX-Box-Team/LaTeX-Box'
 
 "Bundle 'terryma/vim-multiple-cursors'
 
@@ -165,6 +168,7 @@ if has("wildmenu")
 endif
 set ls=2  " show statusline always (airline)
 set ttimeoutlen=50 " fast exit from INSERT (airlin
+set dir=/tmp//,/var/tmp//,.
 "}}}
 
 "MAP
@@ -242,7 +246,7 @@ noremap <localleader>n :NERDTreeToggle<CR>
 " => TagBar
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{
-nnoremap <localleader>t :TagbarToggle<CR>
+"nnoremap <localleader>t :TagbarToggle<CR>
 "}}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -292,7 +296,7 @@ endfunc
 " use OmniComplete function
 let g:SuperTabDefaultCompletionType = "context"
 "let g:SuperTabDefaultCompletionType = "<C-x><C-o>"
-"let g:SuperTabContextDefaultCompletionType = "context"
+"let g:SuperTabContextDefaultCompletionType = "<C-x><C-o>"
 "}}}"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
