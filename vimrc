@@ -294,8 +294,8 @@ endfunc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{"
 " use OmniComplete function
-let g:SuperTabDefaultCompletionType = "context"
-"let g:SuperTabDefaultCompletionType = "<C-x><C-o>"
+"let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabDefaultCompletionType = "<C-x><C-o>"
 "let g:SuperTabContextDefaultCompletionType = "<C-x><C-o>"
 "}}}"
 
