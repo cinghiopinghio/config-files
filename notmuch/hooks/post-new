@@ -1,22 +1,31 @@
 #!/usr/bin/env bash
 
-notmuch tag +troskos -unread -inbox -- subject:"IA Aragón" and tag:unread
-notmuch tag +com_vank -- subject:"comitatovanchiglia_operativi" and tag:unread
-notmuch tag +gap_vank -- subject:"gap_comitatoquartierevanchiglia" and tag:unread
-notmuch tag +com_vank -- subject:"comitatovanchiglia_news" and tag:unread
-notmuch tag +alot -- to:"alot@noreply.github.com"
+NEW='tag:new and '
+NOREAD='-unread -inbox'
 
-notmuch tag +deleted -- folder:Trash and not tag:deleted
-notmuch tag +deleted -- folder:trash and not tag:deleted
-notmuch tag +draft -- folder:Drafts and not tag:draft
-notmuch tag +draft -- folder:drafts and not tag:draft
-notmuch tag +sent -- folder:Sent and not tag:sent
-notmuch tag +sent -- folder:sent and not tag:sent
+## Lists
+notmuch tag +troskos $NOREAD -- $NEW to:"ia_aragon@lists.riseup.net"
+notmuch tag +troskos $NOREAD -- $NEW not tag:troskos and subject:"IA Aragón"
+notmuch tag +com_vank        -- $NEW to:"comitatovanchiglia_operativi@googlegroups.com"
+notmuch tag +gap_vank        -- $NEW to:"gap_comitatoquartierevanchiglia@googlegroups.com"
+notmuch tag +com_vank        -- $NEW to:"comitatovanchiglia_news@googlegroups.com"
+notmuch tag +alot            -- $NEW to:"alot@noreply.github.com"
+notmuch tag +antifabox       -- $NEW to:"antifaboxe-list@csoaskatasuna.org"
 
+## Deleted drafts and sent mails
+notmuch tag +deleted $NOREAD -- $NEW folder:Trash and not tag:deleted
+notmuch tag +deleted $NOREAD -- $NEW folder:trash and not tag:deleted
+notmuch tag +draft           -- $NEW folder:Drafts and not tag:draft
+notmuch tag +draft           -- $NEW folder:drafts and not tag:draft
+notmuch tag +sent            -- $NEW folder:Sent and not tag:sent
+notmuch tag +sent            -- $NEW folder:sent and not tag:sent
 
+## Send notification to OS
 s=$(notmuch search --format=json tag:new AND tag:inbox | notify-mail); 
 if [ "$s" != "" ];
 then
   notify-send MAIL "$s"
 fi
 
+## clear the 'new' tag
+notmuch tag -new -- tag:new

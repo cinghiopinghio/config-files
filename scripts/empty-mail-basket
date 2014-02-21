@@ -1,18 +1,27 @@
 #!/usr/bin/env bash
 
-read -p '+++ Remove All deleted mails permanently?[y/n] +++  ' -n 1 -r
-echo
+TAGS='tag:deleted OR tag:killed'
 
-if [[ $REPLY =~ ^[Yy]$ ]]
-then
-  files=$(notmuch search --output=files tag:deleted OR tag:killed)
-  if [[ $files != '' ]]
-  then 
+echo '+++ DELETE KILLED MAIL +++'
+files=$(notmuch search --output=files "$TAGS")
+
+if [[ $files != '' ]]
+then 
+  notmuch search "$TAGS" | cut -c-$(tput cols)
+  
+  read -p '+++ Remove All deleted mails permanently?[y/n] +++  ' -n 1 -r
+  echo
+
+  if [[ $REPLY =~ ^[Yy]$ ]]
+  then
     echo "$files" | xargs -L 1 -d '\n' rm
     echo '+++ Updating database +++'
     notmuch new --no-hooks
-  else
-    echo '+++ No mails to delete +++'
+    echo '+++ Empty mail trash +++'
   fi
-  echo '+++ Empty mail trash +++'
+  
+else
+  echo '+++ No mails to delete +++'
 fi
+
+
