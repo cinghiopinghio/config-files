@@ -50,6 +50,7 @@ export XTERM="aterm +sb -geometry 80x29 -fg black -bg lightgoldenrodyellow -fn -
 
 # add to PATH .local/bin and subdirectories
 path+=($(find -L ~/.local/bin -type d))
+path+=~/.gem/ruby/1.9.1/bin
 
 ##################################################################
 # Stuff to make my life easier
