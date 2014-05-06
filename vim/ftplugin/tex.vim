@@ -9,10 +9,10 @@ vmap <buffer> <S-F7> <Plug>LatexEnvWrapSelection
 imap <C-p> <C-O>gqip
 
 " Don't screw up folds when inserting text that might affect them, until
-" leaving insert mode. Foldmethod is local to the window.
-autocmd InsertEnter * let w:last_fdm=&foldmethod | setlocal foldmethod=manual
-autocmd InsertLeave * let &l:foldmethod=w:last_fdm
-
+" leaving insert mode. Foldmethod is local to the window. Protect against
+" screwing up folding when switching between windows.
+autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&l:foldmethod | setlocal foldmethod=manual | endif
+autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VOom
@@ -24,12 +24,24 @@ autocmd InsertLeave * let &l:foldmethod=w:last_fdm
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:LatexBox_output_type="pdf"
 let g:LatexBox_show_warnings=2
-"let g:LatexBox_latexmk_options = "-pdfps"
+let g:LatexBox_latexmk_options = "-pdfps"
 let g:LatexBox_viewer = 'zathura'
 let g:LatexBox_fold_preamble=1 
 let g:LatexBox_fold_envs=1 
 let g:LatexBox_latexmk_async=0
 let g:LatexBox_latexmk_preview_continuously=1
+
+nnoremap <localleader>lp :call PdflatexToggle()<cr>
+
+function! PdflatexToggle()
+    if g:LatexBox_latexmk_options == "-pdfps"
+        let g:LatexBox_latexmk_options=""
+        echo 'use pdflatex'
+    else
+        let g:LatexBox_latexmk_options="-pdfps"
+        echo 'use latex/ps2pdf'
+    endif
+endfunction
 
 
 "let g:Tex_CompileRule_dvi = 'latex -interaction=nonstopmode $*'
