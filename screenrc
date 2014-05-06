@@ -24,7 +24,7 @@
 startup_message       off             # default: on
 #nethack on
 
-shell -${SHELL}
+#shell -${SHELL}
 
 #defflow on # will force screen to process ^S/^Q
 deflogin on
