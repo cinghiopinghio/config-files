@@ -47,6 +47,7 @@ if [[ -e /usr/bin/mutt-patched ]]; then
 else
   alias mutt='mutt; notmuch new --no-hooks'
 fi
+alias alot-u='alot search tag:unread'
 
 # GIT + SVN
 
