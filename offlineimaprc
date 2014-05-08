@@ -33,7 +33,7 @@ remoteusereval = get_user('gmail')
 remotepasseval = get_password('gmail')
 realdelete = True
 nametrans = nt_remote
-folderfilter = exclude(['[Gmail]/Spam','[Gmail]/Important','[Gmail]/All Mail'])
+folderfilter = exclude(['[Gmail]/Important','[Gmail]/All Mail'])
 # Necessary as of OfflineIMAP 6.5.4
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 # Instead of closing the connection once a sync is complete, offlineimap will
@@ -74,7 +74,7 @@ realdelete = True
 remoteusereval = get_user('linux')
 remotepasseval = get_password('linux')
 #nametrans = nt_remote
-folderfilter = exclude(['trash', 'Trash', 'Spam','Important'])
+folderfilter = exclude(['trash', 'Trash', 'Important'])
 # Necessary as of OfflineIMAP 6.5.4
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 # Instead of closing the connection once a sync is complete, offlineimap will
