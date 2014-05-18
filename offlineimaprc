@@ -29,8 +29,8 @@ nametrans = nt_local
 [Repository gmail-Remote]
 maxconnections = 1
 type = Gmail
-remoteusereval = get_user('gmail')
-remotepasseval = get_password('gmail')
+remoteusereval = get_user_pass('gmail')
+remotepasseval = get_password_pass('gmail')
 realdelete = True
 nametrans = nt_remote
 folderfilter = exclude(['[Gmail]/Important','[Gmail]/All Mail'])
@@ -71,8 +71,8 @@ maxconnections = 1
 type = IMAP
 remotehost = imap.mail.com
 realdelete = True
-remoteusereval = get_user('linux')
-remotepasseval = get_password('linux')
+remoteusereval = get_user_pass('linux')
+remotepasseval = get_password_pass('linux')
 #nametrans = nt_remote
 folderfilter = exclude(['trash', 'Trash', 'Important'])
 # Necessary as of OfflineIMAP 6.5.4
@@ -111,8 +111,8 @@ localfolders = ~/.mail/yahoo
 [Repository yahoo-Remote]
 maxconnections = 1
 type = IMAP
-remoteusereval = get_user('yahoo')
-remotepasseval = get_password('yahoo')
+remoteusereval = get_user_pass('yahoo')
+remotepasseval = get_password_pass('yahoo')
 remotehost = imap.mail.yahoo.com
 realdelete = True
 ssl = yes
