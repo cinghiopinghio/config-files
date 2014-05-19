@@ -67,6 +67,7 @@ export EDITOR=/usr/bin/vim
 # add to PATH .local/bin and subdirectories
 export PATH=$PATH:$(find -L ~/.local/bin -type d | tr '\n' ':' | sed 's/:$//')
 export PATH=$PATH:~/.gem/ruby/1.9.1/bin
+export PATH=$PATH:~/.gem/ruby/2.1.0/bin
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 
 
