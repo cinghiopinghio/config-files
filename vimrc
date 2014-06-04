@@ -66,7 +66,8 @@ Bundle 'cinghiopinghio/xinghio-color.vim'
 Bundle 'bling/vim-airline'
 """"""" vertical alignement
 Bundle 'vim-scripts/Align'
-Bundle 'Raimondi/delimitMate'
+"Bundle 'Raimondi/delimitMate'
+Bundle 'jiangmiao/auto-pairs'
 
 Bundle 'cinghiopinghio/abook-vim'
 Bundle 'caio/querycommandcomplete.vim'
