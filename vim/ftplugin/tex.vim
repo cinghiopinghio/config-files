@@ -34,12 +34,14 @@ let g:LatexBox_fold_preamble=1
 let g:LatexBox_fold_envs=1 
 let g:LatexBox_latexmk_async=0
 let g:LatexBox_latexmk_preview_continuously=1
+let g:LatexBox_cite_pattern
+   \ = '\c\\\a*\(cite\|quote\|bibentry\)\a*\*\?\_\s*{'
 
 nnoremap <localleader>lp :call PdflatexToggle()<cr>
 
 function! PdflatexToggle()
     if g:LatexBox_latexmk_options == "-pdfps"
-        let g:LatexBox_latexmk_options=""
+        let g:LatexBox_latexmk_options="-pdf"
         echo 'use pdflatex'
     else
         let g:LatexBox_latexmk_options="-pdfps"
