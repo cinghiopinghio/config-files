@@ -11,13 +11,17 @@ imap <C-p> <C-O>gqip
 " Don't screw up folds when inserting text that might affect them, until
 " leaving insert mode. Foldmethod is local to the window. Protect against
 " screwing up folding when switching between windows.
-autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&l:foldmethod | setlocal foldmethod=manual | endif
-autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
+" autocmd InsertEnter * if !exists('w:last_fdm') | let w:last_fdm=&l:foldmethod | setlocal foldmethod=manual | endif
+" autocmd InsertLeave,WinLeave * if exists('w:last_fdm') | let &l:foldmethod=w:last_fdm | unlet w:last_fdm | endif
+autocmd BufWinEnter * setl fdm=expr
+autocmd BufWinEnter * setl fdm=manual
+autocmd BufWritePost * setl fdm=expr
+autocmd BufWritePost * setl fdm=manual
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => VOom
+" => auto-pairs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"nnoremap <leader>y :VoomToggle latex<CR>
+let b:AutoPairs={'(':')','[':']','{':'}',"'":"'",'"':'"','$':'$'}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Latex Box Plugin
@@ -30,12 +34,14 @@ let g:LatexBox_fold_preamble=1
 let g:LatexBox_fold_envs=1 
 let g:LatexBox_latexmk_async=0
 let g:LatexBox_latexmk_preview_continuously=1
+let g:LatexBox_cite_pattern
+   \ = '\c\\\a*\(cite\|quote\|bibentry\)\a*\*\?\_\s*{'
 
 nnoremap <localleader>lp :call PdflatexToggle()<cr>
 
 function! PdflatexToggle()
     if g:LatexBox_latexmk_options == "-pdfps"
-        let g:LatexBox_latexmk_options=""
+        let g:LatexBox_latexmk_options="-pdf"
         echo 'use pdflatex'
     else
         let g:LatexBox_latexmk_options="-pdfps"
