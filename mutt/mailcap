@@ -14,7 +14,8 @@ application/pdf               ; open_attachment %s pdf; nametemplate=%s.pdf ;
 image/pdf               ; open_attachment %s pdf; nametemplate=%s.pdf ;
 
 # Images
-image/*                       ; open_attachment %s image
+#image/*                       ; open_attachment %s image
+image/*                       ; feh %s image
 
 # Text
 #text/html                    ; firefox %s
