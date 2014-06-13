@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+TMPFILE=$(tempfile -p 'mail' -s '.html')
+
+cat - < /dev/stdin > $TMPFILE
+
+$BROWSER $TMPFILE
+
+rm $TMPFILE
