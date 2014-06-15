@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-TMPFILE=$(tempfile -p 'mail' -s '.html')
+TMPFILE=$(mktemp --suffix='.html' mail-XXX)
 
 cat - < /dev/stdin > $TMPFILE
 
