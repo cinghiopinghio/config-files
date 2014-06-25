@@ -136,6 +136,9 @@ if has("autocmd")
     \   exe "normal! g`\"" |
     \ endif
   augroup END
+
+  au InsertEnter * set norelativenumber
+  au InsertLeave * set relativenumber
 else
   set autoindent		" always set autoindenting on
 endif " has("autocmd")}}}
@@ -160,6 +163,13 @@ set wrap
 set linebreak
 set textwidth=75
 set background=dark
+set relativenumber
+set number
+if exists('+colorcolumn')
+  set colorcolumn=80
+else
+  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+endif
 "colorscheme molokai
 colorscheme xinghio
 set makeprg=make
@@ -343,10 +353,11 @@ endfunc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "{{{"
 " use OmniComplete function
-"let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabDefaultCompletionType = "<C-x><C-o>"
-"let g:SuperTabContextDefaultCompletionType = "<C-x><C-o>"
+let g:SuperTabDefaultCompletionType = "context"
+"let g:SuperTabDefaultCompletionType = "<C-x><C-o>"
+let g:SuperTabContextDefaultCompletionType = "<C-x><C-o>"
 "}}}"
+let g:UltiSnipsExpandTrigger="<c-j>"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " AirLine
