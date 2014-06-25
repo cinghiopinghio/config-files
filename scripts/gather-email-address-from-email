@@ -1,0 +1,114 @@
+#!/usr/bin/env python2
+
+from __future__ import print_function
+import email
+import email.header
+import os,sys
+import re
+import codecs
+
+headers = ['To','From','Cc']
+DATABASE = os.path.expanduser('~/.abook/addressbook')
+
+def main():
+    fl = sys.stdin
+    msg = email.message_from_file(fl)
+    fl.close()
+    sys.stdin = open("/dev/tty")
+
+    emails = {}
+    ask = True
+    for hdr in headers:
+        emails[hdr] = add_header(msg[hdr])
+        print ('------------------')
+        if len (emails[hdr]) > 0:
+            print ('Emails in',hdr)
+        else:
+            print ('No emails in',hdr)
+        for ml in emails[hdr]:
+            print ('\n> add:')
+            print (u'  {0:>25s} <{1:s}>'.format(ml[0],ml[1]))
+            if ask:
+                print ('  [Nyea] ',end='')
+                inp = raw_input('').lower()
+                send_to_database (ml,inp)
+                if inp == 'a': ask =False
+            else:
+                send_to_database (ml,'y')
+    print (' The END. (press ENTER)')
+    raw_input('')
+
+def send_to_database (email, user_input='n'):
+    if user_input == 'y' or user_input == 'a':
+        add_to_database(email[0],email[1])
+    elif user_input == 'e':
+        name = raw_input('Insert new name ')
+        add_to_database(name,email[1])
+    else:
+        pass
+
+def add_to_database(name, email):
+    old = False
+    with open (DATABASE,'r') as fin:
+        for line in fin:
+            l = line.strip().split('=')
+            if len(l) == 1 and len(l[0]) > 0:
+                indx = l[0].strip('[]')
+            elif len(l) == 2:
+                if l[0] == 'email' and email in l[1].split(','):
+                    print ('Mail already present in the database')
+                    old = True
+
+    if not old:
+        indx = int(indx)
+        with codecs.open (DATABASE,'a','utf-8') as fout:
+            print (u'[{0:d}]'.format(indx+1),file=fout)
+            print (u'name={0:s}'.format(name),file=fout)
+            print (u'email={0:s}'.format(email),file=fout)
+            print (u'',file=fout)
+
+def add_header(string):
+    '''Read the header and return al list of (name,email) tuple
+    '''
+    if string is None or string == '':
+        return []
+
+    s = u''
+    for p,e in email.header.decode_header(string):
+        if e == None:
+            s += p
+        else:
+            s += unicode(p,e)
+    string = s
+
+    lst = [ml for ml in string.split(',') if '@' in ml]
+    mail_lst = []
+    for ml in lst:
+        reg_ml = re.split('[<>]', ml)
+        if len (reg_ml) == 1:
+            mail_lst.append((u'',reg_ml[0].strip()))
+        else:
+            mail_lst.append((reg_ml[0].strip(),reg_ml[1].strip()))
+
+    return mail_lst
+
+
+class DB(list):
+    """Email Database"""
+    def __init__(self,db=None):
+        list.__init__(self)
+        if db is not None:
+            self.import_db(db)
+    def import_db(db_file):
+        with codecs.open(db_file,'r','utf-8') as fin:
+            for line in fin:
+
+
+        
+
+def load_database():
+    with open(DATABASE,'r') as fin:
+        for 
+
+if __name__ == '__main__':
+    main()
