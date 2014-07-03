@@ -12,7 +12,6 @@ NF="#6ff"
 #FN="-*-dejavu sans mono-medium-r-normal--*-80-*-*-*-*-iso10646-1"
 FN='-*-*-*-*-*-*-15-*-*-*-*-*-*-*'
 DMENU_OPTIONS="-nb $NB -nf $NF -sb $SB -sf $SF -fn $FN -i"
-echo $DMENU_OPTIONS
 dmenu_cmd="dmenu $DMENU_OPTIONS"
 terminal="urxvtc -e"
 max_recent=199 # Number of recent commands to track
