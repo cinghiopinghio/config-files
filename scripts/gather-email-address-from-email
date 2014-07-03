@@ -6,26 +6,57 @@ import email.header
 import os,sys
 import re
 import codecs
+import configobj
 
 headers = ['To','From','Cc']
 DATABASE = os.path.expanduser('~/.abook/addressbook')
+TEST = os.path.expanduser('~/.mail/gmail/INBOX/cur/1395740369_0.4943.mercurio,U=3299,FMD5=7e33429f656f1e6e9d79b29c3f82c57e:2,S')
+
+class DB():
+    def __init__(self,filename=None):
+        self.db = configobj.ConfigObj(filename,encoding='utf-8')
+        self.extract_addresses()
+    def extract_addresses(self):
+        self.addresses = set()
+        for contact in self.db:
+            if 'email' in self.db[contact]:
+                ems = self.db[contact]['email']
+                if type(ems) in [unicode,str]:
+                    self.addresses.add(ems)
+                elif type(ems) == list:
+                    for em in ems:
+                        self.addresses.add(em)
+    def __len__ (self):
+        return len(self.db)-1
+
+def load_file_header(filename=None):
+    pass
 
 def main():
-    fl = sys.stdin
-    msg = email.message_from_file(fl)
-    fl.close()
-    sys.stdin = open("/dev/tty")
+    # load database
+    db = DB(DATABASE)
 
-    emails = {}
+    # load email
+    #fl = sys.stdin
+    #msg = email.message_from_file(fl)
+    #fl.close()
+    #sys.stdin = open("/dev/tty")
+
+    with open(TEST,'r') as fin:
+        msg = email.message_from_file(fin)
+    print (msg['To'])
+    exit()
+
+    new_emails = {}
     ask = True
     for hdr in headers:
-        emails[hdr] = add_header(msg[hdr])
+        new_emails[hdr] = add_header(msg[hdr],emails)
         print ('------------------')
-        if len (emails[hdr]) > 0:
+        if len (new_emails[hdr]) > 0:
             print ('Emails in',hdr)
         else:
             print ('No emails in',hdr)
-        for ml in emails[hdr]:
+        for ml in new_emails[hdr]:
             print ('\n> add:')
             print (u'  {0:>25s} <{1:s}>'.format(ml[0],ml[1]))
             if ask:
@@ -67,7 +98,7 @@ def add_to_database(name, email):
             print (u'email={0:s}'.format(email),file=fout)
             print (u'',file=fout)
 
-def add_header(string):
+def add_header(string,emails=[]):
     '''Read the header and return al list of (name,email) tuple
     '''
     if string is None or string == '':
@@ -86,29 +117,26 @@ def add_header(string):
     for ml in lst:
         reg_ml = re.split('[<>]', ml)
         if len (reg_ml) == 1:
-            mail_lst.append((u'',reg_ml[0].strip()))
+            if reg_ml[0].strip() not in emails:
+                mail_lst.append((u'',reg_ml[0].strip()))
         else:
-            mail_lst.append((reg_ml[0].strip(),reg_ml[1].strip()))
+            if reg_ml[1].strip() not in emails:
+                mail_lst.append((reg_ml[0].strip(),reg_ml[1].strip()))
 
     return mail_lst
 
+def extract_addresses(db):
+    emails = set()
+    for contact in db:
+        if 'email' in db[contact]:
+            ems = db[contact]['email']
+            if type(ems) in [unicode,str]:
+                emails.add(ems)
+            elif type(ems) == list:
+                for em in ems:
+                    emails.add(em)
+    return emails
 
-class DB(list):
-    """Email Database"""
-    def __init__(self,db=None):
-        list.__init__(self)
-        if db is not None:
-            self.import_db(db)
-    def import_db(db_file):
-        with codecs.open(db_file,'r','utf-8') as fin:
-            for line in fin:
-
-
-        
-
-def load_database():
-    with open(DATABASE,'r') as fin:
-        for 
 
 if __name__ == '__main__':
     main()
