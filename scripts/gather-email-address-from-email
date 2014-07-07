@@ -51,23 +51,20 @@ class DB():
                     print (line.strip('\n'),file=fout)
                 else:
                     print (line.strip('\n').replace(' = ','=',1),file=fout)
+        # I don't delete the temp directory just in case (for now)
 
     def __len__ (self):
         return len(self.db)-1
 
 def main():
-
     # load database
     db = DB(DATABASE)
-    print (db.N)
 
     # load email
-    new_emails = load_file_header(db=db)
-
+    new_emails = load_file_header(filename='stdin',db=db)
     
     db = add_to_database(new_emails,db)
-    db.write()
-
+    db.write(DATABASE)
 
 def load_file_header(filename=None,db=None):
     '''get filename as stdin and return name-emails as dictionary'''
@@ -112,7 +109,7 @@ def add_header(string,db):
         else:
             address = reg_ml[1].strip().lower()
             if address not in db.addresses:
-                mail_lst.append((reg_ml[0].strip(),address))
+                mail_lst.append((reg_ml[0].strip().strip("'\""),address))
 
     return mail_lst
 
