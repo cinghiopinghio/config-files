@@ -7,8 +7,9 @@ import os,sys
 import re
 import codecs
 import configobj
+import tempfile
 
-headers = ['To','From','Cc']
+HEADERS = ['To','From','Cc']
 DATABASE = os.path.expanduser('~/.abook/addressbook')
 TEST = os.path.expanduser('~/.mail/gmail/INBOX/cur/1395740369_0.4943.mercurio,U=3299,FMD5=7e33429f656f1e6e9d79b29c3f82c57e:2,S')
 
@@ -16,6 +17,9 @@ class DB():
     def __init__(self,filename=None):
         self.db = configobj.ConfigObj(filename,encoding='utf-8')
         self.extract_addresses()
+        for sec in self.db:
+            if sec != 'format':
+                self.N = int(sec)
     def extract_addresses(self):
         self.addresses = set()
         for contact in self.db:
@@ -26,79 +30,64 @@ class DB():
                 elif type(ems) == list:
                     for em in ems:
                         self.addresses.add(em)
+    def append(self,name,address):
+        self.N +=1
+        self.db[str(self.N)] = {'name':name, 'email':address}
+
+    def write(self,filename='tmp'):
+        #self.db.filename = filename
+        #self.db.write()
+        # weird trick to remove spaces around ' = '
+        tmpdir = tempfile.mkdtemp()
+        self.db.filename = tmpdir+'/tmpdata'
+        self.db.write()
+
+        with open(tmpdir+'/tmpdata','r') as fin:
+            flines = fin.readlines()
+
+        with open(filename,'w') as fout:
+            for line in flines:
+                if '=' not in line:
+                    print (line.strip('\n'),file=fout)
+                else:
+                    print (line.strip('\n').replace(' = ','=',1),file=fout)
+
     def __len__ (self):
         return len(self.db)-1
 
-def load_file_header(filename=None):
-    pass
-
 def main():
+
     # load database
     db = DB(DATABASE)
+    print (db.N)
 
     # load email
-    #fl = sys.stdin
-    #msg = email.message_from_file(fl)
-    #fl.close()
-    #sys.stdin = open("/dev/tty")
+    new_emails = load_file_header(db=db)
 
-    with open(TEST,'r') as fin:
-        msg = email.message_from_file(fin)
-    print (msg['To'])
-    exit()
+    
+    db = add_to_database(new_emails,db)
+    db.write()
 
-    new_emails = {}
-    ask = True
-    for hdr in headers:
-        new_emails[hdr] = add_header(msg[hdr],emails)
-        print ('------------------')
-        if len (new_emails[hdr]) > 0:
-            print ('Emails in',hdr)
-        else:
-            print ('No emails in',hdr)
-        for ml in new_emails[hdr]:
-            print ('\n> add:')
-            print (u'  {0:>25s} <{1:s}>'.format(ml[0],ml[1]))
-            if ask:
-                print ('  [Nyea] ',end='')
-                inp = raw_input('').lower()
-                send_to_database (ml,inp)
-                if inp == 'a': ask =False
-            else:
-                send_to_database (ml,'y')
-    print (' The END. (press ENTER)')
-    raw_input('')
 
-def send_to_database (email, user_input='n'):
-    if user_input == 'y' or user_input == 'a':
-        add_to_database(email[0],email[1])
-    elif user_input == 'e':
-        name = raw_input('Insert new name ')
-        add_to_database(name,email[1])
+def load_file_header(filename=None,db=None):
+    '''get filename as stdin and return name-emails as dictionary'''
+    if filename is not None:
+        fl = sys.stdin
+        msg = email.message_from_file(fl)
+        fl.close()
+        # re-active the stdin
+        sys.stdin = open("/dev/tty")
     else:
-        pass
+        with open(TEST,'r') as fin:
+            msg = email.message_from_file(fin)
+    
+    new_emails = {}
+    for hdr in HEADERS:
+        new_emails[hdr] = add_header(msg[hdr],db)
+        print (new_emails[hdr])
+    return new_emails
 
-def add_to_database(name, email):
-    old = False
-    with open (DATABASE,'r') as fin:
-        for line in fin:
-            l = line.strip().split('=')
-            if len(l) == 1 and len(l[0]) > 0:
-                indx = l[0].strip('[]')
-            elif len(l) == 2:
-                if l[0] == 'email' and email in l[1].split(','):
-                    print ('Mail already present in the database')
-                    old = True
-
-    if not old:
-        indx = int(indx)
-        with codecs.open (DATABASE,'a','utf-8') as fout:
-            print (u'[{0:d}]'.format(indx+1),file=fout)
-            print (u'name={0:s}'.format(name),file=fout)
-            print (u'email={0:s}'.format(email),file=fout)
-            print (u'',file=fout)
-
-def add_header(string,emails=[]):
+def add_header(string,db):
     '''Read the header and return al list of (name,email) tuple
     '''
     if string is None or string == '':
@@ -117,26 +106,51 @@ def add_header(string,emails=[]):
     for ml in lst:
         reg_ml = re.split('[<>]', ml)
         if len (reg_ml) == 1:
-            if reg_ml[0].strip() not in emails:
-                mail_lst.append((u'',reg_ml[0].strip()))
+            address = reg_ml[0].strip().lower()
+            if address not in db.addresses:
+                mail_lst.append((u'',address))
         else:
-            if reg_ml[1].strip() not in emails:
-                mail_lst.append((reg_ml[0].strip(),reg_ml[1].strip()))
+            address = reg_ml[1].strip().lower()
+            if address not in db.addresses:
+                mail_lst.append((reg_ml[0].strip(),address))
 
     return mail_lst
 
-def extract_addresses(db):
-    emails = set()
-    for contact in db:
-        if 'email' in db[contact]:
-            ems = db[contact]['email']
-            if type(ems) in [unicode,str]:
-                emails.add(ems)
-            elif type(ems) == list:
-                for em in ems:
-                    emails.add(em)
-    return emails
+def add_to_database(new_emails,db):
+    emails_to_add = []
+    ask = True
+    for hdr in HEADERS:
+        print ('------------------')
+        if len (new_emails[hdr]) > 0:
+            print ('Emails in',hdr)
+        else:
+            print ('No emails new in',hdr)
+        for ml in new_emails[hdr]:
+            print (u'> add:  {0:>25s} <{1:s}>'.format(ml[0],ml[1]),end='')
+            if ask:
+                print ('  [Nyea] ',end='')
+                inp = raw_input('').lower()
+                nm,ad = user_check (ml,inp)
+                if ad is not None:
+                    db.append(nm,ad)
+                if inp == 'a': ask =False
+            else:
+                nm,ad = user_check (ml,'y')
+                if ad is not None:
+                    db.append(nm,ad)
+                    print ('   added!!!')
+    print (' The END. (press ENTER)')
+    raw_input('')
+    return db
 
+def user_check (contact, user_input='n'):
+    if user_input == 'y' or user_input == 'a':
+        return contact
+    elif user_input == 'e':
+        name = raw_input('Insert new name: ')
+        return (name,contact[1])
+    else:
+        return None,None
 
 if __name__ == '__main__':
     main()
