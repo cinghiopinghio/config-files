@@ -1,11 +1,9 @@
 #!/usr/bin/env python2
 
 from __future__ import print_function
-import email
 import email.header
 import os,sys
 import re
-import codecs
 import configobj
 import tempfile
 
@@ -81,7 +79,6 @@ def load_file_header(filename=None,db=None):
     new_emails = {}
     for hdr in HEADERS:
         new_emails[hdr] = add_header(msg[hdr],db)
-        print (new_emails[hdr])
     return new_emails
 
 def add_header(string,db):
