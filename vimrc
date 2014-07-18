@@ -50,7 +50,8 @@ if has("python")
   Bundle 'honza/vim-snippets'
 endif
 """"""" window splits control
-Bundle 'spolu/dwm.vim'
+"Bundle 'spolu/dwm.vim'
+Bundle 'zhaocai/GoldenView.Vim'
 """"""" parenthesis change
 Bundle 'tpope/vim-surround'
 Bundle 'benmills/vimux'
@@ -272,6 +273,11 @@ command Blame call s:svnBlame()
 command! -b -nargs=0 SvnUp :!svn up
 command! -b -nargs=+ SvnCi :!svn ci -m <q-args>
 "}}}"
+
+" SYNTASTIC
+"{{{
+let g:syntastic_mode_map = { 'passive_filetypes': ['sass'] }
+"}}}
 
 "UNITE
 "{{{
