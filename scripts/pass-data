@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+if [ $# -ne 1 ]
+then
+  echo 'Usage: pass-data key'
+  exit 1 
+fi
+
+KEY=$1
+echo 'Data for key: '$KEY
+pass $KEY | sed '1d'
