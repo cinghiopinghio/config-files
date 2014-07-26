@@ -4,6 +4,8 @@ TMPFILE=$(mktemp --suffix='.html' mail-XXX)
 
 cat - < /dev/stdin > $TMPFILE
 
+cp $TMPFILE /home/mauro/
+echo $TMPFILE
 $BROWSER $TMPFILE
 
 rm $TMPFILE
