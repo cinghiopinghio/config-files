@@ -5,12 +5,17 @@ DIFF="vimdiff"
 
 # Subversion provides the paths we need as the sixth and seventh
 # parameters.
+BASE=${1}
 THEIRS=${2}
 MINE=${3}
+MERGED=${4}
+#WCPATH=${5}
 
 # Call the diff command (change the following line to make sense for
 # your merge program).
-$DIFF $MINE $THEIRS
+# $DIFF $MINE $THEIRS
+$DIFF $MINE $THEIRS -c ":bo sp $MERGED" -c ":diffthis" -c "setl stl=MERGED | wincmd W | setl stl=THEIRS | wincmd W | setl stl=MINE"
+
 
 # Return an errorcode of 0 if no differences were detected, 1 if some were.
 # Any other errorcode will be treated as fatal.
