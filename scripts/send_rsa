@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+HOST=$1
+
+cat ~/.ssh/id_rsa.pub | ssh ${HOST} 'cat >> .ssh/authorized_keys'
+
