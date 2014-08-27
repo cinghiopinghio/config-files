@@ -8,10 +8,8 @@
 nb='#111111'
 nf='#777777'
 sb='#111111'
-sf='#903030'
-font='-*-*-*-*-*-*-14-*-*-*-*-*-*-*'
-font="-*-dejavu sans mono-bold-R-normal--14-100-*-*-*-*-iso10646-1"
-font='-bitstream-bitstream vera sans mono-medium-r-normal-*-15-*-100-100-m-*-iso8859-1'
+sf='#337733'
+font='-*-bitstream vera sans-medium-r-normal-*-*-*-*-*-*-*-iso8859-1'
 dmenu_cmd=( dmenu -i -fn "$font" -nb "$nb" -nf "$nf" -sb "$sb" -sf "$sf" )
 terminal="urxvtc -e"
 max_recent=199 # Number of recent commands to track
