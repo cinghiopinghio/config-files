@@ -5,13 +5,13 @@
 
 
 # DMENU OPTIONS
-nb='#111111'
-nf='#777777'
-sb='#111111'
-sf='#337733'
+nb='#222222'
+nf='#999999'
+sb='#109010'
+sf='#222222'
 font='-*-bitstream vera sans-medium-r-normal-*-*-*-*-*-*-*-iso8859-1'
 dmenu_cmd=( dmenu -i -fn "$font" -nb "$nb" -nf "$nf" -sb "$sb" -sf "$sf" )
-terminal="urxvtc -e"
+terminal="sakura -e"
 max_recent=199 # Number of recent commands to track
 
 cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/dmenu-recent"

@@ -3,10 +3,10 @@
 
 shopt -s nullglob globstar
 
-nb='#111111'
-nf='#777777'
-sb='#111111'
-sf='#903030'
+nb='#222222'
+nf='#999999'
+sb='#B01010'
+sf='#222222'
 font='-*-bitstream vera sans-medium-r-normal-*-*-*-*-*-*-*-iso8859-1'
 font="-*-dejavu sans-medium-R-normal-*-*-*-*-*-*-*-iso10646-1"
 dmenucmd=( dmenu -i -fn "$font" -nb "$nb" -nf "$nf" -sb "$sb" -sf "$sf" )
@@ -22,7 +22,7 @@ word=$(printf '%s\n' "${fbase[@]}" | "${dmenucmd[@]}" -p PASS: "$@")
 if [[ -n $word ]]; then
   for match in "${files[@]}"; do  
     if [[ $word == ${match#*/} ]]; then
-      /usr/bin/pass show -c "$match" #2>/dev/null
+      /usr/bin/pass show -c "$match" 2>/dev/null
     fi  
   done
 fi

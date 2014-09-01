@@ -68,8 +68,6 @@ alias ipynb='ipython2 notebook --pylab inline'
 
 alias uruake='urxvt -geometry 128x29+100+0 -pe kuake &'
 
-alias dm='dmenu_run -i -nb "#666" -nf "#6ff" -sb "#c22" -fn "-*-dejavu sans mono-medium-r-normal--*-100-*-*-*-*-iso10646-1" -p dmenu:'
-
 ##################
 # bash functions #
 ##################

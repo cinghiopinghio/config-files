@@ -35,7 +35,7 @@ Bundle 'vim-scripts/VOoM'
 Bundle 'scrooloose/syntastic'
 """""""" folder navigation
 Bundle 'scrooloose/nerdtree'
-Bundle 'istib/vifm.vim'
+"Bundle 'istib/vifm.vim'
 """"""" AutoCompletion
 Bundle 'ervandew/supertab'
 "Bundle 'Valloric/YouCompleteMe'

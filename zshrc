@@ -40,7 +40,20 @@ vcs_prompt(){
 export RPROMPT='$(vcs_prompt)'
 Host="%m"
 Folder="%f"
-export PS1="%F{blue}$Host%F{yellow} %~$Folder "
+# Prompt color depends on HOST
+if [[ "$HOST" == "arcinghio" ]];
+then
+  hostColor="%F{green}"
+elif [[ "$HOST" == "mercurio" ]];
+then
+  hostColor="%F{blue}"
+else
+  hostColor="%F{red}"
+fi
+
+#export PS1="%F{blue}$Host%F{yellow} %~$Folder "
+#export PS2="%F{blue}>%F{white}"
+export PS1="$hostColor$Host%F{yellow} %~$Folder "
 export PS2="%F{blue}>%F{white}"
 
 # Vars used later on by Zsh
