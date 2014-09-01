@@ -6,7 +6,7 @@ main:
 	  make install\n\n\
 	Warning: this will delete all your config files\n"
 
-install: ivim ibash igit iscreen ilatex izsh iscripts ivifm ignuplot isvn imutt
+install: ivim ibash igit iscreen ilatex izsh iscripts ivifm ignuplot isvn imutt iurxvt
 
 ivim:
 	@$(call linking,${Local}/vimrc,~/.vimrc)
@@ -55,6 +55,11 @@ imutt:
 	@$(call linking,${Local}/urlview,~/.urlview)
 	@$(call linking,${Local}/notmuch/hooks/pre-new,~/.mail/.notmuch/hooks/pre-new)
 	@$(call linking,${Local}/notmuch/hooks/post-new,~/.mail/.notmuch/hooks/post-new)
+
+iurxvt:
+	@$(call linking,${Local}/Xresourses,~/.Xresources)
+	@$(call linking,${Local}/colours,~/.colours)
+
 
 
 
