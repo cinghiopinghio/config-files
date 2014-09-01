@@ -41,15 +41,17 @@ export RPROMPT='$(vcs_prompt)'
 Host="%m"
 Folder="%f"
 # Prompt color depends on HOST
-if [[ "$HOST" == "arcinghio" ]];
-then
-  hostColor="%F{green}"
-elif [[ "$HOST" == "mercurio" ]];
-then
-  hostColor="%F{blue}"
-else
-  hostColor="%F{red}"
-fi
+case $HOST in
+  "arcinghio")
+    hostColor="%F{green}"
+    ;;
+  "mercurio")
+    hostColor="%F{blue}"
+    ;;
+  *)
+    hostColor="%F{red}"
+    ;;
+esac
 
 #export PS1="%F{blue}$Host%F{yellow} %~$Folder "
 #export PS2="%F{blue}>%F{white}"
