@@ -5,12 +5,12 @@
 ! -------------------------------------------------
 
 !! jwr bright
+URxvt.background: #080808
+URxvt.foreground: #999999
+
 !black
-!*color0: #1B1D1E
-!*color8: #505354
 *color0: #262729
 *color8: #454545
- 
 !red
 *color1: #E32E30
 *color9: #FF6A6A
@@ -31,4 +31,5 @@
 *color14: #80FFFF
 !white
 *color7: #CCCCC6
+*color15:#DDDDDD
 

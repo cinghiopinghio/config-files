@@ -25,8 +25,10 @@ URxvt.scrollstyle:                        plain
 
 ! teh transparency stuff
 URxvt.inheritPixmap:                      false
-URxvt.tintColor:                          #080808
+!URxvt.tintColor:                          #080808
 URxvt.shading:                            0
+urxvt.fading:                             20
+urxvt.fadeColor:                          #080808
 
 ! Font settings
 Xft.autohint:                             0
@@ -129,15 +131,5 @@ XCalc*Cursor:                             hand2
 XCalc*ShapeStyle:                         rectangle
 
 ! -- Colours -- !
-!#include "/home/mauro/.colours/dark"
-!#include "/home/mauro/.colours/light"
-!#include "/home/mauro/.colours/low"
-!#include "/home/mauro/.colours/old"
-!#include "/home/mauro/.colours/soft"
-!#include "/home/mauro/.colours/washed"
-#include "/home/mauro/.colours/bright"
-!#include "/home/mauro/.colours/lich"
-!#include "/home/mauro/.colours/rab"
-!#include "/home/mauro/.colours/reasons"
-!#include "/home/mauro/.colours/zenburn"
+#include "/home/mauro/.colours/matte"
 
