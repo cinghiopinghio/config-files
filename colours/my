@@ -1,64 +1,93 @@
-! --- ~/.Xresources ------------------------------------------------------------
-! ------------------------------------------------------------------------------
-! --- generated with 4bit Terminal Color Scheme Designer -----------------------
-! ------------------------------------------------------------------------------
-! --- http://ciembor.github.com/4bit -------------------------------------------
-! ------------------------------------------------------------------------------
+! -------------------------------------------------------------
+! Author: Cinghio
+! vim:nu:ai:si:et:ts=4:sw=4:ft=xdefaults:
+! -------------------------------------------------------------
+
+! Common
+
+#define l_yellow  #EEED7A 
+#define l_orange  #EED37A 
+#define l_red     #EE807A 
+#define l_magenta #EEB47A 
+#define l_violet  #AA86C0
+#define l_blue    #928FC6 
+#define l_cyan    #7EACB7
+#define l_green   #5FB96A 
+
+
+! Dark
+
+#define d_yellow  #C8C649
+#define d_orange  #C8AA49 
+#define d_red     #C84F49 
+#define d_magenta #C88849
+#define d_violet  #8356A0
+#define d_blue    #6460A6 
+#define d_cyan    #4E8694
+#define d_green   #389B45
+
+! Grays
+
+#define d_black  #202020
+#define l_black  #282828
+#define d_gray   #383A3B
+#define l_gray   #999990
+#define d_white  #AAAAA0 
+#define l_white  #BBBBB0
 
 ! --- special colors ---
 
-*background: #282828
-*foreground: #cdcdcd
+URxvt.cursorColor:  d_yellow 
+*background: d_black
+*foreground: l_white
 
 ! --- standard colors ---
 
 ! black
-*color0: #0b0b0b
-
-! bright_black
-*color8: #282828
+*color0: d_gray
+*color8: l_black
 
 ! red
-*color1: #673638
-
-! bright_red
-*color9: #b77678
+!*color1: #673638
+!*color9: #b77678
+*color1: d_red 
+*color9: l_red
 
 ! green
-*color2: #386736
-
-! bright_green
-*color10: #78b776
+!*color2: #386736
+!*color10: #78b776
+*color2: d_green
+*color10: l_green
 
 ! yellow
-*color3: #676536
-
-! bright_yellow
-*color11: #b7b576
+!*color3: #676536
+!*color11: #b7b576
+*color3: d_yellow
+*color11: l_yellow
 
 ! blue
-*color4: #363867
-
-! bright_blue
-*color12: #7678b7
+!*color4: #363867
+!*color12: #7678b7
+*color4: d_blue
+*color12: l_blue
 
 ! magenta
-*color5: #653667
-
-! bright_magenta
-*color13: #b576b7
+!*color5: #653667
+!*color13: #b576b7
+*color5: d_magenta
+*color13: l_magenta
 
 ! cyan
-*color6: #366765
-
-! bright_cyan
-*color14: #76b7b5
+!*color6: #366765
+!*color14: #76b7b5
+*color6: d_cyan
+*color14: l_cyan
 
 ! white
-*color7: #cdcdcd
-
-! bright_white
-*color15: #ebebeb
+!*color7: #cdcdcd
+!*color15: #ebebeb
+*color7: l_gray
+*color15: d_white
 
 
 ! ------------------------------------------------------------------------------
