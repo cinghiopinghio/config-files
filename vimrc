@@ -226,6 +226,8 @@ inoremap <F5> <C-R>=strftime("[%Y-%m-%d]")<CR>
 
 " paste from clipboard without indentation with F2
 "nnoremap <F2> :set invpaste paste?<CR>
+vmap ,y "*y
+nmap ,p "*p
 
 " reload vimrc
 nmap <leader><leader><leader> :so $MYVIMRC<cr>

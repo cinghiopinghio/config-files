@@ -22,6 +22,7 @@ image/png                       ; feh %s ; template=%s.png;
 # Text
 #text/html                    ; firefox %s
 text/html                    ; elinks -dump %s                      ; nametemplate=%s.html ; copiousoutput ; 
+#text/html                    ; w3m -dump %s                      ; nametemplate=%s.html ; copiousoutput ; 
 #text/html                     ; lynx -display_charset=utf-8 -dump %s ; nametemplate=%s.html ; copiousoutput
 text/plain                    ; less %s                              ; copiousoutput
 
