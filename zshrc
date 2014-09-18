@@ -160,9 +160,26 @@ export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswi
 fi
 
 # print the current directory in the terminal title
-function precmd() {
-    print -Pn "\e]2;..%2d\a"
-}
+#function precmd() {
+#    print -Pn "\e]2;..%2d\a"
+#}
+
+case $TERM in
+  (*xterm* | *rxvt*)
+
+    # Write some info to terminal title.
+    # This is seen when the shell prompts for input.
+    function precmd {
+      print -Pn "\e]0;%(1j,%j job%(2j|s|); ,)%~\a"
+    }
+    # Write command and args to terminal title.
+    # This is seen while the shell waits for a command to complete.
+    function preexec {
+      printf "\033]0;%s\a" "$1"
+    }
+
+  ;;
+esac
 ##################################################################
 # My aliases
 
