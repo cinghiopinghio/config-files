@@ -44,8 +44,8 @@ URxvt.cursorColor:  d_yellow
 ! --- standard colors ---
 
 ! black
-*color0: d_gray
-*color8: l_black
+*color0: l_black
+*color8: d_gray
 
 ! red
 !*color1: #673638
