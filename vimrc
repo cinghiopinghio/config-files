@@ -60,8 +60,9 @@ Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/unite-outline'
 Bundle 'Shougo/vimproc.vim'
 """"""" colors
-" Bundle 'tomasr/molokai'
-Bundle 'cinghiopinghio/xinghio-color.vim'
+"Bundle 'tomasr/molokai'
+"Bundle 'cinghiopinghio/xinghio-color.vim'
+Bundle 'morhetz/gruvbox'
 """"""" statusbar
 "Bundle 'maciakl/vim-neatstatus'
 Bundle 'bling/vim-airline'
@@ -138,8 +139,6 @@ if has("autocmd")
     \ endif
   augroup END
 
-  au InsertEnter * set norelativenumber
-  au InsertLeave * set relativenumber
 else
   set autoindent		" always set autoindenting on
 endif " has("autocmd")}}}
@@ -164,15 +163,15 @@ set wrap
 set linebreak
 set textwidth=75
 set background=dark
-set relativenumber
-set number
 if exists('+colorcolumn')
   set colorcolumn=80
 else
   au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
 "colorscheme molokai
-colorscheme xinghio
+"colorscheme xinghio
+let g:gruvbox_contrast_dark='hard'
+colorscheme gruvbox
 set makeprg=make
 set grepprg=grep\ -nH\ $*
 set pastetoggle=<F2>
