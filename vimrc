@@ -37,7 +37,10 @@ Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdtree'
 "Bundle 'istib/vifm.vim'
 """"""" AutoCompletion
-Bundle 'ervandew/supertab'
+"Bundle 'jiangmiao/auto-pairs'
+Bundle 'Raimondi/delimitMate'
+Bundle 'ajh17/VimCompletesMe'
+"Bundle 'ervandew/supertab'
 "Bundle 'Valloric/YouCompleteMe'
 "Bundle 'Shougo/neocomplete.vim'
 "Bundle 'Shougo/neocomplcache'
@@ -66,9 +69,9 @@ Bundle 'cinghiopinghio/xinghio-color.vim'
 "Bundle 'maciakl/vim-neatstatus'
 Bundle 'bling/vim-airline'
 """"""" vertical alignement
-Bundle 'vim-scripts/Align'
+"Bundle 'vim-scripts/Align'
+Bundle 'junegunn/vim-easy-align'
 "Bundle 'Raimondi/delimitMate'
-Bundle 'jiangmiao/auto-pairs'
 
 Bundle 'cinghiopinghio/abook-vim'
 Bundle 'caio/querycommandcomplete.vim'
@@ -138,8 +141,6 @@ if has("autocmd")
     \ endif
   augroup END
 
-  au InsertEnter * set norelativenumber
-  au InsertLeave * set relativenumber
 else
   set autoindent		" always set autoindenting on
 endif " has("autocmd")}}}
@@ -164,8 +165,6 @@ set wrap
 set linebreak
 set textwidth=75
 set background=dark
-set relativenumber
-set number
 if exists('+colorcolumn')
   set colorcolumn=80
 else
@@ -269,6 +268,9 @@ endfunction
 map gb :call <SID>svnBlame()<CR>
 command Blame call s:svnBlame()
 
+" Use emmet only in html,css
+let g:user_emmet_install_global = 0
+autocmd FileType html,css,scss,sass EmmetInstall
 "COMMANDS
 "{{{"
 " svn commands
@@ -366,6 +368,7 @@ let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabContextDefaultCompletionType = "<C-x><C-o>"
 "}}}"
 let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsListSnippets="<c-l>"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " AirLine
