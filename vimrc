@@ -63,8 +63,9 @@ Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/unite-outline'
 Bundle 'Shougo/vimproc.vim'
 """"""" colors
-" Bundle 'tomasr/molokai'
-Bundle 'cinghiopinghio/xinghio-color.vim'
+"Bundle 'tomasr/molokai'
+"Bundle 'cinghiopinghio/xinghio-color.vim'
+Bundle 'morhetz/gruvbox'
 """"""" statusbar
 "Bundle 'maciakl/vim-neatstatus'
 Bundle 'bling/vim-airline'
@@ -171,7 +172,9 @@ else
   au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
 "colorscheme molokai
-colorscheme xinghio
+"colorscheme xinghio
+let g:gruvbox_contrast_dark='hard'
+colorscheme gruvbox
 set makeprg=make
 set grepprg=grep\ -nH\ $*
 set pastetoggle=<F2>

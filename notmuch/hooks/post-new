@@ -24,7 +24,7 @@ notmuch tag +sent            -- $NEW folder:sent and not tag:sent
 s=$(notmuch search --format=json tag:new AND tag:inbox | notify-mail); 
 if [ "$s" != "" ];
 then
-  notify-send MAIL "$s"
+    notify-send -u normal MAIL "$s"
 fi
 
 ## clear the 'new' tag
