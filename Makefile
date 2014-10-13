@@ -12,6 +12,9 @@ ivim:
 	@$(call linking,${Local}/vimrc,~/.vimrc)
 	@$(call linking,${Local}/vim,~/.vim)
 
+	@$(call linking,${Local}/vimrc,~/.nvimrc)
+	@$(call linking,${Local}/vim,~/.nvim)
+
 ibash:
 	@$(call linking,${Local}/bashrc,~/.bashrc)
 	@$(call linking,${Local}/aliases,~/.aliases)

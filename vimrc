@@ -60,8 +60,8 @@ Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/unite-outline'
 Bundle 'Shougo/vimproc.vim'
 """"""" colors
-"Bundle 'tomasr/molokai'
-"Bundle 'cinghiopinghio/xinghio-color.vim'
+Bundle 'tomasr/molokai'
+Bundle 'cinghiopinghio/xinghio-color.vim'
 Bundle 'morhetz/gruvbox'
 """"""" statusbar
 "Bundle 'maciakl/vim-neatstatus'
