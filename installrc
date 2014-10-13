@@ -1,0 +1,43 @@
+# Install parameters
+# this file contain config file locations
+
+[ themes ]
+    urxvt = ~/.colours
+    alot = ~/.config/alot/themes
+    vifm
+    dunst
+
+[ shell ]
+    zshrc = ~/.zshrc
+    bashrc = ~/.bashrc
+    aliases = ~/.aliases
+    bookmarks
+    profile
+
+[ editor ]
+    vim = ~/.vim
+    vimrc = ~/.vimrc
+    gnuplotting
+    gnuplot
+    latexmkrc
+
+[ email ]
+    notmuch
+    alot
+    offlineimaprc
+    msmtprc
+    mailcap
+
+[ terminal ]
+    Xresources
+    screenrc
+
+[ file_browser ]
+    vifmrc
+    mc.ini
+
+[ versioning ]
+    gitconfig
+    gitignore
+    svnrc
+
