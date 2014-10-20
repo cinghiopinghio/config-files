@@ -64,7 +64,7 @@ Bundle 'Shougo/unite-outline'
 Bundle 'Shougo/vimproc.vim'
 """"""" colors
 "Bundle 'tomasr/molokai'
-"Bundle 'cinghiopinghio/xinghio-color.vim'
+Bundle 'cinghiopinghio/xinghio-color.vim'
 Bundle 'morhetz/gruvbox'
 """"""" statusbar
 "Bundle 'maciakl/vim-neatstatus'
@@ -171,10 +171,10 @@ if exists('+colorcolumn')
 else
   au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
+let g:gruvbox_contrast_dark='medium'
 "colorscheme molokai
-"colorscheme xinghio
-let g:gruvbox_contrast_dark='hard'
 colorscheme gruvbox
+"colorscheme xinghio
 set makeprg=make
 set grepprg=grep\ -nH\ $*
 set pastetoggle=<F2>
@@ -250,6 +250,7 @@ nmap <leader><leader><leader> :so $MYVIMRC<cr>
 "  When invoked on a revnum in a Blame window, re-blame same file up to the
 "    previous revision.
 "  Dynamically synchronize when edits are made to the source file.
+
 function s:svnBlame()
    let line = line(".")
    setlocal nowrap
