@@ -8,3 +8,8 @@ let g:qcc_format_menu = '<${0}>'
 " system plugin like neocomplcache
 setlocal omnifunc=QueryCommandComplete
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => VimCompletesMe
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let b:vcm_tab_complete='omni'
