@@ -34,6 +34,7 @@ if [ ! -z $VLESS ]; then
   alias vless=$VLESS
 fi
 alias vimrc='vim ~/.vimrc'
+alias nv='nvim'
 
 alias head1='head -1'
 alias tail1='tail -1'
@@ -77,35 +78,6 @@ sh_colors(){
   for i in {1..255}; do echo -e "\e[38;5;${1};1m\e[48;5;${i}m    \e[0m\e[38;5;${i}m $i\e[0m"; done
 }
 
-# clean latex files
-cleantex(){
-  RMFILES=$(ls *.aux *.bbl *.blg *.out *.log *.dvi *.toc 2>>/dev/null)
-  if [ "$RMFILES" == "" ];
-  then
-    echo "Folder already clean, bye."
-    exit 0
-  else
-     $RMFILES
-    read -p 'Do you want me to swip out those files??? [Y/n]'
-    [ "$REPLY" == "y" ] && rm $RMFILES || echo "OK, bye!"
-  fi
-}
-
-## Multiple skypes
-#skp(){
-#  PROGNAME=$FUNCNAME
-#  USER=$1
-#  if [[ "$USER" == mauro || "$USER" == cinghio ]];
-#  then
-#    DBDIR=~/.config/Skype-$USER
-#    skype --dbpath=$DBDIR
-#  else
-#    echo $PROGNAME: user $USER unknown 1>&2
-#    echo Usage: $PROGNAME username
-#    echo username = mauro / cinghio
-#  #  exit 1
-#  fi
-#}
 
 # git remove submodules
 rm_git_submodules(){
@@ -117,45 +89,6 @@ rm_git_submodules(){
   rm -Rf $submodulepath
 }
 
-# vimwiki custom conversion to html
-custom_md2html (){
-  # This script converts markdown into html, to be used with vimwiki's
-  # "customwiki2html" option. Experiment with the two proposed methods by
-  # commenting / uncommenting the relevant lines below.
-  # Then, in your .vimrc file, set:
-  #
-  # g:vimwiki_customwiki2html=$HOME.'/.vim/autoload/vimwiki/customwiki2html.sh'
-  PANDOC=pandoc
-
-  FORCE="$1"
-  SYNTAX="$2"
-  EXTENSION="$3"
-  OUTPUTDIR="$4"
-  INPUT="$5"
-  CSSFILE="$6"
-
-  [ $FORCE -eq 0 ] || { FORCEFLAG="-f"; };
-  [ $SYNTAX = "markdown" ] || { echo "Error: Unsupported syntax"; exit -2; };
-
-  OUTPUT=$OUTPUTDIR/$(basename "$INPUT" .$EXTENSION).html
-  $PANDOC --css $CSSFILE --mathjax -o $OUTPUT $INPUT
-}
-
-pdf_booklet (){
-  #convert pdf to a booklet format to be printable
-  # usage: pdf_booklet infile.pdf outfile.pdf
-  # print to a4 papersize.
-  INFILE="$1"
-  OUTFILE="$2"
-  PAPER=$(pdfinfo $INFILE | grep -e 'Page size*(*)*' | sed 's/.*(\(.*\)).*/\1/' | tr '[A-Z]' '[a-z]')
-  echo $PAPER
-  pdftops -level3 $INFILE - |\
-    ps2ps - - |\
-    psbook |\
-    psnup -2 -pa4|\
-   # -P$PAPER |\
-    ps2pdf - $OUTFILE
-}
 
 # vim: set ft=sh:
 # vim: set fdm=indent:
