@@ -93,6 +93,7 @@ Bundle 'LaTeX-Box-Team/LaTeX-Box'
 "Bundle ''
 
 "Bundle 'terryma/vim-multiple-cursors'
+"Bundle 'felipec/notmuch-vim'
 
 
 " vim-scripts repos
