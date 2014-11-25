@@ -1,12 +1,16 @@
 " vimrc file.
 
+"----------------------------------------------------------------------
+" PREABLE
+"{{{ PREAMBLE
 let maplocalleader=' '
-""""""""""""""""""""
-" call Vundle
-""""""""""""""""""""
 set nocompatible               " be iMproved
+"}}}
+
+"----------------------------------------------------------------------
+" VUNDLE
+"{{{ Vundle: plugin manager
 filetype off                   " required!
-"{{{
 let iCanHazVundle=1
 let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
 if !filereadable(vundle_readme)
@@ -27,9 +31,10 @@ Bundle 'gmarik/vundle'
 "
 " original repos on github
 """""""" git
-Bundle 'tpope/vim-fugitive'
+"Bundle 'tpope/vim-fugitive'
+Bundle 'mhinz/vim-signify'
 """""""" outliner
-Bundle 'vim-scripts/VOoM'
+"Bundle 'vim-scripts/VOoM'
 "Bundle 'majutsushi/tagbar'
 """""""" syntax checker
 Bundle 'scrooloose/syntastic'
@@ -53,22 +58,25 @@ if has("python")
   Bundle 'honza/vim-snippets'
 endif
 """"""" window splits control
-"Bundle 'spolu/dwm.vim'
 Bundle 'zhaocai/GoldenView.Vim'
+Bundle 'itchyny/thumbnail.vim'
 """"""" parenthesis change
 Bundle 'tpope/vim-surround'
-Bundle 'benmills/vimux'
+"Bundle 'benmills/vimux'
 """"""" unite
 Bundle 'Shougo/unite.vim'
 Bundle 'Shougo/unite-outline'
 Bundle 'Shougo/vimproc.vim'
 """"""" colors
-Bundle 'tomasr/molokai'
-Bundle 'cinghiopinghio/xinghio-color.vim'
+"Bundle 'tomasr/molokai'
+"Bundle 'cinghiopinghio/xinghio-color.vim'
 Bundle 'morhetz/gruvbox'
 """"""" statusbar
 "Bundle 'maciakl/vim-neatstatus'
 Bundle 'bling/vim-airline'
+"Bundle 'bling/vim-bufferline'
+"Bundle 'itchyny/lightline.vim'
+"Bundle 'edkolev/promptline.vim'
 """"""" vertical alignement
 "Bundle 'vim-scripts/Align'
 Bundle 'junegunn/vim-easy-align'
@@ -77,7 +85,7 @@ Bundle 'junegunn/vim-easy-align'
 Bundle 'cinghiopinghio/abook-vim'
 Bundle 'caio/querycommandcomplete.vim'
 """"""" calendar for vim
-Bundle 'mattn/calendar-vim'
+"Bundle 'mattn/calendar-vim'
 """"""" filetype plugins
 """"""" CSV
 Bundle 'chrisbra/csv.vim'
@@ -112,19 +120,12 @@ endif
 """"""""""""""""""""
 """end"vundle"stuff"
 """"""""""""""""""""
-"}}}
 filetype plugin indent on     " required!
+"}}}
 
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-if &t_Co > 2 || has("gui_running")
-  syntax on
-  set hlsearch
-endif
-
-" Only do this part when compiled with support for autocommands.
-if has("autocmd")
-  "{{{
+"----------------------------------------------------------------------
+"{{{ Autocommands
+if has("autocmd") " only with autocommands
   " Put these in an autocmd group, so that we can delete them easily.
   augroup vimrcEx
   au!
@@ -147,8 +148,16 @@ else
   set autoindent		" always set autoindenting on
 endif " has("autocmd")}}}
 
-"SET
-""{{{
+"-------------------------------------------------------------------------
+" SET
+""{{{ Settings
+
+" Switch syntax highlighting on, when the terminal has colors
+" Also switch on highlighting the last used search pattern.
+if &t_Co > 2 || has("gui_running")
+  syntax on
+  set hlsearch
+endif
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
 set history=50                 " keep 50 lines of command line history
 set ruler                      " show the cursor position all the time
@@ -192,10 +201,12 @@ endif
 set ls=2  " show statusline always (airline)
 set ttimeoutlen=50 " fast exit from INSERT (airlin
 set dir=/tmp//,/var/tmp//,.
+set mouse=vi
 "}}}
 
-"MAP
-"{{{
+"-------------------------------------------------------------------------
+" MAP
+"{{{ Key mappings
 """ open file under cursor on a tab
 "map gf :tabe<cfile><CR>
 "toggle buffers
@@ -235,23 +246,30 @@ nmap ,p "*p
 nmap <leader><leader><leader> :so $MYVIMRC<cr>
 "}}}"
 
-" Use emmet only in html,css
-let g:user_emmet_install_global = 0
-autocmd FileType html,css,scss,sass EmmetInstall
-"COMMANDS
-"{{{"
+"-------------------------------------------------------------------------
+" COMMANDS
+"{{{ local defined commands
 " svn commands
 command! -b -nargs=0 SvnUp :!svn up
 command! -b -nargs=+ SvnCi :!svn ci -m <q-args>
 "}}}"
 
-" SYNTASTIC
+"-------------------------------------------------------------------------
+" PLUGINS SETTINGS
 "{{{
+"----------------------------------
+"{{{ Use emmet only in html,css
+let g:user_emmet_install_global = 0
+autocmd FileType html,css,scss,sass EmmetInstall
+"}}}
+
+"----------------------------------
+"{{{ Syntastic
 let g:syntastic_mode_map = { 'passive_filetypes': ['sass'] }
 "}}}
 
-"UNITE
-"{{{
+"----------------------------------
+"{{{ Unite
 nmap <localleader>uf :Unite -no-split file buffer<cr>
 nmap <localleader>ub :Unite -no-split buffer<cr>
 nmap <localleader>ur :Unite -no-split file_mru<cr>
@@ -259,44 +277,23 @@ nmap <localleader>uo :Unite -vertical outline<cr>
 let g:unite_enable_start_insert = 1
 "}}}"
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => VOOM
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"{{{
+"----------------------------------
+"{{{ VOoM
 nnoremap <localleader>y :VoomToggle<CR>
 let g:voom_tab_key='<C-Tab>'
 let g:voom_return_key = '<C-Return>'
 let g:voom_ft_modes = {'markdown': 'markdown', 'pandoc': 'markdown', 'python': 'python', 'tex': 'latex'}
 "}}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => NERDTree
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"{{{
+"----------------------------------
+"{{{ NERDTree
 " this let start NERDTree if no file name is given
 "autocmd vimenter * if !argc() | NERDTree | endif
 noremap <localleader>n :NERDTreeToggle<CR>
 "}}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => TagBar
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"{{{
-"nnoremap <localleader>t :TagbarToggle<CR>
-"}}}
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => MOUSE
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"{{{
-" use the mouse in vim:
-set mouse=vi
-"}}}
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Latex-Box
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"{{{
+"----------------------------------
+"{{{ LatexBox
 " this is here because otherwise it won't be read by the plugin
 let g:LatexBox_Folding=1
 let g:LatexBox_ignore_warnings =['Underfull', 'Overfull',
@@ -304,43 +301,23 @@ let g:LatexBox_ignore_warnings =['Underfull', 'Overfull',
                           \'Label(s) may have changed']
 "}}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => DWM
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"{{{
-let g:dwm_map_keys=1
-let g:dwm_master_pane_width="66%"
-"}}}
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Show syntax highlighting groups for word under cursor
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"{{{
-nmap <C-S-P> :call <SID>SynStack()<CR>
-function! <SID>SynStack()
-  if !exists("*synstack")
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
-"}}}
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" SuperTab
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"{{{"
+"----------------------------------
+"{{{ SuperTab
 " use OmniComplete function
 let g:SuperTabDefaultCompletionType = "context"
 "let g:SuperTabDefaultCompletionType = "<C-x><C-o>"
 let g:SuperTabContextDefaultCompletionType = "<C-x><C-o>"
 "}}}"
+
+"----------------------------------
+"{{{ UltiSnips
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsListSnippets="<c-l>"
+"}}}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" AirLine
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"{{{ " see the theme file for the color definition
+"----------------------------------
+"{{{ AirLine
+" see the theme file for the color definition
 let g:airline_right_sep=''
 let g:airline_left_sep=''
 let g:airline#extensions#default#layout = [
@@ -349,5 +326,49 @@ let g:airline#extensions#default#layout = [
 let g:airline#extensions#whitespace#enabled = 0
 "}}}
 
+"----------------------------------
+"{{{ Signify
+let g:signify_vcs_list              = [ 'git', 'svn', 'hg' ]
+let g:signify_cursorhold_insert     = 1
+let g:signify_cursorhold_normal     = 1
+let g:signify_update_on_bufenter    = 0
+let g:signify_update_on_focusgained = 1
+let g:signify_disable_by_default    = 1
+
+nnoremap <localleader>gt :SignifyToggle<cr>
+nnoremap <localleader>gh :SignifyToggleHighlight<cr>
+nnoremap <localleader>gr :SignifyRefresh<cr>
+nnoremap <localleader>gd :SignifyDebug<cr>
+
+" hunk jumping
+nmap <leader>gj <plug>(signify-next-hunk)
+nmap <leader>gk <plug>(signify-prev-hunk)
+
+" hunk text object
+"omap ic <plug>(signify-motion-inner-pending)
+"xmap ic <plug>(signify-motion-inner-visual)
+"omap ac <plug>(signify-motion-outer-pending)
+"xmap ac <plug>(signify-motion-outer-visual)
+
+"<cr>}}}
+
+"----------------------------------
+"{{{ Thumbnail
+nnoremap <localleader>t :Thumbnail -include=help<cr>
+"}}}
+"}}}
 
 
+
+
+function! RunCom(command)
+    let winnr = bufwinnr('^_output$')
+    if ( winnr >= 0 )
+        execute winnr . 'wincmd w'
+        execute 'normal ggdG'
+    else
+        vnew _output
+        setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
+    endif
+    silent! r! . a:command
+endfunction
