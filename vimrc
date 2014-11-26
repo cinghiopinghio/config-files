@@ -7,120 +7,103 @@ let maplocalleader=' '
 set nocompatible               " be iMproved
 "}}}
 
+
+
 "----------------------------------------------------------------------
-" VUNDLE
-"{{{ Vundle: plugin manager
-filetype off                   " required!
-let iCanHazVundle=1
-let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
-if !filereadable(vundle_readme)
-    echo "Installing Vundle.."
-    echo ""
-    silent !mkdir -p ~/.vim/bundle
-    silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
-    let iCanHazVundle=0
-endif
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+" Plugin Manager
+""{{{ Vundle: plugin manager
+call plug#begin('~/.vim/bundle')
 
-" let Vundle manage Vundle
-" required!
-Bundle 'gmarik/vundle'
+" Make sure you use single quotes
+"Plug 'junegunn/seoul256.vim'
 
-" My Bundles here:
-"
-" original repos on github
-"""""""" git
-"Bundle 'tpope/vim-fugitive'
-Bundle 'mhinz/vim-signify'
+" On-demand loading
+"Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+
+" Using git URL
+"Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+
+" Plugin options
+"Plug 'nsf/gocode', { 'tag': 'go.weekly.2012-03-13', 'rtp': 'vim' }
+
+" Plugin outside ~/.vim/plugged with post-update hook
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+
+" Unmanaged plugin (manually installed and updated)
+"Plug '~/my-prototype-plugin'
+
+"Plug 'tpope/vim-fugitive'
+Plug 'mhinz/vim-signify'
 """""""" outliner
-"Bundle 'vim-scripts/VOoM'
-"Bundle 'majutsushi/tagbar'
+"Plug 'vim-scripts/VOoM'
+"Plug 'majutsushi/tagbar'
 """""""" syntax checker
-Bundle 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 """""""" folder navigation
-Bundle 'scrooloose/nerdtree'
-"Bundle 'istib/vifm.vim'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+"Plug 'istib/vifm.vim'
 """"""" AutoCompletion
-"Bundle 'jiangmiao/auto-pairs'
-Bundle 'Raimondi/delimitMate'
-Bundle 'ajh17/VimCompletesMe'
-"Bundle 'ervandew/supertab'
-"Bundle 'Valloric/YouCompleteMe'
-"Bundle 'Shougo/neocomplete.vim'
-"Bundle 'Shougo/neocomplcache'
+"Plug 'jiangmiao/auto-pairs'
+Plug 'Raimondi/delimitMate'
+Plug 'ajh17/VimCompletesMe'
+"Plug 'ervandew/supertab'
+"Plug 'Valloric/YouCompleteMe'
+"Plug 'Shougo/neocomplete.vim'
+"Plug 'Shougo/neocomplcache'
 """"""" snippets
-"Bundle 'honza/snipmate-snippets'
-"Bundle 'garbas/vim-snipmate'
-"Bundle 'MarcWeber/ultisnips'
+"Plug 'honza/snipmate-snippets'
+"Plug 'garbas/vim-snipmate'
+"Plug 'MarcWeber/ultisnips'
 if has("python")
-  Bundle 'SirVer/ultisnips'
-  Bundle 'honza/vim-snippets'
+  Plug 'SirVer/ultisnips'
+  Plug 'honza/vim-snippets'
 endif
 """"""" window splits control
-Bundle 'zhaocai/GoldenView.Vim'
-Bundle 'itchyny/thumbnail.vim'
+Plug 'zhaocai/GoldenView.Vim'
+Plug 'itchyny/thumbnail.vim'
 """"""" parenthesis change
-Bundle 'tpope/vim-surround'
-"Bundle 'benmills/vimux'
+Plug 'tpope/vim-surround'
+"Plug 'benmills/vimux'
 """"""" unite
-Bundle 'Shougo/unite.vim'
-Bundle 'Shougo/unite-outline'
-Bundle 'Shougo/vimproc.vim'
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/unite-outline'
+Plug 'Shougo/vimproc.vim'
 """"""" colors
-"Bundle 'tomasr/molokai'
-"Bundle 'cinghiopinghio/xinghio-color.vim'
-Bundle 'morhetz/gruvbox'
+"Plug 'tomasr/molokai'
+"Plug 'cinghiopinghio/xinghio-color.vim'
+Plug 'morhetz/gruvbox'
 """"""" statusbar
-"Bundle 'maciakl/vim-neatstatus'
-Bundle 'bling/vim-airline'
-"Bundle 'bling/vim-bufferline'
-"Bundle 'itchyny/lightline.vim'
-"Bundle 'edkolev/promptline.vim'
+"Plug 'maciakl/vim-neatstatus'
+Plug 'bling/vim-airline'
+"Plug 'bling/vim-bufferline'
+"Plug 'itchyny/lightline.vim'
+"Plug 'edkolev/promptline.vim'
 """"""" vertical alignement
-"Bundle 'vim-scripts/Align'
-Bundle 'junegunn/vim-easy-align'
-"Bundle 'Raimondi/delimitMate'
+"Plug 'vim-scripts/Align'
+Plug 'junegunn/vim-easy-align'
+"Plug 'Raimondi/delimitMate'
 
-Bundle 'cinghiopinghio/abook-vim'
-Bundle 'caio/querycommandcomplete.vim'
+Plug 'cinghiopinghio/abook-vim'
+Plug 'caio/querycommandcomplete.vim'
 """"""" calendar for vim
-"Bundle 'mattn/calendar-vim'
+"Plug 'mattn/calendar-vim'
 """"""" filetype plugins
 """"""" CSV
-Bundle 'chrisbra/csv.vim'
+Plug 'chrisbra/csv.vim'
 """"""" HTML
-Bundle 'mattn/emmet-vim'
-Bundle 'othree/html5.vim'
+Plug 'mattn/emmet-vim'
+Plug 'othree/html5.vim'
 """"""" LaTeX
-Bundle 'LaTeX-Box-Team/LaTeX-Box'
+Plug 'LaTeX-Box-Team/LaTeX-Box', { 'for': 'tex' }
 """"""" Note/Todo writing
-"Bundle 'xolox/vim-notes'
-"Bundle 'fmoralesc/vim-pad'
-"Bundle 'blinry/vimboy'
-"Bundle ''
+"Plug 'xolox/vim-notes'
+"Plug 'fmoralesc/vim-pad'
+"Plug 'blinry/vimboy'
+"Plug ''
 
-"Bundle 'terryma/vim-multiple-cursors'
-"Bundle 'felipec/notmuch-vim'
-
-
-" vim-scripts repos
-"Bundle 'L9'
-"Bundle 'FuzzyFinder'
-" non github repos
-"Bundle 'git://git.wincent.com/command-t.git'
-" ...
-
-if iCanHazVundle == 0
-  echo "Installing Bundles, please ignore key map error messages"
-  echo ""
-  :BundleInstall
-endif
-
-""""""""""""""""""""
-"""end"vundle"stuff"
-""""""""""""""""""""
-filetype plugin indent on     " required!
+"Plug 'terryma/vim-multiple-cursors'
+"Plug 'felipec/notmuch-vim'
+call plug#end()
 "}}}
 
 "----------------------------------------------------------------------
@@ -233,7 +216,6 @@ map Q gq
 inoremap <C-U> <C-G>u<C-U>
 map <F6> :setlocal spell! spelllang=en_us<CR>
 
-
 " insert date
 inoremap <F5> <C-R>=strftime("[%Y-%m-%d]")<CR>
 
@@ -276,14 +258,6 @@ nmap <localleader>ur :Unite -no-split file_mru<cr>
 nmap <localleader>uo :Unite -vertical outline<cr>
 let g:unite_enable_start_insert = 1
 "}}}"
-
-"----------------------------------
-"{{{ VOoM
-nnoremap <localleader>y :VoomToggle<CR>
-let g:voom_tab_key='<C-Tab>'
-let g:voom_return_key = '<C-Return>'
-let g:voom_ft_modes = {'markdown': 'markdown', 'pandoc': 'markdown', 'python': 'python', 'tex': 'latex'}
-"}}}
 
 "----------------------------------
 "{{{ NERDTree
@@ -370,5 +344,5 @@ function! RunCom(command)
         vnew _output
         setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
     endif
-    silent! r! . a:command
+    silent! r! ls -la
 endfunction
