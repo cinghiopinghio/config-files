@@ -7,30 +7,10 @@ let maplocalleader=' '
 set nocompatible               " be iMproved
 "}}}
 
-
-
 "----------------------------------------------------------------------
 " Plugin Manager
 ""{{{ Vundle: plugin manager
 call plug#begin('~/.vim/bundle')
-
-" Make sure you use single quotes
-"Plug 'junegunn/seoul256.vim'
-
-" On-demand loading
-"Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-
-" Using git URL
-"Plug 'https://github.com/junegunn/vim-github-dashboard.git'
-
-" Plugin options
-"Plug 'nsf/gocode', { 'tag': 'go.weekly.2012-03-13', 'rtp': 'vim' }
-
-" Plugin outside ~/.vim/plugged with post-update hook
-"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
-
-" Unmanaged plugin (manually installed and updated)
-"Plug '~/my-prototype-plugin'
 
 "Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
@@ -67,11 +47,18 @@ Plug 'tpope/vim-surround'
 """"""" unite
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/unite-outline'
+Plug 'Shougo/neomru.vim'
 Plug 'Shougo/vimproc.vim'
 """"""" colors
 "Plug 'tomasr/molokai'
 "Plug 'cinghiopinghio/xinghio-color.vim'
 Plug 'morhetz/gruvbox'
+Plug 'junegunn/seoul256.vim'
+Plug 'zeis/vim-kolor'
+"Plug 'freeo/vim-kalisi'
+"Plug 'chriskempson/base16-vim'
+"Plug 'sjl/badwolf' " too dark 
+"Plug 'altercation/vim-colors-solarized'
 """"""" statusbar
 "Plug 'maciakl/vim-neatstatus'
 Plug 'bling/vim-airline'
@@ -89,10 +76,10 @@ Plug 'caio/querycommandcomplete.vim'
 "Plug 'mattn/calendar-vim'
 """"""" filetype plugins
 """"""" CSV
-Plug 'chrisbra/csv.vim'
+Plug 'chrisbra/csv.vim', { 'for': 'csv' }
 """"""" HTML
-Plug 'mattn/emmet-vim'
-Plug 'othree/html5.vim'
+Plug 'mattn/emmet-vim', { 'for': ['html', 'sass', 'scss', 'css']} 
+Plug 'othree/html5.vim', { 'for': ['html', 'sass', 'scss', 'css']}
 """"""" LaTeX
 Plug 'LaTeX-Box-Team/LaTeX-Box', { 'for': 'tex' }
 """"""" Note/Todo writing
@@ -103,6 +90,15 @@ Plug 'LaTeX-Box-Team/LaTeX-Box', { 'for': 'tex' }
 
 "Plug 'terryma/vim-multiple-cursors'
 "Plug 'felipec/notmuch-vim'
+
+" Using git URL
+"Plug 'https://github.com/junegunn/vim-github-dashboard.git'
+" Plugin options
+"Plug 'nsf/gocode', { 'tag': 'go.weekly.2012-03-13', 'rtp': 'vim' }
+" Plugin outside ~/.vim/plugged with post-update hook
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+" Unmanaged plugin (manually installed and updated)
+"Plug '~/my-prototype-plugin'
 call plug#end()
 "}}}
 
@@ -168,6 +164,9 @@ let g:gruvbox_contrast_dark='medium'
 "colorscheme molokai
 colorscheme gruvbox
 "colorscheme xinghio
+"let g:seoul256_background = 235
+"let g:seoul256_light_background = 256
+"colorscheme seoul256
 set makeprg=make
 set grepprg=grep\ -nH\ $*
 set pastetoggle=<F2>
@@ -292,6 +291,7 @@ let g:UltiSnipsListSnippets="<c-l>"
 "----------------------------------
 "{{{ AirLine
 " see the theme file for the color definition
+let g:airline_theme='gruvbox'
 let g:airline_right_sep=''
 let g:airline_left_sep=''
 let g:airline#extensions#default#layout = [
@@ -332,17 +332,27 @@ nnoremap <localleader>t :Thumbnail -include=help<cr>
 "}}}
 "}}}
 
-
-
-
+"{{{ Func+Command: Run a command and paste output in a buffer
 function! RunCom(command)
     let winnr = bufwinnr('^_output$')
     if ( winnr >= 0 )
         execute winnr . 'wincmd w'
         execute 'normal ggdG'
     else
-        vnew _output
+        "TODO: check if GoldenView is available
+        if exists("*GoldenView#Split")
+          call GoldenView#Split()
+          edit _output
+        else
+          vnew _output
+        endif
         setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
     endif
-    silent! r! ls -la
+    let s:com='VimProcRead ' . a:command
+    exec s:com
+    "silent! VimProcRead . a:command 
+    "back to previous buffer
+    wincmd p
 endfunction
+command! -b -nargs=+ Runit :call RunCom(<q-args>)
+"}}}
