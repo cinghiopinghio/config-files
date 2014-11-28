@@ -42,15 +42,12 @@ Host="%m"
 Folder="%f"
 # Prompt color depends on HOST
 case $HOST in
-  "arcinghio")
-    hostColor="%F{green}"
-    ;;
-  "mercurio")
-    hostColor="%F{blue}"
-    ;;
-  *)
-    hostColor="%F{red}"
-    ;;
+  "arcinghio") hostColor="%F{green}"  ;;
+  "moma")      hostColor="%F{green}"  ;;
+  "mercurio")  hostColor="%F{blue}"   ;;
+  "quantumcl") hostColor="%F{yellow}"   ;;
+  "bunet")     hostColor="%F{red}"   ;;
+  *)           hostColor="%B{red}"    ;;
 esac
 
 #export PS1="%F{blue}$Host%F{yellow} %~$Folder "
