@@ -1,0 +1,104 @@
+[global]
+    font = "Monospace 8"
+    allow_markup = yes
+    format = "<b>%s %p</b>\n%b"
+    sort = yes
+    indicate_hidden = true
+    # geometry = "x5"
+    idle_threshold = 0
+    geometry = "300x5-20+20"
+    alignment = center
+    show_age_threshold = 60
+    sticky_history = yes
+    follow = mouse
+    word_wrap = yes
+    separator_height = 2
+    padding = 10
+    horizontal_padding = 10
+    separator_color = frame
+    startup_notification = true
+    dmenu = "/usr/bin/dmenu -p dunst: -nb #FFFFFF -nf #000000 -sb #94DBFF -sf #000000"
+    browser = /home/knopwob/bin/url_dispatcher
+
+
+[frame]
+    width = 3
+    color = "#000000"
+
+[shortcuts]
+    close = ctrl+space
+    close_all = ctrl+shift+space
+    context = ctrl+shift+period
+
+[urgency_low]
+    background = "#999990"
+    foreground = "#202020"
+    timeout = 10
+
+[urgency_normal]
+    background = "#389b45"
+    foreground = "#000000"
+    timeout = 15
+
+[urgency_critical]
+    background = "#c84f49"
+    foreground = "#000000"
+    timeout = 20
+
+
+[libpurple_signed]
+    appname = libpurple
+    summary = *igned*
+    urgency = low
+    timeout = 3
+    background = "#8356a0"
+
+[libpurple_came_back]
+    appname = libpurple
+    summary = "*came*"
+    background = "#8356a0"
+
+[libpurple_went_away]
+    appname = libpurple
+    summary = "*went*"
+    background = "#8356a0"
+
+[libpurple_says]
+    appname = libpurple
+    summary = *ays*
+    urgency = critical
+    background = "#8356a0"
+
+[libpurple]
+    appname = libpurple
+    urgency = critical
+    background = "#8356a0"
+
+[twitter]
+    appname = Pidgin
+    summary = *twitter.com*
+    urgency = low
+
+[notmuch]
+    summary = "MAIL"
+    urgency = normal
+    background = "#4e8694"
+
+[cookies]
+    summary = "*Cookies*"
+    urgency = low
+    timeout = 3
+
+[local_storage]
+    summary = "*LocalStorage*"
+    urgency = low
+    timeout = 3
+
+[tracker]
+    summary = "*Trackers*"
+    urgency = low
+    timeout = 3
+
+[pass]
+    summary = 'DPass:'
+    urgency = critical
