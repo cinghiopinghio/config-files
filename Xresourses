@@ -51,7 +51,7 @@ URxvt.boldFont:                           xft:dejavu sans mono:size=10.5
 !URxvt.boldFont:                          xft:inconsolata:medium:size=13
 
 ! --  Extensions -- !
-#URxvt.perl-ext-common:                    default,matcher,keyboard-select,url-select,clipboard,tabbedex
+!URxvt.perl-ext-common:                    default,matcher,keyboard-select,url-select,clipboard,tabbedex
 URxvt.perl-ext-common:                    default,matcher,keyboard-select,url-select,clipboard
 URxvt.keysym.M-Escape:                    perl:keyboard-select:activate
 URxvt.keysym.M-u:                         perl:url-select:select_next
@@ -131,5 +131,5 @@ XCalc*Cursor:                             hand2
 XCalc*ShapeStyle:                         rectangle
 
 ! -- Colours -- !
-#include "/home/mauro/.colours/my"
+#include "/home/mauro/.colours/gruvbox-dark"
 
