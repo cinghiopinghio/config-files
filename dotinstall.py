@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 
-import sys,os
+import sys,os,shutil
 import configobj as co
 import time
 
@@ -11,12 +11,13 @@ NOINSTALL = [\
              '_fixed',\
              'Makefile',\
              'install.ini',\
+             'backup',\
              'dotinstall.py'\
             ]
 
-VERB = False
+VERB = True
 INTERACTIVE = True
-FAKEHOME = True
+FAKEHOME = False
 
 def main(inifile='install.ini',folder='.'):
     """main
@@ -41,6 +42,7 @@ def main(inifile='install.ini',folder='.'):
         if VERB:
             print (title('Executing post-hooks'))
             print (hook,'...',command)
+        os.system(command)
 
 def install(local_path, real_path, yesall=False):
     """create a link from real_path to local_path:
@@ -85,7 +87,8 @@ def install(local_path, real_path, yesall=False):
                                         time.strftime('-%Y-%m-%d_%H-%M-%S')
                                                         )
                 #os.rename(real_path, bup_dir) #<- do not work
-                os.system( 'mv '+real_path+' '+bup_dir)
+                #os.system( 'mv '+real_path+' '+bup_dir)
+                shutil.move(real_path, bup_dir)
                 link(local_path, real_path)
             elif choice == '4':
                 pass
@@ -111,7 +114,8 @@ def removepath(path):
 
     """
     if os.path.isdir(path):
-        os.removedirs(path)
+        #os.removedirs(path)
+        shutil.rmtree(path)
     else:
         os.remove(path)
     

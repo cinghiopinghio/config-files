@@ -253,7 +253,7 @@ bar {
 
 exec --no-startup-id urxvtd -q -f -o
 exec --no-startup-id unclutter -root -visible
-exec --no-startup-id feh --bg-center ${HOME}/grafica/sfondi/splash.png
+exec --no-startup-id feh --bg-center ${HOME}/grafica/sfondi/sengioalto.jpg
 
 #for_window [class="Firefox"] border none
 for_window [class="pinentry"] floating enabled

@@ -101,6 +101,10 @@ ignore_ftp_chattr_errors=true
 preallocate_space=0
 editor_group_undo=0
 
+editor_cursor_after_inserted_block=0
+editor_ask_filename_before_edit=0
+editor_filesize_threshold=64M
+
 [Layout]
 message_visible=1
 keybar_visible=1
@@ -138,6 +142,8 @@ rxvt=
 clipboard_store=
 clipboard_paste=
 
+spell_language=en
+
 [Colors]
 base_color=gray,black:normal=white,black:selected=black,brown:marked=black,lightgray:markselect=black,yellow:errors=white,red:menu=yellow,gray:reverse=brightmagenta,black:dnormal=black,lightgray:dfocus=black,cyan:dhotnormal=blue,lightgray:dhotfocus=blue,cyan:viewunderline=black,green:menuhot=red,gray:menusel=white,black:menuhotsel=yellow,black:helpnormal=black,lightgray:helpitalic=red,lightgray:helpbold=blue,lightgray:helplink=black,cyan:helpslink=yellow,blue:gauge=white,black:input=yellow,gray:directory=yellow,gray:executable=brightgreen,gray:link=brightcyan,gray:stalelink=brightred,blue:device=magenta,gray:core=red,blue:special=black,blue:editnormal=white,black:editbold=yellow,blue:editmarked=black,white:errdhotnormal=yellow,red:errdhotfocus=yellow,lightgray
 rxvt=
@@ -148,6 +154,8 @@ xterm=
 linux=
 
 screen=
+
+rxvt-unicode-256color=
 
 [HotlistConfig]
 expanded_view_of_groups=0
