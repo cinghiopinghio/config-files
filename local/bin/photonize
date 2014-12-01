@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+# copy from here
+INFOLDER=$1
+#copy to here
+OUTFOLDER=${HOME}/grafica/foto
+#FORMATS
+# %Y = year
+# %m = month
+# $d = day
+# %H = hour
+# %M = mins
+# %S = secs
+# ID = integer id
+# COMMENT = user comment (one per folder)
+# BASENAME = use camera file basename
+# out folder format
+FOL_FORMAT='%Y/%Y-%m-%d-COMMENT'
+# out file format
+FIL_FORMAT='%Y%m%d-ID-COMMENT'
+
+function frmt {
+  # change date format to formats
+   date -d"$1" +"$2"
+}
+
+
+ID=0
+COMMENT=$(echo "mona é chi mona fa" | sed -e 's/[^a-zA-Z0-9]/-/g')
+for f in $(find ${INFOLDER} -type f);
+do
+  echo $f
+  mime=$(file --mime-type $f | sed -r 's|.*: (.*)/.*|\1|')
+  if [[ $mime == "image" ]];
+  then
+    time=$(exiv2 -g Exif.Image.DateTime -Pv $f |\
+           sed -r 's|:|-|' |\
+           sed -r 's|:|-|')
+    flfmt=${FOL_FORMAT/COMMENT/$COMMENT}
+    fol=$(frmt "$time" $flfmt)
+    flfmt=${FIL_FORMAT/COMMENT/$COMMENT}
+    flfmt=${flfmt/ID/`printf '%03d' $ID`}
+    fil=$(frmt "$time" "$flfmt")
+    echo $fol/$fil
+    let ID=$ID+1
+  fi
+done
+
