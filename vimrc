@@ -12,7 +12,7 @@ set nocompatible               " be iMproved
 ""{{{ Vundle: plugin manager
 call plug#begin('~/.vim/bundle')
 
-"Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
 """""""" outliner
 "Plug 'vim-scripts/VOoM'
