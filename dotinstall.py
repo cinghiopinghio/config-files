@@ -308,12 +308,4 @@ if __name__ == '__main__':
         INTERACTIVE = args.interactive
         COLORED = args.color
 
-    parser.print_help()
     main(args)
-    exit()
-    if len(sys.argv) == 1:
-        main()
-    elif len(sys.argv) == 2:
-        main(sys.argv[1])
-    else:
-        log ('Usage: dotinstall.py [ini-file]',level='E',force=True)
