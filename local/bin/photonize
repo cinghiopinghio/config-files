@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 
+COMMAND="photonize"
 # copy from here
-INFOLDER=$1
+INFOLDER='.'
 #copy to here
 OUTFOLDER=${HOME}/grafica/foto
+COMMENT=''
+DRY=false
+
 #FORMATS
 # %Y = year
 # %m = month
@@ -14,35 +18,113 @@ OUTFOLDER=${HOME}/grafica/foto
 # ID = integer id
 # COMMENT = user comment (one per folder)
 # BASENAME = use camera file basename
-# out folder format
-FOL_FORMAT='%Y/%Y-%m-%d-COMMENT'
-# out file format
-FIL_FORMAT='%Y%m%d-ID-COMMENT'
+# out folder format 2014/2014-12-15
+FOL_FORMAT='%Y/%Y-%m-%d'
+# out file format 20141215-001
+FIL_FORMAT='%Y%m%d-ID'
+
+
+while getopts "f:n" opt; do
+  case $opt in
+    f)
+      INFOLDER=$OPTARG
+      echo "Installing from folder: ${INFOLDER}"
+      ;;
+    n)
+      echo -e "\n--- Dry Run ---\n"
+      DRY=true
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
+
+function sanitize {
+  echo "$1" | iconv -s -c -f utf8 -t ascii//TRANSLIT//IGNORE |\
+    sed -e 's/[^a-zA-Z0-9._]/-/g'
+}
 
 function frmt {
   # change date format to formats
-   date -d"$1" +"$2"
+  # input: date format COMMENT ID
+  str=$(date -d"$1" +"$2")
+  echo ${str,,}
 }
 
 
-ID=0
-COMMENT=$(echo "mona é chi mona fa" | sed -e 's/[^a-zA-Z0-9]/-/g')
+TMPFOL=$(mktemp -d --tmpdir ${COMMAND}-XXXX)
+
+
+# this produce the folder struct
 for f in $(find ${INFOLDER} -type f);
 do
-  echo $f
   mime=$(file --mime-type $f | sed -r 's|.*: (.*)/.*|\1|')
-  if [[ $mime == "image" ]];
-  then
-    time=$(exiv2 -g Exif.Image.DateTime -Pv $f |\
-           sed -r 's|:|-|' |\
-           sed -r 's|:|-|')
-    flfmt=${FOL_FORMAT/COMMENT/$COMMENT}
-    fol=$(frmt "$time" $flfmt)
-    flfmt=${FIL_FORMAT/COMMENT/$COMMENT}
-    flfmt=${flfmt/ID/`printf '%03d' $ID`}
-    fil=$(frmt "$time" "$flfmt")
-    echo $fol/$fil
-    let ID=$ID+1
-  fi
+  extension=${f##*.}
+  basename=$(basename ${f} .${extension})
+  extension=${extension,,}
+  #echo $f, $mime, $extension
+  case $mime in 
+    image)
+      # time format ready for date
+      time=$(exiv2 -g Exif.Image.DateTime -q -Pv $f |\
+             sed -r 's|:|-|' |\
+             sed -r 's|:|-|')
+      fol=$(frmt "$time" "$FOL_FORMAT")
+      fil=$(frmt "$time" "$FIL_FORMAT")
+      mkdir -p $TMPFOL/$fol
+
+      exiv2 -ep1 -q -l $TMPFOL/$fol $f &>>/dev/null
+
+      if [[ ! -e "$TMPFOL/$fol/$basename-preview1.jpg" ]];
+      then
+        cp $f $TMPFOL/$fol
+      fi
+      ;;
+    video)
+      echo "to be done (copy a frame to tmpfol)"
+      avconv -ss 00:03:00 -i $f -frames:v 1 timefile.jpg
+      lenght=$(avconv $f  2>&1 |\
+        sed -nr 's/.*Duration: (.*)\..., start.*/\1/p')
+      time=$(avconv $f  2>&1 |\
+        sed -nr '/.*creation_time.*: (.*)/{s//\1/p; q}')
+      half=$(echo $lenght | awk -F ':' '{print ($3+$2*60+$1*3600)/2}')
+
+      fol=$(frmt "$time" "$FOL_FORMAT")
+      fil=$(frmt "$time" "$FIL_FORMAT")
+      mkdir -p $TMPFOL/$fol
+
+      avconv -ss $half -i $f -vcodec mjpeg -vframes 1 $TMPFOL/$fol/$basename.jpg
+      ;;
+    *)
+      echo "not an interesting file"
+      ;;
+  esac
 done
+
+
+# here we need the actual copy stuff better if on a subprocess
+
+
+# ask for comments (tags?) and rename folders 
+for tmpf in $(find ${TMPFOL} -type d -links 2);
+do
+  day=$(basename $tmpf)
+  folname=${tmpf/$TMPFOL}
+  sxiv -ft -r $tmpf
+  echo -e "\nAdd a comment to the previous folder ($day): "
+  read comment
+  comment=$(sanitize "$comment")
+  outf=$OUTFOLDER$folname-$comment
+  echo $outf
+
+done
+
+# remove temporal folder with thumbnails
+rm -r $TMPFOL
 

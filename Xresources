@@ -59,11 +59,10 @@ URxvt.keysym.M-s:                         perl:keyboard-select:search
 URxvt.keysym.M-c:                         perl:clipboard:copy
 URxvt.keysym.M-v:                         perl:clipboard:paste
 URxvt.keysym.M-C-v:                       perl:clipboard:paste_escaped
-!URxvt.url-select.launcher:                /home/jason/Scripts/vimprobtab.sh
-URxvt.url-select.launcher:                /usr/bin/xdg-open
+URxvt.url-select.launcher:                /usr/bin/luakit
 URxvt.matcher.rend.0:                     -Uline fg16
-URxvt.matcher.button:                     1
-URXvt.tabbed.reopen-on-close: yes
+!URxvt.matcher.button:                     1
+!URXvt.tabbed.reopen-on-close: yes
 
 ! -- Xterm settings -- !
 xterm*termName:                           xterm-256color
