@@ -54,7 +54,7 @@ function frmt {
   # change date format to formats
   # input: date format COMMENT ID
   str=$(date -d"$1" +"$2")
-  echo ${str,,}
+  echo ${str,,} # lowercase everything
 }
 
 
@@ -78,28 +78,28 @@ do
       fol=$(frmt "$time" "$FOL_FORMAT")
       fil=$(frmt "$time" "$FIL_FORMAT")
       mkdir -p $TMPFOL/$fol
-
-      exiv2 -ep1 -q -l $TMPFOL/$fol $f &>>/dev/null
-
+      
       if [[ ! -e "$TMPFOL/$fol/$basename-preview1.jpg" ]];
       then
-        cp $f $TMPFOL/$fol
+        exiv2 -ep1 -q -l $TMPFOL/$fol $f &>>/dev/null
+        #cp $f $TMPFOL/$fol
       fi
       ;;
     video)
       echo "to be done (copy a frame to tmpfol)"
-      avconv -ss 00:03:00 -i $f -frames:v 1 timefile.jpg
-      lenght=$(avconv $f  2>&1 |\
+      #avconv -ss 00:03:00 -i $f -frames:v 1 timefile.jpg
+      lenght=$(ffmpeg -i $f  2>&1 |\
         sed -nr 's/.*Duration: (.*)\..., start.*/\1/p')
-      time=$(avconv $f  2>&1 |\
+      time=$(ffmpeg -i $f  2>&1 |\
         sed -nr '/.*creation_time.*: (.*)/{s//\1/p; q}')
       half=$(echo $lenght | awk -F ':' '{print ($3+$2*60+$1*3600)/2}')
+      echo $time
 
       fol=$(frmt "$time" "$FOL_FORMAT")
       fil=$(frmt "$time" "$FIL_FORMAT")
       mkdir -p $TMPFOL/$fol
 
-      avconv -ss $half -i $f -vcodec mjpeg -vframes 1 $TMPFOL/$fol/$basename.jpg
+      ffmpeg -ss $half -i $f -vcodec mjpeg -vframes 1 $TMPFOL/$fol/$basename.jpg
       ;;
     *)
       echo "not an interesting file"
