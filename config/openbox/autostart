@@ -1,0 +1,40 @@
+feh --bg-center grafica/sfondi/splash.png
+
+docker-tray &
+
+# tray icons and applets
+
+## start network manager
+#wicd-client -t &
+#batti & # battery tray icon
+batterymon &
+# volume control on panel
+volumeicon &
+#lal & # clock in tray
+lal -c green -f "%a %d-%m" &
+lal -c green -f "%H:%M" &
+
+# start panel
+#tint2 -c .config/tint2/sottone.tint2rc &
+
+# add bin to path
+#PATH+=":/home/mauro/bin:/home/mauro/.local/bin"
+
+# start power manager
+#xfce4-power-manager &
+
+# start conky
+#conky &
+
+# start nvidia settings
+#nvidia-settings -a InitialPixmapPlacement=2
+
+# start the screen locker
+#xautolock -time 10 -locker slock
+
+#xrdb -merge ~/.Xresources
+#the above is no longer required if you fix the lightdm bug:
+# in /etc/lightdm/Xsession remove -nocpp from xrdb -merge ...
+
+# start urxvt daemon
+urxvtd &

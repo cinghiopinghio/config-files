@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# set a random background from $DBLOC
+# depends on feh
+
+LOCATION=~/.local/share
+FNAME=background
+DBLOC=${LOCATION}/sfondi
+
+randomlink (){
+  sourcedir=$1
+  linkname=$2
+  files=( ${sourcedir}/* )
+  rfile=$(printf "%s\n" "${files[RANDOM % ${#files[@]}]}")
+  ln -s $rfile $linkname
+  echo $rfile
+}
+
+# check if bg images exist
+if [ ! -d ${DBLOC} ];
+then
+  echo "Error: no source directory with pictures"
+  exit 1
+fi
+
+rm -f ${LOCATION}/${FNAME}
+orig=$(randomlink ${DBLOC} ${LOCATION}/${FNAME})
+
+
+echo "Installing:" ${orig}
+feh --bg-fill ${LOCATION}/${FNAME}
+
