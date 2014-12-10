@@ -121,6 +121,7 @@ def install(dotfiles, dry=False, yesall=False):
             log (df.local+': no such file','E')
             exit(11)
 
+        log (df.local,level='sT')
         if pathexists(path):
             if os.path.islink(path) and\
                local == os.path.realpath(path):
@@ -200,6 +201,9 @@ def log(string, level='N', enable=True, indent=0, force=False):
                 out = Fore.RED + 'Error: ' + string + Fore.RESET
             elif level == 'T':
                 out = Fore.GREEN + '\n{0:-^75s}\n'.format(string) +\
+                      Fore.RESET
+            elif level == 'sT':
+                out = Fore.GREEN + '\n{0:-^35s}\n'.format(string) +\
                       Fore.RESET
 
             print(ind+out)
