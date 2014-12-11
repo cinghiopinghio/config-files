@@ -127,13 +127,16 @@ def install(dotfiles, dry=False, yesall=False):
                local == os.path.realpath(path):
 
                 log('Already installed!',indent=1)
+                if dry: log(local+','+path,level='D')
 
             elif not os.path.exists(os.path.realpath(path)):
 
                 log('Path '+path+' is a broken link.',level='W',\
                        force=True)
                 choice = input('Remove it? [Y/n]').lower()
-                if choice != 'n' and not dry:
+                if dry:
+                    log(local+','+path, level='D')
+                elif choice != 'n':
                     os.unlink(path)
                     link(local, path)
 
@@ -146,15 +149,17 @@ def install(dotfiles, dry=False, yesall=False):
                 log('4. Skip this',indent=2,force=True)
 
                 choice = input('Choice: [1234]')
-                if choice == '1' and not dry: 
+                if dry:
+                    log(local+','+path, level='D')
+                elif choice == '1': 
                     #overwrite
                     removepath(path)
                     link(local, path)
-                elif choice == '2' and not dry:
+                elif choice == '2':
                     os.system('meld ' + path + ' ' + local)
                     removepath(path)
                     link(local, path)
-                elif choice == '3' and not dry:
+                elif choice == '3':
                     dirname,basename = os.path.split(local)
                     bup = '{:s}/backup/{:s}-{:s}'.format(dirname,\
                                                              basename,\
@@ -164,7 +169,7 @@ def install(dotfiles, dry=False, yesall=False):
                     #os.system( 'mv '+real_path+' '+bup_dir)
                     shutil.move(path, bup)
                     link(local, path)
-                elif choice == '4' and not dry:
+                elif choice == '4':
                     pass
                 else:
                     pass
@@ -178,7 +183,9 @@ def install(dotfiles, dry=False, yesall=False):
             elif yesall:
                 installit = True
 
-            if installit and not dry:
+            if dry:
+                log(local+','+path, level='D')
+            elif installit:
                 link(local, path)
 
 def log(string, level='N', enable=True, indent=0, force=False):
@@ -205,10 +212,17 @@ def log(string, level='N', enable=True, indent=0, force=False):
             elif level == 'sT':
                 out = Fore.GREEN + '\n{0:-^35s}\n'.format(string) +\
                       Fore.RESET
-
-            print(ind+out)
+            elif level == 'D':
+                local,path = string.split(',')
+                out = Fore.BLUE + '{0:_<40s}{1:_>40s}'.format(local,path)+\
+                      Fore.RESET
         else:
-            print(ind+string)
+            if level == 'D':
+                local,path = string.split(',')
+                out = '{0:_<40s}{1:_>40s}'.format(local,path)
+            else:
+                out = string
+        print(ind+out)
 
 def pathexists(path):
     """local definition that consider broken links
