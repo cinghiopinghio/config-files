@@ -1,4 +1,4 @@
-feh --bg-center grafica/sfondi/splash.png
+background &
 
 docker-tray &
 
