@@ -232,7 +232,7 @@ bar {
         status_command i3status
         #status_command i3status -c ~/config
         #font pango: Terminus, Icon 8
-        font pango:DejaVu Sans Mono 8
+        font pango: DejaVu Sans Mono, FontAwesome 8
         output eDP1
         output DVI-I-1
         colors {
