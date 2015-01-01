@@ -141,9 +141,20 @@ bindsym $mod+Shift+7 move container to workspace 111
 bindsym $mod+Shift+8 move container to workspace 1000
 bindsym $mod+Shift+9 move container to workspace 1001
 bindsym $mod+Shift+0 move container to workspace 000
+# move focused container to workspace and go there
+bindsym $mod+Ctrl+1 move container to workspace 001; workspace 001
+bindsym $mod+Ctrl+2 move container to workspace 010; workspace 010
+bindsym $mod+Ctrl+3 move container to workspace 011; workspace 011
+bindsym $mod+Ctrl+4 move container to workspace 100; workspace 100
+bindsym $mod+Ctrl+5 move container to workspace 101; workspace 101
+bindsym $mod+Ctrl+6 move container to workspace 110; workspace 110
+bindsym $mod+Ctrl+7 move container to workspace 111; workspace 111
+bindsym $mod+Ctrl+8 move container to workspace 1000; workspace 1000
+bindsym $mod+Ctrl+9 move container to workspace 1001; workspace 1001
+bindsym $mod+Ctrl+0 move container to workspace 000; workspace 000
 # move to next/previous workspace
-bindsym $mod+i workspace prev
-bindsym $mod+o workspace next
+bindsym $mod+i workspace prev_on_output
+bindsym $mod+o workspace next_on_output
 bindsym $mod+z workspace back_and_forth
 bindsym $mod+Shift+z move container to workspace back_and_forth
 
