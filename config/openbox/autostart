@@ -15,7 +15,7 @@ lal -c green -f "%a %d-%m" &
 lal -c green -f "%H:%M" &
 
 # start panel
-#tint2 -c .config/tint2/sottone.tint2rc &
+tint2 -c ~/.config/tint2/sottone.tint2rc &
 
 # add bin to path
 #PATH+=":/home/mauro/bin:/home/mauro/.local/bin"

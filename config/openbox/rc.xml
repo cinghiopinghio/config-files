@@ -172,9 +172,14 @@
         <wrap>no</wrap>
       </action>
     </keybind>
+    <keybind key="C-space">
+      <action name="Execute">
+        <command>synapse</command>
+      </action>
+    </keybind>
     <keybind key="W-p">
       <action name="Execute">
-        <command>~/.local/bin/scripts/dpass</command>
+        <command>~/.local/bin/dpass</command>
       </action>
     </keybind>
     <keybind key="W-F5">
@@ -320,7 +325,7 @@
     </keybind>
     <keybind key="W-r">
       <action name="Execute">
-        <command>~/.local/bin/scripts/dmenu-recent</command>
+        <command>~/.local/bin/dmenu-recent</command>
         <startupnotify>
           <enabled>yes</enabled>
           <name>dmenu</name>
