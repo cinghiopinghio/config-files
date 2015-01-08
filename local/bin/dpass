@@ -9,7 +9,13 @@ sb='#B01010'
 sf='#222222'
 font='-*-bitstream vera sans-medium-r-normal-*-*-*-*-*-*-*-iso8859-1'
 font="-*-dejavu sans-medium-R-normal-*-*-*-*-*-*-*-iso10646-1"
-dmenucmd=( dmenu -i -fn "$font" -nb "$nb" -nf "$nf" -sb "$sb" -sf "$sf" )
+if [ -e ~/codes/dmenu2/dmenu ];
+then
+  cmd=~/codes/dmenu2/dmenu
+else
+  cmd=dmenu
+fi
+dmenucmd=( $cmd -i -fn "$font" -nb "$nb" -nf "$nf" -sb "$sb" -sf "$sf" )
 
 prefix=${PASSWORD_STORE_DIR:-~/.password-store}
 files=( "$prefix"/**/*.gpg )

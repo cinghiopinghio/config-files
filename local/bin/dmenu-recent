@@ -10,7 +10,13 @@ nf='#999999'
 sb='#109010'
 sf='#222222'
 font='-*-bitstream vera sans-medium-r-normal-*-*-*-*-*-*-*-iso8859-1'
-dmenu_cmd=( dmenu -i -fn "$font" -nb "$nb" -nf "$nf" -sb "$sb" -sf "$sf" )
+if [ -e ~/codes/dmenu2/dmenu ];
+then
+  cmd=~/codes/dmenu2/dmenu
+else
+  cmd=dmenu
+fi
+dmenu_cmd=( $cmd -i -fn "$font" -nb "$nb" -nf "$nf" -sb "$sb" -sf "$sf" )
 terminal="sakura -e"
 max_recent=199 # Number of recent commands to track
 
