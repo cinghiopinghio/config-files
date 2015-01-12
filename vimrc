@@ -40,7 +40,7 @@ if has("python")
 endif
 """"""" window splits control
 Plug 'zhaocai/GoldenView.Vim'
-Plug 'itchyny/thumbnail.vim'
+Plug 'itchyny/thumbnail.vim', { 'on': 'Thumbnail' }
 """"""" parenthesis change
 Plug 'tpope/vim-surround'
 "Plug 'benmills/vimux'
