@@ -44,7 +44,7 @@ theme.menu_fg                 = color_lwhite
 theme.menu_bg                 = color_dblack
 theme.menu_selected_fg        = color_dblack
 theme.menu_selected_bg        = color_lwhite
-theme.menu_title_bg           = color_lwhite
+theme.menu_title_bg           = color_dblack
 theme.menu_primary_title_fg   = color_dred
 theme.menu_secondary_title_fg = color_dred
 

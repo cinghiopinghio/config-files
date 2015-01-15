@@ -73,7 +73,11 @@ search_engines.default = search_engines.sp
 
 -- Per-domain webview properties
 -- See http://webkitgtk.org/reference/webkitgtk/stable/WebKitWebSettings.html
-domain_props = { --[[
+domain_props = { 
+    ["luakit://history"] = {
+        user_stylesheet_uri     = "file://" .. luakit.data_dir .. "/styles/custom.css",
+    }
+    --[[
     ["all"] = {
         enable_scripts          = false,
         enable_plugins          = false,
@@ -87,7 +91,8 @@ domain_props = { --[[
     ["bbs.archlinux.org"] = {
         user_stylesheet_uri     = "file://" .. luakit.data_dir .. "/styles/dark.css",
         enable_private_browsing = true,
-    }, ]]
+    },
+    ]]
 }
 
 -- vim: et:sw=4:ts=8:sts=4:tw=80
