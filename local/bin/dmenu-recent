@@ -17,7 +17,7 @@ else
   cmd=dmenu
 fi
 dmenu_cmd=( $cmd -i -fn "$font" -nb "$nb" -nf "$nf" -sb "$sb" -sf "$sf" )
-terminal="sakura -e"
+terminal="urxvt -e"
 max_recent=199 # Number of recent commands to track
 
 cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/dmenu-recent"
