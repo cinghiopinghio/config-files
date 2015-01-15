@@ -284,9 +284,12 @@ exec --no-startup-id unclutter -root -visible
 exec --no-startup-id ~/.local/bin/background 
 
 #for_window [class="Firefox"] border none
-for_window [class="pinentry"] floating enabled
-for_window [class="MPlayer"] floating enabled
-for_window [class="smplayer"] floating enabled
-for_window [class="Arandr"] floating enabled
-for_window [class="gimp"] floating enabled
-for_window [class="Pidgin"] floating enabled
+for_window [class="(?i)pinentry"] floating enabled
+for_window [class="(?i)MPlayer"] floating enabled
+for_window [class="(?i)smplayer"] floating enabled
+for_window [class="(?i)Arandr"] floating enabled
+for_window [class="(?i)sxiv"] floating enabled
+for_window [class="(?i)Pidgin"] floating enabled
+for_window [class="(?i)xcalc"] floating enabled
+for_window [title="(?i)Calculator"] floating enabled
+for_window [title="(?i)speedCrunch"] floating enabled
