@@ -49,14 +49,15 @@ webview.init_funcs.set_win_trans = function (view, w)
     view.transparent = true
 end
 -- custom about:blank page
-webview.init_funcs.set_dark_about_blank = function (view, w)
-    view:add_signal("navigation-request", function (_, uri)
-        if uri == "about:blank" then
-            view:load_string("<html><body bgcolor='#282828'><h1 style='width:100%;padding:1em;text-align:center;color:#ebdbb2'>about:blank</h1></body></html>", "about:blank")
-            return true
-        end
-    end)
-end
+-- webview.init_funcs.set_dark_about_blank = function (view, w)
+--     view:add_signal("navigation-request", function (_, uri)
+--         if uri == "about:blank" then
+--             view:load_string("<html><body bgcolor='#282828'></body></html>", "about:blank")
+-- --            view:load_string("<html><body bgcolor='#282828'><h1 style='width:100%;padding:1em;text-align:center;color:#ebdbb2'>about:blank</h1></body></html>", "about:blank")
+--             return true
+--         end
+--     end)
+-- end
 -- browse history with dmenu
 webview.methods.browse_hist_dmenu = function( view, w )
     local scripts_dir = luakit.data_dir .. "/scripts" 

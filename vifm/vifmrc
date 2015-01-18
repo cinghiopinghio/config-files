@@ -105,7 +105,8 @@ filetype *.html,*.htm,*.shtml firefox
 filetype *.pdf zathura,evince
 
 " Image
-filetype *.jpeg,*.jpg,*.png feh,geeqie,eog
+filetype *.jpeg,*.jpg,*.png sxiv,feh,geeqie,eog
+filetype *.orf,*.nef geeqie
 
 " For automated FUSE mounts, you must register an extension with FILETYPE=..
 " in one of following formats:
