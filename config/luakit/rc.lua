@@ -49,26 +49,15 @@ webview.init_funcs.set_win_trans = function (view, w)
     view.transparent = true
 end
 -- custom about:blank page
-webview.init_funcs.set_dark_about_blank = function (view, w)
-    view:add_signal("navigation-request", function (_, uri)
-        if uri == "about:blank" then
-            view:load_string("<html><body bgcolor='#282828'><h1 style='width:100%;padding:1em;text-align:center;color:#ebdbb2'>about:blank</h1></body></html>", "about:blank")
-            return true
-        end
-    end)
-end
--- browse history with dmenu
-webview.methods.browse_hist_dmenu = function( view, w )
-    local scripts_dir = luakit.data_dir .. "/scripts" 
-    local hist_file = luakit.data_dir .. "/history.db" 
-    local query = "select uri, title, datetime(last_visit,'unixepoch') from history order by last_visit DESC;" 
-    local dmenu = "dmenu -l 10" 
-    -- AFAIK, luakit will urlencode spaces in uri's so this crude cut call should work fine.
-    local fh = io.popen( "sh -c \"echo \\\"" .. query .. "\\\" | sqlite3 " .. hist_file .. " | sed 's#|#  #' | " .. dmenu .. " | cut -d' ' -f1\"" , "r" )
-    local selection = fh:read( "*a" )
-    fh:close()
-    if selection ~= "" then w:navigate( selection ) end
-end
+-- webview.init_funcs.set_dark_about_blank = function (view, w)
+--     view:add_signal("navigation-request", function (_, uri)
+--         if uri == "about:blank" then
+--             view:load_string("<html><body bgcolor='#282828'></body></html>", "about:blank")
+-- --             view:load_string("<html><body bgcolor='#282828'><h1 style='width:100%;padding:1em;text-align:center;color:#ebdbb2'>about:blank</h1></body></html>", "about:blank")
+--             return true
+--         end
+--     end)
+-- end
 
 -- Load users mode configuration
 -- ("$XDG_CONFIG_HOME/luakit/modes.lua" or "/etc/xdg/luakit/modes.lua")
