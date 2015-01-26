@@ -1,18 +1,25 @@
+#!/usr/bin/env bash
+
+if [ -z ${PASSWORD_STORE_DIR+x} ];
+then 
+  passdir=$HOME"/.password-store"
+else
+  passdir=${PASSWORD_STORE_DIR}
+fi
+
+passids=( $(find $passdir -name "*.gpg" -printf "%P\n" | sed -e 's/\.gpg$//') )
 
 if [ -z $@ ];
 then
-  if [ -z ${PASSWORD_STORE_DIR+x} ];
-  then 
-    passdir=$HOME"/.password-store"
-  else
-    passdir=${PASSWORD_STORE_DIR}
-  fi
-
-  find $passdir -name "*.gpg" | sed -e 's/^.*\///' -e 's/\.gpg$//'
-  #find $passdir -name "*.gpg" -exec basename -s ".gpg" {} \;
+  for passid in ${passids[@]};
+  do
+    echo ${passid}
+  done
 
 else
-  pass show --clip $@ >> tmp
+  passid=$@
+  pass show --clip ${passid} > /dev/null 
   notify-send 'DPass:' "secret copied to clipboard\n (will be cleared in 45 sec.)"
 fi
 
+#vim ft:sh
