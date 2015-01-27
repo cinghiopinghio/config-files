@@ -8,6 +8,7 @@ application/excel ;        open_attachment %s spreadsheet
 application/msexcel ;      open_attachment %s spreadsheet
 application/vnd.ms-exc ;   open_attachment %s spreadsheet
 application/vnd.ms-excel ; open_attachment %s spreadsheet
+application/vnd.ms-office; libreoffice %s; 
 
 # PDFs
 application/pdf ;          open_attachment %s pdf ; nametemplate=%s.pdf ;

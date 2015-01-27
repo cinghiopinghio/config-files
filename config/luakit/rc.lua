@@ -45,9 +45,9 @@ require "window"
 require "webview"
 
 -- start with transparent background (black)
-webview.init_funcs.set_win_trans = function (view, w)
-    view.transparent = true
-end
+-- webview.init_funcs.set_win_trans = function (view, w)
+--     view.transparent = true
+-- end
 -- custom about:blank page
 -- webview.init_funcs.set_dark_about_blank = function (view, w)
 --     view:add_signal("navigation-request", function (_, uri)

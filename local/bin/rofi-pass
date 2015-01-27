@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+VERB=false
+SEP='|'
+
+if [ -z ${PASSWORD_STORE_DIR+x} ];
+then 
+  passdir=$HOME"/.password-store"
+else
+  passdir=${PASSWORD_STORE_DIR}
+fi
+
+passids=( $(find $passdir -name "*.gpg" -printf "%P\n" | sed -e 's/\.gpg$//') )
+
+if [ -z $@ ];
+then
+  for passid in ${passids[@]};
+  do
+    base=$(dirname $passid)
+    [[ $base == '.' ]] && base=" "
+    name=$(basename $passid)
+    string="$base\t$SEP$name"
+    if [ "$VERB" == true ];
+    then
+      echo -e $string
+    else
+      echo -e $string | grep -v "prova"
+    fi
+  done
+
+else
+  passid=$(echo $@ | tr -d "\t" | tr ${SEP} "/")
+  pass show --clip ${passid} > /dev/null 
+  notify-send 'DPass:' "secret copied to clipboard\n (will be cleared in 45 sec.)"
+fi
+
+#vim ft:sh
