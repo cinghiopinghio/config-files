@@ -109,8 +109,8 @@ rofi.bgalt:#262626
 rofi.hlfg: #282828
 rofi.hlbg: #689d6a
 rofi.bc:   #689d6a
-rofi.disable-history: false 
-rofi.levenshtein-sort: true 
+rofi.disable-history:  false 
+rofi.levenshtein-sort: false 
 rofi.switchers: window,run,ssh
 
 
