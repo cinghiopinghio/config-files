@@ -19,9 +19,9 @@ color_dred                    = "#cc241d"
 -- theme.font                    = "Droid Sans Mono 10" -- large
 -- theme.font                    = "LM Mono Light Cond 10" -- quite narrow
 -- theme.font                    = "LM Mono 10" -- quite narrow
-theme.font                    = "inconsolata 10"
+-- theme.font                    = "inconsolata 10"
 -- theme.font                    = "DejaVu Sans Mono Cond 10" -- large
--- theme.font                    = "DejaVu Sans Mono 10" -- large
+theme.font                    = "DejaVu Sans Mono 10" -- large
 theme.fg                      = color_lwhite
 theme.bg                      = color_dblack
 
