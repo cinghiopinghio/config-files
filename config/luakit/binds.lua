@@ -336,8 +336,6 @@ add_binds("normal", {
     key({"Control"}, "i", "Go forward in the browser history.",
         function (w, m) w:forward(m.count) end),
 
-    buf("^gl$", function (w) w:browse_hist_dmenu() end),
-
     -- Tab
     key({"Control"}, "Page_Up", "Go to previous tab.",
         function (w) w:prev_tab() end),

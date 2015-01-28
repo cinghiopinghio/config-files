@@ -74,9 +74,6 @@ search_engines.default = search_engines.sp
 -- Per-domain webview properties
 -- See http://webkitgtk.org/reference/webkitgtk/stable/WebKitWebSettings.html
 domain_props = { 
-    ["luakit://history"] = {
-        user_stylesheet_uri     = "file://" .. luakit.data_dir .. "/styles/custom.css",
-    }
     --[[
     ["all"] = {
         enable_scripts          = false,

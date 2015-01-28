@@ -69,6 +69,7 @@ Plug 'bling/vim-airline'
 "Plug 'vim-scripts/Align'
 Plug 'junegunn/vim-easy-align'
 "Plug 'Raimondi/delimitMate'
+Plug 'thinca/vim-quickrun'
 
 Plug 'cinghiopinghio/abook-vim'
 Plug 'caio/querycommandcomplete.vim'
