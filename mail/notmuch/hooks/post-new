@@ -5,7 +5,9 @@ NOREAD='-unread -inbox'
 
 ## Lists
 notmuch tag +troskos $NOREAD -- $NEW to:"ia_aragon@lists.riseup.net"
+notmuch tag +troskos $NOREAD -- $NEW to:"info_ia_aragon@lists.riseup.net"
 notmuch tag +troskos $NOREAD -- $NEW not tag:troskos and subject:"IA Aragón"
+notmuch tag +troskos $NOREAD -- $NEW not tag:troskos and subject:"Anticapitalistas Aragón"
 notmuch tag +com_vank        -- $NEW to:"comitatovanchiglia_operativi@googlegroups.com"
 notmuch tag +gap_vank        -- $NEW to:"gap_comitatoquartierevanchiglia@googlegroups.com"
 notmuch tag +com_vank        -- $NEW to:"comitatovanchiglia_news@googlegroups.com"

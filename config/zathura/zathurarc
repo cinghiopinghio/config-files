@@ -1,7 +1,7 @@
 set window-icon /home/mauro/.config/zathura/zathura.png
 
-set font                        "inconsolata 12"
-#set font                        "dejavu sans mono 10"
+#set font                        "inconsolata 12"
+set font                        "dejavu sans mono 10"
 
 # settings
 set adjust-open height

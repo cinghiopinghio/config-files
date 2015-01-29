@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 VERB=false
-SEP='|'
 
 if [ -z ${PASSWORD_STORE_DIR+x} ];
 then 
@@ -12,24 +11,23 @@ fi
 
 passids=( $(find $passdir -name "*.gpg" -printf "%P\n" | sed -e 's/\.gpg$//') )
 
-if [ -z $@ ];
+if [ -z "$@" ];
 then
   for passid in ${passids[@]};
   do
     base=$(dirname $passid)
-    [[ $base == '.' ]] && base=" "
+    [[ $base == '.' ]] && base=' '
     name=$(basename $passid)
-    string="$base\t$SEP$name"
     if [ "$VERB" == true ];
     then
-      echo -e $string
+      printf '%-13s %s\n' "$base" $name
     else
-      echo -e $string | grep -v "prova"
+      printf '%-13s %s\n' "$base" $name | grep -v "prova"
     fi
   done
 
 else
-  passid=$(echo $@ | tr -d "\t" | tr ${SEP} "/")
+  passid=$(echo $@ | tr -s " " "/")
   pass show --clip ${passid} > /dev/null 
   notify-send 'DPass:' "secret copied to clipboard\n (will be cleared in 45 sec.)"
 fi
