@@ -163,11 +163,11 @@ else
 endif
 let g:gruvbox_contrast_dark='medium'
 "colorscheme molokai
-colorscheme gruvbox
 "colorscheme xinghio
 "let g:seoul256_background = 235
 "let g:seoul256_light_background = 256
 "colorscheme seoul256
+colorscheme gruvbox
 set makeprg=make
 set grepprg=grep\ -nH\ $*
 set pastetoggle=<F2>
@@ -293,6 +293,7 @@ let g:UltiSnipsListSnippets="<c-l>"
 "{{{ AirLine
 " see the theme file for the color definition
 let g:airline_theme='gruvbox'
+"let g:airline_theme='kalisi'
 let g:airline_right_sep=''
 let g:airline_left_sep=''
 let g:airline#extensions#default#layout = [
