@@ -12,6 +12,7 @@ set nocompatible               " be iMproved
 ""{{{ Vundle: plugin manager
 call plug#begin('~/.vim/bundle')
 
+Plug 'chriskempson/base16-vim'
 Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
 """""""" outliner
@@ -55,7 +56,7 @@ Plug 'Shougo/vimproc.vim'
 Plug 'morhetz/gruvbox'
 Plug 'junegunn/seoul256.vim'
 Plug 'zeis/vim-kolor'
-"Plug 'freeo/vim-kalisi'
+Plug 'freeo/vim-kalisi'
 "Plug 'chriskempson/base16-vim'
 "Plug 'sjl/badwolf' " too dark 
 "Plug 'altercation/vim-colors-solarized'
@@ -167,6 +168,8 @@ let g:gruvbox_contrast_dark='medium'
 "let g:seoul256_background = 235
 "let g:seoul256_light_background = 256
 "colorscheme seoul256
+"let base16colorspace=256
+"colorscheme base16-default
 colorscheme gruvbox
 set makeprg=make
 set grepprg=grep\ -nH\ $*
