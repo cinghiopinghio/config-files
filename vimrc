@@ -5,6 +5,8 @@
 "{{{ PREAMBLE
 let maplocalleader=' '
 set nocompatible               " be iMproved
+filetype indent plugin on
+syntax on
 "}}}
 
 "----------------------------------------------------------------------
@@ -134,10 +136,7 @@ endif " has("autocmd")}}}
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
-if &t_Co > 2 || has("gui_running")
-  syntax on
-  set hlsearch
-endif
+set hlsearch
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
 set history=50                 " keep 50 lines of command line history
 set ruler                      " show the cursor position all the time
