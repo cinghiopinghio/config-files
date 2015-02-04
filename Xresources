@@ -71,8 +71,8 @@ xterm*cursorColor:                        #395573
 xterm*toolBar:                            false
 xterm*scrollBar:                          false
 xterm*rightScrollBar:                     false
-xterm*background:                         #030303
-xterm*foreground:                         #999999
+!xterm*background:                         #030303
+!xterm*foreground:                         #999999
 xterm*faceName:                           dejavu sans mono:medium:size=11
 xterm*allowBoldFonts:                     false
 xterm*geometry:                           120x28

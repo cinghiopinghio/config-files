@@ -2,3 +2,4 @@
 vim/bundle
 vim/backup
 config/mutt/mailboxes
+vim/autoload/plug.vim.old
