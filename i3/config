@@ -235,6 +235,7 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 #i3bar_command dzen2
 
+exec --no-startup-id ~/.local/bin/background 
 bar {
         status_command i3status
         #status_command i3status -c ~/config
@@ -275,7 +276,6 @@ bar {
 # autostart
 exec --no-startup-id urxvtd -q -f -o
 exec --no-startup-id unclutter -root -visible
-exec --no-startup-id ~/.local/bin/background 
 
 #for_window [class="Firefox"] border none
 for_window [class="(?i)pinentry|(?i)Arandr"] floating enabled
