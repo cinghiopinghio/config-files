@@ -99,20 +99,23 @@ function frmt {
 
 for f in $(find ${INFOLDER} -type f);
 do
-  mime=$(file --mime-type $f | sed -r 's|.*: (.*)/.*|\1|')
+  #mime=$(file --mime-type $f | sed -r 's|.*: (.*)/.*|\1|')
   extension=${f##*.}
   basename=$(basename ${f} .${extension})
   extension=${extension,,}
 
-  datetime=$(exiftool -s3 -DateTimeOriginal $f |\
-             sed -r 's|:|-|' |\
-             sed -r 's|:|-|')
-  [[ $(date -d $datetime 2>>/dev/null) ]] || datetime=$(stat -c "%y" $f)
+  datetime=$(exiftool -s3 -DateTimeOriginal $f 2>>/dev/null)
+  if [[ "$?" == "0" ]];
+  then
+    datetime=$(echo $datetime | sed -r 's|:|-|' | sed -r 's|:|-|')
+  else
+    datetime=$(stat -c "%y" $f)
+  fi
+  #[[ $(date -d "$datetime" 2>>/dev/null) ]] || datetime=$(stat -c "%y" $f)
 
   log "file - $f"
   log "base - $basename"
   log "ext  - $extension"
-  log "mime - $mime"
   log "date - $datetime"
   fol=$(frmt "$datetime" "$FOL_FORMAT" $basename)
   fil=$(frmt "$datetime" "$FIL_FORMAT" $basename)
@@ -123,87 +126,19 @@ do
     echo "--- file source : $f"
     echo "--- file target : ${destination}"
   else
+    mkdir -p ${OUTFOLDER}/${fol}
     cp $f $destination
   fi
 
 done
 
+if [[ "$DRY" == 'false' ]];
+then
+  rm -f ${CACHE}/${COMMAND}
+  echo $datetime > ${CACHE}/${COMMAND}
+fi
 
 echo fine $destination
 # TODO: mettere un link a un file cache per la prossima volta copiare solo
 # file +nuovi (usando "newer" in find)
-exit
-
-
-
-TMPFOL=$(mktemp -d --tmpdir ${COMMAND}-XXXX)
-last=$(cat )
-
-
-# this produce the folder struct
-for f in $(find ${INFOLDER} -type f);
-do
-  mime=$(file --mime-type $f | sed -r 's|.*: (.*)/.*|\1|')
-  extension=${f##*.}
-  basename=$(basename ${f} .${extension})
-  extension=${extension,,}
-  #echo $f, $mime, $extension
-  case $mime in 
-    image)
-      # time format ready for date
-      time=$(exiv2 -g Exif.Image.DateTime -q -Pv $f |\
-             sed -r 's|:|-|' |\
-             sed -r 's|:|-|')
-      fol=$(frmt "$time" "$FOL_FORMAT")
-      fil=$(frmt "$time" "$FIL_FORMAT")
-      mkdir -p $TMPFOL/$fol
-      
-      if [[ ! -e "$TMPFOL/$fol/$basename-preview1.jpg" ]];
-      then
-        exiv2 -ep1 -q -l $TMPFOL/$fol $f &>>/dev/null
-        #cp $f $TMPFOL/$fol
-      fi
-      ;;
-    video)
-      echo "to be done (copy a frame to tmpfol)"
-      #avconv -ss 00:03:00 -i $f -frames:v 1 timefile.jpg
-      lenght=$(ffmpeg -i $f  2>&1 |\
-        sed -nr 's/.*Duration: (.*)\..., start.*/\1/p')
-      time=$(ffmpeg -i $f  2>&1 |\
-        sed -nr '/.*creation_time.*: (.*)/{s//\1/p; q}')
-      half=$(echo $lenght | awk -F ':' '{print ($3+$2*60+$1*3600)/2}')
-      echo $time
-
-      fol=$(frmt "$time" "$FOL_FORMAT")
-      fil=$(frmt "$time" "$FIL_FORMAT")
-      mkdir -p $TMPFOL/$fol
-
-      ffmpeg -ss $half -i $f -vcodec mjpeg -vframes 1 $TMPFOL/$fol/$basename.jpg
-      ;;
-    *)
-      echo "not an interesting file"
-      ;;
-  esac
-done
-
-
-# here we need the actual copy stuff better if on a subprocess
-
-
-# ask for comments (tags?) and rename folders 
-for tmpf in $(find ${TMPFOL} -type d -links 2);
-do
-  day=$(basename $tmpf)
-  folname=${tmpf/$TMPFOL}
-  sxiv -ft -r $tmpf
-  echo -e "\nAdd a comment to the previous folder ($day): "
-  read comment
-  comment=$(sanitize "$comment")
-  outf=$OUTFOLDER$folname-$comment
-  echo $outf
-
-done
-
-# remove temporal folder with thumbnails
-rm -r $TMPFOL
 
