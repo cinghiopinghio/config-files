@@ -22,16 +22,11 @@ INTERACTIVE = True
 FAKEHOME = False
 
 class DotFile():
-    """Each dotfile"""
+    """a class for each dotfile
+    """
 
-    def __init__(self, local, home='~', config='.'):
-        """init
-
-        :local: TODO
-        :path: TODO
-
-        """
-        self.home = os.path.expanduser(home)
+    def __init__(self, local, config='.'):
+        self.home = os.path.expanduser('~')
         self.config = os.path.abspath(os.path.expanduser(config))
 
         self.local = local
@@ -74,8 +69,6 @@ class DotFile():
 
     def __ne__(self, other):
         return not self.__eq__(other)
-
-
 
     def __str__(self):
         """__str__

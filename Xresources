@@ -71,11 +71,12 @@ xterm*cursorColor:                        #395573
 xterm*toolBar:                            false
 xterm*scrollBar:                          false
 xterm*rightScrollBar:                     false
-!xterm*background:                         #030303
+xterm*background:                         #252525
 !xterm*foreground:                         #999999
 xterm*faceName:                           dejavu sans mono:medium:size=11
 xterm*allowBoldFonts:                     false
-xterm*geometry:                           120x28
+!xterm*geometry:                           120x28
+*xterm.letterSpace:                        -2
 
 ! -- Dzen settings -- !
 dzen2.font:                               droid sans mono slashed:medium:size=10

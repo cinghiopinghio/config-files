@@ -13,6 +13,7 @@ notmuch tag +gap_vank        -- $NEW to:"gap_comitatoquartierevanchiglia@googleg
 notmuch tag +com_vank        -- $NEW to:"comitatovanchiglia_news@googlegroups.com"
 notmuch tag +alot            -- $NEW to:"alot@noreply.github.com"
 notmuch tag +antifabox       -- $NEW to:"antifaboxe-list@csoaskatasuna.org"
+notmuch tag +isi             -- $NEW from:"segreteria1@isi.it"
 
 ## Deleted drafts and sent mails
 notmuch tag +deleted $NOREAD -- $NEW folder:Trash and not tag:deleted
