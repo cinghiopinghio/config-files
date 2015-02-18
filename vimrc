@@ -161,7 +161,6 @@ if exists('+colorcolumn')
 else
   au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
-let g:gruvbox_contrast_dark='medium'
 "colorscheme molokai
 "colorscheme xinghio
 "let g:seoul256_background = 235
@@ -169,6 +168,7 @@ let g:gruvbox_contrast_dark='medium'
 "colorscheme seoul256
 "let base16colorspace=256
 "colorscheme base16-default
+let g:gruvbox_contrast_dark='medium'
 colorscheme gruvbox
 set makeprg=make
 set grepprg=grep\ -nH\ $*

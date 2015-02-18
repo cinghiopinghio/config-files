@@ -20,7 +20,7 @@ image/jpeg ;               feh %s ;                 nametemplate=%s.jpg ;
 image/png ;                feh %s ;                 nametemplate=%s.png ;
 
 # Text
-#text/html                    ; luakit %s;
+#text/html                    ; luakit %s; copiousoutput
 text/html ;                elinks -dump %s ;        nametemplate=%s.html ; copiousoutput ;
 #text/html                    ; w3m -dump %s                      ; nametemplate=%s.html ; copiousoutput ; 
 #text/html                     ; lynx -display_charset=utf-8 -dump %s ; nametemplate=%s.html ; copiousoutput

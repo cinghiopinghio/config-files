@@ -41,6 +41,8 @@ Xft.rgba:                                 rgb
 ! -- Fonts -- !
 URxvt.font:                               xft:dejavu sans mono:size=10.5
 URxvt.boldFont:                           xft:dejavu sans mono:size=10.5
+!URxvt.font:                               xft:liberation mono:size=11
+!URxvt.boldFont:                           xft:liberation mono:size=11
 !URxvt.font:                              xft:droid sans mono slashed:size=10.5
 !URxvt.boldFont:                          xft:droid sans mono slashed:size=10.5
 !URxvt.font:                              xft:luxi mono:regular:size=10

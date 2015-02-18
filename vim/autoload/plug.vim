@@ -73,6 +73,7 @@ let s:plug_tab = get(s:, 'plug_tab', -1)
 let s:plug_buf = get(s:, 'plug_buf', -1)
 let s:mac_gui = has('gui_macvim') && has('gui_running')
 let s:is_win = has('win32') || has('win64')
+let s:ruby = has('ruby') && (v:version >= 703 || v:version == 702 && has('patch374'))
 let s:nvim = has('nvim') && !s:is_win
 let s:me = resolve(expand('<sfile>:p'))
 let s:base_spec = { 'branch': 'master', 'frozen': 0 }
@@ -114,7 +115,7 @@ function! s:define_commands()
   command! -nargs=* -bar -bang -complete=customlist,s:names PlugInstall call s:install('<bang>' == '!', [<f-args>])
   command! -nargs=* -bar -bang -complete=customlist,s:names PlugUpdate  call s:update('<bang>' == '!', [<f-args>])
   command! -nargs=0 -bar -bang PlugClean call s:clean('<bang>' == '!')
-  command! -nargs=0 -bar PlugUpgrade if s:upgrade() | execute 'source' s:me | endif
+  command! -nargs=0 -bar PlugUpgrade if s:upgrade() | execute 'source' s:esc(s:me) | endif
   command! -nargs=0 -bar PlugStatus  call s:status()
   command! -nargs=0 -bar PlugDiff    call s:diff()
   command! -nargs=? -bar PlugSnapshot call s:snapshot(<f-args>)
@@ -131,7 +132,7 @@ endfunction
 function! s:source(from, ...)
   for pattern in a:000
     for vim in s:lines(globpath(a:from, pattern))
-      execute 'source' vim
+      execute 'source' s:esc(vim)
     endfor
   endfor
 endfunction
@@ -234,6 +235,23 @@ function! s:trim(str)
   return substitute(a:str, '[\/]\+$', '', '')
 endfunction
 
+function! s:git_version_requirement(...)
+  let s:git_version = get(s:, 'git_version',
+    \ map(split(split(s:system('git --version'))[-1], '\.'), 'str2nr(v:val)'))
+  for idx in range(0, a:0 - 1)
+    let v = get(s:git_version, idx, 0)
+    if     v < a:000[idx] | return 0
+    elseif v > a:000[idx] | return 1
+    endif
+  endfor
+  return 1
+endfunction
+
+function! s:progress_opt(base)
+  return a:base && !s:is_win &&
+        \ s:git_version_requirement(1, 7, 1) ? '--progress' : ''
+endfunction
+
 if s:is_win
   function! s:rtp(spec)
     return s:path(a:spec.dir . get(a:spec, 'rtp', ''))
@@ -309,9 +327,9 @@ function! s:reorg_rtp()
   let s:middle = get(s:, 'middle', &rtp)
   let rtps     = map(s:loaded_names(), 's:rtp(g:plugs[v:val])')
   let afters   = filter(map(copy(rtps), 'globpath(v:val, "after")'), 'isdirectory(v:val)')
-  let rtp      = join(map(rtps, 's:escrtp(v:val)'), ',')
+  let rtp      = join(map(rtps, 'escape(v:val, ",")'), ',')
                  \ . ','.s:middle.','
-                 \ . join(map(afters, 's:escrtp(v:val)'), ',')
+                 \ . join(map(afters, 'escape(v:val, ",")'), ',')
   let &rtp     = substitute(substitute(rtp, ',,*', ',', 'g'), '^,\|,$', '', 'g')
   let s:prtp   = &rtp
 
@@ -420,7 +438,7 @@ function! s:parse_options(arg)
   elseif type == s:TYPE.dict
     call extend(opts, a:arg)
     if has_key(opts, 'tag')
-      let opts.branch = remove(opts, 'tag')
+      let opts.tag = remove(opts, 'tag')
     endif
     if has_key(opts, 'dir')
       let opts.dir = s:dirpath(expand(opts.dir))
@@ -588,6 +606,7 @@ function! s:prepare()
   endif
   silent! unmap <buffer> <cr>
   silent! unmap <buffer> L
+  silent! unmap <buffer> o
   silent! unmap <buffer> X
   setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap cursorline modifiable
   setf vim-plug
@@ -700,6 +719,15 @@ function! s:update_impl(pull, force, args) abort
     return
   endif
 
+  if !s:is_win && s:git_version_requirement(2, 3)
+    let s:git_terminal_prompt = exists('$GIT_TERMINAL_PROMPT') ? $GIT_TERMINAL_PROMPT : ''
+    let $GIT_TERMINAL_PROMPT = 0
+    for plug in values(todo)
+      let plug.uri = substitute(plug.uri,
+            \ '^https://git::@github\.com', 'https://github.com', '')
+    endfor
+  endif
+
   if !isdirectory(g:plug_home)
     try
       call mkdir(g:plug_home, 'p')
@@ -717,7 +745,7 @@ function! s:update_impl(pull, force, args) abort
     \ 'pull':    a:pull,
     \ 'force':   a:force,
     \ 'new':     {},
-    \ 'threads': (has('ruby') || s:nvim) ? min([len(todo), threads]) : 1,
+    \ 'threads': (s:ruby || s:nvim) ? min([len(todo), threads]) : 1,
     \ 'bar':     '',
     \ 'fin':     0
   \ }
@@ -726,7 +754,7 @@ function! s:update_impl(pull, force, args) abort
   call append(0, ['', ''])
   normal! 2G
 
-  if has('ruby') && s:update.threads > 1
+  if s:ruby && s:update.threads > 1
     try
       let imd = &imd
       if s:mac_gui
@@ -759,6 +787,9 @@ function! s:update_impl(pull, force, args) abort
 endfunction
 
 function! s:update_finish()
+  if exists('s:git_terminal_prompt')
+    let $GIT_TERMINAL_PROMPT = s:git_terminal_prompt
+  endif
   if s:switch_in()
     call s:do(s:update.pull, s:update.force, filter(copy(s:update.all), 'has_key(v:val, "do")'))
     call s:finish(s:update.pull)
@@ -901,6 +932,8 @@ function! s:update_vim()
 endfunction
 
 function! s:tick()
+  let pull = s:update.pull
+  let prog = s:progress_opt(s:nvim)
 while 1 " Without TCO, Vim stack is bound to explode
   if empty(s:update.todo)
     if empty(s:jobs) && !s:update.fin
@@ -912,20 +945,21 @@ while 1 " Without TCO, Vim stack is bound to explode
 
   let name = keys(s:update.todo)[0]
   let spec = remove(s:update.todo, name)
-  let pull = s:update.pull
   let new  = !isdirectory(spec.dir)
-  let prog = s:nvim ? '--progress' : ''
 
   call s:log(new ? '+' : '*', name, pull ? 'Updating ...' : 'Installing ...')
   redraw
+
+  let checkout = s:shellesc(has_key(spec, 'tag') ? spec.tag : spec.branch)
+  let merge = s:shellesc(has_key(spec, 'tag') ? spec.tag : 'origin/'.spec.branch)
 
   if !new
     let [valid, msg] = s:git_valid(spec, 0)
     if valid
       if pull
         call s:spawn(name,
-          \ printf('(git fetch %s 2>&1 && git checkout -q %s 2>&1 && git merge --ff-only origin/%s 2>&1 && git submodule update --init --recursive 2>&1)',
-          \ prog, s:shellesc(spec.branch), s:shellesc(spec.branch)), { 'dir': spec.dir })
+          \ printf('(git fetch %s 2>&1 && git checkout -q %s 2>&1 && git merge --ff-only %s 2>&1 && git submodule update --init --recursive 2>&1)',
+          \ prog, checkout, merge), { 'dir': spec.dir })
       else
         let s:jobs[name] = { 'running': 0, 'result': 'Already installed', 'error': 0 }
       endif
@@ -937,7 +971,7 @@ while 1 " Without TCO, Vim stack is bound to explode
           \ printf('git clone %s --recursive %s -b %s %s 2>&1',
           \ prog,
           \ s:shellesc(spec.uri),
-          \ s:shellesc(spec.branch),
+          \ checkout,
           \ s:shellesc(s:trim(spec.dir))), { 'new': 1 })
   endif
 
@@ -1108,14 +1142,15 @@ function! s:update_ruby()
     end
   } if VIM::evaluate('s:mac_gui') == 1
 
-  progress = iswin ? '' : '--progress'
+  progress = VIM::evaluate('s:progress_opt(1)')
   nthr.times do
     mtx.synchronize do
       threads << Thread.new {
         while pair = take1.call
           name = pair.first
-          dir, uri, branch = pair.last.values_at *%w[dir uri branch]
-          branch = esc branch
+          dir, uri, branch, tag = pair.last.values_at *%w[dir uri branch tag]
+          checkout = esc(tag ? tag : branch)
+          merge = esc(tag ? tag : "origin/#{branch}")
           subm = "git submodule update --init --recursive 2>&1"
           exists = File.directory? dir
           ok, result =
@@ -1136,7 +1171,7 @@ function! s:update_ruby()
               else
                 if pull
                   log.call name, 'Updating ...', :update
-                  bt.call "#{cd} #{dir} && (git fetch #{progress} 2>&1 && git checkout -q #{branch} 2>&1 && git merge --ff-only origin/#{branch} 2>&1 && #{subm})", name, :update, nil
+                  bt.call "#{cd} #{dir} && (git fetch #{progress} 2>&1 && git checkout -q #{checkout} 2>&1 && git merge --ff-only #{merge} 2>&1 && #{subm})", name, :update, nil
                 else
                   [true, skip]
                 end
@@ -1144,7 +1179,7 @@ function! s:update_ruby()
             else
               d = esc dir.sub(%r{[\\/]+$}, '')
               log.call name, 'Installing ...', :install
-              bt.call "git clone #{progress} --recursive #{uri} -b #{branch} #{d} 2>&1", name, :install, proc {
+              bt.call "git clone #{progress} --recursive #{uri} -b #{checkout} #{d} 2>&1", name, :install, proc {
                 FileUtils.rm_rf dir
               }
             end
@@ -1226,13 +1261,19 @@ function! s:git_valid(spec, check_branch)
       let ret = 0
     elseif a:check_branch
       let branch = result[0]
-      if a:spec.branch !=# branch
+      " Check tag
+      if has_key(a:spec, 'tag')
         let tag = s:system_chomp('git describe --exact-match --tags HEAD 2>&1', a:spec.dir)
-        if a:spec.branch !=# tag
-          let msg = printf('Invalid branch/tag: %s (expected: %s). Try PlugUpdate.',
-                \ (empty(tag) ? branch : tag), a:spec.branch)
+        if a:spec.tag !=# tag
+          let msg = printf('Invalid tag: %s (expected: %s). Try PlugUpdate.',
+                \ (empty(tag) ? 'N/A' : tag), a:spec.tag)
           let ret = 0
         endif
+      " Check branch
+      elseif a:spec.branch !=# branch
+        let msg = printf('Invalid branch: %s (expected: %s). Try PlugUpdate.',
+              \ branch, a:spec.branch)
+        let ret = 0
       endif
     endif
   else
@@ -1312,7 +1353,7 @@ function! s:upgrade()
       if v:shell_error
         throw get(s:lines(output), -1, v:shell_error)
       endif
-    elseif has('ruby')
+    elseif s:ruby
       call s:upgrade_using_ruby(new)
     else
       return s:err('curl executable or ruby support not found')
@@ -1492,6 +1533,7 @@ function! s:diff()
 
   call setline(1, cnt == 0 ? 'No updates.' : 'Last update:')
   nnoremap <silent> <buffer> <cr> :silent! call <SID>preview_commit()<cr>
+  nnoremap <silent> <buffer> o    :silent! call <SID>preview_commit()<cr>
   nnoremap <silent> <buffer> X    :call <SID>revert()<cr>
   normal! gg
   setlocal nomodifiable
@@ -1544,11 +1586,12 @@ function! s:snapshot(...) abort
   endfor
 
   if a:0 > 0
-    let fn = s:esc(expand(a:1))
+    let fn = expand(a:1)
+    let fne = s:esc(fn)
     call writefile(getline(1, '$'), fn)
-    if !s:is_win | call s:system('chmod +x ' . fn) | endif
+    if !s:is_win | call s:system('chmod +x ' . fne) | endif
     echo 'Saved to '.a:1
-    silent execute 'e' fn
+    silent execute 'e' fne
   endif
 endfunction
 
