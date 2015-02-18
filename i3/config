@@ -51,6 +51,7 @@ focus_follows_mouse no
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Return exec urxvtc
+#bindsym $mod+Return exec st
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -59,8 +60,8 @@ bindsym $mod+Shift+q kill
 #bindsym $mod+d exec dmenu_run
 #bindsym $mod+d exec ~/.local/bin/dmenu-recent
 #bindsym $mod+p exec ~/.local/bin/dpass
-bindsym $mod+d exec "rofi -show run  -switchers 'run,window'"
-bindsym $mod+p exec rofi -show pass -switchers "pass:rofi-pass" -hlbg "#cc241d" -bc "#cc241d"
+bindsym $mod+d exec "rofi -show run  -switchers 'run,window,ssh'"
+bindsym $mod+p exec "rofi -show pass -switchers 'pass:rofi-pass' -hlbg '#cc241d' -bc '#cc241d'"
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
