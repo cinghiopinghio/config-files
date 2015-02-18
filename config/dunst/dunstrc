@@ -1,5 +1,5 @@
 [global]
-    font = "Monospace 8"
+    font = "Liberation Mono 8"
     allow_markup = yes
     format = "<b>%s %p</b>\n%b"
     sort = yes
@@ -12,7 +12,7 @@
     sticky_history = yes
     follow = mouse
     word_wrap = yes
-    separator_height = 2
+    separator_height = 0
     padding = 10
     horizontal_padding = 10
     separator_color = frame
@@ -22,7 +22,7 @@
 
 
 [frame]
-    width = 3
+    width = 0
     color = "#000000"
 
 [shortcuts]
