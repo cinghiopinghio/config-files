@@ -59,6 +59,16 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
 fi
 
 
+# autocomplete marks
+_completemarks() {
+  local curw=${COMP_WORDS[COMP_CWORD]}
+  local wordlist=$(find $MARKPATH -type l -printf "%f\n")
+  COMPREPLY=($(compgen -W '${wordlist[@]}' -- "$curw"))
+  return 0
+}
+complete -F _completemarks jump unmark
+
+
 
 # svn editor variable:
 export SVN_EDITOR=/usr/bin/vim
@@ -175,7 +185,7 @@ Jobs="\j"
 User="\u"
 Host="\h"
 
-command -v git >/dev/null 2>&1 && source ~/.local/bin/scripts/git-prompt
+#command -v git >/dev/null 2>&1 && source ~/.local/bin/git-prompt
 command -v __git_ps1 >/dev/null 2>&1 && GitBranch='$(__git_ps1)' || GitBranch=''
 
 

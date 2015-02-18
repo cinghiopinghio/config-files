@@ -93,6 +93,14 @@ zle -N self-insert url-quote-magic
 zstyle -e :urlglobber url-other-schema \
 '[[ $words[1] == scp ]] && reply=("*") || reply=(http https ftp)'
 
+# mark completion
+function _completemarks {
+  reply=($(ls $MARKPATH))
+}
+
+compctl -K _completemarks jump
+compctl -K _completemarks unmark
+
 ##################################################################
 # Key bindings
 # http://mundy.yazzy.org/unix/zsh.php
@@ -216,3 +224,5 @@ if [ -f ~/.bookmarks ];
 then 
   source ~/.bookmarks
 fi
+
+
