@@ -219,10 +219,5 @@ if [ -f ~/.aliases ];
 then 
   source ~/.aliases
 fi
-# folder bookmarks
-if [ -f ~/.bookmarks ];
-then 
-  source ~/.bookmarks
-fi
 
 
