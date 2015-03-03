@@ -280,7 +280,8 @@ exec --no-startup-id unclutter -root -visible
 
 #for_window [class="Firefox"] border none
 for_window [class="(?i)pinentry|(?i)Arandr"] floating enabled
-for_window [class="(?i)xcalc|(?i)Calculator|(?i)speedCrunch"] floating enabled
+for_window [class="(?i)xcalc|(?i)Calculator|(?i)speedCrunch|(?i)gnome-calculator"] floating enabled
 for_window [class="(?i)MPlayer|(?i)smplayer"] floating enabled
 for_window [class="(?i)sxiv"] floating enabled
 for_window [class="(?i)Pidgin|(?i)Skype|(?i)Tox"] floating enabled
+for_window [class="(?i)gnuplot"] floating enabled
