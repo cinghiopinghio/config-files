@@ -64,7 +64,7 @@ zcat $1 | head
 }
 
 # python aliases
-alias ipynb='ipython2 notebook --pylab inline'
+alias ipynb='ipython2.7 notebook --no-browser'
 
 alias uruake='urxvt -geometry 128x29+100+0 -pe kuake &'
 
