@@ -11,6 +11,7 @@ fi
 alias ll='ls -alFh'
 alias la='ls -A'
 alias l='ls -lFh'
+alias l1='ls -1'
 
 # MC exits in the same directory
 if [ -e /usr/lib/mc/mc-wrapper.sh ]; then
@@ -19,8 +20,6 @@ fi
 
 alias :wq='exit'
 alias ..='cd ..'
-#MYHOST=$(hostname -s)
-#[[ $MYHOST != 'quantumcl' && $MYHOST != 'terminus' ]] && alias vim='vim --servername vim'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -32,8 +31,10 @@ VLESS=$(find /usr/share/vim -name 'less.sh')
 if [ ! -z $VLESS ]; then
   alias vless=$VLESS
 fi
+if [ -e '/usr/bin/nvim' ]; then
+  alias vim='nvim'
+fi
 alias vimrc='vim ~/.vimrc'
-alias nv='nvim'
 
 alias head1='head -1'
 alias tail1='tail -1'
@@ -64,9 +65,7 @@ zcat $1 | head
 }
 
 # python aliases
-alias ipynb='ipython2.7 notebook --no-browser'
-
-alias uruake='urxvt -geometry 128x29+100+0 -pe kuake &'
+alias ipynb='ipython2 notebook --no-browser'
 
 # mark dirs
 export MARKPATH=$HOME/.marks
