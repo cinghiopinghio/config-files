@@ -55,6 +55,9 @@ function! PdflatexToggle()
     if g:LatexBox_latexmk_options == "-pdfps"
         let g:LatexBox_latexmk_options="-pdf"
         echo 'use pdflatex'
+    elseif g:LatexBox_latexmk_options == "-pdf"
+        let g:LatexBox_latexmk_options="-lualatex"
+        echo 'use lualatex'
     else
         let g:LatexBox_latexmk_options="-pdfps"
         echo 'use latex/ps2pdf'
