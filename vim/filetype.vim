@@ -12,6 +12,7 @@ augroup filetypedetect
   au! BufNewFile,BufRead *.markdown,*.mdown,*.md,README.md setf markdown
   au! BufNewFile,BufRead alot.*,mutt* setf mail
   au! BufRead,BufNewFile *.csv setf csv
+  au! BufRead,BufNewFile *.cls setf tex
   "au! BufRead,BufNewFile *rc if expand('%') =~ 'vimrc' | setf vim | else | setf rc | endif
 augroup END
  
