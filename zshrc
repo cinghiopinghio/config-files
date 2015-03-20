@@ -65,6 +65,8 @@ path+=($(find -L ~/.local/bin -type d))
 path+=~/.gem/ruby/1.9.1/bin
 path+=~/.gem/ruby/2.1.0/bin
 
+
+
 ##################################################################
 # Stuff to make my life easier
 
@@ -219,9 +221,11 @@ alias -g L='|less'
 alias -g S='&> /dev/null &'
 
 # normal aliases
-if [ -f ~/.aliases ];
-then 
-  source ~/.aliases
-fi
+[ -f ~/.shell/aliases ] && . ~/.shell/aliases
 
+# ----------------------------------------
+# export some env vars
+# ----------------------------------------
+
+[ -f ~/.shell/aliases ] && . ~/.shell/vars
 

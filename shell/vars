@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+[ "$HOST" = 'mercurio' ] && export JAVA_HOME='/usr/lib/jvm/java-1.7.0-openjdk-amd64'
+[ "$HOSTNAME" = 'mercurio' ] && export JAVA_HOME='/usr/lib/jvm/java-1.7.0-openjdk-amd64'
+[ "$HOSTNAME" = 'quantumcl.isi.it' ] && export TERM=xterm-256color
+
+# svn editor variable:
+export SVN_EDITOR=/usr/bin/vim
+# editor variable:
+export EDITOR=/usr/bin/vim
+# add to PATH .local/bin and subdirectories
+export PATH=$PATH:$(find -L ~/.local/bin -type d | tr '\n' ':' | sed 's/:$//')
+export PATH=$PATH:~/.gem/ruby/1.9.1/bin
+export PATH=$PATH:~/.gem/ruby/2.1.0/bin
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
