@@ -133,3 +133,6 @@ filetype *.ssh FUSE_MOUNT2|sshfs %PARAM %DESTINATION_DIR
 " set vifminfo=options,filetypes,commands,bookmarks,tui,state,cs,chistory,shistory,dirstack,registers,phistory
 " Like in vi
 set vifminfo=bookmarks,chistory,shistory,phistory
+
+
+set statusline="  %t%= %A %10u:%-7g %15s %20d "
