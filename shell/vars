@@ -7,9 +7,11 @@
 # svn editor variable:
 export SVN_EDITOR=/usr/bin/vim
 # editor variable:
-export EDITOR=/usr/bin/vim
+export EDITOR="vim"
+export BROWSER="firefox"
 # add to PATH .local/bin and subdirectories
 export PATH=$PATH:$(find -L ~/.local/bin -type d | tr '\n' ':' | sed 's/:$//')
 export PATH=$PATH:~/.gem/ruby/1.9.1/bin
 export PATH=$PATH:~/.gem/ruby/2.1.0/bin
+# nice java fonts
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'

@@ -23,9 +23,13 @@ setopt noclobber
 setopt SH_WORD_SPLIT
 setopt nohup
 
-# PS1 and PS2
-setopt prompt_subst
 
+# ------------------------------
+# PROMPT
+# PS1 and PS2
+# ------------------------------
+# {{{
+setopt prompt_subst
 vcs_prompt(){
   while [[ ! -d .git && ! -d .svn && ! `pwd` = "/" ]]; do cd ..; done
   if [ -e ./.git ];   
@@ -49,26 +53,20 @@ case $HOST in
   "bunet")     hostColor="%F{red}"   ;;
   *)           hostColor="%B{red}"    ;;
 esac
-
-#export PS1="%F{blue}$Host%F{yellow} %~$Folder "
-#export PS2="%F{blue}>%F{white}"
 export PS1="$hostColor$Host%F{yellow} %~$Folder "
 export PS2="%F{blue}>%F{white}"
+# }}}
 
+# ----------------------------------------
+# export some env vars
 # Vars used later on by Zsh
-export EDITOR="vim"
-export BROWSER="firefox"
-export XTERM="aterm +sb -geometry 80x29 -fg black -bg lightgoldenrodyellow -fn -xos4-terminus-medium-*-normal-*-14-*-*-*-*-*-iso8859-15"
-
-# add to PATH .local/bin and subdirectories
-path+=($(find -L ~/.local/bin -type d))
-path+=~/.gem/ruby/1.9.1/bin
-path+=~/.gem/ruby/2.1.0/bin
-
-
+# ----------------------------------------
+[ -f ~/.shell/aliases ] && . ~/.shell/vars
 
 ##################################################################
-# Stuff to make my life easier
+# Completion
+##################################################################
+# {{{
 
 # comand-extension completione
 #zstyle ':completion::*:(vi|vim):*' file-patterns '*.tex' '*' '*'
@@ -102,12 +100,13 @@ function _completemarks {
 
 compctl -K _completemarks jump
 compctl -K _completemarks unmark
+# }}}
 
 ##################################################################
 # Key bindings
 # http://mundy.yazzy.org/unix/zsh.php
 # http://www.zsh.org/mla/users/2000/msg00727.html
-
+# {{{
 typeset -g -A key
 bindkey '^?' backward-delete-char
 bindkey '^[[1~' beginning-of-line
@@ -167,14 +166,10 @@ key[Delete]=${terminfo[kdch1]}
 #
 #fi
 
-# nice java fonts
-export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+# }}}
 
 # print the current directory in the terminal title
-#function precmd() {
-#    print -Pn "\e]2;..%2d\a"
-#}
-
+# {{{
 case $TERM in
   (*xterm* | *rxvt*)
 
@@ -191,9 +186,11 @@ case $TERM in
 
   ;;
 esac
+# }}}
 ##################################################################
 # My aliases
 
+# {{{
 # Set up auto extension stuff
 alias -s html=$BROWSER
 alias -s org=$BROWSER
@@ -223,9 +220,4 @@ alias -g S='&> /dev/null &'
 # normal aliases
 [ -f ~/.shell/aliases ] && . ~/.shell/aliases
 
-# ----------------------------------------
-# export some env vars
-# ----------------------------------------
-
-[ -f ~/.shell/aliases ] && . ~/.shell/vars
-
+# }}}

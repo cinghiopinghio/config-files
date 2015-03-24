@@ -74,6 +74,7 @@ alias ipynb='ipython2 notebook --no-browser'
 
 # mark dirs
 export MARKPATH=$HOME/.marks
+alias j='jump'
 function jump { 
     cd -P "$MARKPATH/$1" 2>/dev/null || echo "No such mark: $1"
 }
