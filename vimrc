@@ -85,7 +85,8 @@ Plug 'chrisbra/csv.vim', { 'for': 'csv' }
 Plug 'mattn/emmet-vim', { 'for': ['html', 'sass', 'scss', 'css']} 
 Plug 'othree/html5.vim', { 'for': ['html', 'sass', 'scss', 'css']}
 """"""" LaTeX
-Plug 'LaTeX-Box-Team/LaTeX-Box', { 'for': 'tex' }
+Plug 'lervag/vimtex', { 'for': 'tex' }
+"Plug 'LaTeX-Box-Team/LaTeX-Box', { 'for': 'tex' }
 """"""" Note/Todo writing
 "Plug 'xolox/vim-notes'
 "Plug 'fmoralesc/vim-pad'
