@@ -36,7 +36,7 @@ set $white  #999990
 
 # colors                border background text indicator
 client.focused          $color $color $backd $color
-client.focused_inactive $color $color $backd $backl
+client.focused_inactive $backl $backl $color $backl
 client.unfocused        $backl $backd $color $backd
 client.urgent           $colal $colal $backd $colal
 client.background       $backd
@@ -249,7 +249,8 @@ bar {
               background         $backd
               separator          $white
               focused_workspace  $color $color $backd 
-              active_workspace   $colol $colol $backl
+              active_workspace   $backl $backl $color
+              #active_workspace   $colol $colol $backl
               inactive_workspace $backd $backd $color
               urgent_workspace   $colal $colal $backd 
         }
@@ -268,7 +269,8 @@ bar {
               background         $backd
               separator          $white
               focused_workspace  $color $color $backd 
-              active_workspace   $colol $colol $backl
+              active_workspace   $backl $backl $color
+              #active_workspace   $colol $colol $backl
               inactive_workspace $backd $backd $color
               urgent_workspace   $colal $colal $backd 
         }
