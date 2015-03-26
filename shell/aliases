@@ -50,10 +50,12 @@ else
 fi
 alias alot-u='alot search tag:unread'
 
-if [[ "${HOSTNAME/.*/}" == "quantumcl" ]];
-then
-  alias exit='deactivate; exit'
-fi
+#if [[ "${HOSTNAME/.*/}" == "quantumcl" ]];
+#then
+#  alias exit='deactivate; exit'
+#fi
+# if in virtual env deactivate it before logout
+alias exit='if [[ -z "$VIRTUAL_ENV" ]]; then  exit; else deactivate; exit; fi'
 
 # GIT + SVN
 
