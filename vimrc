@@ -76,6 +76,7 @@ Plug 'thinca/vim-quickrun'
 
 Plug 'cinghiopinghio/abook-vim'
 Plug 'caio/querycommandcomplete.vim'
+Plug 'guyzmo/notmuch-abook'
 """"""" calendar for vim
 "Plug 'mattn/calendar-vim'
 """"""" filetype plugins

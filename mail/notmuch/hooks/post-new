@@ -30,5 +30,10 @@ then
     notify-send -u normal MAIL "$s"
 fi
 
+## update addressbook with new mails
+for file in $(notmuch search --output=files tag:new) ; do
+    cat $file | $HOME/bin/notmuch-abook update
+done
+
 ## clear the 'new' tag
 notmuch tag -new -- tag:new
