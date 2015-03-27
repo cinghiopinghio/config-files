@@ -99,6 +99,12 @@ def main(args):
         log (hook+' ... '+command)
         os.system(command)
 
+def userinput(string):
+    if sys.version_info >= (3,0):
+        return input(string).lower()
+    else:
+        return raw_input(string).lower()
+
 def install(dotfiles, dry=False, yesall=False):
     """create a link from real_path to local_path:
 
@@ -126,7 +132,7 @@ def install(dotfiles, dry=False, yesall=False):
 
                 log('Path '+path+' is a broken link.',level='W',\
                        force=True)
-                choice = input('Remove it? [Y/n]').lower()
+                choice = userinput('Remove it? [Y/n]')
                 if dry:
                     log(local+','+path, level='D')
                 elif choice != 'n':
@@ -141,7 +147,7 @@ def install(dotfiles, dry=False, yesall=False):
                 log('3. Backup and install',indent=2,force=True)
                 log('4. Skip this',indent=2,force=True)
 
-                choice = input('Choice: [1234]')
+                choice = userinput('Choice: [1234]')
                 if dry:
                     log(local+','+path, level='D')
                 elif choice == '1': 
@@ -170,7 +176,7 @@ def install(dotfiles, dry=False, yesall=False):
             log('Installing new instance...', indent=1)
             installit = False
             if INTERACTIVE:
-                inter = input('Install {0:s}? [y/N]'.format(df.local)).lower()
+                inter = userinput('Install {0:s}? [y/N]'.format(df.local))
                 if inter == 'y':
                     installit = True
             elif yesall:
