@@ -11,6 +11,9 @@ set window-title-basename true
 # set database sqlite
 set selection-clipboard clipboard
 
+# set browser "firefox %"
+# set uri_command "firefox %"
+
 ############
 # COLORS
 ############
