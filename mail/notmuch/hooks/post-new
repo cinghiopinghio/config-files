@@ -32,7 +32,7 @@ fi
 
 ## update addressbook with new mails
 for file in $(notmuch search --output=files tag:new) ; do
-    cat $file | $HOME/bin/notmuch-abook update
+    cat $file | notmuch_abook update
 done
 
 ## clear the 'new' tag
