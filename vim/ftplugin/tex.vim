@@ -51,6 +51,7 @@ let g:LatexBox_cite_pattern
 
 nnoremap <localleader>lp :call PdflatexToggle()<cr>
 
+let g:vimtex_latexmk_options = "-pdfps"
 function! PdflatexToggle()
     if g:LatexBox_latexmk_options == "-pdfps"
         let g:LatexBox_latexmk_options="-pdf"
@@ -60,6 +61,17 @@ function! PdflatexToggle()
         echo 'use lualatex'
     else
         let g:LatexBox_latexmk_options="-pdfps"
+        echo 'use latex/ps2pdf'
+    endif
+
+    if g:vimtex_latexmk_options == "-pdfps"
+        let g:vimtex_latexmk_options="-pdf"
+        echo 'use pdflatex'
+    elseif g:vimtex_latexmk_options == "-pdf"
+        let g:vimtex_latexmk_options="-lualatex"
+        echo 'use lualatex'
+    else
+        let g:vimtex_latexmk_options="-pdfps"
         echo 'use latex/ps2pdf'
     endif
 endfunction
