@@ -43,7 +43,7 @@ _completemarks() {
   COMPREPLY=($(compgen -W '${wordlist[@]}' -- "$curw"))
   return 0
 }
-complete -F _completemarks jump unmark
+complete -F _completemarks j jump unmark
 
 # }}}
 
@@ -107,3 +107,7 @@ esac
 export PS1=$HostColor$Host$Red$GitBranch' '$Yellow$PathShort$Color_Off' '
 
 #}}}
+
+# export some variables
+
+[ -f ~/.shell/vars ] && . ~/.shell/vars

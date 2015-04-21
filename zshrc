@@ -61,7 +61,7 @@ export PS2="%F{blue}>%F{white}"
 # export some env vars
 # Vars used later on by Zsh
 # ----------------------------------------
-[ -f ~/.shell/aliases ] && . ~/.shell/vars
+[ -f ~/.shell/vars ] && . ~/.shell/vars
 
 ##################################################################
 # Completion
