@@ -6,6 +6,11 @@
 let maplocalleader=' '
 set nocompatible               " be iMproved
 filetype indent plugin on
+let s:host=substitute(hostname(), "\\..*", "", "") 
+if s:host == 'giove'
+  set term=builtin_ansi
+  set t_Co=256
+endif
 syntax on
 "}}}
 
@@ -54,12 +59,13 @@ Plug 'Shougo/neomru.vim'
 Plug 'Shougo/vimproc.vim'
 """"""" colors
 "Plug 'tomasr/molokai'
-"Plug 'cinghiopinghio/xinghio-color.vim'
-Plug 'morhetz/gruvbox'
+
 Plug 'junegunn/seoul256.vim'
-Plug 'zeis/vim-kolor'
+Plug 'morhetz/gruvbox'
+Plug 'chriskempson/base16-vim'
 Plug 'freeo/vim-kalisi'
-"Plug 'chriskempson/base16-vim'
+"Plug 'cinghiopinghio/xinghio-color.vim'
+"Plug 'zeis/vim-kolor'
 "Plug 'sjl/badwolf' " too dark 
 "Plug 'altercation/vim-colors-solarized'
 """"""" statusbar
@@ -150,28 +156,39 @@ set smartcase           " upper-case sensitive search
 set nobackup            " fasten writing process (:w)
 " tabulation
 setlocal shiftwidth=2 softtabstop=2 expandtab smarttab
+
 set complete+=k         " enable dictionary completion
 set completeopt+=longest
+
 set clipboard+=unnamed  " yank and copy to X clipboard
 "wrapping
 set wrap
 set linebreak
-set textwidth=75
-set background=dark
+
+set textwidth=78
 if exists('+colorcolumn')
   set colorcolumn=80
 else
   au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
-"colorscheme molokai
-"colorscheme xinghio
-"let g:seoul256_background = 235
-"let g:seoul256_light_background = 256
-"colorscheme seoul256
-"let base16colorspace=256
-"colorscheme base16-default
-let g:gruvbox_contrast_dark='medium'
-colorscheme gruvbox
+
+
+set background=dark
+if (s:host == 'mercurio')
+  let g:seoul256_background = 235
+  let g:seoul256_light_background = 256
+  colorscheme seoul256
+elseif s:host == 'arcinghio'
+  let g:gruvbox_contrast_dark='medium'
+  colorscheme gruvbox
+elseif s:host == 'giove'
+  let g:airline_theme='kalisi'
+  colorscheme kalisi
+else
+  let base16colorspace=256
+  colorscheme base16-default
+endif
+
 set makeprg=make
 set grepprg=grep\ -nH\ $*
 set pastetoggle=<F2>
