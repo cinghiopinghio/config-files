@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 [ `hostname -s` = 'quantumcl' ] && . ~/.bashrc
+[ `hostname -s` = 'giove' ] && . ~/.bashrc
 [ `hostname -s` = 'quantumcl' ] && . ve/bin/activate
 
 export PATH=$PATH:$(find -L ~/.local/bin -type d | tr '\n' ':' | sed 's/:$//')
