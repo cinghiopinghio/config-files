@@ -2,5 +2,11 @@
 
 HOST=$1
 
+if [ "$HOST" = "" ];
+then
+ echo "Usage $0 HOST"
+ exit 0
+fi 
+
 cat ~/.ssh/id_rsa.pub | ssh ${HOST} 'cat >> .ssh/authorized_keys'
 
