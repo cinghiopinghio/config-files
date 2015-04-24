@@ -46,6 +46,7 @@ if has("python")
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
 endif
+Plug 'nvie/vim-flake8', { 'for': 'python' }
 """"""" window splits control
 Plug 'zhaocai/GoldenView.Vim'
 Plug 'itchyny/thumbnail.vim', { 'on': 'Thumbnail' }
