@@ -51,7 +51,7 @@ case $HOST in
   "mercurio")  hostColor="%F{blue}"   ;;
   "quantumcl") hostColor="%F{yellow}"   ;;
   "bunet")     hostColor="%F{red}"   ;;
-  *)           hostColor="%B{red}"    ;;
+  *)           hostColor="%F{red}"    ;;
 esac
 export PS1="$hostColor$Host%F{yellow} %~$Folder "
 export PS2="%F{blue}>%F{white}"
