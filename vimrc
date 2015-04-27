@@ -183,9 +183,6 @@ if (s:host == 'mercurio')
 elseif s:host == 'arcinghio'
   let g:gruvbox_contrast_dark='medium'
   colorscheme gruvbox
-elseif s:host == 'giove'
-  let g:airline_theme='kalisi'
-  colorscheme kalisi
 else
   colorscheme molokai
 endif
