@@ -1,8 +1,17 @@
 #!/usr/bin/env bash
 
-[ "$HOST" = 'mercurio' ] && export JAVA_HOME='/usr/lib/jvm/java-1.7.0-openjdk-amd64'
-[ "$HOSTNAME" = 'mercurio' ] && export JAVA_HOME='/usr/lib/jvm/java-1.7.0-openjdk-amd64'
-[ "$HOSTNAME" = 'quantumcl.isi.it' ] && export TERM=xterm-256color
+case `hostname -s` in
+  mercurio)
+    export JAVA_HOME='/usr/lib/jvm/java-1.7.0-openjdk-amd64'
+    export JAVA_HOME='/usr/lib/jvm/java-1.7.0-openjdk-amd64'
+    ;;
+  quantumcl)
+    export TERM=xterm-256color
+    ;;
+  giove)
+    export TERM=xterm
+    ;;
+esac
 
 # svn editor variable:
 export SVN_EDITOR=/usr/bin/vim
