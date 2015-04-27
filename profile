@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
-[ `hostname -s` = 'quantumcl' ] && . ~/.bashrc
-[ `hostname -s` = 'giove' ] && . ~/.bashrc
-[ `hostname -s` = 'quantumcl' ] && . ve/bin/activate
+
+case `hostname -s` in
+  quantumcl)
+    . ~/.bashrc
+    . ve/bin/activate
+    ;;
+  giove)
+    . ~/.bashrc
+    . ve/bin/activate
+    ;;
+esac
 
 export PATH=$PATH:$(find -L ~/.local/bin -type d | tr '\n' ':' | sed 's/:$//')
 export PATH=$PATH:${HOME}/.gem/ruby/2.2.0/bin/
