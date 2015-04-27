@@ -19,7 +19,6 @@ syntax on
 ""{{{ Vundle: plugin manager
 call plug#begin('~/.vim/bundle')
 
-Plug 'chriskempson/base16-vim'
 Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
 """""""" outliner
@@ -52,6 +51,8 @@ Plug 'zhaocai/GoldenView.Vim'
 Plug 'itchyny/thumbnail.vim', { 'on': 'Thumbnail' }
 """"""" parenthesis change
 Plug 'tpope/vim-surround'
+"Plug 'zef/vim-cycle' " No upper cases like 'True/False'
+Plug 'mjbrownie/swapit'
 "Plug 'benmills/vimux'
 """"""" unite
 Plug 'Shougo/unite.vim'
@@ -59,12 +60,12 @@ Plug 'Shougo/unite-outline'
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/vimproc.vim'
 """"""" colors
-"Plug 'tomasr/molokai'
-
+Plug 'tomasr/molokai'
 Plug 'junegunn/seoul256.vim'
 Plug 'morhetz/gruvbox'
-Plug 'chriskempson/base16-vim'
+"Plug 'chriskempson/base16-vim' " not prepared for shell
 Plug 'freeo/vim-kalisi'
+"Plug 'nanotech/jellybeans.vim'
 "Plug 'cinghiopinghio/xinghio-color.vim'
 "Plug 'zeis/vim-kolor'
 "Plug 'sjl/badwolf' " too dark 
@@ -81,7 +82,7 @@ Plug 'junegunn/vim-easy-align'
 "Plug 'Raimondi/delimitMate'
 Plug 'thinca/vim-quickrun'
 
-Plug 'cinghiopinghio/abook-vim'
+"Plug 'cinghiopinghio/abook-vim'
 Plug 'caio/querycommandcomplete.vim'
 Plug 'guyzmo/notmuch-abook'
 """"""" calendar for vim
@@ -186,8 +187,7 @@ elseif s:host == 'giove'
   let g:airline_theme='kalisi'
   colorscheme kalisi
 else
-  let base16colorspace=256
-  colorscheme base16-default
+  colorscheme molokai
 endif
 
 set makeprg=make
