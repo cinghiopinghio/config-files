@@ -46,21 +46,8 @@ caption always "%{= kg}[%{G}%H%{g}] %=%{= kw}%-w%{= rW}%n %t%{-}%+w %=%{kg}%D %d
 # SCREEN KEYBINDINGS
 # ------------------------------------------------------------------------------
 
-# bind F7 to detach screen session from this terminal
-#bindkey -k k7 detach
-# bind F8 to kill current screen window.
-#bindkey -k k8 kill
-# bind F9 to create a new screen
-#bindkey -k k9 screen
-# bind F10 to rename current screen window
-#bindkey -k k; title
-# bind F11 to move to previous window
-#bindkey -k F1 prev
-# bind F12 to move to next window
-#bindkey -k F2 next
-
-#bindkey -k kl prev
-#bindkey -k kr next
+bindkey "^[Od" prev  # change window with ctrl-left
+bindkey "^[Oc" next  # change window with ctrl-right
 
 bind ' ' windowlist -b
 # Remove some stupid / dangerous key bindings
