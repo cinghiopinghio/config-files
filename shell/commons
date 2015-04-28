@@ -6,4 +6,4 @@
 # normal aliases
 [ -f ~/.shell/aliases ] && . ~/.shell/aliases
 
-[[ $TERM=='screen' && -e /tmp/envvars ]] && . /tmp/envvars;
+[ $TERM = 'screen' ] && [ -e /tmp/envvars ] && . /tmp/envvars;
