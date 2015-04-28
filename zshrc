@@ -60,8 +60,9 @@ export PS2="%F{blue}>%F{white}"
 # ----------------------------------------
 # export some env vars
 # Vars used later on by Zsh
+# hostname specific stuff
 # ----------------------------------------
-[ -f ~/.shell/vars ] && . ~/.shell/vars
+[ -f ~/.shell/commons ] && . ~/.shell/commons
 
 ##################################################################
 # Completion
@@ -216,8 +217,5 @@ alias -g L='|less'
 
 # command S equivalent to command &> /dev/null &
 alias -g S='&> /dev/null &'
-
-# normal aliases
-[ -f ~/.shell/aliases ] && . ~/.shell/aliases
 
 # }}}

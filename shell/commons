@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+[ -f ~/.shell/vars ] && . ~/.shell/vars
+[ -f ~/.shell/hosts/`hostname -s` ] && . ~/.shell/hosts/`hostname -s`
+
+# normal aliases
+[ -f ~/.shell/aliases ] && . ~/.shell/aliases
+
+[[ $TERM=='screen' && -e /tmp/envvars ]] && . /tmp/envvars;

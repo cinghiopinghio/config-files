@@ -106,19 +106,19 @@ rofi.rkey:            mod1+F2
 rofi.skey:            mod1+F3
 rofi.location:        0
 
-rofi.fg:   #a89984
-rofi.bg:   #282828
-rofi.bgalt:#262626
-rofi.hlfg: #282828
-rofi.hlbg: #689d6a
-rofi.bc:   #689d6a
-rofi.color-enabled: false
-! State:           'bg',     'fg',     'bgalt',  'hlfg',   'hlbg'
-rofi.color-normal: #282828,  #a89984,  #262626,  #282828,  #689d6a
-rofi.color-urgent: #282828,  #aa5555,  #262626,  #282828,  #689d6a
-rofi.color-active: #282828,  #55aa55,  #262626,  #282828,  #689d6a
+!rofi.fg:   #a89984
+!rofi.bg:   #282828
+!rofi.bgalt:#262626
+!rofi.hlfg: #282828
+!rofi.hlbg: #689d6a
+!rofi.bc:   #689d6a
+rofi.color-enabled: true
+! State:           'bg',     'fg',     'bgalt',  'hlbg',   'hlfg'
+rofi.color-normal: #282828,#a89984,#262626,#689d6a,#282828
+rofi.color-urgent: #282828,#aa5555,#262626,#689d6a,#282828
+rofi.color-active: #282828,#55aa55,#262626,#689d6a,#282828
 !                  'background', 'border'
-rofi.color-window: #fdf6e3,      #002b36
+rofi.color-window: #282828,#689d6a
 
 rofi.disable-history:  false 
 rofi.levenshtein-sort: false 

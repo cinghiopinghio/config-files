@@ -3,11 +3,9 @@
 case `hostname -s` in
   quantumcl)
     . ~/.bashrc
-    . ve/bin/activate
     ;;
   giove)
     . ~/.bashrc
-    . ve/bin/activate
     ;;
 esac
 

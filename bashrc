@@ -21,9 +21,6 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-# Alias definitions.
-[ -f ~/.shell/aliases ] && . ~/.shell/aliases
-
 # ----------------------------------------
 # COMPLETION
 # ----------------------------------------
@@ -56,8 +53,6 @@ function save-vars {
         gawk 'BEGIN{FS="="}{if ($2!=""){print "export "$1"=\""$2"\""}}'
   done 1> /tmp/envvars
 }
-
-[[ $TERM=='screen' && -e /tmp/envvars ]] && . /tmp/envvars;
 
 # ----------------------------------------------------
 # PROMPT
@@ -110,4 +105,4 @@ export PS1=$HostColor$Host$Red$GitBranch' '$Yellow$PathShort$Color_Off' '
 
 # export some variables
 
-[ -f ~/.shell/vars ] && . ~/.shell/vars
+[ -f ~/.shell/commons ] && . ~/.shell/commons
