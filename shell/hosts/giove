@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-. ve/bin/activate
+. ~/ve/bin/activate
 export TERM=xterm-color
