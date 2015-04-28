@@ -9,7 +9,17 @@ setopt HIST_REDUCE_BLANKS
 setopt HIST_IGNORE_SPACE
 setopt HIST_IGNORE_ALL_DUPS # ignore duplicates in history
 
-eval `dircolors -b`
+
+if whence dircolors >/dev/null; then
+  # GNU utils way
+  eval "$(dircolors -b)"
+  zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+  alias ls='ls --color'
+else
+  # f***ing OSX/unix way
+  export CLICOLOR=1
+  zstyle ':completion:*:default' list-colors ''
+fi
 
 autoload -U compinit 
 compinit
