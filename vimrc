@@ -27,7 +27,7 @@ Plug 'mhinz/vim-signify'
 """""""" syntax checker
 Plug 'scrooloose/syntastic'
 """""""" folder navigation
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+"Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 "Plug 'istib/vifm.vim'
 """"""" AutoCompletion
 "Plug 'jiangmiao/auto-pairs'
@@ -46,6 +46,8 @@ if has("python")
   Plug 'honza/vim-snippets'
 endif
 Plug 'nvie/vim-flake8', { 'for': 'python' }
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+let g:jedi#popup_on_dot = 0
 """"""" window splits control
 Plug 'zhaocai/GoldenView.Vim'
 Plug 'itchyny/thumbnail.vim', { 'on': 'Thumbnail' }
@@ -286,6 +288,12 @@ let g:unite_enable_start_insert = 1
 " this let start NERDTree if no file name is given
 "autocmd vimenter * if !argc() | NERDTree | endif
 noremap <localleader>n :NERDTreeToggle<CR>
+
+" use netrw instead:
+" https://medium.com/@mozhuuuuu/vimmers-you-dont-need-nerdtree-18f627b561c3
+let g:netrw_liststyle=3
+noremap <localleader>e :e.<CR>
+
 "}}}
 
 "----------------------------------
