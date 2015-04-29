@@ -184,6 +184,7 @@ elseif s:host == 'arcinghio'
   let g:gruvbox_contrast_dark='medium'
   colorscheme gruvbox
 else
+  AirlineTheme badwolf
   colorscheme molokai
 endif
 
