@@ -45,9 +45,12 @@ if has("python")
   Plug 'SirVer/ultisnips'
   Plug 'honza/vim-snippets'
 endif
-Plug 'nvie/vim-flake8', { 'for': 'python' }
+"Plug 'nvie/vim-flake8', { 'for': 'python' }
+
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+" prevent slow popups
 let g:jedi#popup_on_dot = 0
+let g:jedi#show_call_signatures = 0 
 """"""" window splits control
 Plug 'zhaocai/GoldenView.Vim'
 Plug 'itchyny/thumbnail.vim', { 'on': 'Thumbnail' }
