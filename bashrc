@@ -9,6 +9,18 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+
+# bash options
+shopt -s cdspell                    # autocorrects cd misspellings
+shopt -s checkwinsize               # update the value of LINES and COLUMNS after each command if altered
+shopt -s cmdhist                    # save multi-line commands in history as single line
+shopt -s dotglob                    # include dotfiles in pathname expansion
+shopt -s expand_aliases             # expand aliases
+shopt -s extglob                    # enable extended pattern-matching features
+shopt -s nocaseglob                 # pathname expansion will be treated as case-insensitive
+shopt -s histappend                 # Append History instead of overwriting file.
+shopt -s no_empty_cmd_completion    # No empty completion
+
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
 HISTCONTROL=ignoredups:erasedups

@@ -1,29 +1,15 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
-#echo 'Getting Mails (offlineimap)'
-
-TMP_FILE=$(mktemp --tmpdir offlineimap-XXXXXX.tmp)
-#offlineimap -o -u quiet >/dev/null 2>/dev/null
-notmuch new >$TMP_FILE 2>/dev/null
-
-message=$(sed -e 's/\. /.\n/g' $TMP_FILE | grep -e "Added\|Removed" | awk 'BEGIN{ORS=". "}{print $1,$2}')
-
-rm $TMP_FILE
-
-#del_mails=$(sed -e 's/\. /.\n/g' $TMP_FILE | grep -s Removed | awk '{print $2}')
-#
-#message=""
-#if [[ ! $new_mails == "" ]];
-#then
-#  message="$message  New mails: $new_mails"
-#fi
-#if [[ ! $del_mails == "" ]];
-#then
-#  message="$message Removed mails: $del_mails"
-#fi
-
-if [[ ! $message == "" ]];
-then
-  notify-send  -i "mutt" -t 3000 --hint=int:transient:1 "MAIL:" "$message"
+# export GPG environment variables
+envfile="$HOME/.gnupg/gpg-agent.env"
+if [[ -e "$envfile" ]] && kill -0 $(grep GPG_AGENT_INFO "$envfile" | cut -d: -f 2) 2>/dev/null; then
+    eval "$(cat "$envfile")"
+else
+    eval "$(gpg-agent --daemon --enable-ssh-support --write-env-file "$envfile")"
 fi
+export GPG_AGENT_INFO  # the env file does not contain the export statement
+export SSH_AUTH_SOCK   # enable gpg-agent for ssh
+
+echo "[`date`] -- Notmuch" >> /home/mauro/logs/notmuch.log
+notmuch new >> /home/mauro/logs/notmuch.log
 
