@@ -88,42 +88,78 @@ dzen2.background:                         #121212
 
 ! -- ROFI -- !
 
-rofi.opacity:         100
-rofi.width:           50
-rofi.lines:           25
-rofi.columns:         1
-rofi.font:            Dejavu Sans Mono 10
-rofi.bw:              1
-rofi.padding:         2
-rofi.yoffset:         0
-rofi.xoffset:         0
-rofi.fixed-num-lines: false
-rofi.hmode:           false
-rofi.terminal:        urxvt
-rofi.ssh-set-title:   true
-rofi.key:             F12
-rofi.rkey:            mod1+F2
-rofi.skey:            mod1+F3
-rofi.location:        0
-
-!rofi.fg:   #a89984
-!rofi.bg:   #282828
-!rofi.bgalt:#262626
-!rofi.hlfg: #282828
-!rofi.hlbg: #689d6a
-!rofi.bc:   #689d6a
-rofi.color-enabled: true
-! State:           'bg',     'fg',     'bgalt',  'hlbg',   'hlfg'
-rofi.color-normal: #282828,#a89984,#262626,#689d6a,#282828
-rofi.color-urgent: #282828,#aa5555,#262626,#689d6a,#282828
-rofi.color-active: #282828,#55aa55,#262626,#689d6a,#282828
-!                  'background', 'border'
-rofi.color-window: #282828,#689d6a
-
-rofi.disable-history:  false 
-rofi.levenshtein-sort: false 
-rofi.switchers: window,run,ssh
-
+rofi.modi:                       run,window,ssh
+rofi.opacity:                    100
+rofi.width:                      50
+rofi.lines:                      25
+rofi.columns:                    2
+rofi.font:                       Dejavu Sans Mono 10
+!rofi.fg:                         #a89984
+!rofi.bg:                         #282828
+rofi.color-enabled:              true
+! State:                         bg,fg,bgalt,hlbg,hlfg
+rofi.color-normal:               #282828,#a89984,#262626,#689d6a,#282828
+rofi.color-urgent:               #282828,#fb4934,#262626,#689d6a,#282828
+rofi.color-active:               #282828,#fabd2f,#262626,#689d6a,#282828
+!                                background,border
+rofi.color-window:               #282828,#689d6a
+!rofi.fg-active:                  #268BD2
+!rofi.fg-urgent:                  #DC322F
+!rofi.hlfg-active:                #FDF6E3
+!rofi.hlfg-urgent:                #FDF6E3
+!rofi.bg-active:                  #FDF6E3
+!rofi.bg-urgent:                  #FDF6E3
+!rofi.hlbg-active:                #268BD2
+!rofi.hlbg-urgent:                #DC322F
+!rofi.bgalt:                      #262626
+!rofi.hlfg:                       #282828
+!rofi.hlbg:                       #689d6a
+!rofi.bc:                         #689d6a
+rofi.bw:                         10
+rofi.location:                   0
+rofi.padding:                    0
+rofi.yoffset:                    0
+rofi.xoffset:                    0
+rofi.fixed-num-lines:            false
+rofi.terminal:                   urxvt
+rofi.ssh-client:                 ssh
+rofi.ssh-command:                {terminal} -e {ssh-client} {host}
+rofi.run-command:                {cmd}
+rofi.run-list-command:
+rofi.run-shell-command:          {terminal} -e {cmd}
+rofi.disable-history:            false
+rofi.levenshtein-sort:           false
+rofi.case-sensitive:             false
+rofi.sidebar-mode:               false
+rofi.lazy-filter-limit:          5000
+rofi.eh:                         1
+rofi.auto-select:                false
+rofi.parse-hosts:                false
+rofi.combi-modi:                 window,run
+rofi.pid:                        /run/user/1000/rofi.pid
+rofi.kb-primary-paste:           Control+Shift+v,Shift+Insert
+rofi.kb-secondary-paste:         Control+v,Insert
+rofi.kb-clear-line:              Control+u
+rofi.kb-move-front:              Control+a
+rofi.kb-move-end:                Control+e
+rofi.kb-move-word-back:          Alt+b
+rofi.kb-move-word-forward:       Alt+f
+rofi.kb-move-char-back:          Left,Control+b
+rofi.kb-move-char-forward:       Right,Control+f
+rofi.kb-remove-word-back:        Control+Alt+h
+rofi.kb-remove-word-forward:     Control+Alt+d
+rofi.kb-remove-char-forward:     Delete,Control+d
+rofi.kb-remove-char-back:        BackSpace,Control+h
+rofi.kb-accept-entry:            Control+j,Control+m,Return,KP_Enter
+rofi.kb-accept-custom:           Control+Return
+rofi.kb-accept-entry-continue:   Shift+Return
+rofi.kb-mode-next:               Shift+Right,Control+Tab
+rofi.kb-mode-previous:           Shift+Left,Control+Shift+Tab
+rofi.kb-toggle-case-sensitivity: grave,dead_grave
+rofi.kb-delete-entry:            Shift+Delete
+rofi.key-window:
+rofi.key-run:
+rofi.key-ssh:                        
 
 !xcalc-----------------------------------------------------------------------
 
