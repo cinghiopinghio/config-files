@@ -2,4 +2,4 @@
 notmuch tag -new -- tag:new
 # use offlineimap to get emails
 #offlineimap -o -u quiet >/dev/null 2>/dev/null
-offlineimap -o >/dev/null 2>/dev/null
+offlineimap -o -a gmail,linux >/dev/null 2>/dev/null
