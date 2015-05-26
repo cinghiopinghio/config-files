@@ -98,8 +98,9 @@ Plug 'guyzmo/notmuch-abook'
 """"""" CSV
 Plug 'chrisbra/csv.vim', { 'for': 'csv' }
 """"""" HTML
-Plug 'mattn/emmet-vim', { 'for': ['html', 'sass', 'scss', 'css']} 
-Plug 'othree/html5.vim', { 'for': ['html', 'sass', 'scss', 'css']}
+Plug 'mattn/emmet-vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] } 
+Plug 'othree/html5.vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] }
+"Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss', 'css', 'sass'] }
 """"""" LaTeX
 Plug 'lervag/vimtex', { 'for': 'tex' }
 "Plug 'LaTeX-Box-Team/LaTeX-Box', { 'for': 'tex' }
@@ -271,7 +272,7 @@ command! -b -nargs=+ SvnCi :!svn ci -m <q-args>
 "----------------------------------
 "{{{ Use emmet only in html,css
 let g:user_emmet_install_global = 0
-autocmd FileType html,css,scss,sass EmmetInstall
+autocmd FileType html,css,scss,sass,htmldjango EmmetInstall
 "}}}
 
 "----------------------------------
