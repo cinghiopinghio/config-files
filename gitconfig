@@ -3,11 +3,13 @@
   cim = commit -a -m
   cif = commit -m
   co = checkout
-  st = status
+  st = status -b -s
   br = branch
   unstage = reset HEAD --
   last = log -1 HEAD
-  hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+  hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+  lg = log --pretty=format:'%C(auto)%h - %<(55,trunc)%s %Cblue%<(18,trunc)%an%Creset %Cgreen%<(15)%ad%Creset %C(auto)%d' --abbrev-commit --date=relative
+
 [core]
     editor = vim
 	excludesfile = ~/.gitignore
@@ -16,6 +18,7 @@
     status = auto
     branch = auto
     interactive = true
+    ui = true
 
 ; diff and merge
 [diff]
