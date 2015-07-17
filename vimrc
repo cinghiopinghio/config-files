@@ -72,6 +72,7 @@ Plug 'junegunn/seoul256.vim'
 Plug 'morhetz/gruvbox'
 "Plug 'chriskempson/base16-vim' " not prepared for shell
 Plug 'freeo/vim-kalisi'
+Plug 'jnurmine/Zenburn'
 "Plug 'nanotech/jellybeans.vim'
 "Plug 'cinghiopinghio/xinghio-color.vim'
 "Plug 'zeis/vim-kolor'
