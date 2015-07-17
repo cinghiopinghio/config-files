@@ -55,6 +55,7 @@ bindsym $mod+Return exec urxvtc
 
 # kill focused window
 bindsym $mod+Shift+q kill
+bindsym $mod+b border toggle
 
 # start dmenu (a program launcher)
 #bindsym $mod+d exec dmenu_run
@@ -280,6 +281,7 @@ bar {
 # autostart
 exec --no-startup-id urxvtd -q -f -o
 exec --no-startup-id unclutter -root -visible
+exec --no-startup-id xgamma -quiet -rgamma 0.97 -ggamma 1 -bgamma 0.8
 
 #for_window [class="Firefox"] border none
 for_window [class="(?i)pinentry|(?i)Arandr"] floating enabled
