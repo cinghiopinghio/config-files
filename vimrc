@@ -72,6 +72,7 @@ Plug 'junegunn/seoul256.vim'
 Plug 'morhetz/gruvbox'
 "Plug 'chriskempson/base16-vim' " not prepared for shell
 Plug 'freeo/vim-kalisi'
+Plug 'jnurmine/Zenburn'
 "Plug 'nanotech/jellybeans.vim'
 "Plug 'cinghiopinghio/xinghio-color.vim'
 "Plug 'zeis/vim-kolor'
@@ -184,7 +185,7 @@ endif
 
 
 set background=dark
-if (s:host == 'mercurio')
+if s:host == 'spin'
   let g:airline_theme='gruvbox'
   let g:seoul256_background = 235
   let g:seoul256_light_background = 256
