@@ -58,6 +58,10 @@ _completemarks() {
 }
 complete -F _completemarks j jump unmark
 
+# vex completion
+
+eval "$(vex --shell-config bash)"
+
 # }}}
 
 #save display variable in .env_var
@@ -109,12 +113,18 @@ command -v __git_ps1 >/dev/null 2>&1 && GitBranch='$(__git_ps1)' || GitBranch=''
 case ${HOSTNAME/.*/} in
   'arcinghio') HostColor=$Green ;;
   'moma')      HostColor=$IGreen ;;
-  'mercurio')  HostColor=$Blue  ;;
+  'spin')      HostColor=$Blue  ;;
   'quantumcl') HostColor=$Yellow;;
   'bunet')     HostColor=$Red   ;;
   *)           HostColor=$On_Red ;;
 esac
 
-export PS1=$HostColor$Host$Red$GitBranch' '$Yellow$PathShort$Color_Off' '
+function virtualenv_prompt() {
+    if [ -n "$VIRTUAL_ENV" ]; then
+        echo $Red"(${VIRTUAL_ENV##*/}) "$Color_Off
+    fi
+}
+
+export PS1=$(virtualenv_prompt)$HostColor$Host$Red$GitBranch' '$Yellow$PathShort$Color_Off' '
 
 #}}}

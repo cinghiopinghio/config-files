@@ -58,12 +58,17 @@ Folder="%f"
 case $HOST in
   "arcinghio") hostColor="%F{green}"  ;;
   "moma")      hostColor="%F{green}"  ;;
-  "mercurio")  hostColor="%F{blue}"   ;;
+  "spin")      hostColor="%F{blue}"   ;;
   "quantumcl") hostColor="%F{yellow}"   ;;
   "bunet")     hostColor="%F{red}"   ;;
   *)           hostColor="%F{red}"    ;;
 esac
-export PS1="$hostColor$Host%F{yellow} %~$Folder "
+function virtualenv_prompt() {
+    if [ -n "$VIRTUAL_ENV" ]; then
+        echo "%F{red}(${VIRTUAL_ENV##*/}) "
+    fi
+}
+export PS1="$(virtualenv_prompt)$hostColor$Host%F{yellow} %~$Folder "
 export PS2="%F{blue}>%F{white}"
 # }}}
 
@@ -108,9 +113,12 @@ zstyle -e :urlglobber url-other-schema \
 function _completemarks {
   reply=($(ls $MARKPATH))
 }
-
 compctl -K _completemarks jump
 compctl -K _completemarks unmark
+
+# vex completion
+eval "$(vex --shell-config zsh)"
+
 # }}}
 
 ##################################################################
