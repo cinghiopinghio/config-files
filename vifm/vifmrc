@@ -98,14 +98,14 @@ set timefmt=\ %d/%m\ %H:%M
 " The %a macro is ignored.  To use a % you must put %%.
 
 " Web
-filetype *.html,*.htm,*.shtml firefox
+filetype *.html,*.htm,*.shtml firefox &
 
 " Pdf
-filetype *.pdf zathura,evince
+filetype *.pdf zathura &,evince &
 
 " Image
-filetype *.jpeg,*.jpg,*.png sxiv,feh,geeqie,eog
-filetype *.orf,*.nef geeqie
+filetype *.jpeg,*.jpg,*.png sxiv &,feh &,geeqie &,eog &
+filetype *.orf,*.nef geeqie &
 
 " For automated FUSE mounts, you must register an extension with FILETYPE=..
 " in one of following formats:
