@@ -25,7 +25,7 @@ startup_message       off             # default: on
 #nethack on
 
 #shell -${SHELL}
-term screen-256color
+term rxvt-256color
 
 #defflow on # will force screen to process ^S/^Q
 deflogin on
