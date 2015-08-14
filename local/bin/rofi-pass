@@ -28,7 +28,7 @@ then
 
 else
   passid=$(echo $@ | tr -s " " "/")
-  pass show --clip ${passid} > /dev/null 
+  pass show --clip ${passid} &> /dev/null 
   notify-send 'DPass:' "secret copied to clipboard\n (will be cleared in 45 sec.)"
 fi
 

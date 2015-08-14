@@ -11,7 +11,7 @@ URxvt.geometry:                           80x22
 URxvt.transparent:                        0
 URxvt.urgentOnBell:                       true
 URxvt.letterSpace:                        -2
-URxvt.lineSpace:                          1
+URxvt.lineSpace:                          0.9
 URxvt.internalBorder:                     4
 urxvt*termName: rxvt-256color
 
@@ -40,10 +40,10 @@ Xft.dpi:                                  96
 Xft.rgba:                                 rgb
 
 ! -- Fonts -- !
-URxvt.font:                               xft:dejavu sans mono:size=10.5
-URxvt.boldFont:                           xft:dejavu sans mono:size=10.5
-!URxvt.font:                               xft:liberation mono:size=11
-!URxvt.boldFont:                           xft:liberation mono:size=11
+!URxvt.font:                               xft:dejavu sans mono:size=10.5
+!URxvt.boldFont:                           xft:dejavu sans mono:size=10.5
+URxvt.font:                               xft:liberation mono:size=10.5
+URxvt.boldFont:                           xft:liberation mono:size=10.5
 !URxvt.font:                              xft:droid sans mono slashed:size=10.5
 !URxvt.boldFont:                          xft:droid sans mono slashed:size=10.5
 !URxvt.font:                              xft:luxi mono:regular:size=10
