@@ -19,14 +19,3 @@ text/plain ;               less %s ;                copiousoutput
 audio/* ;                  mplayer %s
 video/* ;                  mplayer %s
 
-# Compressed
-application/zip ;          xdg-open %s 
-application/x-zip ;        xdg-open %s 
-application/gzip ;         xdg-open %s 
-application/x-gzip ;       xdg-open %s 
-application/gunzip ;       xdg-open %s 
-application/x-gunzip ;     xdg-open %s 
-application/tar ;          xdg-open %s 
-application/x-tar ;        xdg-open %s 
-application/tar-gz ;       xdg-open %s 
-application/x-tar-gz ;     xdg-open %s 
