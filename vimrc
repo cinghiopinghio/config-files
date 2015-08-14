@@ -109,7 +109,7 @@ Plug 'lervag/vimtex', { 'for': 'tex' }
 "Plug 'xolox/vim-notes'
 "Plug 'fmoralesc/vim-pad'
 "Plug 'blinry/vimboy'
-"Plug ''
+Plug 'freitass/todo.txt-vim'
 
 "Plug 'terryma/vim-multiple-cursors'
 "Plug 'felipec/notmuch-vim'
