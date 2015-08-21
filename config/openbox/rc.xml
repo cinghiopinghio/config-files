@@ -1,4 +1,3 @@
-<?xml version="1.0"?>
 <openbox_config xmlns="http://openbox.org/3.4/rc">
   <resistance>
     <strength>10</strength>
@@ -326,10 +325,10 @@
     </keybind>
     <keybind key="W-r">
       <action name="Execute">
-        <command>~/.local/bin/dmenu-recent</command>
+        <command>/usr/bin/rofi -show run</command>
         <startupnotify>
           <enabled>yes</enabled>
-          <name>dmenu</name>
+          <name>rofi</name>
         </startupnotify>
       </action>
     </keybind>
