@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+# encoding: utf-8
+
+import json
+import requests
+import xml.etree.ElementTree as etree
+import os
+
+
+def get_port(configpath='~/.config/syncthing/config.xml'):
+    tree = etree.parse(os.path.expanduser(configpath))
+    ip = tree.find('gui').find('address').text
+    return ip.split(':')[-1]
+
+def find_device(string):
+    pass
+
+def get_devices(port):
+    config = requests.get("http://localhost:"+
+                          port+"/rest/system/config").json()
+
+    devs = {}
+    for dev in config['devices']:
+        devs[dev['name']] = dev['deviceID']
+
+    return devs
+        
+def get_ip(port, devID):
+    connections = requests.get("http://localhost:"+
+                               port+"/rest/system/connections").json()
+    if devID in connections['connections'].keys():
+        return connections['connections'][devID]['address'].split(':')[0]
+    else:
+        return None
+
+
+port = get_port()
+devices = get_devices(port)
+for d,id in devices.items():
+    ip = get_ip(port, id)
+    if ip is not None:
+        print('{}:{}'.format(d, ip))

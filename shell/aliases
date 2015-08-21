@@ -55,7 +55,7 @@ alias alot-u='alot search tag:unread'
 #  alias exit='deactivate; exit'
 #fi
 # if in virtual env deactivate it before logout
-alias exit='if [[ -z "$VIRTUAL_ENV" ]]; then  exit; else deactivate; exit; fi'
+#alias exit='if [[ -z "$VIRTUAL_ENV" ]]; then  exit; else deactivate; exit; fi'
 
 # GIT + SVN
 svnhist(){

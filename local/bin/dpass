@@ -28,7 +28,7 @@ word=$(printf '%s\n' "${fbase[@]}" | "${dmenucmd[@]}" -p PASS: "$@")
 if [[ -n $word ]]; then
   for match in "${files[@]}"; do  
     if [[ $word == ${match#*/} ]]; then
-      /usr/bin/pass show -c "$match" 2>/dev/null
+      /usr/bin/pass show -c "$match" &>/dev/null 
       notify-send 'DPass:' "secret copied to clipboard\n (will be cleared in 45 sec.)"
     fi  
   done

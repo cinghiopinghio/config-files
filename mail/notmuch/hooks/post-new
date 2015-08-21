@@ -31,9 +31,9 @@ then
 fi
 
 ## update addressbook with new mails
-for file in $(notmuch search --output=files tag:new) ; do
-    cat $file | notmuch_abook update
-done
+#for file in $(notmuch search --output=files tag:new) ; do
+#    cat $file | notmuch_abook update
+#done
 
 ## clear the 'new' tag
 notmuch tag -new -- tag:new

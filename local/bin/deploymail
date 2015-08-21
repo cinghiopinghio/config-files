@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+ACCOUNT=$1
+
+PASS=$(pass email/${ACCOUNT})
+USER=$(echo "$PASS" | sed '1d' | grep -w "^[Uu]ser" | \
+  sed -e "s/^[Uu]ser[ \t]*:[ \t]*//" -e "s/[ \t]*$//")
+FROM=$(echo "$PASS" | sed '1d' | grep -w "^[Ff]rom" | \
+  sed -e "s/^[Ff]rom[ \t]*:[ \t]*//" -e "s/[ \t]*$//")
+
+
+MSMTP_CMD="msmtp"
+MSMTP_OPTS=" -a ${ACCOUNT} --user ${USER} --from ${FROM} -t "
+
+#echo $MSMTP_CMD $MSMTP_OPTS
+cat /dev/stdin | ${MSMTP_CMD} ${MSMTP_OPTS}

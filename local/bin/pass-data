@@ -1,11 +1,19 @@
 #!/usr/bin/env bash
 
-if [ $# -ne 1 ]
+if [ $# -lt 1 ];
 then
-  echo 'Usage: pass-data key'
+  echo 'Usage: pass-data key [attr]'
   exit 1 
+else
+  KEY=$1
+  if [ $# -eq 1 ];
+  then
+    echo 'Data for key: '${KEY}
+    echo '---------------------'
+    pass ${KEY} | sed '1d'
+  else
+    ENTRY=$2
+    pass ${KEY} | sed '1d' | grep -w "^${ENTRY}" | \
+      sed -e "s/^${ENTRY}[ \t]*:[ \t]*//" -e "s/[ \t]*$//"
+  fi
 fi
-
-KEY=$1
-echo 'Data for key: '$KEY
-pass $KEY | sed '1d'
