@@ -116,7 +116,7 @@ function _completemarks {
 compctl -K _completemarks jump
 compctl -K _completemarks unmark
 
-# vex completion
+# vex completion with lazy loading
 eval "$(vex --shell-config zsh)"
 
 # }}}
@@ -237,3 +237,5 @@ alias -g L='|less'
 alias -g S='&> /dev/null &'
 
 # }}}
+#
+#
