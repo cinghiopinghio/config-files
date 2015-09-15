@@ -29,7 +29,13 @@ def get_ip(port, devID):
     connections = requests.get("http://localhost:"+
                                port+"/rest/system/connections").json()
     if devID in connections['connections'].keys():
-        return connections['connections'][devID]['address'].split(':')[0]
+        address = connections['connections'][devID]['address']
+        if address[0] == '[':
+            ip, port = address.rsplit(':', maxsplit=1)
+            ip = ip.strip('[]')
+        else:
+            ip, port = address.split(':')
+        return ip
     else:
         return None
 
