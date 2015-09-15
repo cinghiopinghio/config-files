@@ -3,4 +3,4 @@
 # use offlineimap to get emails
 #offlineimap -o -u quiet >/dev/null 2>/dev/null
 #offlineimap -o -a gmail,linux >/dev/null 2>/dev/null
-mbsync -a
+#mbsync -a
