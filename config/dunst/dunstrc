@@ -80,7 +80,7 @@
     urgency = low
 
 [notmuch]
-    summary = "MAIL"
+    summary = "*MAIL*"
     urgency = normal
     background = "#4e8694"
 
