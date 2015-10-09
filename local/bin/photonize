@@ -10,6 +10,7 @@ OUTFOLDER=${HOME}/grafica/foto
 COMMENT=''
 DRY=false
 VERB=false
+TO_LOWERCASE=true
 
 #FORMATS
 # %Y = year
