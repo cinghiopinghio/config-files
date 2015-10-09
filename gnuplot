@@ -14,8 +14,8 @@ set tics nomirror out scale 0.75
 
 
 #set grid
-set style line 102 lc rgb '#808080' lt 0 lw 1
-set grid back ls 102
+#set style line 102 lc rgb '#808080' lt 0 lw 1
+#set grid back ls 102
 
 # function to plot histograms:
 # usage:
