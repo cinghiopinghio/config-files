@@ -1,25 +1,26 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 
-import sys,os,shutil
+import sys
+import os
+import shutil
 import configobj as co
 import time
 from colorama import Fore
 import argparse
 
-NOINSTALL = [\
-             'README.md',\
-             '_noinstall',\
-             '_fixed',\
-             'Makefile',\
-             'install.ini',\
-             'backup',\
-             'dotinstall.py'\
-            ]
+NOINSTALL = ['README.md',
+             '_noinstall',
+             '_fixed',
+             'Makefile',
+             'install.ini',
+             'backup',
+             'dotinstall.py']
 
 VERB = True
 INTERACTIVE = True
 FAKEHOME = False
+
 
 class DotFile():
     """a class for each dotfile
@@ -76,7 +77,8 @@ class DotFile():
 
         """
         return self._locale
-        
+
+
 def main(args):
     """main
 
@@ -84,26 +86,27 @@ def main(args):
 
     """
 
-
     conf = co.ConfigObj(args.configfile)
-    log("Configuration",'T')
-    for k,v in conf.items():
-        log('{0:>15s} -> {1:<15s}'.format(k,str(v)))
+    log("Configuration", 'T')
+    for k, v in conf.items():
+        log('{0:>15s} -> {1:<15s}'.format(k, str(v)))
 
-    paths = add_paths(conf,args.dir)
-    log('Installs','T')
+    paths = add_paths(conf, args.dir)
+    log('Installs', 'T')
     install(paths, dry=args.dry)
-            
-    for hook,command in conf['hooks'].items():
-        log ('Executing post-hooks','T') 
-        log (hook+' ... '+command)
+
+    for hook, command in conf['hooks'].items():
+        log('Executing post-hooks', 'T')
+        log(hook+' ... '+command)
         os.system(command)
 
+
 def userinput(string):
-    if sys.version_info >= (3,0):
+    if sys.version_info >= (3, 0):
         return input(string).lower()
     else:
         return raw_input(string).lower()
+
 
 def install(dotfiles, dry=False, yesall=False):
     """create a link from real_path to local_path:
@@ -117,21 +120,22 @@ def install(dotfiles, dry=False, yesall=False):
         local = df.get_local()
         path = df.get_path()
         if not os.path.exists(local):
-            log (df.local+': no such file','E')
+            log(df.local+': no such file', 'E')
             exit(11)
 
-        log (df.local,level='sT')
+        log(df.local, level='sT')
         if pathexists(path):
             if os.path.islink(path) and\
                local == os.path.realpath(path):
 
-                log('Already installed!',indent=1)
-                if dry: log(local+','+path,level='D')
+                log('Already installed!', indent=1)
+                if dry:
+                    log(local + ',' + path, level='D')
 
             elif not os.path.exists(os.path.realpath(path)):
 
-                log('Path '+path+' is a broken link.',level='W',\
-                       force=True)
+                log('Path ' + path + ' is a broken link.', level='W',
+                    force=True)
                 choice = userinput('Remove it? [Y/n]')
                 if dry:
                     log(local+','+path, level='D')
@@ -140,18 +144,18 @@ def install(dotfiles, dry=False, yesall=False):
                     link(local, path)
 
             else:
-                log('Already prensent in filesystem:',level='W',indent=1,\
-                    force=True)
-                log('1. Overwrite',indent=2,force=True)
-                log('2. Get diff with diff-tool',indent=2,force=True)
-                log('3. Backup and install',indent=2,force=True)
-                log('4. Skip this',indent=2,force=True)
+                log('Already prensent in filesystem:',
+                    level='W', indent=1, force=True)
+                log('1. Overwrite', indent=2, force=True)
+                log('2. Get diff with diff-tool', indent=2, force=True)
+                log('3. Backup and install', indent=2, force=True)
+                log('4. Skip this', indent=2, force=True)
 
                 choice = userinput('Choice: [1234]')
                 if dry:
                     log(local+','+path, level='D')
-                elif choice == '1': 
-                    #overwrite
+                elif choice == '1':
+                    # Overwrite
                     removepath(path)
                     link(local, path)
                 elif choice == '2':
@@ -159,13 +163,9 @@ def install(dotfiles, dry=False, yesall=False):
                     removepath(path)
                     link(local, path)
                 elif choice == '3':
-                    dirname,basename = os.path.split(local)
-                    bup = '{:s}/backup/{:s}-{:s}'.format(dirname,\
-                                                             basename,\
-                                            time.strftime('-%Y-%m-%d_%H-%M-%S')
-                                                            )
-                    #os.rename(real_path, bup_dir) #<- do not work
-                    #os.system( 'mv '+real_path+' '+bup_dir)
+                    dirname, basename = os.path.split(local)
+                    bup = '{:s}/backup/{:s}-{:s}'.format(dirname,
+                        basename, time.strftime('-%Y-%m-%d_%H-%M-%S'))
                     shutil.move(path, bup)
                     link(local, path)
                 elif choice == '4':
@@ -187,6 +187,7 @@ def install(dotfiles, dry=False, yesall=False):
             elif installit:
                 link(local, path)
 
+
 def log(string, level='N', enable=True, indent=0, force=False):
     """print colored output
 
@@ -195,8 +196,9 @@ def log(string, level='N', enable=True, indent=0, force=False):
     :enable: if colors are enabled
 
     """
-    ind=''
-    for i in range(indent): ind += '    '
+    ind = ''
+    for i in range(indent):
+        ind += '    '
     if force or VERB:
         if enable:
             if level == 'N':
@@ -212,16 +214,17 @@ def log(string, level='N', enable=True, indent=0, force=False):
                 out = Fore.GREEN + '\n{0:-^35s}\n'.format(string) +\
                       Fore.RESET
             elif level == 'D':
-                local,path = string.split(',')
-                out = Fore.BLUE + '{0:_<40s}{1:_>40s}'.format(local,path)+\
-                      Fore.RESET
+                local, path = string.split(',')
+                out = Fore.BLUE + '{0:_<40s}{1:_>40s}'.format(local, path) +\
+                        Fore.RESET
         else:
             if level == 'D':
-                local,path = string.split(',')
-                out = '{0:_<40s}{1:_>40s}'.format(local,path)
+                local, path = string.split(',')
+                out = '{0:_<40s}{1:_>40s}'.format(local, path)
             else:
                 out = string
         print(ind+out)
+
 
 def pathexists(path):
     """local definition that consider broken links
@@ -232,6 +235,7 @@ def pathexists(path):
     """
     return os.path.islink(path) or os.path.isfile(path) or os.path.isdir(path)
 
+
 def removepath(path):
     """remove path
 
@@ -239,11 +243,11 @@ def removepath(path):
 
     """
     if os.path.isdir(path):
-        #os.removedirs(path)
         shutil.rmtree(path)
     else:
         os.remove(path)
-    
+
+
 def link(local_path, real_path):
     """Actually link it
 
@@ -254,12 +258,13 @@ def link(local_path, real_path):
     # check if folder tree exists otherwise create it
     dirname = os.path.dirname(real_path)
     if not os.path.exists(dirname):
-        os.makedirs(dirname,exist_ok=True)
+        os.makedirs(dirname, exist_ok=True)
 
     # link it
     os.symlink(local_path, real_path)
-    
-def add_paths(conf,folder='.'):
+
+
+def add_paths(conf, folder='.'):
     """Get paths where to put links.
 
     :conf: configuration object
@@ -287,33 +292,33 @@ def add_paths(conf,folder='.'):
 
     paths = []
     for l in localpaths:
-        dotfile = DotFile(l,config=folder)
+        dotfile = DotFile(l, config=folder)
         dotfile.renamePath(conf['rename'])
         paths.append(dotfile)
     return paths
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser(prog='dotinstall',\
+    parser = argparse.ArgumentParser(prog='dotinstall',
                                      description='Install dotfiles')
-    parser.add_argument('-c','--color', action='store_true',
-                       help='Colored output')
-    parser.add_argument('-i','--interactive', action='store_true',
-                       help='Ask before installing')
-    parser.add_argument('-v','--verbose', action='store_true',
-                       help='Verbose')
-    parser.add_argument('-a','--all', action='store_true',
-                       help='same as -civ')
-    parser.add_argument('-n','--dry', action='store_true',
-                       help='Perform a dry install (simulation)')
-    parser.add_argument('-t','--test', action='store_true',
-                       help='Perform tests')
-    parser.add_argument('-f','--configfile', \
-                        default = 'install.ini',\
-                        help = 'Configuration file')
-    parser.add_argument('-d','--dir', \
-                        default = '.',\
-                        help = 'Source file directory')
+    parser.add_argument('-c', '--color', action='store_true',
+                        help='Colored output')
+    parser.add_argument('-i', '--interactive', action='store_true',
+                        help='Ask before installing')
+    parser.add_argument('-v', '--verbose', action='store_true',
+                        help='Verbose')
+    parser.add_argument('-a', '--all', action='store_true',
+                        help='same as -civ')
+    parser.add_argument('-n', '--dry', action='store_true',
+                        help='Perform a dry install (simulation)')
+    parser.add_argument('-t', '--test', action='store_true',
+                        help='Perform tests')
+    parser.add_argument('-f', '--configfile',
+                        default='install.ini',
+                        help='Configuration file')
+    parser.add_argument('-d', '--dir',
+                        default='.',
+                        help='Source file directory')
 
     args = parser.parse_args()
     if args.all:
