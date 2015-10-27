@@ -1,0 +1,48 @@
+# Snippets for code blocks used oftenly in Apache files.
+# <Directory>
+snippet dir "dir"
+<Directory ${1:/}>
+	DirectoryIndex ${2:index.html}
+	Order Deny,Allow
+	Deny from All
+</Directory>
+endsnippet
+
+# <FilesMatch>   
+snippet filesmatch "filesmatch"
+<FilesMatch "${1:regex}">
+	${2}
+</FilesMatch>
+endsnippet
+
+# <IfModule>
+snippet ifmodule "ifmodule"
+<IfModule ${1:mod_example.c}>
+	${2}
+</IfModule>
+endsnippet
+
+# <LimitExcept>
+snippet limitexcept "limitexcept"
+<LimitExcept ${1:POST GET}>
+	${2}
+</LimitExcept>
+endsnippet
+
+# <Proxy>
+snippet proxy "proxy"
+<Proxy ${1:*}>
+	${2}
+</Proxy>
+endsnippet
+
+# <VirtualHost>
+snippet virtualhost "virtualhost"
+<VirtualHost ${1:*}:${2:80}>
+	ServerAdmin ${3:webmaster@example.com}
+	DocumentRoot ${4:/www/example.com}
+	ServerName ${5:www.example.com}
+</VirtualHost>
+endsnippet
+
+

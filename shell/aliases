@@ -32,7 +32,8 @@ if [ ! -z $VLESS ]; then
   alias vless=$VLESS
 fi
 if [ -e '/usr/bin/nvim' ]; then
-  alias vim='nvim'
+  alias nv='nvim'
+  alias v='nvim'
 fi
 alias vimrc='vim ~/.vimrc'
 

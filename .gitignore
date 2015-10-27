@@ -1,5 +1,7 @@
 
 vim/bundle
+config/nvim/bundle
 vim/backup
+config/nvim/backup
 config/mutt/mailboxes
 vim/autoload/plug.vim.old

@@ -242,8 +242,6 @@ bindsym $mod+r mode "resize"
 exec --no-startup-id ~/.local/bin/background 
 bar {
         status_command i3status
-        #status_command i3status -c ~/config
-        #font pango: Terminus, Icon 8
         font pango: DejaVu Sans Mono, FontAwesome 8
         output eDP1
         output DVI-I-1
@@ -253,7 +251,6 @@ bar {
               separator          $white
               focused_workspace  $color $color $backd 
               active_workspace   $backl $backl $color
-              #active_workspace   $colol $colol $backl
               inactive_workspace $backd $backd $color
               urgent_workspace   $colal $colal $backd 
         }
@@ -261,7 +258,6 @@ bar {
 
 bar {
         #status_command i3status
-        #font pango: Terminus, Icon 8
         font pango:DejaVu Sans Mono 8
         output DP1
         output HDMI1
@@ -273,7 +269,6 @@ bar {
               separator          $white
               focused_workspace  $color $color $backd 
               active_workspace   $backl $backl $color
-              #active_workspace   $colol $colol $backl
               inactive_workspace $backd $backd $color
               urgent_workspace   $colal $colal $backd 
         }

@@ -50,6 +50,10 @@ ethernet eth0 {
 battery 0 {
         format = " %status %percentage %remaining"
         integer_battery_capacity = true
+	hide_seconds = true
+        status_chr = "CHR"
+        status_bat = "BAT"
+        status_full = "FULL"
         low_threshold = 30
         threshold_type = time
 }
