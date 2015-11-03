@@ -1,6 +1,7 @@
 
 # Office  documents
 application/msword ;       libreoffice %s ;             nametemplate=%s.doc ;
+application/pdf ;                zathura %s ; nametemplate=%s.pdf ;
 application/* ;            xdg-open %s; 
 
 # PDFs
