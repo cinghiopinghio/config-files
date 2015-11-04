@@ -245,6 +245,7 @@ bar {
         font pango: DejaVu Sans Mono, FontAwesome 8
         output eDP1
         output DVI-I-1
+        output VGA1
         colors {
               statusline         $white
               background         $backd
