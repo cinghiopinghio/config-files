@@ -1,0 +1,13 @@
+#!/bin/sh
+
+#STATE=`nmcli networking connectivity`
+STATE=`LC_ALL=en_US.UTF-8 wicd-cli -i | grep "Connection status" | awk '{print $NF}'`
+
+if [ $STATE = 'Connected' ]
+then
+    mbsync -qq -a
+    notmuch new --quiet
+    exit 0
+fi
+echo "No internet connection."
+exit 0
