@@ -14,6 +14,7 @@ notmuch tag +com_vank        -- $NEW to:"comitatovanchiglia_news@googlegroups.co
 notmuch tag +alot            -- $NEW to:"alot@noreply.github.com"
 notmuch tag +antifaboxe      -- $NEW to:"antifaboxe-list@csoaskatasuna.org"
 notmuch tag +isi             -- $NEW from:"segreteria1@isi.it"
+notmuch tag +lfran           -- $NEW "LFRAN 1201"
 
 ## Deleted drafts and sent mails
 notmuch tag +deleted $NOREAD -- $NEW folder:Trash and not tag:deleted
