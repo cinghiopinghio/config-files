@@ -12,9 +12,6 @@ def get_port(configpath='~/.config/syncthing/config.xml'):
     ip = tree.find('gui').find('address').text
     return ip.split(':')[-1]
 
-def find_device(string):
-    pass
-
 def get_devices(port):
     config = requests.get("http://localhost:"+
                           port+"/rest/system/config").json()
@@ -29,13 +26,14 @@ def get_ip(port, devID):
     connections = requests.get("http://localhost:"+
                                port+"/rest/system/connections").json()
     if devID in connections['connections'].keys():
-        address = connections['connections'][devID]['address']
-        if address[0] == '[':
+        dev = connections['connections'][devID]
+        if dev['connected']:
+            address = connections['connections'][devID]['address']
             ip, port = address.rsplit(':', maxsplit=1)
             ip = ip.strip('[]')
+            return ip
         else:
-            ip, port = address.split(':')
-        return ip
+            return 'Not connected'
     else:
         return None
 
@@ -45,4 +43,4 @@ devices = get_devices(port)
 for d,id in devices.items():
     ip = get_ip(port, id)
     if ip is not None:
-        print('{}:{}'.format(d, ip))
+        print('{:12s}{}'.format(d, ip))
