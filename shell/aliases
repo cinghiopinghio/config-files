@@ -14,7 +14,8 @@ alias l='ls -lFh'
 alias l1='ls -1'
 
 # calendar
-alias c='when c; when'
+alias c="{when c; when}"
+# braces serve to pipe the outputs altogether
 
 # MC exits in the same directory
 if [ -e /usr/lib/mc/mc-wrapper.sh ]; then
