@@ -13,13 +13,13 @@ alias la='ls -A'
 alias l='ls -lFh'
 alias l1='ls -1'
 
+# calendar
+alias c='when c; when'
+
 # MC exits in the same directory
 if [ -e /usr/lib/mc/mc-wrapper.sh ]; then
   alias mc='. /usr/lib/mc/mc-wrapper.sh'
 fi
-
-alias :wq='exit'
-alias ..='cd ..'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -27,13 +27,10 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 alias scr='save-vars; screen -dRR'
 
-VLESS=$(find /usr/share/vim -name 'less.sh')
-if [ ! -z $VLESS ]; then
-  alias vless=$VLESS
-fi
 if [ -e '/usr/bin/nvim' ]; then
   alias nv='nvim'
   alias v='nvim'
+  alias vrc='nvim ~/.config/nvim/init.vim'
 fi
 alias vimrc='vim ~/.vimrc'
 
