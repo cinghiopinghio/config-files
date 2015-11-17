@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+DATE=`date -d tomorrow +%Y-%m-%d`
+CALENDAR=`sed -n '1p' ~/.when/calendar`
+
+read -e -p "Title of event:   " TITLE
+if [[ ${TITLE} == '' ]];
+then
+  exit 0
+fi
+read -e -p "Event date:       " -i $DATE DATE2
+read -e -p "Add time:         " TIME
+
+DATE=`date -d $DATE2 +"%Y %m %d"`
+
+echo "---------------------------"
+echo ${DATE}, ${TIME} ${TITLE}
+echo "---------------------------"
+
+read -e -p "Appended to: $CALENDAR? [nY]" -n 1 APPEND
+APPEND=${APPEND:-y}
+
+if [[ ${APPEND} == [Yy] ]];
+then
+  echo ${DATE}, ${TIME} ${TITLE} >> ${HOME}/${CALENDAR}
+  tail ${HOME}/${CALENDAR}
+else
+  echo "Nothing done"
+fi
