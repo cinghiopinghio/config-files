@@ -164,7 +164,7 @@ set showcmd                    " display incomplete commands
 set incsearch                  " do incremental searching
 set ignorecase          " case-insensitive search
 set smartcase           " upper-case sensitive search
-set nobackup            " fasten writing process (:w)
+" set nobackup            " fasten writing process (:w)
 " tabulation
 setlocal shiftwidth=2 softtabstop=2 expandtab smarttab
 
