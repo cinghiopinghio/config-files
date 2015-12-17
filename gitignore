@@ -6,3 +6,15 @@
 *~
 */.*
 *.pyc
+
+# latex
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.nav
+*.snm
+*.toc
+*.bbl
+*.blg
+*.dvi
