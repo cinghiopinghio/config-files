@@ -182,10 +182,11 @@ bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 1 +5% #increase sound vo
 bindsym XF86AudioLowerVolume exec pactl set-sink-volume 1 -5% #decrease sound volume
 bindsym XF86AudioMute exec pactl set-sink-mute 1 toggle # mute sound
 # Sreen brightness controls
-bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightness
-bindsym XF86MonBrightnessUp   exec xbacklight -inc 10 # increase screen brightness
-bindsym $mod+F5 exec xbacklight -10 # increase screen brightness
-bindsym $mod+F6 exec xbacklight +10 # decrease screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightness
+bindsym XF86MonBrightnessUp   exec xbacklight -inc 5 # increase screen brightness
+bindsym $mod+F5 exec xbacklight -5 # increase screen brightness
+bindsym $mod+F6 exec xbacklight +5 # decrease screen brightness
+bindsym $mod+F7 exec xbacklight -set 0 # decrease screen brightness
 
 
 # Scratchpad
