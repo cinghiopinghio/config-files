@@ -1,9 +1,10 @@
 #!/bin/sh
 
-STATE=`ip route | wc -l`
+# Check if gpg agent is running, otherwise start it
+# echo RELOADAGENT | gpg-connect-agent >> /dev/null
 
-#
-#
+# Check if connected
+STATE=`ip route | wc -l`
 ##STATE=`nmcli networking connectivity`
 #STATE=`LC_ALL=en_US.UTF-8 wicd-cli -i | grep "Connection status" | awk '{print $NF}'`
 
