@@ -29,11 +29,12 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias scr='save-vars; screen -dRR'
 
 if [ -e '/usr/bin/nvim' ]; then
-  alias nv='nvim'
   alias v='nvim'
   alias vrc='nvim ~/.config/nvim/init.vim'
+else
+  alias v='vim'
+  alias vrc='nvim ~/.vimrc'
 fi
-alias vimrc='vim ~/.vimrc'
 
 alias head1='head -1'
 alias tail1='tail -1'

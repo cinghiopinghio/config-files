@@ -1,22 +1,24 @@
 
 # Office  documents
-application/msword ;       libreoffice %s ;             nametemplate=%s.doc ;
-application/pdf ;                zathura %s ; nametemplate=%s.pdf ;
-application/* ;            xdg-open %s; 
+application/msword ; libreoffice %s ;  nametemplate=%s.doc ;
+application/pdf ;    zathura %s ;      nametemplate=%s.pdf ;
+application/* ;      xdg-open %s ;
 
 # PDFs
-image/pdf ;                zathura %s ; nametemplate=%s.pdf ;
 
 # Images
-image/jpg ;                sxiv %s ;                 nametemplate=%s.jpg ;
-image/jpeg ;               sxiv %s ;                 nametemplate=%s.jpg ;
-image/png ;                sxiv %s ;                 nametemplate=%s.png ;
+image/pdf ;          zathura %s ;      nametemplate=%s.pdf ;
+image/jpg ;          sxiv %s ;         nametemplate=%s.jpg ;
+image/jpeg ;         sxiv %s ;         nametemplate=%s.jpg ;
+image/png ;          sxiv %s ;         nametemplate=%s.png ;
+image/* ;            xdg-open %s ;
 
 # Text
-text/html ;                elinks -dump %s ;        nametemplate=%s.html ; copiousoutput ;
-text/plain ;               less %s ;                copiousoutput
+text/html ;          elinks -dump %s ; nametemplate=%s.html ; copiousoutput ;
+text/plain ;         less %s ;         copiousoutput
+text/* ;             xdg-open %s ;
 
 # Media Files
-audio/* ;                  mplayer %s
-video/* ;                  mplayer %s
+audio/* ;            mplayer %s
+video/* ;            mplayer %s
 
