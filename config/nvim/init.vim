@@ -21,8 +21,9 @@ syntax on
 ""{{{ Vundle: plugin manager
 call plug#begin('~/.config/nvim/bundle')
 
-Plug 'tpope/vim-fugitive'
-Plug 'mhinz/vim-signify'
+""""""" version control
+"Plug 'tpope/vim-fugitive'
+"Plug 'mhinz/vim-signify' 
 """""""" outliner
 "Plug 'vim-scripts/VOoM'
 "Plug 'majutsushi/tagbar'
@@ -59,7 +60,7 @@ let g:jedi#show_call_signatures = 0
 Plug 'zhaocai/GoldenView.Vim'
 Plug 'itchyny/thumbnail.vim', { 'on': 'Thumbnail' }
 """"""" parenthesis change
-Plug 'tpope/vim-surround'
+"Plug 'tpope/vim-surround'
 "Plug 'zef/vim-cycle' " No upper cases like 'True/False'
 Plug 'mjbrownie/swapit'
 "Plug 'benmills/vimux'

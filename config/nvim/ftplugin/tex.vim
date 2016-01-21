@@ -19,6 +19,11 @@ let b:delimitMate_quotes = "\" ' $"
 "{{{ VIMTEX
 
 let g:vimtex_fold_enabled=1
+let g:vimtex_fold_manual=1
+"let g:vimtex_motion_enabled=0
+"let g:vimtex_motion_matchparen=0
+"let g:vimtex_indent_enabled=0
+
 nnoremap <localleader>lp :call PdflatexToggle()<cr>
 
 let g:vimtex_latexmk_options = "-pdfps"
