@@ -1,8 +1,6 @@
 -- Global variables for luakit
 globals = {
     homepage = "https://startpage.com/do/mypage.pl?prf=98676c1095beb6ccc8f1bbbbb02f82d2",
- -- homepage            = "http://luakit.org/",
- -- homepage            = "http://github.com/mason-larobina/luakit",
     scroll_step         = 40,
     zoom_step           = 0.1,
     max_cmd_history     = 100,
@@ -49,7 +47,7 @@ soup.ssl_strict = false
 
 -- Set cookie acceptance policy
 cookie_policy = { always = 0, never = 1, no_third_party = 2 }
-soup.accept_policy = cookie_policy.always
+soup.accept_policy = cookie_policy.no_third_party
 
 -- List of search engines. Each item must contain a single %s which is
 -- replaced by URI encoded search terms. All other occurances of the percent
@@ -74,7 +72,7 @@ search_engines.default = search_engines.sp
 -- Per-domain webview properties
 -- See http://webkitgtk.org/reference/webkitgtk/stable/WebKitWebSettings.html
 domain_props = { 
-    --[[
+    [[
     ["all"] = {
         enable_scripts          = false,
         enable_plugins          = false,
