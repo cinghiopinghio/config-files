@@ -21,7 +21,7 @@ then
   ${VIEWER} ${PKG_FILE} &
 else
   echo "retrieving..."
-  wget -P ${PKG_CACHE} "http://texdoc.net/pkg/${PKG}"
+  wget -O ${PKG_FILE} "http://texdoc.net/pkg/${PKG}"
   ${VIEWER} ${PKG_FILE} &
   ls ${PKG_CACHE}
 fi
