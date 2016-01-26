@@ -1,40 +1,51 @@
+#!/usr/bin/env bash
+# this file autostart stuff
+
+
+
+
+# set background image:
 background &
 
-docker-tray &
+if [[ ${XDG_CURRENT_DESKTOP} == 'openbox' ]];
+then
+  # start panel
+  tint2 -c ~/.config/tint2/sottone.tint2rc &
+
+  #lal & # clock in tray
+  lal -c green -f "%a %d-%m" &
+  lal -c green -f "%H:%M" &
+
+  # start a docking application (system Tray)
+  docker-tray &
+fi
+
+sleep 10
+
 
 # tray icons and applets
 
-## start network manager
-#wicd-client -t &
-#batti & # battery tray icon
-batterymon &
+# automount devices
+udiskie --use-udisks2 --tray &
+
 # volume control on panel
 volumeicon &
-#lal & # clock in tray
-lal -c green -f "%a %d-%m" &
-lal -c green -f "%H:%M" &
-
-# start panel
-tint2 -c ~/.config/tint2/sottone.tint2rc &
-
-# add bin to path
-#PATH+=":/home/mauro/bin:/home/mauro/.local/bin"
-
-# start power manager
-#xfce4-power-manager &
-
-# start conky
-#conky &
-
-# start nvidia settings
-#nvidia-settings -a InitialPixmapPlacement=2
-
 # start the screen locker
-#xautolock -time 10 -locker slock
-
-#xrdb -merge ~/.Xresources
-#the above is no longer required if you fix the lightdm bug:
-# in /etc/lightdm/Xsession remove -nocpp from xrdb -merge ...
-
+xautolock -time 10 -locker 'i3lock -c 502020'
 # start urxvt daemon
-urxvtd &
+urxvtd -q -f -o &
+# hide mouse if not in use
+unclutter -root -visible &
+
+# Machine specific start apps
+case ${HOSTNAME} in
+  'arcinghio')
+    #batti & # battery tray icon
+    batterymon &
+    xgamma -quiet -rgamma 1.11 -ggamma 1.01 -bgamma 0.93 &
+    ;;
+  'spin')
+    dropbox-cli start
+    pidgin &
+    ;;
+esac

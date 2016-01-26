@@ -240,7 +240,6 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 #i3bar_command dzen2
 
-exec --no-startup-id ~/.local/bin/background 
 bar {
         status_command i3status
         font pango: DejaVu Sans Mono, FontAwesome 8
@@ -276,11 +275,14 @@ bar {
         }
 }
 
-# autostart
-exec --no-startup-id urxvtd -q -f -o
-exec --no-startup-id unclutter -root -visible
-#exec --no-startup-id xgamma -quiet -rgamma 0.97 -ggamma 1 -bgamma 0.8
-exec --no-startup-id xgamma -quiet -rgamma 1.11 -ggamma 1.01 -bgamma 0.93
+exec --no-startup-id ~/.config/openbox/autostart
+#exec --no-startup-id ~/.local/bin/background 
+## autostart
+#exec --no-startup-id urxvtd -q -f -o
+#exec --no-startup-id unclutter -root -visible
+##exec --no-startup-id xgamma -quiet -rgamma 0.97 -ggamma 1 -bgamma 0.8
+#exec --no-startup-id xgamma -quiet -rgamma 1.11 -ggamma 1.01 -bgamma 0.93
+#exec --no-startup-id udiskie -t2
 
 
 #for_window [class="Firefox"] border none
