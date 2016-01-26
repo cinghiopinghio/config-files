@@ -11,7 +11,8 @@ randomlink (){
   linkname=$2
   files=( ${sourcedir}/* )
   rfile=$(printf "%s\n" "${files[RANDOM % ${#files[@]}]}")
-  ln -s $rfile $linkname
+  ext=${rfile/*./}
+  ln -s $rfile ${linkname}.${ext}
   echo $rfile
 }
 
@@ -22,10 +23,10 @@ then
   exit 1
 fi
 
-rm -f ${LOCATION}/${FNAME}
+rm -f ${LOCATION}/${FNAME}.*
 orig=$(randomlink ${DBLOC} ${LOCATION}/${FNAME})
 
 
 echo "Installing:" ${orig}
-feh --bg-fill ${LOCATION}/${FNAME}
+feh --bg-fill ${LOCATION}/${FNAME}.*
 
