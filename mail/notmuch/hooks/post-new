@@ -25,7 +25,7 @@ notmuch tag +sent            -- $NEW folder:Sent and not tag:sent
 notmuch tag +sent            -- $NEW folder:sent and not tag:sent
 
 ## Send notification to OS
-s=$(notmuch search --format=json tag:new AND tag:inbox | ${HOME}/.local/bin/notify-mail); 
+s=$(notmuch search --format=json tag:new AND tag:inbox | ${HOME}/.local/bin/scripts/notify-mail); 
 if [ "$s" != "" ];
 then
     notify-send -u normal MAIL "$s"
