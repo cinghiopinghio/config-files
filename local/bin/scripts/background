@@ -9,11 +9,12 @@ DBLOC=${LOCATION}/sfondi
 randomlink (){
   sourcedir=$1
   linkname=$2
-  files=( ${sourcedir}/* )
-  rfile=$(printf "%s\n" "${files[RANDOM % ${#files[@]}]}")
-  ext=${rfile/*./}
-  ln -s $rfile ${linkname}.${ext}
-  echo $rfile
+  #files=( ${sourcedir}/* )
+  #rfile=$(printf "%s\n" "${files[RANDOM % ${#files[@]}]}")
+  randfile=$(shuf -n 1 -e ${sourcedir}/*)
+  ext=${randfile/*./}
+  ln -s $randfile ${linkname}.${ext}
+  echo $randfile
 }
 
 # check if bg images exist
