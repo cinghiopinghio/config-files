@@ -2,10 +2,12 @@
 # this file autostart stuff
 
 
-
+# early apps
 
 # set background image:
 background &
+# start urxvt daemon
+urxvtd -q -f -o &
 
 if [[ ${XDG_CURRENT_DESKTOP} == 'openbox' ]];
 then
@@ -27,25 +29,23 @@ sleep 10
 
 # automount devices
 udiskie --use-udisks2 --tray &
-
-# volume control on panel
-volumeicon &
 # start the screen locker
-xautolock -time 10 -locker 'i3lock -c 502020'
-# start urxvt daemon
-urxvtd -q -f -o &
+xautolock -time 10 -locker 'i3lock -c 502020' &
 # hide mouse if not in use
 unclutter -root -visible &
 
 # Machine specific start apps
 case ${HOSTNAME} in
   'arcinghio')
-    #batti & # battery tray icon
+    # battery tray icon
     batterymon &
     xgamma -quiet -rgamma 1.11 -ggamma 1.01 -bgamma 0.93 &
     ;;
   'spin')
+    echo RELOADAGENT | gpg-connect-agent
     dropbox-cli start
     pidgin &
+    # volume control on panel
+    volumeicon &
     ;;
 esac
