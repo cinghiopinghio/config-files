@@ -50,13 +50,6 @@ else
 fi
 alias alot-u='alot search tag:unread'
 
-#if [[ "${HOSTNAME/.*/}" == "quantumcl" ]];
-#then
-#  alias exit='deactivate; exit'
-#fi
-# if in virtual env deactivate it before logout
-#alias exit='if [[ -z "$VIRTUAL_ENV" ]]; then  exit; else deactivate; exit; fi'
-
 # GIT + SVN
 svnhist(){
   svn log | awk 'BEGIN{OFS="\t";ls=80}{if($2=="|"){printf("%4s\033[1;31m%12s\033[0m: (%s)  ",$1,$3,$5)}else{if($0!=""){if (length($0)<ls){add=""}else{add="..."};print substr($0,1,ls) add}}}' | sed -e '/------/d'
