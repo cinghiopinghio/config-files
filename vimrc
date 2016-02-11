@@ -19,100 +19,64 @@ syntax on
 ""{{{ Vundle: plugin manager
 call plug#begin('~/.vim/bundle')
 
-Plug 'tpope/vim-fugitive'
-Plug 'mhinz/vim-signify'
-"""""""" outliner
-"Plug 'vim-scripts/VOoM'
-"Plug 'majutsushi/tagbar'
-"""""""" syntax checker
+"""""""""""""""""""""""""""""""""""""" syntax checker
 Plug 'scrooloose/syntastic'
-"""""""" folder navigation
-"Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-"Plug 'istib/vifm.vim'
-""""""" AutoCompletion
+""""""""""""""""""""""""""""""""""""" AutoCompletion
 "Plug 'jiangmiao/auto-pairs'
 Plug 'Raimondi/delimitMate'
-Plug 'ajh17/VimCompletesMe'
-"Plug 'ervandew/supertab'
-"Plug 'Valloric/YouCompleteMe'
-"Plug 'Shougo/neocomplete.vim'
-"Plug 'Shougo/neocomplcache'
-""""""" snippets
-"Plug 'honza/snipmate-snippets'
-"Plug 'garbas/vim-snipmate'
-"Plug 'MarcWeber/ultisnips'
+"Plug 'ajh17/VimCompletesMe'
+Plug 'neitanod/vim-clevertab'
+" for email address completion
+Plug 'caio/querycommandcomplete.vim'
+""""""""""""""""""""""""""""""""""""" snippets
 if has("python")
   Plug 'SirVer/ultisnips'
-  Plug 'honza/vim-snippets'
+else
+  Plug 'MarcWeber/vim-addon-mw-utils'
+  Plug 'tomtom/tlib_vim'
+  Plug 'garbas/vim-snipmate'
 endif
-"Plug 'nvie/vim-flake8', { 'for': 'python' }
-
+Plug 'honza/vim-snippets'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 " prevent slow popups
 let g:jedi#popup_on_dot = 0
-let g:jedi#show_call_signatures = 0 
-
-"Plug 'JuliaLang/julia-vim', { 'for': 'julia' }
-""""""" window splits control
+""""""""""""""""""""""""""""""""""""" window splits control
 Plug 'zhaocai/GoldenView.Vim'
 Plug 'itchyny/thumbnail.vim', { 'on': 'Thumbnail' }
-""""""" parenthesis change
-Plug 'tpope/vim-surround'
-"Plug 'zef/vim-cycle' " No upper cases like 'True/False'
-Plug 'mjbrownie/swapit'
-"Plug 'benmills/vimux'
-""""""" unite
+""""""""""""""""""""""""""""""""""""" unite
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/unite-outline'
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/vimproc.vim'
-""""""" colors
+""""""""""""""""""""""""""""""""""""" colors
 Plug 'tomasr/molokai'
 Plug 'junegunn/seoul256.vim'
 Plug 'morhetz/gruvbox'
-"Plug 'chriskempson/base16-vim' " not prepared for shell
 Plug 'freeo/vim-kalisi'
 Plug 'jnurmine/Zenburn'
-"Plug 'nanotech/jellybeans.vim'
 "Plug 'cinghiopinghio/xinghio-color.vim'
-"Plug 'zeis/vim-kolor'
-"Plug 'sjl/badwolf' " too dark 
-"Plug 'altercation/vim-colors-solarized'
-""""""" statusbar
+""""""""""""""""""""""""""""""""""""" statusbar
 "Plug 'maciakl/vim-neatstatus'
-Plug 'bling/vim-airline'
-"Plug 'bling/vim-bufferline'
-"Plug 'itchyny/lightline.vim'
-"Plug 'edkolev/promptline.vim'
-""""""" vertical alignement
-"Plug 'vim-scripts/Align'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+""""""""""""""""""""""""""""""""""""" vary
 Plug 'junegunn/vim-easy-align'
-"Plug 'Raimondi/delimitMate'
 Plug 'thinca/vim-quickrun'
+Plug 'mjbrownie/swapit'
 
-"Plug 'cinghiopinghio/abook-vim'
-Plug 'caio/querycommandcomplete.vim'
-"Plug 'guyzmo/notmuch-abook'
-""""""" calendar for vim
-"Plug 'mattn/calendar-vim'
-""""""" filetype plugins
-""""""" CSV
-Plug 'chrisbra/csv.vim', { 'for': 'csv' }
-""""""" HTML
+""""""""""""""""""""""""""""""""""""" HTML
 Plug 'mattn/emmet-vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] } 
 Plug 'othree/html5.vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] }
 "Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss', 'css', 'sass'] }
-""""""" LaTeX
+""""""""""""""""""""""""""""""""""""" LaTeX
 Plug 'lervag/vimtex', { 'for': 'tex' }
-"Plug 'LaTeX-Box-Team/LaTeX-Box', { 'for': 'tex' }
-""""""" Note/Todo writing
+""""""""""""""""""""""""""""""""""""" Note/Todo writing
 "Plug 'xolox/vim-notes'
 "Plug 'fmoralesc/vim-pad'
 "Plug 'blinry/vimboy'
-Plug 'freitass/todo.txt-vim'
+"Plug 'freitass/todo.txt-vim'
 
 "Plug 'terryma/vim-multiple-cursors'
-"Plug 'felipec/notmuch-vim'
 
 " Using git URL
 "Plug 'https://github.com/junegunn/vim-github-dashboard.git'
@@ -175,6 +139,9 @@ set clipboard+=unnamed  " yank and copy to X clipboard
 "wrapping
 set wrap
 set linebreak
+
+filetype plugin on
+set omnifunc=syntaxcomplete#Complete
 
 set textwidth=78
 if exists('+colorcolumn')
@@ -260,16 +227,38 @@ nmap <leader><leader><leader> :so $MYVIMRC<cr>
 "}}}"
 
 "-------------------------------------------------------------------------
-" COMMANDS
-"{{{ local defined commands
-" svn commands
-command! -b -nargs=0 SvnUp :!svn up
-command! -b -nargs=+ SvnCi :!svn ci -m <q-args>
-"}}}"
-
-"-------------------------------------------------------------------------
 " PLUGINS SETTINGS
 "{{{
+"----------------------------------
+"{{{ EasyAlign
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+"}}}
+
+"----------------------------------
+"{{{ Clevertab - complete chain
+
+
+if has("python")
+  inoremap <silent><tab> <c-r>=CleverTab#Complete('start')<cr>
+                        \<c-r>=CleverTab#Complete('tab')<cr>
+                        \<c-r>=CleverTab#Complete('ultisnips')<cr>
+                        \<c-r>=CleverTab#Complete('omni')<cr>
+                        \<c-r>=CleverTab#Complete('keyword')<cr>
+                        \<c-r>=CleverTab#Complete('stop')<cr>
+else
+  inoremap <silent><tab> <c-r>=CleverTab#Complete('start')<cr>
+                        \<c-r>=CleverTab#Complete('tab')<cr>
+                        \<c-r>=CleverTab#Complete('keyword')<cr>
+                        \<c-r>=CleverTab#Complete('omni')<cr>
+                        \<c-r>=CleverTab#Complete('stop')<cr>
+endif
+"inoremap <silent><s-tab> <c-r>=CleverTab#Complete('prev')<cr>
+"}}}
+
 "----------------------------------
 "{{{ Use emmet only in html,css
 let g:user_emmet_install_global = 0
@@ -291,36 +280,6 @@ let g:unite_enable_start_insert = 1
 "}}}"
 
 "----------------------------------
-"{{{ NERDTree
-" this let start NERDTree if no file name is given
-"autocmd vimenter * if !argc() | NERDTree | endif
-noremap <localleader>n :NERDTreeToggle<CR>
-
-" use netrw instead:
-" https://medium.com/@mozhuuuuu/vimmers-you-dont-need-nerdtree-18f627b561c3
-let g:netrw_liststyle=3
-noremap <localleader>e :e.<CR>
-
-"}}}
-
-"----------------------------------
-"{{{ LatexBox
-" this is here because otherwise it won't be read by the plugin
-let g:LatexBox_Folding=1
-let g:LatexBox_ignore_warnings =['Underfull', 'Overfull',
-                          \'specifier changed to', 'A float is stuck',
-                          \'Label(s) may have changed']
-"}}}
-
-"----------------------------------
-"{{{ SuperTab
-" use OmniComplete function
-let g:SuperTabDefaultCompletionType = "context"
-"let g:SuperTabDefaultCompletionType = "<C-x><C-o>"
-let g:SuperTabContextDefaultCompletionType = "<C-x><C-o>"
-"}}}"
-
-"----------------------------------
 "{{{ UltiSnips
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsListSnippets="<c-l>"
@@ -338,58 +297,7 @@ let g:airline#extensions#whitespace#enabled = 0
 "}}}
 
 "----------------------------------
-"{{{ Signify
-let g:signify_vcs_list              = [ 'git', 'svn', 'hg' ]
-let g:signify_cursorhold_insert     = 1
-let g:signify_cursorhold_normal     = 1
-let g:signify_update_on_bufenter    = 0
-let g:signify_update_on_focusgained = 1
-let g:signify_disable_by_default    = 1
-
-nnoremap <localleader>gt :SignifyToggle<cr>
-nnoremap <localleader>gh :SignifyToggleHighlight<cr>
-nnoremap <localleader>gr :SignifyRefresh<cr>
-nnoremap <localleader>gd :SignifyDebug<cr>
-
-" hunk jumping
-nmap <leader>gj <plug>(signify-next-hunk)
-nmap <leader>gk <plug>(signify-prev-hunk)
-
-" hunk text object
-"omap ic <plug>(signify-motion-inner-pending)
-"xmap ic <plug>(signify-motion-inner-visual)
-"omap ac <plug>(signify-motion-outer-pending)
-"xmap ac <plug>(signify-motion-outer-visual)
-
-"<cr>}}}
-
-"----------------------------------
 "{{{ Thumbnail
 nnoremap <localleader>t :Thumbnail -include=help<cr>
 "}}}
-"}}}
-
-"{{{ Func+Command: Run a command and paste output in a buffer
-function! RunCom(command)
-    let winnr = bufwinnr('^_output$')
-    if ( winnr >= 0 )
-        execute winnr . 'wincmd w'
-        execute 'normal ggdG'
-    else
-        "TODO: check if GoldenView is available
-        if exists("*GoldenView#Split")
-          call GoldenView#Split()
-          edit _output
-        else
-          vnew _output
-        endif
-        setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
-    endif
-    let s:com='VimProcRead ' . a:command
-    exec s:com
-    "silent! VimProcRead . a:command 
-    "back to previous buffer
-    wincmd p
-endfunction
-command! -b -nargs=+ Runit :call RunCom(<q-args>)
 "}}}
