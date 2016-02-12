@@ -25,7 +25,7 @@ Plug 'scrooloose/syntastic'
 "Plug 'jiangmiao/auto-pairs'
 Plug 'Raimondi/delimitMate'
 "Plug 'ajh17/VimCompletesMe'
-Plug 'neitanod/vim-clevertab'
+Plug 'cinghiopinghio/vim-clevertab'
 " for email address completion
 Plug 'caio/querycommandcomplete.vim'
 """"""""""""""""""""""""""""""""""""" snippets
@@ -248,15 +248,17 @@ if has("python")
                         \<c-r>=CleverTab#Complete('ultisnips')<cr>
                         \<c-r>=CleverTab#Complete('omni')<cr>
                         \<c-r>=CleverTab#Complete('keyword')<cr>
+                        \<c-r>=CleverTab#Complete('file')<cr>
                         \<c-r>=CleverTab#Complete('stop')<cr>
 else
   inoremap <silent><tab> <c-r>=CleverTab#Complete('start')<cr>
                         \<c-r>=CleverTab#Complete('tab')<cr>
                         \<c-r>=CleverTab#Complete('keyword')<cr>
                         \<c-r>=CleverTab#Complete('omni')<cr>
+                        \<c-r>=CleverTab#Complete('file')<cr>
                         \<c-r>=CleverTab#Complete('stop')<cr>
 endif
-"inoremap <silent><s-tab> <c-r>=CleverTab#Complete('prev')<cr>
+inoremap <silent><s-tab> <c-r>=CleverTab#Complete('prev')<cr>
 "}}}
 
 "----------------------------------
