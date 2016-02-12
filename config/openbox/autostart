@@ -30,7 +30,7 @@ sleep 10
 # automount devices
 udiskie --use-udisks2 --tray &
 # start the screen locker
-xautolock -time 10 -locker 'i3lock -c 502020' &
+xautolock -time 10 -locker "~/.local/bin/scripts/screenlock" &
 # hide mouse if not in use
 unclutter -root -visible &
 

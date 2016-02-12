@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+
+LOCKER='i3lock'
+OPTS=' -c 502020 '
+case $1 in
+  "")
+    BG="${HOME}/.local/share/background.*"
+    ;;
+  *)
+    BG="$1"
+    ;;
+esac
+
+for f in ${BG}; do
+  echo $f
+  if [[ -L ${f} || -e ${f} ]]; then
+    SCREENSIZE=`xrandr | grep '*' | sed -e 's|^ *||' -e 's| .*||'`
+    TMPFILE=`mktemp -q --suffix=.png`
+    convert -resize ${SCREENSIZE}^\
+      -gravity center\
+      -extent ${SCREENSIZE}\
+      ${f} ${TMPFILE}
+    OPTS=${OPTS}"-i "${TMPFILE}
+  fi
+  break
+done
+
+
+echo ${OPTS}
+echo $SCREENSIZE
+${LOCKER} ${OPTS}
