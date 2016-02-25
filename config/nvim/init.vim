@@ -22,8 +22,8 @@ call plug#begin('~/.config/nvim/bundle')
 """""""""""""""""""""""""""""""""""""" syntax checker
 Plug 'scrooloose/syntastic'
 """"""""""""""""""""""""""""""""""""" AutoCompletion
-"Plug 'jiangmiao/auto-pairs'
-Plug 'Raimondi/delimitMate'
+Plug 'jiangmiao/auto-pairs'
+""Plug 'Raimondi/delimitMate'
 "Plug 'ajh17/VimCompletesMe'
 Plug 'cinghiopinghio/vim-clevertab'
 " for email address completion
@@ -38,6 +38,9 @@ else
 endif
 Plug 'honza/vim-snippets'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+" keep folds as is until save of fold/unfold
+" (save time)
+Plug 'Konfekt/FastFold'
 " prevent slow popups
 let g:jedi#popup_on_dot = 0
 """"""""""""""""""""""""""""""""""""" window splits control
@@ -53,6 +56,7 @@ Plug 'tomasr/molokai'
 Plug 'junegunn/seoul256.vim'
 Plug 'morhetz/gruvbox'
 Plug 'freeo/vim-kalisi'
+Plug 'marcopaganini/termschool-vim-theme'
 Plug 'jnurmine/Zenburn'
 "Plug 'cinghiopinghio/xinghio-color.vim'
 """"""""""""""""""""""""""""""""""""" statusbar
@@ -63,9 +67,10 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'junegunn/vim-easy-align'
 Plug 'thinca/vim-quickrun'
 Plug 'mjbrownie/swapit'
+Plug 'terryma/vim-multiple-cursors'
 
 """"""""""""""""""""""""""""""""""""" HTML
-Plug 'mattn/emmet-vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] } 
+"Plug 'mattn/emmet-vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] } 
 Plug 'othree/html5.vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] }
 "Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss', 'css', 'sass'] }
 """"""""""""""""""""""""""""""""""""" LaTeX
@@ -263,8 +268,8 @@ inoremap <silent><s-tab> <c-r>=CleverTab#Complete('prev')<cr>
 
 "----------------------------------
 "{{{ Use emmet only in html,css
-let g:user_emmet_install_global = 0
-autocmd FileType html,css,scss,sass,htmldjango EmmetInstall
+"let g:user_emmet_install_global = 0
+"autocmd FileType html,css,scss,sass,htmldjango EmmetInstall
 "}}}
 
 "----------------------------------
