@@ -25,7 +25,7 @@ Plug 'scrooloose/syntastic'
 Plug 'jiangmiao/auto-pairs'
 ""Plug 'Raimondi/delimitMate'
 "Plug 'ajh17/VimCompletesMe'
-Plug 'cinghiopinghio/vim-clevertab'
+Plug 'cinghiopinghio/vim-clevertab', { 'branch': 'filecomplete' }
 " for email address completion
 Plug 'caio/querycommandcomplete.vim'
 """"""""""""""""""""""""""""""""""""" snippets
@@ -145,8 +145,8 @@ set clipboard+=unnamed  " yank and copy to X clipboard
 set wrap
 set linebreak
 
-filetype plugin on
-set omnifunc=syntaxcomplete#Complete
+"filetype plugin on
+"set omnifunc=syntaxcomplete#Complete
 
 set textwidth=78
 if exists('+colorcolumn')

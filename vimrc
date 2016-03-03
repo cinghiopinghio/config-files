@@ -22,10 +22,10 @@ call plug#begin('~/.vim/bundle')
 """""""""""""""""""""""""""""""""""""" syntax checker
 Plug 'scrooloose/syntastic'
 """"""""""""""""""""""""""""""""""""" AutoCompletion
-"Plug 'jiangmiao/auto-pairs'
-Plug 'Raimondi/delimitMate'
+Plug 'jiangmiao/auto-pairs'
+""Plug 'Raimondi/delimitMate'
 "Plug 'ajh17/VimCompletesMe'
-Plug 'neitanod/vim-clevertab'
+Plug 'cinghiopinghio/vim-clevertab', { 'branch': 'filecomplete' }
 " for email address completion
 Plug 'caio/querycommandcomplete.vim'
 """"""""""""""""""""""""""""""""""""" snippets
@@ -38,6 +38,9 @@ else
 endif
 Plug 'honza/vim-snippets'
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+" keep folds as is until save of fold/unfold
+" (save time)
+Plug 'Konfekt/FastFold'
 " prevent slow popups
 let g:jedi#popup_on_dot = 0
 """"""""""""""""""""""""""""""""""""" window splits control
@@ -63,9 +66,10 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'junegunn/vim-easy-align'
 Plug 'thinca/vim-quickrun'
 Plug 'mjbrownie/swapit'
+Plug 'terryma/vim-multiple-cursors'
 
 """"""""""""""""""""""""""""""""""""" HTML
-Plug 'mattn/emmet-vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] } 
+"Plug 'mattn/emmet-vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] } 
 Plug 'othree/html5.vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] }
 "Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss', 'css', 'sass'] }
 """"""""""""""""""""""""""""""""""""" LaTeX
@@ -140,8 +144,8 @@ set clipboard+=unnamed  " yank and copy to X clipboard
 set wrap
 set linebreak
 
-filetype plugin on
-set omnifunc=syntaxcomplete#Complete
+"filetype plugin on
+"set omnifunc=syntaxcomplete#Complete
 
 set textwidth=78
 if exists('+colorcolumn')
@@ -248,21 +252,23 @@ if has("python")
                         \<c-r>=CleverTab#Complete('ultisnips')<cr>
                         \<c-r>=CleverTab#Complete('omni')<cr>
                         \<c-r>=CleverTab#Complete('keyword')<cr>
+                        \<c-r>=CleverTab#Complete('file')<cr>
                         \<c-r>=CleverTab#Complete('stop')<cr>
 else
   inoremap <silent><tab> <c-r>=CleverTab#Complete('start')<cr>
                         \<c-r>=CleverTab#Complete('tab')<cr>
                         \<c-r>=CleverTab#Complete('keyword')<cr>
                         \<c-r>=CleverTab#Complete('omni')<cr>
+                        \<c-r>=CleverTab#Complete('file')<cr>
                         \<c-r>=CleverTab#Complete('stop')<cr>
 endif
-"inoremap <silent><s-tab> <c-r>=CleverTab#Complete('prev')<cr>
+inoremap <silent><s-tab> <c-r>=CleverTab#Complete('prev')<cr>
 "}}}
 
 "----------------------------------
 "{{{ Use emmet only in html,css
-let g:user_emmet_install_global = 0
-autocmd FileType html,css,scss,sass,htmldjango EmmetInstall
+"let g:user_emmet_install_global = 0
+"autocmd FileType html,css,scss,sass,htmldjango EmmetInstall
 "}}}
 
 "----------------------------------

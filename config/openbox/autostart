@@ -8,6 +8,8 @@
 background &
 # start urxvt daemon
 urxvtd -q -f -o &
+# automatically turn on attached displays
+srandrd ${HOME}/.local/bin/scripts/diplay-on
 
 if [[ ${XDG_CURRENT_DESKTOP} == 'openbox' ]];
 then
@@ -38,7 +40,6 @@ unclutter -root -visible &
 case ${HOSTNAME} in
   'arcinghio')
     # battery tray icon
-    batterymon &
     xgamma -quiet -rgamma 1.11 -ggamma 1.01 -bgamma 0.93 &
     ;;
   'spin')
@@ -49,3 +50,6 @@ case ${HOSTNAME} in
     volumeicon &
     ;;
 esac
+
+# launcher
+synapse -s
