@@ -14,6 +14,7 @@ URxvt.letterSpace:                        -2
 URxvt.lineSpace:                          0.9
 URxvt.internalBorder:                     4
 urxvt*termName: rxvt-256color
+URxvt*iso14755: False
 
 ! borderless and no scrollbar
 URxvt.scrollBar_right:                    true
