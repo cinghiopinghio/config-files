@@ -58,5 +58,5 @@ if [[ $?==0 ]] && $SUSPEND; then
 fi
 
 # suspend dunst
-! ${DRYRUN} killall -SIGUSR1 dunst
+! ${DRYRUN} && killall -SIGUSR2 dunst
 ${VERBOSE} && echo "Re-enabling notification system"
