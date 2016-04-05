@@ -2,18 +2,6 @@
 
 XRANDR="xrandr"
 CMD="${XRANDR}"
-declare -A VOUTS
-eval VOUTS=$(${XRANDR} | \
-  awk 'BEGIN {printf("(")} /^\S.*connected/{printf("[%s]=%s ", $1, $2)} END{printf(")")}')
-declare -A POS
-
-POS=([X]=0 [Y]=0)
-
-find_mode() {
-  echo $(${XRANDR} | \
-    grep "^${1} " -A1 | \
-    awk '{FS="[ x]"} /^\s/{printf("WIDTH=%s\nHEIGHT=%s", $4,$5)}')
-}
 
 xrandr_params_for() {
   if [ "${2}" == 'connected' ]
@@ -29,11 +17,26 @@ xrandr_params_for() {
   fi
 }
 
-for VOUT in ${!VOUTS[*]}
-do
-  xrandr_params_for ${VOUT} ${VOUTS[${VOUT}]}
+ISFIRST=true
+for VOUT in `${XRANDR} | grep " connected " | awk '{print $1}'`; do
+	echo $VOUT is connected
+	if ${ISFIRST}; then
+		OLD_VOUT=${VOUT}
+		CMD="${CMD} --output ${VOUT} --auto --pos 0x0"
+		POS="--above"
+		ISFIRST=false
+	else
+		CMD="${CMD} --output ${VOUT} --auto ${POS} ${OLD_VOUT}"
+		OLD_VOUT=${VOUT}
+		POS="--right-of"
+	fi
+done
+for VOUT in `${XRANDR} | grep " disconnected " | awk '{print $1}'`; do
+	echo $VOUT is disconnected
+	CMD="${CMD} --output ${VOUT} --off"
 done
 set -x
 ${CMD}
 set +x
+
 ${HOME}/.local/bin/scripts/background

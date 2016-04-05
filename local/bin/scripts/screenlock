@@ -1,32 +1,62 @@
 #!/usr/bin/env bash
 
+# set -x
 
 LOCKER='i3lock'
 OPTS=' -c 502020 '
-case $1 in
-  "")
-    BG="${HOME}/.local/share/background.*"
-    ;;
-  *)
-    BG="$1"
-    ;;
-esac
+
+# defaults
+BG="${HOME}/.local/share/background.*"
+SUSPEND=false
+VERBOSE=false
+DRYRUN=false
+
+for arg in $@; do
+    case $arg in
+        "-s")
+            SUSPEND=true
+            ;;
+        "-v")
+            VERBOSE=true
+            ;;
+        "-n")
+            DRYRUN=true
+            ;;
+        "*.{jpg,jpeg,png}")
+            BG="$1"
+            ;;
+    esac
+done
 
 for f in ${BG}; do
-  echo $f
+  ${VERBOSE} && echo "Using file: $f"
   if [[ -L ${f} || -e ${f} ]]; then
-    SCREENSIZE=`xrandr | grep '*' | sed -e 's|^ *||' -e 's| .*||'`
+    #SCREENSIZE=`xrandr | grep '*' | sed -e 's|^ *||' -e 's| .*||'`
+    SCREENSIZE=`xrandr --current | grep current | sed -e "s|^.*current||" -e "s|,.*||" -e "s| ||g"`
     TMPFILE=`mktemp -q --suffix=.png`
-    convert -resize ${SCREENSIZE}^\
-      -gravity center\
-      -extent ${SCREENSIZE}\
-      ${f} ${TMPFILE}
+    ! $DRYRUN &&\
+            convert -resize ${SCREENSIZE}^\
+            -gravity center\
+            -extent ${SCREENSIZE}\
+            ${f} ${TMPFILE}
     OPTS=${OPTS}"-i "${TMPFILE}
   fi
   break
 done
 
+${VERBOSE} && echo "Using Size: $SCREENSIZE"
 
-echo ${OPTS}
-echo $SCREENSIZE
-${LOCKER} ${OPTS}
+# suspend dunst
+${VERBOSE} && echo "Suspending notification system"
+! ${DRYRUN} && killall -SIGUSR1 dunst
+
+! ${DRYRUN} && ${LOCKER} ${OPTS}
+
+if [[ $?==0 ]] && $SUSPEND; then 
+        ${VERBOSE} && echo "Going to suspend mode"
+        ! ${DRYRUN} && systemctl suspend
+fi
+
+# suspend dunst
+! ${DRYRUN} && killall -SIGUSR2 dunst
+${VERBOSE} && echo "Re-enabling notification system"

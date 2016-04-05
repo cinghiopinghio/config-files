@@ -199,7 +199,7 @@ set $mode_system System (l) lock, (e) logout, (s) suspend, (r) reboot, (x) shutd
 mode "$mode_system" {
     bindsym l exec --no-startup-id ~/.local/bin/scripts/screenlock, mode "default"
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
-    bindsym s exec --no-startup-id ~/.local/bin/scripts/screenlock && systemctl suspend, mode "default"
+    bindsym s exec --no-startup-id ~/.local/bin/scripts/screenlock -s, mode "default"
     # no swap to hibernate
     #bindsym h exec --no-startup-id i3lock -c 502020 && systemctl hibernate, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
@@ -293,3 +293,5 @@ for_window [class="(?i)sxiv"] floating enabled
 for_window [class="(?i)Pidgin|(?i)Skype|(?i)Tox"] floating enabled
 for_window [class="(?i)gnuplot"] floating enabled
 for_window [class="appfinder"] floating enabled
+workspace 000 output DP1
+assign [class="(?i)pdfpc" window_role="presentation"] workspace 000
