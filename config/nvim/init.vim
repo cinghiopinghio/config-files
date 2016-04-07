@@ -14,6 +14,11 @@ endif
 syntax on
 "}}}
 
+" Neovim-qt Guifont command
+command -nargs=? Guifont call rpcnotify(0, 'Gui', 'SetFont', "<args>") | let g:Guifont="<args>"
+" Set the font to DejaVu Sans Mono:h13
+Guifont Ubuntu Mono:h12
+
 "----------------------------------------------------------------------
 " Plugin Manager
 ""{{{ Vundle: plugin manager
