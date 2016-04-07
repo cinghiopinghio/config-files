@@ -22,7 +22,7 @@ for VOUT in `${XRANDR} | grep " connected " | awk '{print $1}'`; do
 	echo $VOUT is connected
 	if ${ISFIRST}; then
 		OLD_VOUT=${VOUT}
-		CMD="${CMD} --output ${VOUT} --auto --pos 0x0"
+		CMD="${CMD} --output ${VOUT} --auto --pos 0x0 --primary"
 		POS="--above"
 		ISFIRST=false
 	else
