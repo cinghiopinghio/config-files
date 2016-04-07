@@ -5,24 +5,30 @@
 # early apps
 
 # set background image:
-background &
+${HOME}/.local/bin/scripts/background &
 # start urxvt daemon
 urxvtd -q -f -o &
 # automatically turn on attached displays
 srandrd ${HOME}/.local/bin/scripts/diplay-on
+${HOME}/.local/bin/scripts/diplay-on &
 
-if [[ ${XDG_CURRENT_DESKTOP} == 'openbox' ]];
-then
-  # start panel
-  tint2 -c ~/.config/tint2/sottone.tint2rc &
 
-  #lal & # clock in tray
-  lal -c green -f "%a %d-%m" &
-  lal -c green -f "%H:%M" &
+case ${XDG_CURRENT_DESKTOP} in
+  'openbox')
+    # start panel
+    tint2 -c ~/.config/tint2/sottone.tint2rc &
+  
+    #lal & # clock in tray
+    lal -c green -f "%a %d-%m" &
+    lal -c green -f "%H:%M" &
 
-  # start a docking application (system Tray)
-  docker-tray &
-fi
+    # start a docking application (system Tray)
+    docker-tray &
+    ;;
+  'i3')
+    i3-msg reload
+    ;;
+esac
 
 sleep 10
 
@@ -41,6 +47,7 @@ case ${HOSTNAME} in
   'arcinghio')
     # battery tray icon
     xgamma -quiet -rgamma 1.11 -ggamma 1.01 -bgamma 0.93 &
+    volumeicon &
     ;;
   'spin')
     echo RELOADAGENT | gpg-connect-agent
@@ -52,4 +59,4 @@ case ${HOSTNAME} in
 esac
 
 # launcher
-synapse -s
+# synapse -s
