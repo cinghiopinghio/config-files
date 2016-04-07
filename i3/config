@@ -178,9 +178,9 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # multimedia keys
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 1 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume 1 -5% #decrease sound volume
-bindsym XF86AudioMute exec pactl set-sink-mute 1 toggle # mute sound
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5% #decrease sound volume
+bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle # mute sound
 # Sreen brightness controls
 bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightness
 bindsym XF86MonBrightnessUp   exec xbacklight -inc 5 # increase screen brightness
@@ -240,12 +240,13 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 #i3bar_command dzen2
 
+# exec --no-startup-id ~/.local/bin/scripts/display-on
+
 bar {
         status_command i3status
         font pango: DejaVu Sans Mono, FontAwesome 8
+#	tray_output primary
         output eDP1
-        output DVI-I-1
-        output VGA1
         colors {
               statusline         $white
               background         $backd
@@ -260,10 +261,9 @@ bar {
 bar {
         #status_command i3status
         font pango:DejaVu Sans Mono 8
+#	tray_output primary
         output DP1
         output HDMI1
-        output VIRTUAL1
-        output VGA-0
         colors {
               statusline         $white
               background         $backd
