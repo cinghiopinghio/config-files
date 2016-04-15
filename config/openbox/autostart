@@ -9,8 +9,8 @@ ${HOME}/.local/bin/scripts/background &
 # start urxvt daemon
 urxvtd -q -f -o &
 # automatically turn on attached displays
-srandrd ${HOME}/.local/bin/scripts/diplay-on
-${HOME}/.local/bin/scripts/diplay-on &
+srandrd ${HOME}/.local/bin/scripts/display-on
+${HOME}/.local/bin/scripts/display-on &
 
 
 case ${XDG_CURRENT_DESKTOP} in
@@ -41,21 +41,22 @@ udiskie --use-udisks2 --tray &
 xautolock -time 10 -locker "~/.local/bin/scripts/screenlock" &
 # hide mouse if not in use
 unclutter -root -visible &
+# volume control on panel
+volumeicon &
 
 # Machine specific start apps
 case ${HOSTNAME} in
   'arcinghio')
     # battery tray icon
     xgamma -quiet -rgamma 1.11 -ggamma 1.01 -bgamma 0.93 &
-    volumeicon &
     ;;
   'spin')
     echo RELOADAGENT | gpg-connect-agent
     dropbox-cli start
     pidgin &
-    # volume control on panel
-    volumeicon &
     ;;
+  'dingo')
+    nm-applet&
 esac
 
 # launcher
