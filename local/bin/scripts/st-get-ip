@@ -18,29 +18,33 @@ def get_devices(port):
 
     devs = {}
     for dev in config['devices']:
-        devs[dev['name']] = dev['deviceID']
+        devs[dev['deviceID']] = dev['name']
 
     return devs
         
-def get_ip(port, devID):
+def get_connections(port, devID=None):
     connections = requests.get("http://localhost:"+
                                port+"/rest/system/connections").json()
-    if devID in connections['connections'].keys():
-        dev = connections['connections'][devID]
-        if dev['connected']:
-            address = connections['connections'][devID]['address']
+    conns = {}
+    for dId, dConn in connections['connections'].items():
+
+        if dConn['connected']:
+            address = connections['connections'][dId]['address']
             ip, port = address.rsplit(':', maxsplit=1)
             ip = ip.strip('[]')
-            return ip
         else:
-            return 'Not connected'
-    else:
-        return None
+            ip = 'Not connected'
+        conns[dId] = ip
+    return conns
 
 
 port = get_port()
 devices = get_devices(port)
-for d,id in devices.items():
-    ip = get_ip(port, id)
-    if ip is not None:
-        print('{:12s}{}'.format(d, ip))
+connections = get_connections(port)
+
+status = requests.get("http://localhost:" + port+"/rest/system/status").json()
+myId = status['myID']
+
+for d_Id, d_name in devices.items():
+    if d_Id in connections and d_Id != myId:
+        print('{:12s}{}'.format(d_name, connections[d_Id]))
