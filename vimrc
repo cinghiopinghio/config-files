@@ -56,6 +56,7 @@ Plug 'tomasr/molokai'
 Plug 'junegunn/seoul256.vim'
 Plug 'morhetz/gruvbox'
 Plug 'freeo/vim-kalisi'
+Plug 'marcopaganini/termschool-vim-theme'
 Plug 'jnurmine/Zenburn'
 "Plug 'cinghiopinghio/xinghio-color.vim'
 """"""""""""""""""""""""""""""""""""" statusbar
@@ -165,6 +166,11 @@ elseif s:host == 'arcinghio'
   let g:airline_theme='gruvbox'
   let g:gruvbox_contrast_dark='medium'
   colorscheme gruvbox
+elseif s:host == 'dingo'
+  colorscheme kalisi
+  let g:airline_theme='kalisi'
+  highlight Normal ctermbg=NONE
+  highlight nonText ctermbg=NONE
 else
   let g:airline_theme='badwolf'
   colorscheme molokai
