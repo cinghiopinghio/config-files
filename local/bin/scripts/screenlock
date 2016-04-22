@@ -34,6 +34,7 @@ for f in ${BG}; do
     #SCREENSIZE=`xrandr | grep '*' | sed -e 's|^ *||' -e 's| .*||'`
     SCREENSIZE=`xrandr --current | grep current | sed -e "s|^.*current||" -e "s|,.*||" -e "s| ||g"`
     TMPFILE=`mktemp -q --suffix=.png`
+    SRCSIZE=`identify -ping -format "%[w]x%[h]" ${f}`
     ! $DRYRUN &&\
             convert -resize ${SCREENSIZE}^\
             -gravity center\
