@@ -17,7 +17,7 @@ syntax on
 " Neovim-qt Guifont command
 command -nargs=? Guifont call rpcnotify(0, 'Gui', 'SetFont', "<args>") | let g:Guifont="<args>"
 " Set the font to DejaVu Sans Mono:h13
-Guifont Ubuntu Mono:h12
+Guifont Fira Mono:h12
 
 "----------------------------------------------------------------------
 " Plugin Manager
@@ -317,4 +317,8 @@ let g:airline#extensions#whitespace#enabled = 0
 "{{{ Thumbnail
 nnoremap <localleader>t :Thumbnail -include=help<cr>
 "}}}
+
+"----------------------------------
+"{{{ AutoPairs
+let g:AutoPairs= {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
 "}}}
