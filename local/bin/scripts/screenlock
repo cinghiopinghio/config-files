@@ -51,6 +51,10 @@ ${VERBOSE} && echo "Using Size: $SCREENSIZE"
 ${VERBOSE} && echo "Suspending notification system"
 ! ${DRYRUN} && killall -SIGUSR1 dunst
 
+# forget gpg-agent passphrase
+${VERBOSE} && echo "Forgetting your gpg passphrase"
+! ${DRYRUN} && killall -SIGHUP gpg-agent
+
 ! ${DRYRUN} && ${LOCKER} ${OPTS}
 
 if [[ $?==0 ]] && $SUSPEND; then 
