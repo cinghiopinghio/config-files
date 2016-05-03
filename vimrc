@@ -169,6 +169,7 @@ elseif s:host == 'arcinghio'
 elseif s:host == 'dingo'
   colorscheme kalisi
   let g:airline_theme='kalisi'
+  set background=light
   highlight Normal ctermbg=NONE
   highlight nonText ctermbg=NONE
 else
@@ -312,4 +313,8 @@ let g:airline#extensions#whitespace#enabled = 0
 "{{{ Thumbnail
 nnoremap <localleader>t :Thumbnail -include=help<cr>
 "}}}
+
+"----------------------------------
+"{{{ AutoPairs
+let g:AutoPairs= {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
 "}}}
