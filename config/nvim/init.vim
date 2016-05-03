@@ -77,6 +77,7 @@ Plug 'terryma/vim-multiple-cursors'
 """"""""""""""""""""""""""""""""""""" HTML
 "Plug 'mattn/emmet-vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] } 
 Plug 'othree/html5.vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] }
+Plug 'lepture/vim-jinja'
 "Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss', 'css', 'sass'] }
 """"""""""""""""""""""""""""""""""""" LaTeX
 Plug 'lervag/vimtex', { 'for': 'tex' }
@@ -174,6 +175,7 @@ elseif s:host == 'arcinghio'
 elseif s:host == 'dingo'
   colorscheme kalisi
   let g:airline_theme='kalisi'
+  set background=light
   highlight Normal ctermbg=NONE
   highlight nonText ctermbg=NONE
 else
@@ -289,7 +291,7 @@ let g:syntastic_mode_map = { 'passive_filetypes': ['sass'] }
 
 "----------------------------------
 "{{{ Unite
-nmap <localleader>uf :Unite -no-split file buffer<cr>
+nmap <localleader>uf :Unite -no-split file_rec/neovim<cr>
 nmap <localleader>ub :Unite -no-split buffer<cr>
 nmap <localleader>ur :Unite -no-split file_mru<cr>
 nmap <localleader>uo :Unite -vertical outline<cr>
