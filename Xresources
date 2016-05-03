@@ -197,5 +197,5 @@ XCalc*Cursor:                             hand2
 XCalc*ShapeStyle:                         rectangle
 
 ! -- Colours -- !
-#include "/home/mauro/.colours/gruvbox-dark"
+#include "/home/mauro/.colours/gruvbox-light"
 
