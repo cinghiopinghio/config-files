@@ -59,8 +59,7 @@ case $HOST in
   "arcinghio") hostColor="%F{green}"  ;;
   "moma")      hostColor="%F{green}"  ;;
   "spin")      hostColor="%F{blue}"   ;;
-  "quantumcl") hostColor="%F{yellow}"   ;;
-  "bunet")     hostColor="%F{red}"   ;;
+  "dingo")     hostColor="%F{yellow}"   ;;
   *)           hostColor="%F{red}"    ;;
 esac
 function virtualenv_prompt() {

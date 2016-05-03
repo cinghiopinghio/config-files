@@ -114,8 +114,7 @@ case ${HOSTNAME/.*/} in
   'arcinghio') HostColor=$Green ;;
   'moma')      HostColor=$IGreen ;;
   'spin')      HostColor=$Blue  ;;
-  'quantumcl') HostColor=$Yellow;;
-  'bunet')     HostColor=$Red   ;;
+  'dingo')     HostColor=$Yellow;;
   *)           HostColor=$On_Red ;;
 esac
 
