@@ -1,48 +1,77 @@
 #!/bin/bash
 
+# TODO:
+# - switch from usb to nas
+# - add exclude-from
 
-
-if [ $# -lt 1 ]; then
-    echo "No destination defined. Usage: $0 destination" >&2
-    exit 1
-elif [ $# -gt 1 ]; then
-    echo "Too many arguments. Usage: $0 destination" >&2
-    exit 1
-elif [ ! -d "$1" ]; then
-   echo "Invalid path: $1" >&2
-   exit 1
-elif [ ! -w "$1" ]; then
-   echo "Directory not writable: $1" >&2
-   exit 1
-fi
-
-case "$1" in
-  "/mnt") ;;
-  "/mnt/"*) ;;
-  "/media") ;;
-  "/media/"*) ;;
-  "/run/media") ;;
-  "/run/media/"*) ;;
-  *) echo "Destination not allowed." >&2
-     exit 1
-     ;;
-esac
-
-BUFOLD=$1
+# options for borg
+OPTS='--verbose'
+# archive name
+ARCHIVENAME=cinBorgBak
+# folders to archive
+FOLDERS='/home /etc'
+# position of archive
+REMOTEARCH="brancamenta:/var/services/homes/mauro/${ARCHIVENAME}"
+# binary path
+REMOTEPATH=/var/services/homes/mauro/.local/bin/borg
+# use timestamps to name backups
 TIMESTAMP=`date +%Y%m%d-%H:%M`
 
-borg create ${BUFOLD}::bu-${TIMESTAMP} /home /etc\
-  --exclude-from /etc/borgmatic/excludes\
-  --verbose --progress
 
-borg prune --verbose --stats --list \
+# Excludes
+EXCLUDE="--exclude-caches\
+  --exclude '*~'\
+  --exclude '.cache'\
+  --exclude 'lost+found'\
+  --exclude '.git'\
+  --exclude '.svn'\
+  --exclude '*.pyc'"
+
+
+options=("NAS Brancamenta" "External Drive" "Local Archive")
+PS3="Select from:"
+select opt in "${options[@]}" "Quit"; do
+  POS=${REPLY}
+  case "${REPLY}" in
+    1)
+      ARCHIVE=${REMOTEARCH}
+      OPTS="${OPTS} --remote-path ${REMOTEPATH}"
+      ;;
+    2)
+      PARTS=( `lsblk --list --output MOUNTPOINT --noheadings` )
+      select part in "${PARTS[@]}" "Quit"; do
+        ARCHIVE=${part}/${ARCHIVENAME}
+        break
+      done
+      ;;
+    3)
+      ;;
+    *)
+      exit 0
+      ;;
+  esac
+  break
+done
+
+export BORG_RSH="ssh -i ${HOME}/.ssh/id_rsa -F ${HOME}/.ssh/config -o UserKnownHostsFile=${HOME}/.ssh/known_hosts"
+export BORG_PASSPHRASE=`pass borg/brancamenta`
+SUDOPTS='-E'
+sudo ${SUDOPTS} borg create ${ARCHIVE}::${TIMESTAMP} ${FOLDERS}\
+  ${EXCLUDE}\
+  ${OPTS} --progress
+
+sudo ${SUDOPTS} borg prune --stats --list\
+  ${OPTS}\
   --keep-hourly 3 \
   --keep-daily 7 \
   --keep-weekly 4 \
   --keep-monthly 6 \
   --keep-yearly 1 \
-  ${BUFOLD}
+  ${ARCHIVE}
+export BORG_PASSPHRASE=''
 
+
+notify-send "BORG-BACKUP" "Backup done! See log files"
 
 #START=$(date +%s)
 ##rsync -aAXv --exclude={"/dev/*","/proc/*","/sys/*","/tmp/*","/run/*","/mnt/*","/media/*","/lost+found"} /* "$1"
