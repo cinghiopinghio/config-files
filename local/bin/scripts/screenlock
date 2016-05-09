@@ -39,6 +39,7 @@ for f in ${BG}; do
             convert -resize ${SCREENSIZE}^\
             -gravity center\
             -extent ${SCREENSIZE}\
+	    -quality 11\
             ${f} ${TMPFILE}
     OPTS=${OPTS}"-i "${TMPFILE}
   fi
