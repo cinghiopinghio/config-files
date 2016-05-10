@@ -19,14 +19,22 @@ TIMESTAMP=`date +%Y%m%d-%H:%M`
 
 
 # Excludes
+EXCLUDEFILE=/tmp/borg-exclude.txt
+rm ${EXCLUDEFILE}
+cat > ${EXCLUDEFILE} <<EOF
+# Comment line
+/home/lost+found
+pp:/etc/ssl
+sh:/**/.git
+sh:/**/.cache
+sh:/**/.mozilla
+sh:/**/.thubnails
+sh:/**/.local/share/Trash
+sh:/**/.svn
+*.pyc
+EOF
 EXCLUDE="--exclude-caches\
-  --exclude '*~'\
-  --exclude '.cache'\
-  --exclude 'lost+found'\
-  --exclude '.git'\
-  --exclude '.svn'\
-  --exclude '*.pyc'"
-
+	--exclude-from ${EXCLUDEFILE}"
 
 options=("NAS Brancamenta" "External Drive" "Local Archive")
 PS3="Select from:"
