@@ -12,7 +12,11 @@ if [ $STATE -eq 0 ]
 then
     echo "No internet connection."
 else
+    # ensure gpg-agent is running
+    gpg-connect-agent /bye >> /dev/null
+    # get new mails
     mbsync -qq -a
+    # index new mails
     notmuch new --quiet
 fi
 exit 0
