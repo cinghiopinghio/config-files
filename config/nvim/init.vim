@@ -66,8 +66,9 @@ Plug 'jnurmine/Zenburn'
 "Plug 'cinghiopinghio/xinghio-color.vim'
 """"""""""""""""""""""""""""""""""""" statusbar
 "Plug 'maciakl/vim-neatstatus'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 """"""""""""""""""""""""""""""""""""" vary
 Plug 'junegunn/vim-easy-align'
 Plug 'thinca/vim-quickrun'
@@ -161,6 +162,9 @@ else
   au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
 
+let g:lightline = {
+      \ 'colorscheme': 'wombat'
+      \ }
 
 set background=dark
 if s:host == 'spin'
