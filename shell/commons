@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
 [ -f ~/.shell/vars ] && . ~/.shell/vars
-[ -f ~/.shell/hosts/`hostname -s` ] && . ~/.shell/hosts/`hostname -s`
+
+host=`hostname`
+host=${host%%.*}
+[ -f ~/.shell/hosts/${host} ] && . ~/.shell/hosts/${host}
 
 # normal aliases
 [ -f ~/.shell/aliases ] && . ~/.shell/aliases
