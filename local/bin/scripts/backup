@@ -22,7 +22,7 @@ PRUNEOPTS="--list --stats"
 
 # Excludes
 EXCLUDEFILE=/tmp/borg-exclude.txt
-rm ${EXCLUDEFILE}
+rm -f ${EXCLUDEFILE}
 cat > ${EXCLUDEFILE} <<EOF
 # Comment line
 /home/lost+found
