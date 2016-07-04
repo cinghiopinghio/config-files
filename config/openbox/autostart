@@ -60,6 +60,7 @@ case ${HOSTNAME} in
   'dingo')
     nm-applet &
     pidgin &
+    albert &
 esac
 
 # launcher
