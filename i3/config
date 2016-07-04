@@ -34,14 +34,14 @@ set $backd  #202020
 set $backl  #383A3B
 set $white  #CCCCC0 
 
-# colors                border background text indicator
-client.focused          $color $color $backd $color
-client.focused_inactive $backl $backl $color $backl
-client.unfocused        $backl $backd $color $backd
-client.urgent           $colal $colal $backd $colal
+# colors                border backgr text   indicator  border
+client.focused          $color $color $backd $color     $color
+client.focused_inactive $backl $backl $color $backl     $backl
+client.unfocused        $backl $backd $color $backd     $backl
+client.urgent           $colal $colal $backd $colal     $colal
 client.background       $backd
-new_window 1pixel
-new_float 1pixel
+new_window pixel 1
+new_float pixel 15
 #hide_edge_borders vertical
 
 # Use Mouse+$mod to drag floating windows to their wanted position
@@ -300,4 +300,4 @@ for_window [class="(?i)Pidgin|(?i)Skype|(?i)Tox"] floating enabled
 for_window [class="(?i)gnuplot"] floating enabled
 for_window [class="appfinder"] floating enabled
 workspace 000 output DP1
-assign [class="(?i)pdfpc" window_role="presentation"] workspace 000
+# assign [class="(?i)pdfpc" window_role="presentation"] workspace 000
