@@ -30,7 +30,14 @@ Plug 'scrooloose/syntastic'
 Plug 'jiangmiao/auto-pairs'
 ""Plug 'Raimondi/delimitMate'
 "Plug 'ajh17/VimCompletesMe'
-Plug 'cinghiopinghio/vim-clevertab', { 'branch': 'filecomplete' }
+function! DoRemote(arg)
+  UpdateRemotePlugins
+endfunction
+Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+" prevent slow popups
+let g:jedi#popup_on_dot = 0
+" Plug 'cinghiopinghio/vim-clevertab', { 'branch': 'filecomplete' }
 " for email address completion
 Plug 'caio/querycommandcomplete.vim'
 """"""""""""""""""""""""""""""""""""" snippets
@@ -46,8 +53,6 @@ Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 " keep folds as is until save of fold/unfold
 " (save time)
 Plug 'Konfekt/FastFold'
-" prevent slow popups
-let g:jedi#popup_on_dot = 0
 """"""""""""""""""""""""""""""""""""" window splits control
 Plug 'zhaocai/GoldenView.Vim'
 Plug 'itchyny/thumbnail.vim', { 'on': 'Thumbnail' }
@@ -152,8 +157,8 @@ set clipboard+=unnamed  " yank and copy to X clipboard
 set wrap
 set linebreak
 
-"filetype plugin on
-"set omnifunc=syntaxcomplete#Complete
+set splitbelow
+set splitright
 
 set textwidth=78
 if exists('+colorcolumn')
@@ -263,23 +268,24 @@ nmap ga <Plug>(EasyAlign)
 "{{{ Clevertab - complete chain
 
 
-if has("python")
-  inoremap <silent><tab> <c-r>=CleverTab#Complete('start')<cr>
-                        \<c-r>=CleverTab#Complete('tab')<cr>
-                        \<c-r>=CleverTab#Complete('ultisnips')<cr>
-                        \<c-r>=CleverTab#Complete('omni')<cr>
-                        \<c-r>=CleverTab#Complete('keyword')<cr>
-                        \<c-r>=CleverTab#Complete('file')<cr>
-                        \<c-r>=CleverTab#Complete('stop')<cr>
-else
-  inoremap <silent><tab> <c-r>=CleverTab#Complete('start')<cr>
-                        \<c-r>=CleverTab#Complete('tab')<cr>
-                        \<c-r>=CleverTab#Complete('keyword')<cr>
-                        \<c-r>=CleverTab#Complete('omni')<cr>
-                        \<c-r>=CleverTab#Complete('file')<cr>
-                        \<c-r>=CleverTab#Complete('stop')<cr>
-endif
-inoremap <silent><s-tab> <c-r>=CleverTab#Complete('prev')<cr>
+let g:deoplete#enable_at_startup = 1
+" if has("python")
+"   inoremap <silent><tab> <c-r>=CleverTab#Complete('start')<cr>
+"                         \<c-r>=CleverTab#Complete('tab')<cr>
+"                         \<c-r>=CleverTab#Complete('ultisnips')<cr>
+"                         \<c-r>=CleverTab#Complete('omni')<cr>
+"                         \<c-r>=CleverTab#Complete('keyword')<cr>
+"                         \<c-r>=CleverTab#Complete('file')<cr>
+"                         \<c-r>=CleverTab#Complete('stop')<cr>
+" else
+"   inoremap <silent><tab> <c-r>=CleverTab#Complete('start')<cr>
+"                         \<c-r>=CleverTab#Complete('tab')<cr>
+"                         \<c-r>=CleverTab#Complete('keyword')<cr>
+"                         \<c-r>=CleverTab#Complete('omni')<cr>
+"                         \<c-r>=CleverTab#Complete('file')<cr>
+"                         \<c-r>=CleverTab#Complete('stop')<cr>
+" endif
+" inoremap <silent><s-tab> <c-r>=CleverTab#Complete('prev')<cr>
 "}}}
 
 "----------------------------------
@@ -300,7 +306,7 @@ let g:syntastic_check_on_wq = 0
 
 "----------------------------------
 "{{{ Unite
-nmap <localleader>uf :Unite -no-split file_rec/neovim<cr>
+nmap <localleader>uf :Unite -no-split file buffer<cr>
 nmap <localleader>ub :Unite -no-split buffer<cr>
 nmap <localleader>ur :Unite -no-split file_mru<cr>
 nmap <localleader>uo :Unite -vertical outline<cr>
