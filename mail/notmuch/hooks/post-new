@@ -15,6 +15,8 @@ notmuch tag +alot            -- $NEW to:"alot@noreply.github.com"
 notmuch tag +antifaboxe      -- $NEW to:"antifaboxe-list@csoaskatasuna.org"
 notmuch tag +isi             -- $NEW from:"segreteria1@isi.it"
 notmuch tag +lfran           -- $NEW "LFRAN 1201"
+notmuch tag +ucl             -- $NEW from:"communication-interne@uclouvain.be"
+notmuch tag +maternelle      -- $NEW from:"direction.bruyeres@gmail.com"
 
 ## Deleted drafts and sent mails
 notmuch tag +deleted $NOREAD -- $NEW folder:Trash and not tag:deleted
@@ -23,6 +25,9 @@ notmuch tag +draft           -- $NEW folder:Drafts and not tag:draft
 notmuch tag +draft           -- $NEW folder:drafts and not tag:draft
 notmuch tag +sent            -- $NEW folder:Sent and not tag:sent
 notmuch tag +sent            -- $NEW folder:sent and not tag:sent
+
+notmuch tag +ccs@ccs         -- $NEW from:CCS_at_CCS_2016
+notmuch tag +quantum         -- $NEW from:biamonte
 
 ## Send notification to OS
 s=$(notmuch search --format=json tag:new AND tag:inbox | ${HOME}/.local/bin/scripts/notify-mail); 
