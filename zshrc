@@ -21,6 +21,7 @@ else
   zstyle ':completion:*:default' list-colors ''
 fi
 
+fpath=(${HOME}/.local/share/zsh $fpath)
 autoload -U compinit 
 compinit
 setopt autopushd pushdminus pushdsilent pushdtohome
