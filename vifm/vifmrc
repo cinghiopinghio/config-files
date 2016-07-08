@@ -108,7 +108,7 @@ filetype *.jpeg,*.jpg,*.png sxiv &,feh &,geeqie &,eog &
 filetype *.orf,*.nef geeqie &
 
 " Document
-filetype *.odt,*.doc,*.docx libreoffice &
+filetype *.odt,*.doc,*.docx,*.xls,*.xlsx libreoffice &
 
 " For automated FUSE mounts, you must register an extension with FILETYPE=..
 " in one of following formats:
