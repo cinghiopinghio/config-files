@@ -17,6 +17,7 @@ notmuch tag +isi             -- $NEW from:"segreteria1@isi.it"
 notmuch tag +lfran           -- $NEW "LFRAN 1201"
 notmuch tag +ucl             -- $NEW from:"communication-interne@uclouvain.be"
 notmuch tag +maternelle      -- $NEW from:"direction.bruyeres@gmail.com"
+notmuch tag +karate +deai-ottignies -- $NEW from:"detrochclaude@hotmail.com"
 
 ## Deleted drafts and sent mails
 notmuch tag +deleted $NOREAD -- $NEW folder:Trash and not tag:deleted
