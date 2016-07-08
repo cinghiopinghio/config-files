@@ -1,0 +1,17 @@
+#compdef carta
+
+_carta(){
+	local -a commands
+
+	commands=(
+		"fetch:Fetch emails from remote servers"
+		"empty-basket:Remove messages tagged with killed"
+	)
+
+	if (( CURRENT == 2 )); then
+		_describe -t commands "commands" commands
+	fi
+	return 0
+}
+
+_carta
