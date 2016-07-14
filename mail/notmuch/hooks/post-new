@@ -31,11 +31,12 @@ notmuch tag +ccs@ccs         -- $NEW from:CCS_at_CCS_2016
 notmuch tag +quantum         -- $NEW from:biamonte
 
 ## Send notification to OS
-s=$(notmuch search --format=json tag:new AND tag:inbox | ${HOME}/.local/bin/scripts/notify-mail); 
-if [ "$s" != "" ];
-then
-    notify-send -u normal MAIL "$s"
-fi
+carta notify
+#s=$(notmuch search --format=json tag:new AND tag:inbox | ${HOME}/.local/bin/scripts/notify-mail); 
+#if [ "$s" != "" ];
+#then
+#    notify-send -u normal MAIL "$s"
+#fi
 
 ## update addressbook with new mails
 #for file in $(notmuch search --output=files tag:new) ; do

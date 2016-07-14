@@ -1,9 +1,0 @@
-#!/usr/bin/env python3
-
-import json
-import sys
-trds=json.load(sys.stdin)
-
-for trd in trds:
-    S = u'<b>{0:s}:</b> <i>{1:s}</i>'.format(trd['authors'][:15],trd['subject'][:20])
-    print (S)

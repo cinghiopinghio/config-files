@@ -5,7 +5,8 @@ _carta(){
 
 	commands=(
 		"fetch:Fetch emails from remote servers"
-		"empty-basket:Remove messages tagged with killed"
+                "empty-basket:Remove messages tagged with killed"
+                "notify: notify OS of tagged messages (new by default)"
 	)
 
 	if (( CURRENT == 2 )); then
