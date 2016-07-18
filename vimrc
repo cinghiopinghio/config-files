@@ -61,8 +61,9 @@ Plug 'jnurmine/Zenburn'
 "Plug 'cinghiopinghio/xinghio-color.vim'
 """"""""""""""""""""""""""""""""""""" statusbar
 "Plug 'maciakl/vim-neatstatus'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 """"""""""""""""""""""""""""""""""""" vary
 Plug 'junegunn/vim-easy-align'
 Plug 'thinca/vim-quickrun'
@@ -72,6 +73,7 @@ Plug 'terryma/vim-multiple-cursors'
 """"""""""""""""""""""""""""""""""""" HTML
 "Plug 'mattn/emmet-vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] } 
 Plug 'othree/html5.vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] }
+Plug 'lepture/vim-jinja'
 "Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss', 'css', 'sass'] }
 """"""""""""""""""""""""""""""""""""" LaTeX
 Plug 'lervag/vimtex', { 'for': 'tex' }
@@ -145,8 +147,8 @@ set clipboard+=unnamed  " yank and copy to X clipboard
 set wrap
 set linebreak
 
-"filetype plugin on
-"set omnifunc=syntaxcomplete#Complete
+set splitbelow
+set splitright
 
 set textwidth=78
 if exists('+colorcolumn')
@@ -155,6 +157,9 @@ else
   au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
 endif
 
+let g:lightline = {
+      \ 'colorscheme': 'wombat'
+      \ }
 
 set background=dark
 if s:host == 'spin'
@@ -281,6 +286,11 @@ inoremap <silent><s-tab> <c-r>=CleverTab#Complete('prev')<cr>
 "----------------------------------
 "{{{ Syntastic
 let g:syntastic_mode_map = { 'passive_filetypes': ['sass'] }
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 "}}}
 
 "----------------------------------
