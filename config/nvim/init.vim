@@ -25,7 +25,31 @@ Guifont Fira Mono:h12
 call plug#begin('~/.config/nvim/bundle')
 
 """""""""""""""""""""""""""""""""""""" syntax checker
-Plug 'scrooloose/syntastic'
+"Plug 'scrooloose/syntastic'
+Plug 'neomake/neomake'
+" {{{
+    let g:neomake_warning_sign = {
+      \ 'text': 'W>',
+      \ 'texthl': 'WarningMsg',
+      \ }
+    let g:neomake_error_sign = {
+      \ 'text': 'E>',
+      \ 'texthl': 'ErrorMsg',
+      \ }
+    " neomake is async => it doesn't block the editor
+    " It's a syntastic alternative. Syntastic was slow for me on python files.
+    " $ sudo pip2/pip3 install flake8 -U
+    " $ sudo pip2/pip3 install vulture -U
+    " let g:neomake_python_enabled_makers = ['flake8', 'pep8', 'vulture']
+    " let g:neomake_python_enabled_makers = ['flake8', 'pep8']
+    let g:neomake_python_enabled_makers = ['flake8']
+    " E501 is line length of 80 characters
+    " let g:neomake_python_flake8_maker = { 'args': ['--ignore=E115,E266,E501'], }
+    " let g:neomake_python_pep8_maker = { 'args': ['--max-line-length=100', '--ignore=E115,E266'], }
+ 
+    " run neomake on the current file on every write:
+    autocmd! BufWritePost * Neomake
+" }}}
 """"""""""""""""""""""""""""""""""""" AutoCompletion
 Plug 'jiangmiao/auto-pairs'
 ""Plug 'Raimondi/delimitMate'
@@ -229,6 +253,10 @@ nnoremap <C-right> :vertical resize +5<cr>
 "imap <silent> <Up> <C-o>gk
 "nmap <silent> <Down> gj
 "nmap <silent> <Up> gk
+nnoremap <silent> <localleader><Up>    :wincmd k<CR>
+nnoremap <silent> <localleader><Down>  :wincmd j<CR>
+nnoremap <silent> <localleader><Right> :wincmd l<CR>
+nnoremap <silent> <localleader><Left>  :wincmd h<CR>
 " prova
 
 nmap    <ESC>[5^    <C-PageUp>
