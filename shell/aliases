@@ -30,9 +30,11 @@ alias scr='save-vars; screen -dRR'
 
 if [ -e '/usr/bin/nvim' ]; then
   alias v='nvim'
+  alias vdiff='nvim -d'
   alias vrc='nvim ~/.config/nvim/init.vim'
 else
   alias v='vim'
+  alias vdiff='vim -d'
   alias vrc='nvim ~/.vimrc'
 fi
 
