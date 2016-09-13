@@ -34,7 +34,7 @@ notmuch tag +banca +bancaetica -- $NEW from:bancaetica
 notmuch tag +banca +ing        -- $NEW from:ing
 
 ## Send notification to OS
-carta notify
+~/.local/bin/scripts/carta notify
 #s=$(notmuch search --format=json tag:new AND tag:inbox | ${HOME}/.local/bin/scripts/notify-mail); 
 #if [ "$s" != "" ];
 #then
