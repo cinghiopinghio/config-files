@@ -367,3 +367,10 @@ nnoremap <localleader>t :Thumbnail -include=help<cr>
 "{{{ AutoPairs
 let g:AutoPairs= {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
 "}}}
+
+"----------------------------------
+"{{{ SwapIt
+let b:swap_lists = [
+      \{'name': 'dark/light', 'options': ['dark', 'light']},
+      \]
+"}}}
