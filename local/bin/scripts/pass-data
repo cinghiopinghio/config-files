@@ -13,7 +13,12 @@ else
     pass ${KEY} | sed '1d'
   else
     ENTRY=$2
-    pass ${KEY} | sed '1d' | grep -w "^${ENTRY}" | \
-      sed -e "s/^${ENTRY}[ \t]*:[ \t]*//" -e "s/[ \t]*$//"
+    if [[ ${ENTRY} == 'PWD' ]];
+    then
+      pass ${KEY} | sed -n 1p
+    else
+      pass ${KEY} | sed '1d' | grep -w "^${ENTRY}" | \
+         sed -e "s/^${ENTRY}[ \t]*:[ \t]*//" -e "s/[ \t]*$//"
+    fi
   fi
 fi
