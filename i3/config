@@ -250,6 +250,7 @@ bar {
         font pango: DejaVu Sans Mono, FontAwesome 10
 #	tray_output primary
         output eDP1
+        output VGA1
         output eDP-1
 	tray_padding 0
         colors {
