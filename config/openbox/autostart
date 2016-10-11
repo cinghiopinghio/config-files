@@ -38,9 +38,9 @@ sleep 10
 # automount devices
 udiskie --use-udisks2 --tray &
 # start the screen locker
-xautolock -time 10 -notify 10\
-  -notifier "notify-send XAUTOLOCK 'Screen locking in 10 secondsi'"\
-  -locker "~/.local/bin/scripts/screenlock" &
+xautolock -time 10 -notify 30\
+  -notifier "notify-send XAUTOLOCK 'Screen locking in 30 secondsi'"\
+  -locker "i3lock -t -i ~/.local/share/sfondi/tile.png" &
 # hide mouse if not in use
 unclutter -root -visible &
 # volume control on panel
