@@ -198,11 +198,12 @@ bindsym $mod+m scratchpad show
 
 
 #set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (x) shutdown
-set $mode_system System (l) lock, (e) logout, (s) suspend, (r) reboot, (x) shutdown
+set $mode_system System (l) lock, (e) logout, (s) suspend, (r) reboot, (x) shutdown, (b) background
 mode "$mode_system" {
-    bindsym l exec --no-startup-id ~/.local/bin/scripts/screenlock, mode "default"
+    bindsym l exec --no-startup-id bash ~/.local/bin/scripts/background --lock, mode "default"
+    bindsym b exec --no-startup-id bash ~/.local/bin/scripts/background, mode "default"
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
-    bindsym s exec --no-startup-id ~/.local/bin/scripts/screenlock -s, mode "default"
+    bindsym s exec --no-startup-id bash ~/.local/bin/scripts/background --lock && systemctl suspend, mode "default"
     # no swap to hibernate
     #bindsym h exec --no-startup-id i3lock -c 502020 && systemctl hibernate, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"

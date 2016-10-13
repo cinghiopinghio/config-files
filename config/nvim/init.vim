@@ -14,11 +14,6 @@ endif
 syntax on
 "}}}
 
-" Neovim-qt Guifont command
-command -nargs=? Guifont call rpcnotify(0, 'Gui', 'SetFont', "<args>") | let g:Guifont="<args>"
-" Set the font to DejaVu Sans Mono:h13
-Guifont Fira Mono:h12
-
 "----------------------------------------------------------------------
 " Plugin Manager
 ""{{{ Vundle: plugin manager
@@ -85,6 +80,7 @@ Plug 'Shougo/unite.vim'
 Plug 'Shougo/unite-outline'
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/vimproc.vim'
+Plug 'kopischke/unite-spell-suggest' " text suggestion
 """"""""""""""""""""""""""""""""""""" colors
 Plug 'tomasr/molokai'
 Plug 'junegunn/seoul256.vim'
@@ -266,7 +262,7 @@ map Q gq
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
-map <F6> :setlocal spell! spelllang=en_us<CR>
+map <F6> :setlocal spell! spelllang=en_gb<CR>
 
 " insert date
 inoremap <F5> <C-R>=strftime("[%Y-%m-%d]")<CR>
@@ -339,6 +335,8 @@ nmap <localleader>ub :Unite -no-split buffer<cr>
 nmap <localleader>ur :Unite -no-split file_mru<cr>
 nmap <localleader>uo :Unite -vertical outline<cr>
 let g:unite_enable_start_insert = 1
+
+nmap <localleader>us :Unite spell_suggest<cr>
 "}}}"
 
 "----------------------------------

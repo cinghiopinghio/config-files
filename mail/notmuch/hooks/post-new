@@ -29,6 +29,7 @@ notmuch tag +sent            -- $NEW folder:sent and not tag:sent
 
 notmuch tag +ccs@ccs         -- $NEW from:CCS_at_CCS_2016
 notmuch tag +quantum         -- $NEW from:biamonte
+notmuch tag +benet2016       -- $NEW from:"benet2016@easychair.org"
 
 notmuch tag +banca +bancaetica -- $NEW from:bancaetica
 notmuch tag +banca +ing        -- $NEW from:ing
