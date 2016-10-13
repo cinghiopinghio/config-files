@@ -47,6 +47,7 @@ select opt in "${options[@]}" "Quit"; do
       ARCHIVE=${REMOTEARCH}
       OPTS="${OPTS} --remote-path ${REMOTEPATH}"
       CREATEOPTS="${CREATEOPTS} --compression lz4"
+      export BORG_PASSPHRASE=`pass borg/brancamenta`
       ;;
     2)
       PARTS=( `lsblk --list --output MOUNTPOINT --noheadings` )
@@ -65,8 +66,8 @@ select opt in "${options[@]}" "Quit"; do
   break
 done
 
+
 export BORG_RSH="ssh -i ${HOME}/.ssh/id_rsa -F ${HOME}/.ssh/config -o UserKnownHostsFile=${HOME}/.ssh/known_hosts"
-export BORG_PASSPHRASE=`pass borg/brancamenta`
 SUDOPTS='-E'
 
 # set -x
