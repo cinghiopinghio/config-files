@@ -118,7 +118,9 @@ compctl -K _completemarks jump
 compctl -K _completemarks unmark
 
 # vex completion with lazy loading
-eval "$(vex --shell-config zsh)"
+if hash vex 2>/dev/null; then
+  eval "$(vex --shell-config zsh)"
+fi
 
 # }}}
 

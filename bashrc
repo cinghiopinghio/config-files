@@ -60,7 +60,9 @@ complete -F _completemarks j jump unmark
 
 # vex completion
 
-eval "$(vex --shell-config bash)"
+if hash vex 2>/dev/null; then
+  eval "$(vex --shell-config bash)"
+fi
 
 # }}}
 
