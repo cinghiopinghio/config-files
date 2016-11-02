@@ -3,7 +3,7 @@
 # svn editor variable:
 export SVN_EDITOR=/usr/bin/vim
 # editor variable:
-export EDITOR="vim"
+export EDITOR="nvim"
 export BROWSER="firefox"
 # add to PATH .local/bin and subdirectories
 export PATH=$PATH:$(find -L ~/.local/bin -type d | tr '\n' ':' | sed 's/:$//')
@@ -18,3 +18,4 @@ PERL_MB_OPT="--install_base \"$HOME/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
 
 export GPG_TTY=$(tty)
+export GPG_AGENT_INFO=$HOME/.gnupg/S.gpg-agent
