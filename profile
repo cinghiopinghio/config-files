@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 case `hostname -s` in
-  quantumcl)
+  spin|jupyter)
     . ~/.bashrc
     ;;
   giove)
