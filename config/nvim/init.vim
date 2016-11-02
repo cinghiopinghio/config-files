@@ -112,17 +112,6 @@ Plug 'lervag/vimtex', { 'for': 'tex' }
 "Plug 'fmoralesc/vim-pad'
 "Plug 'blinry/vimboy'
 "Plug 'freitass/todo.txt-vim'
-
-"Plug 'terryma/vim-multiple-cursors'
-
-" Using git URL
-"Plug 'https://github.com/junegunn/vim-github-dashboard.git'
-" Plugin options
-"Plug 'nsf/gocode', { 'tag': 'go.weekly.2012-03-13', 'rtp': 'vim' }
-" Plugin outside ~/.vim/plugged with post-update hook
-"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
-" Unmanaged plugin (manually installed and updated)
-"Plug '~/my-prototype-plugin'
 call plug#end()
 "}}}
 
@@ -204,7 +193,7 @@ elseif s:host == 'arcinghio'
 elseif s:host == 'dingo'
   colorscheme kalisi
   let g:airline_theme='kalisi'
-  set background=light
+  "set background light
   highlight Normal ctermbg=NONE
   highlight nonText ctermbg=NONE
 else
