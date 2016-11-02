@@ -2,6 +2,7 @@
 # Office  documents
 application/msword ; libreoffice %s ;  nametemplate=%s.doc ;
 application/pdf ;    zathura %s ;      nametemplate=%s.pdf ;
+text/x-pdf ;    zathura %s ;      nametemplate=%s.pdf ;
 application/* ;      xdg-open %s ;
 
 # PDFs
@@ -16,6 +17,7 @@ image/* ;            xdg-open %s ;
 # Text
 text/html ;          elinks -dump %s ; nametemplate=%s.html ; copiousoutput ;
 text/plain ;         less %s ;         copiousoutput
+text/x-pdf ;    zathura %s ;      nametemplate=%s.pdf ;
 text/* ;             xdg-open %s ;
 
 # Media Files

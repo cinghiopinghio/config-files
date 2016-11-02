@@ -89,6 +89,7 @@ export PS2="%F{blue}>%F{white}"
 #zstyle ':completion::*:(vi|vim):*' file-patterns '*~*.(aux|dvi|log|idx|pdf|rel|out)' '*'
 
 # allow approximate
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*' completer _complete _match _approximate
 zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
