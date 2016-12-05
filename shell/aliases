@@ -15,6 +15,7 @@ alias l1='ls -1'
 
 # calendar
 alias c="{when c; when; echo; grep "^-" ~/casolin/casolin/notes/todo.diff 2>/dev/null}"
+alias k="khal; echo; todo"
 # braces serve to pipe the outputs altogether
 
 # MC exits in the same directory
