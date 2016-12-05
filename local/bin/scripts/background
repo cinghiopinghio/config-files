@@ -6,6 +6,8 @@
 LOCATION=~/.local/share
 VERBOSE=false
 ACTION=background
+FNAME=background
+SOURCE=${LOCATION}/sfondi/fill
 
 while [[ $# -gt 0 ]]
 do
@@ -15,6 +17,11 @@ do
       ;;
     -l|--lock)
       ACTION=lock
+      FNAME=tiling
+      SOURCE=${LOCATION}/sfondi/tile
+      ;;
+    -u|--update)
+      ACTION=update
       ;;
     -h|--help)
       echo "Change background"
@@ -22,6 +29,7 @@ do
       echo "$0 [-v|--verbose] [-l|--lock] [-h|--help]"
       echo " -v --verbose:    Verbose"
       echo " -l --lock:       Lock the screen"
+      echo " -u --update:     Redraw background"
       echo " -h --help:       Print this and exits"
       exit 0
       ;;
@@ -41,22 +49,15 @@ randomlink (){
 }
 
 case ${ACTION} in
-  background)
-    FNAME=background
-    SOURCE=${LOCATION}/sfondi/fill
-    ;;
-  lock)
-    FNAME=tiling
-    SOURCE=${LOCATION}/sfondi/tile
+  background|lock)
+    rm -f ${LOCATION}/${FNAME}.*
+    orig=$(randomlink ${SOURCE} ${LOCATION}/${FNAME})
+    ${VERBOSE} && echo "Installing: ${orig}"
     ;;
 esac
 
-rm -f ${LOCATION}/${FNAME}.*
-orig=$(randomlink ${SOURCE} ${LOCATION}/${FNAME})
-${VERBOSE} && echo "Installing: ${orig}"
-
 case ${ACTION} in
-  background)
+  background|update)
     feh --bg-fill ${LOCATION}/${FNAME}.*
     ;;
   lock)
