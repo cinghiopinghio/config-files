@@ -30,23 +30,30 @@ set $colol  #5Fb96a
 # red
 set $colal  #C84F49 
 # grays
-set $backd  #202020
+set $backd  #20202088
 set $backl  #383A3B
 set $white  #CCCCC0 
+set $trans  #00000000
 
 # colors                border backgr text   indicator  border
 client.focused          $color $color $backd $color     $color
 client.focused_inactive $backl $backl $color $backl     $backl
-client.unfocused        $backl $backd $color $backd     $backl
+client.unfocused        $backl $backd $color $backd     $trans
 client.urgent           $colal $colal $backd $colal     $colal
 client.background       $backd
-new_window pixel 1
+new_window pixel 5
 new_float pixel 15
 #hide_edge_borders vertical
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 focus_follows_mouse no
+
+
+### gaps
+# Examples
+gaps inner 0
+
 
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
@@ -64,12 +71,13 @@ bindsym $mod+b border toggle
 #bindsym $mod+p exec ~/.local/bin/dpass
 #bindsym $mod+d exec "rofi -show run  -switchers 'run,window,ssh'"
 bindsym $mod+d exec "rofi -show run"
-bindsym $mod+p exec "rofi -show pass -switchers 'pass:rofi-pass' -color-window '#282828,#cc241d'"
+bindsym $mod+p exec "rofi -show pass -switchers 'pass:~/.local/bin/scripts/rofi-pass' -color-window '#eeeeee,#f0544c'"
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 bindsym $mod+shift+f exec "skippy-xd"
+bindsym $mod+shift+s exec "scrot"
 
 # change focus
 bindsym $mod+h focus left
@@ -246,6 +254,7 @@ bindsym $mod+r mode "resize"
 # exec --no-startup-id ~/.local/bin/scripts/display-on
 
 bar {
+        i3bar_command i3bar -t
         status_command i3status
         font pango: DejaVu Sans Mono, FontAwesome 10
 #	tray_output primary
