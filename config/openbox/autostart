@@ -10,7 +10,8 @@
 urxvtd -q -f -o &
 # automatically turn on attached displays
 srandrd ${HOME}/.local/bin/scripts/display-on
-${HOME}/.local/bin/scripts/display-on &
+${HOME}/.local/bin/scripts/display-on
+compton -b
 
 
 case ${XDG_CURRENT_DESKTOP} in
@@ -40,7 +41,7 @@ udiskie --use-udisks2 --tray &
 # start the screen locker
 xautolock -time 10 -notify 30\
   -notifier "notify-send XAUTOLOCK 'Screen locking in 30 secondsi'"\
-  -locker "i3lock -t -i ~/.local/share/sfondi/tile.png" &
+  -locker "~/.local/bin/scripts/background --lock" &
 # hide mouse if not in use
 unclutter -root -visible &
 # volume control on panel
