@@ -18,6 +18,7 @@ image/* ;            xdg-open %s ;
 text/html ;          elinks -dump %s ; nametemplate=%s.html ; copiousoutput ;
 text/plain ;         less %s ;         copiousoutput
 text/x-pdf ;    zathura %s ;      nametemplate=%s.pdf ;
+text/x-vcalendar ; khal import -r -a work --batch %s ; nametemplate=%s.ics ;
 text/* ;             xdg-open %s ;
 
 # Media Files
