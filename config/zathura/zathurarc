@@ -10,6 +10,12 @@ set guioptions ''
 # h horizontal scrollbar
 
 # settings
+set smooth-scroll true
+set guioptions sv
+set recolor true
+set recolor-keephue true
+
+
 set adjust-open best-fit
 set first-page-column 2
 set window-title-basename true
@@ -58,7 +64,3 @@ set tabbar-fg                   "#000000" # currently not used???
 set tabbar-bg                   "#FFFFFF"
 set tabbar-focus-fg             "#FF0000"
 set tabbar-focus-bg             "#00FFFF"
-
-# setting recolor-keep true will keep any color your pdf has.
-# if it is false, it'll just be black and white
-set recolor-keephue             "true"
