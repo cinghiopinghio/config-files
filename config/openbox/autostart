@@ -27,7 +27,7 @@ case ${XDG_CURRENT_DESKTOP} in
     docker-tray &
     ;;
   'i3')
-    i3-msg reload
+    # i3-msg reload
     ;;
 esac
 
@@ -45,7 +45,7 @@ xautolock -time 10 -notify 30\
 # hide mouse if not in use
 unclutter -root -visible &
 # volume control on panel
-volumeicon &
+# volumeicon &
 
 # Machine specific start apps
 case ${HOSTNAME} in
