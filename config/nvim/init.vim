@@ -166,6 +166,9 @@ set clipboard+=unnamed  " yank and copy to X clipboard
 set wrap
 set linebreak
 
+" set terminal title
+set title
+
 set splitbelow
 set splitright
 
@@ -191,7 +194,8 @@ elseif s:host == 'arcinghio'
   let g:gruvbox_contrast_dark='medium'
   colorscheme gruvbox
 elseif s:host == 'dingo'
-  colorscheme kalisi
+  "colorscheme kalisi
+  colorscheme gruvbox
   let g:airline_theme='kalisi'
   "set background light
   highlight Normal ctermbg=NONE
