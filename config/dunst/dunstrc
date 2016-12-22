@@ -19,16 +19,22 @@
     startup_notification = false
     browser              = /usr/bin/firefox -new-tab
 
+#    Align icons left/right/off
+    icon_position = left
+#    Paths to default icons.
+#    icon_folders = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
+    icon_folders = /usr/share/icons/Arc/status/16/:/usr/share/icons/Arc/actions/16/:/usr/share/icons/Arc/devices/16/
+
 
 [frame]
     width = 0
     color = "#282828"
 
 [shortcuts]
-    close = ctrl+space
+    close     = ctrl+space
     close_all = ctrl+shift+space
-    context = ctrl+shift+period
-    history = ctrl+grave
+    context   = ctrl+shift+period
+    history   = ctrl+grave
 
 [urgency_low]
     background = "#444444"

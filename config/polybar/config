@@ -9,7 +9,7 @@
 
 [colors]
 
-background       = #28282888
+background       = #cc282828
 background-solid = #282828
 background-alt   = #444444
 
@@ -51,7 +51,6 @@ margin-bottom = 5
 [bar/base]
 monitor             = ${env:MONITOR:eDP1}
 width               = 100%
-height              = 27
 offset-x            = 0
 offset-y            = 0
 
@@ -63,7 +62,7 @@ foreground          = ${colors.foreground}
 overline-size       = ${vars.oversize}
 underline-size      = ${vars.oversize}
 
-border-bottom       = 0
+border-size       = 0
 
 spacing             = ${vars.padding}
 padding-left        = 0
@@ -72,23 +71,28 @@ module-margin-left  = 0
 module-margin-right = ${vars.padding}
 
 font-0              = Fira:size=10
-font-1              = FontAwesome:size=11
-font-2              = Hack:size=10
-
-modules-left        = i3 xwindow
-modules-center      = backlight date volume
-modules-right       = memory cpu wlan eth eth2 battery temperature powermenu
+font-1              = Hack:size=10
+font-2              = FontAwesome:size=11
 
 [bar/bar1]
 
 inherit          = bar/base
 tray-position    = right
 tray-padding     = 2
-tray-transparent = true
+tray-transparent = false
+tray-background  = ${colors.background-solid}
+
+modules-left        = i3 xwindow
+modules-center      = date
+modules-right       = backlight volume memory cpu custbat temperature powermenu
 
 [bar/bar2]
 
 inherit = bar/base
+
+modules-left        = i3 xwindow
+modules-center      = date
+modules-right       = memory cpu battery temperature
 
 [module/i3]
 
@@ -101,7 +105,6 @@ label-mode                 = %mode%
 label-mode-foreground      = ${colors.foreground}
 label-mode-background      = ${colors.alert}
 label-mode-padding         = ${vars.padding}
-label-mode-font            = 1
 
 label-focused              = %name%
 label-focused-foreground   = ${colors.background-solid}
@@ -109,22 +112,18 @@ label-focused-background   = ${colors.easy}
 label-focused-overline     = ${colors.easy}
 label-focused-underline    = ${colors.easy}
 label-focused-padding      = ${vars.padding}
-label-focused-font         = 1
 
 label-unfocused            = %name%
 label-unfocused-background = ${colors.background-solid}
 label-unfocused-padding    = ${vars.padding}
-label-unfocused-font       = 1
 
-label-urgent               = %name%!
+label-urgent               = %name%
 label-urgent-background    = ${colors.alert}
 label-urgent-padding       = ${vars.padding}
-label-urgent-font          = 1
 
 label-visible              = %name%
 label-visible-foreground   = ${colors.foreground}
 label-visible-padding      = ${vars.padding}
-label-visible-font         = 1
 
 [module/xwindow]
 
@@ -134,8 +133,10 @@ type = internal/xwindow
 
 type                     = internal/xbacklight
 
-format                   = <bar> <label>
-label                    = ""
+; <label> <bar> <ramp>
+format                   = <label> <bar>
+; %percentage%
+label                    = 
 
 bar-width                = 7
 bar-indicator            = │
@@ -149,11 +150,11 @@ bar-empty-foreground     = ${colors.foreground-alt}
 type                     = internal/date
 interval                 = 5
 
-date                     = %_d %b
-date-alt                 = %Y-%m-%d
+date                     = %A, %_d %b
+date-alt                 = %x
 
 time                     = %_H:%M
-time-alt                 = %H:%M:%S
+time-alt                 = %X
 
 label                    = %date% %time%
 
@@ -167,7 +168,7 @@ label-volume-foreground         = ${colors.foreground}
 
 format-muted-prefix             = ""
 format-muted-foreground         = ${colors.foreground-alt}
-label-muted                     = " mute"
+label-muted                     = "M"
 
 bar-volume-width                = 7
 bar-volume-foreground-0         = ${colors.easy}
@@ -243,10 +244,16 @@ format-disconnected-underline = ${self.format-connected-underline}
 inherit   = module/eth
 interface = enp62s0u1u4
 
+[module/custbat]
+type = custom/script
+
+exec = acpi -b | sed 's/.*, \(.*\)%. .\(.\):\(..\):.. .*/\1% \2H\3 /'
+label =  %output% 
+
 [module/battery]
 type                         = internal/battery
 battery                      = BAT0
-adapter                      = AC
+;adapter                      = AC
 full-at                      = 98
 time-format                  = %kH%M
 

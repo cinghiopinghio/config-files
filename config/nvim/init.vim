@@ -7,10 +7,6 @@ let maplocalleader=' '
 set nocompatible               " be iMproved
 filetype indent plugin on
 let s:host=substitute(hostname(), "\\..*", "", "") 
-if s:host == 'giove'
-  set term=builtin_ansi
-  set t_Co=256
-endif
 syntax on
 "}}}
 
@@ -22,7 +18,7 @@ call plug#begin('~/.config/nvim/bundle')
 """""""""""""""""""""""""""""""""""""" syntax checker
 "Plug 'scrooloose/syntastic'
 Plug 'neomake/neomake'
-" {{{
+" {{{ Neomake config
     let g:neomake_warning_sign = {
       \ 'text': 'W>',
       \ 'texthl': 'WarningMsg',
@@ -68,7 +64,7 @@ else
   Plug 'garbas/vim-snipmate'
 endif
 Plug 'honza/vim-snippets'
-Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+" Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 " keep folds as is until save of fold/unfold
 " (save time)
 Plug 'Konfekt/FastFold'
@@ -183,6 +179,7 @@ let g:lightline = {
       \ 'colorscheme': 'wombat'
       \ }
 
+set termguicolors
 set background=dark
 if s:host == 'spin'
   let g:airline_theme='gruvbox'
@@ -198,8 +195,8 @@ elseif s:host == 'dingo'
   colorscheme gruvbox
   let g:airline_theme='kalisi'
   "set background light
-  highlight Normal ctermbg=NONE
-  highlight nonText ctermbg=NONE
+  highlight Normal guibg=NONE ctermbg=NONE
+  highlight nonText guifg=#787878 guibg=NONE ctermfg=243 ctermbg=NONE
 else
   let g:airline_theme='badwolf'
   colorscheme molokai
@@ -313,12 +310,12 @@ let g:deoplete#enable_at_startup = 1
 
 "----------------------------------
 "{{{ Syntastic
-let g:syntastic_mode_map = { 'passive_filetypes': ['sass'] }
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+"let g:syntastic_mode_map = { 'passive_filetypes': ['sass'] }
+"
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
 "}}}
 
 "----------------------------------

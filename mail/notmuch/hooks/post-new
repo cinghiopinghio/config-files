@@ -50,5 +50,7 @@ notmuch tag +banca +ing        -- $NEW from:ing
 
 ## clear the 'new' tag
 notmuch tag -new -- tag:new
+
+# Update alot
 killall -SIGUSR1 alot 2>/dev/null
 exit 0

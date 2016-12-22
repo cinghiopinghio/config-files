@@ -112,7 +112,7 @@ case $1 in
     # check if there is some output
     if [[ ${OUT} != "" ]];
     then
-      notify-send -u normal "$TITLE" "$OUT"
+      notify-send -u normal "$TITLE" "$OUT" -i mail_new
     fi
     ;;
   p|print)
