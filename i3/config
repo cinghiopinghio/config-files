@@ -16,25 +16,21 @@ font pango:Hack 10.5
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
 
-# GRUVBOX
-# green
-set $color  #98971a 
-# yellow
-set $colol  #d79921
-# red
-set $colal  #cc241d 
-# grays
-set $backd  #282828cc
-set $backl  #444444
-set $white  #ebdbb2 
-set $trans  #00000000
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+set $primaryCol   #98971a
+set $secondaryCol #a89984
+set $alarmCol     #cc241d
+set $bgCol        #282828cc
+set $fgCol        #ebdbb2
+set $lightBgCol   #444444
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-# colors                border backgr text   indicator  border
-client.focused          $color $color $backd $color     $color
-client.focused_inactive $backl $backl $color $backl     $backl
-client.unfocused        $backl $backd $color $backd     $backd
-client.urgent           $colal $colal $backd $colal     $colal
-client.background       $backd
+# colors                border        backgr        text        indicator     child_border
+client.focused          $primaryCol   $primaryCol   $bgCol      $primaryCol   $primaryCol
+client.focused_inactive $secondaryCol $secondaryCol $bgCol      $secondaryCol $secondaryCol
+client.unfocused        $bgCol        $bgCol        $primaryCol $bgCol        $bgCol
+client.urgent           $alarmCol     $alarmCol     $bgCol      $alarmCol     $alarmCol
+client.background       $bgCol
 new_window pixel 5
 new_float pixel 15
 #hide_edge_borders vertical
@@ -67,6 +63,7 @@ bindsym $mod+b border toggle
 #bindsym $mod+d exec "rofi -show run  -switchers 'run,window,ssh'"
 bindsym $mod+d exec "rofi -show run"
 bindsym $mod+p exec "rofi -show pass -switchers 'pass:~/.local/bin/scripts/rofi-pass' -color-window '#282828,#cc241d'"
+
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
@@ -200,8 +197,9 @@ bindsym $mod+m scratchpad show
 
 
 #set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (x) shutdown
-set $mode_system System (l) lock, (e) logout, (s) suspend, (r) reboot, (x) shutdown, (b) background
-mode "$mode_system" {
+set $mode_system "System [L] lock, [E] logout, [S] suspend, [R] reboot, [X] shutdown, [B] background"
+bindsym $mod+x mode $mode_system
+mode --pango_markup $mode_system {
     bindsym l exec --no-startup-id bash ~/.local/bin/scripts/background --lock, mode "default"
     bindsym b exec --no-startup-id bash ~/.local/bin/scripts/background, mode "default"
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
@@ -215,7 +213,6 @@ mode "$mode_system" {
     bindsym Return mode "default"
     bindsym Escape mode "default"
 }
-bindsym $mod+x mode "$mode_system"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -244,22 +241,22 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-#  bar {
-#          i3bar_command i3bar -t
-#          status_command i3status
-#          position bottom
-#          font pango: DejaVu Sans Mono, FontAwesome 10
-#  	tray_padding 0
-#          colors {
-#                statusline         $white
-#                background         $backd
-#                separator          $white
-#                focused_workspace  $color $color $backd 
-#                active_workspace   $backl $backl $color
-#                inactive_workspace $backd $backd $color
-#                urgent_workspace   $colal $colal $backd 
-#          }
-#  }
+# bar {
+#         i3bar_command i3bar -t
+#         status_command i3status
+#         position bottom
+#         font pango: DejaVu Sans Mono, FontAwesome 10
+# 	tray_padding 0
+#         colors {
+#               statusline         $fgCol
+#               background         $bgCol
+#               separator          $fgCol
+#               focused_workspace  $primaryCol $primaryCol $bgCol 
+#               active_workspace   $lightBgCol $lightBgCol $primaryCol
+#               inactive_workspace $bgCol      $bgCol      $primaryCol
+#               urgent_workspace   $alarmCol   $alarmCol   $bgCol 
+#         }
+# }
 
 #bar {
 #    i3bar_command i3bar -t
