@@ -62,6 +62,7 @@ case ${HOSTNAME} in
     nm-applet &
     pidgin &
     albert &
+    blueman-applet
 esac
 
 # launcher
