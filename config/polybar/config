@@ -78,13 +78,13 @@ font-2              = FontAwesome:size=11
 
 inherit          = bar/base
 tray-position    = right
-tray-padding     = 2
+tray-padding     = 0
 tray-transparent = false
-tray-background  = ${colors.background-solid}
+tray-background  = ${colors.easy}
 
 modules-left        = i3 xwindow
 modules-center      = date
-modules-right       = backlight volume memory cpu custbat temperature powermenu
+modules-right       = backlight volume memory cpu battery powermenu
 
 [bar/bar2]
 
@@ -253,7 +253,7 @@ label =  %output%
 [module/battery]
 type                         = internal/battery
 battery                      = BAT0
-;adapter                      = AC
+adapter                      = AC
 full-at                      = 98
 time-format                  = %kH%M
 
@@ -310,18 +310,26 @@ ramp-foreground       = ${colors.foreground}
 
 [module/powermenu]
 
-type                       = custom/menu
+type                   = custom/menu
 
-label-open                 = 
-label-open-foreground      = ${colors.alert}
-label-close                = 
-label-close-foreground     = ${colors.easy}
+label-open             = 
+label-open-foreground  = ${colors.background-solid}
+label-open-background  = ${colors.alert}
+label-open-padding     = ${vars.padding}
+label-close            = 
+label-close-foreground  = ${colors.background-solid}
+label-close-background  = ${colors.easy}
+label-close-padding     = ${vars.padding}
 
-menu-0-0                   = 
-menu-0-0-exec              = systemctl reboot
-menu-0-0-foreground        = ${colors.primary}
-menu-0-1                   = 
-menu-0-1-exec              = systemctl poweroff
-menu-0-1-foreground        = ${colors.alert}
+menu-0-0               = 
+menu-0-0-exec          = systemctl reboot
+menu-0-0-foreground    = ${colors.background-solid}
+menu-0-0-background    = ${colors.primary}
+menu-0-0-padding       = ${vars.padding}
+menu-0-1               = 
+menu-0-1-exec          = systemctl poweroff
+menu-0-1-foreground    = ${colors.background-solid}
+menu-0-1-background    = ${colors.alert}
+menu-0-1-padding       = ${vars.padding}
 
 ; vim:ft=dosini
