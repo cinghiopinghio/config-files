@@ -64,9 +64,9 @@ underline-size      = ${vars.oversize}
 
 border-size       = 0
 
-spacing             = ${vars.padding}
+spacing             = 0
 padding-left        = 0
-padding-right       = ${vars.padding}
+padding-right       = 0
 module-margin-left  = 0
 module-margin-right = ${vars.padding}
 
@@ -162,7 +162,7 @@ label                    = %date% %time%
 
 type                            = internal/volume
 
-format-volume                   = <label-volume> <bar-volume>
+format-volume                   = %{A3:pavucontrol:}%{A} <bar-volume>
 label-volume                    = ""
 label-volume-foreground         = ${colors.foreground}
 
