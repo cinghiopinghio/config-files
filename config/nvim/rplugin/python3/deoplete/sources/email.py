@@ -10,7 +10,8 @@ class Source(Base):
         Base.__init__(self, vim)
 
         self.name = 'email'
-        self.mark = '[NM]'
+        self.filetypes = ['mail', 'text', 'markdown']
+        self.mark = '[@]'
         self.filetypes = []
         # self.input_pattern = '#\w+'
 
@@ -20,4 +21,6 @@ class Source(Base):
 
         command = ['notmuch-addrlookup', context['complete_str']]
         addrs = subprocess.check_output(command).decode().splitlines()
-        return [{'word': a} for a in addrs]
+
+        return [{'word': ' '.join([_a.strip('"\'') for _a in a.split()])}
+                for a in addrs]
