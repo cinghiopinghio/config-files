@@ -2,11 +2,12 @@
 
 killall polybar
 
-MON=`xrandr -q | grep ' connected' | cut -d " " -f1 | sed '1!d'`
+sleep 1
 
+MON=`xrandr -q | grep ' connected' | cut -d " " -f1 | sed '1!d'`
 MONITOR=${MON} polybar bar1 &
 
 MONITORS=`xrandr -q | grep ' connected' | cut -d " " -f1 | sed '1d'`
 for MON in ${MONITORS}; do
-    MONITOR=${MON} polybar bar2
+    MONITOR=${MON} polybar bar2 &
 done
