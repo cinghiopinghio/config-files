@@ -3,19 +3,19 @@
 XRANDR="xrandr"
 CMD="${XRANDR}"
 
-xrandr_params_for() {
-  if [ "${2}" == 'connected' ]
-  then
-    eval $(find_mode ${1})  #sets ${WIDTH} and ${HEIGHT}
-    MODE="${WIDTH}x${HEIGHT}"
-    CMD="${CMD} --output ${1} --mode ${MODE} --pos ${POS[X]}x${POS[Y]}"
-    POS[X]=$((${POS[X]}+${WIDTH}))
-    return 0
-  else
-    CMD="${CMD} --output ${1} --off"
-    return 1
-  fi
-}
+# xrandr_params_for() {
+#   if [ "${2}" == 'connected' ]
+#   then
+#     eval $(find_mode ${1})  #sets ${WIDTH} and ${HEIGHT}
+#     MODE="${WIDTH}x${HEIGHT}"
+#     CMD="${CMD} --output ${1} --mode ${MODE} --pos ${POS[X]}x${POS[Y]}"
+#     POS[X]=$((${POS[X]}+${WIDTH}))
+#     return 0
+#   else
+#     CMD="${CMD} --output ${1} --off"
+#     return 1
+#   fi
+# }
 
 ISFIRST=true
 for VOUT in `${XRANDR} | grep " connected " | awk '{print $1}'`; do
@@ -35,8 +35,21 @@ for VOUT in `${XRANDR} | grep " disconnected " | awk '{print $1}'`; do
 	echo $VOUT is disconnected
 	CMD="${CMD} --output ${VOUT} --off"
 done
-set -x
-${CMD}
-set +x
 
-${HOME}/.local/bin/scripts/background --update
+# set -x
+if [[ $1 == '-n' ]];
+then
+	echo ${CMD}
+else
+	${CMD}
+fi
+# set +x
+
+if [ -z ${SRANDRD_ACTION+x} ];
+then
+	${HOME}/.local/bin/scripts/background
+else
+	# $SRANDRD_ACTION is set
+	# the script has been called by srandrd
+	${HOME}/.local/bin/scripts/background --update
+fi
