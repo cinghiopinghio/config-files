@@ -4,14 +4,10 @@
 
 # early apps
 
-# set background image (the bg is set by display-on):
-# ${HOME}/.local/bin/scripts/background &
-# start urxvt daemon
-urxvtd -q -f -o &
 # automatically turn on attached displays
-srandrd ${HOME}/.local/bin/scripts/display-on
-${HOME}/.local/bin/scripts/display-on
-compton -b
+srandrd ${HOME}/.local/bin/scripts/display-on &
+${HOME}/.local/bin/scripts/display-on &
+compton -b &
 
 
 case ${XDG_CURRENT_DESKTOP} in
@@ -62,7 +58,8 @@ case ${HOSTNAME} in
     nm-applet &
     pidgin &
     albert &
-    blueman-applet
+    blueman-applet &
+    QSyncthingTray &
 esac
 
 # launcher
