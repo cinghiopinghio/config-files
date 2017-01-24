@@ -13,7 +13,6 @@ class Source(Base):
         self.filetypes = ['mail', 'text', 'markdown']
         self.mark = '[@]'
         self.filetypes = []
-        # self.input_pattern = '#\w+'
 
     def gather_candidates(self, context):
         """Gather candidates from github API

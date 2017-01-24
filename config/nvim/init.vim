@@ -95,6 +95,10 @@ Plug 'junegunn/vim-easy-align'
 Plug 'thinca/vim-quickrun'
 Plug 'mjbrownie/swapit'
 Plug 'terryma/vim-multiple-cursors'
+" GIT integration
+Plug 'tpope/vim-fugitive'
+" ask if you typed a wrong filename
+Plug 'EinfachToll/DidYouMean'
 
 """"""""""""""""""""""""""""""""""""" HTML
 "Plug 'mattn/emmet-vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] } 
