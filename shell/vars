@@ -19,3 +19,6 @@ PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
 
 export GPG_TTY=$(tty)
 export GPG_AGENT_INFO=$HOME/.gnupg/S.gpg-agent
+
+# change look in qt5
+export QT_QPA_PLATFORMTHEME="qt5ct"
