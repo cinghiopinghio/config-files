@@ -142,6 +142,7 @@ bindkey '^[[B' down-line-or-search
 bindkey '^[[C' forward-char 
 # completion in the middle of a line
 bindkey '^i' expand-or-complete-prefix
+bindkey '^R' history-incremental-search-backward
 
 bindkey '\e[1~'   beginning-of-line  # Linux console
 bindkey '\e[H'    beginning-of-line  # xterm
@@ -152,6 +153,8 @@ bindkey '\e[4~'   end-of-line        # Linux console
 bindkey '\e[F'    end-of-line        # xterm
 bindkey '\eOF'    end-of-line        # gnome-terminal
 
+# for st term
+bindkey '\e[P'   delete-char 
 
 
 # from archlinux wiki
@@ -204,7 +207,7 @@ key[Delete]=${terminfo[kdch1]}
 # print the current directory in the terminal title
 # {{{
 case $TERM in
-  (*xterm* | *rxvt*)
+  (*xterm* | *rxvt* | *st* )
 
     # Write some info to terminal title.
     # This is seen when the shell prompts for input.
@@ -219,6 +222,11 @@ case $TERM in
 
   ;;
 esac
+
+if [[ $TERM == xterm-termite ]]; then
+	. /etc/profile.d/vte.sh
+	__vte_osc7
+fi
 # }}}
 ##################################################################
 # My aliases
