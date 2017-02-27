@@ -4,7 +4,8 @@
 export SVN_EDITOR=/usr/bin/vim
 # editor variable:
 export EDITOR="nvim"
-export BROWSER="firefox"
+# export BROWSER="iridium-browser"
+export BROWSER=firefox
 # add to PATH .local/bin and subdirectories
 export PATH=$PATH:$(find -L ~/.local/bin -type d | tr '\n' ':' | sed 's/:$//')
 #export PATH=$PATH:~/.gem/ruby/1.9.1/bin
