@@ -13,38 +13,38 @@
 #define t_purple        	#b294bb
 
 
-*.foreground:   t_foreground
-*.background:   t_background
-*.cursorColor:  #aeafad
+*foreground:   t_foreground
+*background:   t_background
+*cursorColor:  #aeafad
 
 ! Black / Grey
-*.color0:       #000000
-*.color8:       #666666
+*color0:       #000000
+*color8:       #666666
 
 ! Red / Bright Red
-*.color1:       t_red
-*.color9:       #FF3334
+*color1:       t_red
+*color9:       #FF3334
 
 ! Green + Bright Green
-*.color2:       t_green
-*.color10:      #9ec400
+*color2:       t_green
+*color10:      #9ec400
 
 ! Yellow (Orange) + Bright Yellow (Yellow)
-*.color3:       t_orange
-*.color11:      t_yellow
+*color3:       t_orange
+*color11:      t_yellow
 
 ! Blue + Bright Blue
-*.color4:       t_blue
-*.color12:      t_blue
+*color4:       t_blue
+*color12:      t_blue
 
 ! Magenta (Purple) + Bright Magenta
-*.color5:       t_purple
-*.color13:      #b777e0
+*color5:       t_purple
+*color13:      #b777e0
 
 ! Cyan (Aqua) + Bright Cyan
-*.color6:       t_aqua
-*.color14:      #54ced6
+*color6:       t_aqua
+*color14:      #54ced6
 
 ! Light Grey (Selection) + White (Current Line)
-*.color7:       t_selection
-*.color15:      t_current_line
+*color7:       t_selection
+*color15:      t_current_line

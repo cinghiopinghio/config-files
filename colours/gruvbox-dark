@@ -6,6 +6,7 @@
 ! Last Modified: 6 Sep 2014
 ! -----------------------------------------------------------------------------
 
+*opacity: 200
 ! hard contrast: *background: #1d2021
 *background: #282828
 ! soft contrast: *background: #32302f
