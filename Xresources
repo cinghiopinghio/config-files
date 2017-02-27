@@ -7,12 +7,11 @@
 ! Urxvt
 URxvt.buffered:                           true
 URxvt.cursorBlink:                        false
-URxvt.geometry:                           80x22
-URxvt.transparent:                        0
+URxvt.transparent:                        true
 URxvt.urgentOnBell:                       true
 URxvt.letterSpace:                        -2
 URxvt.lineSpace:                          0.9
-URxvt.internalBorder:                     4
+URxvt.internalBorder:                     10
 urxvt*termName: rxvt-256color
 URxvt*iso14755: False
 
@@ -27,7 +26,7 @@ URxvt.scrollstyle:                        plain
 ! teh transparency stuff
 URxvt.inheritPixmap:                      false
 !URxvt.tintColor:                          #080808
-URxvt.shading:                            0
+URxvt.shading:                            30
 urxvt.fading:                             20
 urxvt.fadeColor:                          #080808
 
@@ -68,134 +67,70 @@ URxvt.matcher.rend.0:                     -Uline fg16
 !URxvt.matcher.button:                     1
 !URXvt.tabbed.reopen-on-close: yes
 
-! -- Xterm settings -- !
-xterm*termName:                           xterm-256color
-xterm*locale:                             true
-xterm*cursorColor:                        #395573
-xterm*toolBar:                            false
-xterm*scrollBar:                          false
-xterm*rightScrollBar:                     false
-xterm*background:                         #252525
-!xterm*foreground:                         #999999
-xterm*faceName:                           dejavu sans mono:medium:size=11
-xterm*allowBoldFonts:                     false
-!xterm*geometry:                           120x28
-*xterm.letterSpace:                        -2
-
-! -- Dzen settings -- !
-dzen2.font:                               droid sans mono slashed:medium:size=10
-dzen2.foreground:                         #899CA1
-dzen2.background:                         #121212
-
-
 ! -- ROFI -- !
 
-rofi.modi:                       run,window,ssh
-rofi.opacity:                    100
-rofi.width:                      30
-rofi.lines:                      30
-rofi.columns:                    1
-rofi.font:                       Dejavu Sans Mono 12
-rofi.color-enabled:              true
-rofi.hide-scrollbar:             true
-! State:                         bg,fg,bgalt,hlbg,hlfg
-rofi.color-normal:               #282828,#a89984,#262626,#689d6a,#282828
-rofi.color-urgent:               #282828,#fb4934,#262626,#689d6a,#282828
-rofi.color-active:               #282828,#fabd2f,#262626,#689d6a,#282828
-!                                background,border
-rofi.color-window:               #282828,#689d6a
-rofi.bw:                         1
-rofi.location:                   1
-rofi.padding:                    10
-rofi.yoffset:                    0
-rofi.xoffset:                    0
-rofi.fixed-num-lines:            false
-rofi.terminal:                   urxvtc
-rofi.ssh-client:                 ssh
-rofi.ssh-command:                {terminal} -e {ssh-client} {host}
-rofi.run-command:                {cmd}
-rofi.run-list-command:
-rofi.run-shell-command:          {terminal} -e {cmd}
-rofi.disable-history:            false
-rofi.levenshtein-sort:           false
-rofi.case-sensitive:             false
-rofi.sidebar-mode:               true
-rofi.lazy-filter-limit:          5000
-rofi.eh:                         1
-rofi.auto-select:                false
-rofi.parse-hosts:                false
-rofi.combi-modi:                 window,run
-rofi.pid:                        /run/user/1000/rofi.pid
-rofi.kb-primary-paste:           Control+Shift+v,Shift+Insert
-rofi.kb-secondary-paste:         Control+v,Insert
-rofi.kb-clear-line:              Control+u
-rofi.kb-move-front:              Control+a
-rofi.kb-move-end:                Control+e
-rofi.kb-move-word-back:          Alt+b
-rofi.kb-move-word-forward:       Alt+f
-rofi.kb-move-char-back:          Left,Control+b
-rofi.kb-move-char-forward:       Right,Control+f
-rofi.kb-remove-word-back:        Control+Alt+h
-rofi.kb-remove-word-forward:     Control+Alt+d
-rofi.kb-remove-char-forward:     Delete,Control+d
-rofi.kb-remove-char-back:        BackSpace,Control+h
-rofi.kb-accept-entry:            Control+j,Control+m,Return,KP_Enter
-rofi.kb-accept-custom:           Control+Return
-rofi.kb-accept-entry-continue:   Shift+Return
-rofi.kb-mode-next:               Shift+Right,Control+Tab
-rofi.kb-mode-previous:           Shift+Left,Control+Shift+Tab
-rofi.kb-toggle-case-sensitivity: grave,dead_grave
-rofi.kb-delete-entry:            Shift+Delete
-rofi.key-window:
-rofi.key-run:
-rofi.key-ssh:                        
-
-!xcalc-----------------------------------------------------------------------
-
-xcalc*geometry:                           200x275
-xcalc.ti.bevel.background:                #111111
-xcalc.ti.bevel.screen.background:         #000000
-xcalc.ti.bevel.screen.DEG.background:     #000000
-xcalc.ti.bevel.screen.DEG.foreground:     LightSeaGreen
-xcalc.ti.bevel.screen.GRAD.background:    #000000
-xcalc.ti.bevel.screen.GRAD.foreground:    LightSeaGreen
-xcalc.ti.bevel.screen.RAD.background:     #000000
-xcalc.ti.bevel.screen.RAD.foreground:     LightSeaGreen
-xcalc.ti.bevel.screen.INV.background:     #000000
-xcalc.ti.bevel.screen.INV.foreground:     Red
-xcalc.ti.bevel.screen.LCD.background:     #000000
-xcalc.ti.bevel.screen.LCD.foreground:     LightSeaGreen
-xcalc.ti.bevel.screen.LCD.shadowWidth:    0
-xcalc.ti.bevel.screen.M.background:       #000000
-xcalc.ti.bevel.screen.M.foreground:       LightSeaGreen
-xcalc.ti.bevel.screen.P.background:       #000000
-xcalc.ti.bevel.screen.P.foreground:       Yellow
-xcalc.ti.Command.foreground:              White
-xcalc.ti.Command.background:              #777777
-xcalc.ti.button5.background:              Orange3
-xcalc.ti.button19.background:             #611161
-xcalc.ti.button18.background:             #611161
-xcalc.ti.button20.background:             #611111
-xcalc.ti.button20.label:                  /
-xcalc.ti.button25.background:             #722222
-xcalc.ti.button30.background:             #833333
-xcalc.ti.button35.background:             #944444
-xcalc.ti.button40.background:             #a55555
-xcalc.ti.button22.background:             #222262
-xcalc.ti.button23.background:             #222262
-xcalc.ti.button24.background:             #222272
-xcalc.ti.button27.background:             #333373
-xcalc.ti.button28.background:             #333373
-xcalc.ti.button29.background:             #333373
-xcalc.ti.button32.background:             #444484
-xcalc.ti.button33.background:             #444484
-xcalc.ti.button34.background:             #444484
-xcalc.ti.button37.background:             #555595
-xcalc.ti.button38.background:             #555595
-xcalc.ti.button39.background:             #555595
-XCalc*Cursor:                             hand2
-XCalc*ShapeStyle:                         rectangle
+! rofi.modi:                       run,window,ssh
+! rofi.opacity:                    100
+! rofi.width:                      30
+! rofi.lines:                      30
+! rofi.columns:                    1
+! rofi.font:                       Dejavu Sans Mono 12
+! rofi.color-enabled:              true
+! rofi.hide-scrollbar:             true
+! ! State:                         bg,fg,bgalt,hlbg,hlfg
+! rofi.color-normal:               #282828,#a89984,#262626,#689d6a,#282828
+! rofi.color-urgent:               #282828,#fb4934,#262626,#689d6a,#282828
+! rofi.color-active:               #282828,#fabd2f,#262626,#689d6a,#282828
+! !                                background,border
+! rofi.color-window:               #282828,#689d6a
+! rofi.bw:                         1
+! rofi.location:                   1
+! rofi.padding:                    10
+! rofi.yoffset:                    0
+! rofi.xoffset:                    0
+! rofi.fixed-num-lines:            false
+! rofi.terminal:                   urxvtc
+! rofi.ssh-client:                 ssh
+! rofi.ssh-command:                {terminal} -e {ssh-client} {host}
+! rofi.run-command:                {cmd}
+! rofi.run-list-command:
+! rofi.run-shell-command:          {terminal} -e {cmd}
+! rofi.disable-history:            false
+! rofi.levenshtein-sort:           false
+! rofi.case-sensitive:             false
+! rofi.sidebar-mode:               true
+! rofi.lazy-filter-limit:          5000
+! rofi.eh:                         1
+! rofi.auto-select:                false
+! rofi.parse-hosts:                false
+! rofi.combi-modi:                 window,run
+! rofi.pid:                        /run/user/1000/rofi.pid
+! rofi.kb-primary-paste:           Control+Shift+v,Shift+Insert
+! rofi.kb-secondary-paste:         Control+v,Insert
+! rofi.kb-clear-line:              Control+u
+! rofi.kb-move-front:              Control+a
+! rofi.kb-move-end:                Control+e
+! rofi.kb-move-word-back:          Alt+b
+! rofi.kb-move-word-forward:       Alt+f
+! rofi.kb-move-char-back:          Left,Control+b
+! rofi.kb-move-char-forward:       Right,Control+f
+! rofi.kb-remove-word-back:        Control+Alt+h
+! rofi.kb-remove-word-forward:     Control+Alt+d
+! rofi.kb-remove-char-forward:     Delete,Control+d
+! rofi.kb-remove-char-back:        BackSpace,Control+h
+! rofi.kb-accept-entry:            Control+j,Control+m,Return,KP_Enter
+! rofi.kb-accept-custom:           Control+Return
+! rofi.kb-accept-entry-continue:   Shift+Return
+! rofi.kb-mode-next:               Shift+Right,Control+Tab
+! rofi.kb-mode-previous:           Shift+Left,Control+Shift+Tab
+! rofi.kb-toggle-case-sensitivity: grave,dead_grave
+! rofi.kb-delete-entry:            Shift+Delete
+! rofi.key-window:
+! rofi.key-run:
+! rofi.key-ssh:                        
+! 
 
 ! -- Colours -- !
-#include "/home/mauro/.colours/gruvbox-light"
+! #include "/home/mauro/.colours/gruvbox-light"
+#include "/home/mauro/.colours/base16-twilight-st"
 
