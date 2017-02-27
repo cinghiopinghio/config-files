@@ -76,6 +76,8 @@ SUDOPTS='-E'
 sudo ${SUDOPTS} borg create ${ARCHIVE}::${TIMESTAMP} ${FOLDERS}\
   ${CREATEOPTS} ${OPTS}
 
+sudo -n echo "Check" >/dev/null 2>&1 || notify-send -u critical -i info BACKUP "sudo passwd requested"
+
 sudo ${SUDOPTS} borg prune ${PRUNEOPTS} ${OPTS}\
   --keep-hourly 3 \
   --keep-daily 7 \
