@@ -60,6 +60,8 @@ case ${HOSTNAME} in
     albert &
     blueman-applet &
     QSyncthingTray &
+    revolt &
+    kalu &
 esac
 
 # launcher
