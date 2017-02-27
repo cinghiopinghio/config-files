@@ -2,6 +2,7 @@
 
 XRANDR="xrandr"
 CMD="${XRANDR}"
+BARCMD=""
 
 # xrandr_params_for() {
 #   if [ "${2}" == 'connected' ]
@@ -21,14 +22,15 @@ ISFIRST=true
 for VOUT in `${XRANDR} | grep " connected " | awk '{print $1}'`; do
 	echo $VOUT is connected
 	if ${ISFIRST}; then
-		OLD_VOUT=${VOUT}
 		CMD="${CMD} --output ${VOUT} --auto --pos 0x0 --primary"
+		OLD_VOUT=${VOUT}
 		POS="--above"
 		ISFIRST=false
 	else
 		CMD="${CMD} --output ${VOUT} --auto ${POS} ${OLD_VOUT}"
 		OLD_VOUT=${VOUT}
 		POS="--right-of"
+		BARCMD="${BARCMD} MONITOR=${VOUT} polybar bar2 &;"
 	fi
 done
 for VOUT in `${XRANDR} | grep " disconnected " | awk '{print $1}'`; do
@@ -40,8 +42,10 @@ done
 if [[ $1 == '-n' ]];
 then
 	echo ${CMD}
+	echo ${BARCMD}
 else
 	${CMD}
+	${BARCMD}
 fi
 # set +x
 
