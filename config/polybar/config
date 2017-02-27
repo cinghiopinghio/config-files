@@ -5,31 +5,32 @@
 ;
 ;=====================================================
 
+[settings]
+
+screenchange-reload = true
+
 [colors]
 
-background       = #cc282828
-background-solid = #282828
-background-alt   = #504945
+background       = ${xrdb:polybar.background:#990000}
+background-solid = ${self.background}
+background-alt   = ${xrdb:polybar.color8:#504945}
 
-;foreground       = #dfdfdf
-;foreground-alt   = #888888
-foreground       = #ebdbb2
-foreground-alt   = #a89984
+foreground       = ${xrdb:polybar.foreground:#ebdbb2}
+foreground-alt   = ${xrdb:polybar.color7:#a89984}
 
 
-;GRUVBOX
 ; red
-color1           = #cc241d
+color1           = ${xrdb:polybar.color1}
 ; green
-color2           = #98971a
+color2           = ${xrdb:polybar.color2}
 ; yellow
-color3           = #d79921
+color3           = ${xrdb:polybar.color3}
 ; blue
-color4           = #458588
+color4           = ${xrdb:polybar.color4}
 ; magenta
-color5           = #b16286
+color5           = ${xrdb:polybar.color5}
 ; cyan
-color6           = #689d6a
+color6           = ${xrdb:polybar.color6}
 
 easy             = ${colors.color2}
 primary          = ${colors.color3}
@@ -68,9 +69,9 @@ padding-right       = 0
 module-margin-left  = 0
 module-margin-right = ${vars.padding}
 
-font-0              = Fira:size=12;3
-font-1              = Hack:size=12
-font-2              = FontAwesome:size=14;2
+font-0              = Fira:size=10;2
+font-1              = Hack:size=10
+font-2              = FontAwesome:size=12;2
 font-3              = Wuncon Siji:pixelsize=12
 
 [bar/bar1]
@@ -79,10 +80,10 @@ inherit          = bar/base
 tray-position    = right
 tray-padding     = 0
 tray-transparent = false
-tray-background  = ${colors.easy}
+tray-background  = ${colors.background}
 
 modules-left        = i3 xwindow
-modules-center      = date
+modules-center      = email date
 modules-right       = backlight volume memory cpu battery powermenu
 
 [bar/bar2]
@@ -313,8 +314,8 @@ ramp-foreground       = ${colors.foreground}
 type                   = custom/menu
 
 label-open             = 
-label-open-foreground  = ${colors.background-solid}
-label-open-background  = ${colors.alert}
+label-open-foreground  = ${colors.alert}
+# label-open-background  = ${colors.alert}
 label-open-padding     = ${vars.padding}
 label-close            = 
 label-close-foreground  = ${colors.background-solid}
@@ -331,5 +332,20 @@ menu-0-1-exec          = systemctl poweroff
 menu-0-1-foreground    = ${colors.background-solid}
 menu-0-1-background    = ${colors.alert}
 menu-0-1-padding       = ${vars.padding}
+
+[module/pacman]
+type = custom/script
+exec = pacaur -Qu | wc -l
+label = i %output%
+format-underline = #a45476
+interval = 60
+click-left = gksudo "pacaur -Sy"
+
+[module/email]
+type = custom/script
+exec = echo `notmuch count tag:unread`/`notmuch count tag:inbox`
+label =   %output%
+format-underline = #a45476
+interval = 30
 
 ; vim:ft=dosini
