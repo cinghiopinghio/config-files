@@ -68,9 +68,10 @@ padding-right       = 0
 module-margin-left  = 0
 module-margin-right = ${vars.padding}
 
-font-0              = Fira:size=14
-font-1              = Hack:size=14
-font-2              = FontAwesome:size=15
+font-0              = Fira:size=12;3
+font-1              = Hack:size=12
+font-2              = FontAwesome:size=14;2
+font-3              = Wuncon Siji:pixelsize=12
 
 [bar/bar1]
 
@@ -256,13 +257,13 @@ full-at                      = 98
 time-format                  = %kH%M
 
 ; charging
-label-charging               = %percentage% %time%
-format-charging-prefix       = " "
+label-charging               = %percentage%% -%time%
+format-charging-prefix       = 
 format-charging              = <animation-charging> <label-charging>
 format-charging-underline    = ${colors.color5}
 
 ; discharging
-label-discharging            = %percentage% %time%
+label-discharging            = %percentage%% %time%
 format-discharging           = <ramp-capacity> <label-discharging>
 format-discharging-underline = ${self.format-charging-underline}
 
