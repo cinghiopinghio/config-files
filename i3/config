@@ -17,12 +17,12 @@ font pango:Hack 10.5
 # font, it doesn’t scale on retina/hidpi displays.
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-set $primaryCol   #98971a
-set $secondaryCol #a89984
-set $alarmCol     #cc241d
-set $bgCol        #282828cc
-set $fgCol        #ebdbb2
-set $lightBgCol   #444444
+set_from_resource $primaryCol   i3wm.color2 #98971a
+set_from_resource $secondaryCol i3wm.color7 #a89984
+set_from_resource $alarmCol     i3wm.color1 #cc241d
+set_from_resource $bgCol        i3wm.background #282828cc
+set_from_resource $fgCol        i3wm.foreground #ebdbb2
+set_from_resource $lightBgCol   i3wm.color8 #444444
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 # colors                border        backgr        text        indicator     child_border
@@ -39,12 +39,10 @@ new_float pixel 15
 floating_modifier $mod
 focus_follows_mouse no
 
-
 ### gaps
 # Examples
 gaps inner 0
 smart_gaps on
-
 
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
@@ -70,6 +68,7 @@ bindsym $mod+p exec "rofi -show pass -switchers 'pass:~/.local/bin/scripts/rofi-
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 bindsym $mod+shift+f exec "skippy-xd"
 bindsym $mod+shift+s exec "scrot"
+bindsym $mod+t exec "buku_run"
 
 # change focus
 bindsym $mod+h focus left
