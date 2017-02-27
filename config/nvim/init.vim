@@ -186,25 +186,21 @@ let g:lightline = {
 set termguicolors
 set background=dark
 if s:host == 'spin'
-  let g:airline_theme='gruvbox'
   let g:seoul256_background = 235
   let g:seoul256_light_background = 256
   colorscheme seoul256
 elseif s:host == 'arcinghio'
-  let g:airline_theme='gruvbox'
   let g:gruvbox_contrast_dark='medium'
   colorscheme gruvbox
 elseif s:host == 'dingo'
   "colorscheme kalisi
   colorscheme gruvbox
-  let g:airline_theme='kalisi'
-  "set background light
-  highlight Normal guibg=NONE ctermbg=NONE
-  highlight nonText guifg=#787878 guibg=NONE ctermfg=243 ctermbg=NONE
 else
-  let g:airline_theme='badwolf'
   colorscheme molokai
 endif
+"set background light
+highlight Normal guibg=NONE ctermbg=NONE
+highlight nonText guifg=#787878 guibg=NONE ctermfg=243 ctermbg=NONE
 
 set makeprg=make
 set grepprg=grep\ -nH\ $*
@@ -337,17 +333,6 @@ nmap <localleader>us :Unite spell_suggest<cr>
 "{{{ UltiSnips
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsListSnippets="<c-l>"
-"}}}
-
-"----------------------------------
-"{{{ AirLine
-" see the theme file for the color definition
-let g:airline_right_sep=''
-let g:airline_left_sep=''
-let g:airline#extensions#default#layout = [
-                  \ [ 'a', 'b', 'c'],
-                  \ [ 'x', 'y', 'z', 'warning']]
-let g:airline#extensions#whitespace#enabled = 0
 "}}}
 
 "----------------------------------
