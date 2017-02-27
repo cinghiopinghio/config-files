@@ -6,7 +6,7 @@ check_connection(){
   # if you are not sure, you should ping someone outside your LAN
 
   #get gateway
-  gwIP=`ip route | grep default | cut -d ' ' -f 3`
+  gwIP=`ip route | grep default | head -1 | cut -d ' ' -f 3`
   # if gateway not defined: no internet
   [[ ${gwIP} == '' ]] && exit 1
   # ping gateway
@@ -88,29 +88,36 @@ case $1 in
     case $@ in
       "")
         SEARCH='tag:new'
-        TITLE='New MAIL'
+        TITLE='New MAILs'
         ;;
       *)
         SEARCH=$@
-        TITLE="MAIL ($@)"
+        TITLE="MAILs ($@)"
         ;;
     esac
 
     OUT=""
 
-    for msg in `notmuch search --output=messages $SEARCH`;
-    do
-      auths=`notmuch search --format=json --output=summary $msg |\
-        sed -e 's/,/\n/g' | grep authors |\
-        sed -e 's/.*:[ \t"]*//' -e 's/[ \t"]*$//'`
-      subj=`notmuch search --format=json --output=summary $msg |\
-        sed -e 's/,/\n/g' | grep subject |\
-        sed -e 's/.*:[ \t"]*//' -e 's/[ \t"]*$//'`
-      OUT="$OUT<b>${auths:0:15}:</b> ${subj:0:20}\n"
-    done
+    NQUERY=`notmuch count $SEARCH`
+    NUNREAD=`notmuch count tag:unread and not tag:killed`
+    NINBOX=`notmuch count tag:inbox and not tag:killed`
+
+    OUT="You have $NQUERY $TITLE\n$NUNREAD unread and $NINBOX in inbox"
+    
+
+    # for msg in `notmuch search --output=messages $SEARCH`;
+    # do
+    #   auths=`notmuch search --format=json --output=summary $msg |\
+    #     sed -e 's/,/\n/g' | grep authors |\
+    #     sed -e 's/.*:[ \t"]*//' -e 's/[ \t"]*$//'`
+    #   subj=`notmuch search --format=json --output=summary $msg |\
+    #     sed -e 's/,/\n/g' | grep subject |\
+    #     sed -e 's/.*:[ \t"]*//' -e 's/[ \t"]*$//'`
+    #   OUT="$OUT<b>${auths:0:15}:</b> ${subj:0:20}\n"
+    # done
 
     # check if there is some output
-    if [[ ${OUT} != "" ]];
+    if [[ ${OUT} != "" && ${NQUERY} -gt 0 ]];
     then
       notify-send -u normal "$TITLE" "$OUT" -i mail_new
     fi
@@ -118,10 +125,12 @@ case $1 in
   p|print)
     INPUT=$2
     OPENWITH=zathura
-    MPOPTIONS="-P A4 -F Helvetica -p -"
+    MPOPTIONS="-P A4 -x -H -F Utopia -p -"
+    ESOPTIONS="-Email --pretty-print -G -p -"
     TMPPDF=$(mktemp --tmpdir mutt-XXXXXX.pdf)
 
-    muttprint $MPOPTIONS | ps2pdf - $TMPPDF >/dev/null
+    #enscript $ESOPTIONS 2>/dev/null | ps2pdf - $TMPPDF &>/dev/null
+    muttprint $MPOPTIONS 2>/dev/null | ps2pdf - $TMPPDF &>/dev/null
     zathura $TMPPDF >/dev/null & 
     ;;
   *)
