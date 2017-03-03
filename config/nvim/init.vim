@@ -50,6 +50,7 @@ function! DoRemote(arg)
 endfunction
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+let g:deoplete#sources#jedi#show_docstring=1
 " prevent slow popups
 let g:jedi#popup_on_dot = 0
 " Plug 'cinghiopinghio/vim-clevertab', { 'branch': 'filecomplete' }
