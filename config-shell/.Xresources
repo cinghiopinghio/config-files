@@ -132,5 +132,5 @@ URxvt.matcher.rend.0:                     -Uline fg16
 
 ! -- Colours -- !
 ! #include "/home/mauro/.colours/gruvbox-light"
-#include "/home/mauro/.colours/base16-twilight-st"
+#include "/home/mauro/.xcolors/base16-twilight-st"
 
