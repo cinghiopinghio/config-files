@@ -7,10 +7,6 @@ let maplocalleader=' '
 set nocompatible               " be iMproved
 filetype indent plugin on
 let s:host=substitute(hostname(), "\\..*", "", "") 
-if s:host == 'giove'
-  set term=builtin_ansi
-  set t_Co=256
-endif
 syntax on
 "}}}
 
@@ -51,6 +47,7 @@ Plug 'Shougo/unite.vim'
 Plug 'Shougo/unite-outline'
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/vimproc.vim'
+Plug 'kopischke/unite-spell-suggest' " text suggestion
 """"""""""""""""""""""""""""""""""""" colors
 Plug 'tomasr/molokai'
 Plug 'junegunn/seoul256.vim'
@@ -69,6 +66,10 @@ Plug 'junegunn/vim-easy-align'
 Plug 'thinca/vim-quickrun'
 Plug 'mjbrownie/swapit'
 Plug 'terryma/vim-multiple-cursors'
+" GIT integration
+Plug 'tpope/vim-fugitive'
+" ask if you typed a wrong filename
+Plug 'EinfachToll/DidYouMean'
 
 """"""""""""""""""""""""""""""""""""" HTML
 "Plug 'mattn/emmet-vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] } 
@@ -82,17 +83,6 @@ Plug 'lervag/vimtex', { 'for': 'tex' }
 "Plug 'fmoralesc/vim-pad'
 "Plug 'blinry/vimboy'
 "Plug 'freitass/todo.txt-vim'
-
-"Plug 'terryma/vim-multiple-cursors'
-
-" Using git URL
-"Plug 'https://github.com/junegunn/vim-github-dashboard.git'
-" Plugin options
-"Plug 'nsf/gocode', { 'tag': 'go.weekly.2012-03-13', 'rtp': 'vim' }
-" Plugin outside ~/.vim/plugged with post-update hook
-"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
-" Unmanaged plugin (manually installed and updated)
-"Plug '~/my-prototype-plugin'
 call plug#end()
 "}}}
 
@@ -147,6 +137,9 @@ set clipboard+=unnamed  " yank and copy to X clipboard
 set wrap
 set linebreak
 
+" set terminal title
+set title
+
 set splitbelow
 set splitright
 
@@ -161,26 +154,24 @@ let g:lightline = {
       \ 'colorscheme': 'wombat'
       \ }
 
+set termguicolors
 set background=dark
 if s:host == 'spin'
-  let g:airline_theme='gruvbox'
   let g:seoul256_background = 235
   let g:seoul256_light_background = 256
   colorscheme seoul256
 elseif s:host == 'arcinghio'
-  let g:airline_theme='gruvbox'
   let g:gruvbox_contrast_dark='medium'
   colorscheme gruvbox
 elseif s:host == 'dingo'
-  colorscheme kalisi
-  let g:airline_theme='kalisi'
-  set background=light
-  highlight Normal ctermbg=NONE
-  highlight nonText ctermbg=NONE
+  "colorscheme kalisi
+  colorscheme gruvbox
 else
-  let g:airline_theme='badwolf'
   colorscheme molokai
 endif
+"set background light
+highlight Normal guibg=NONE ctermbg=NONE
+highlight nonText guifg=#787878 guibg=NONE ctermfg=243 ctermbg=NONE
 
 set makeprg=make
 set grepprg=grep\ -nH\ $*
@@ -219,6 +210,10 @@ nnoremap <C-right> :vertical resize +5<cr>
 "imap <silent> <Up> <C-o>gk
 "nmap <silent> <Down> gj
 "nmap <silent> <Up> gk
+nnoremap <silent> <localleader><Up>    :wincmd k<CR>
+nnoremap <silent> <localleader><Down>  :wincmd j<CR>
+nnoremap <silent> <localleader><Right> :wincmd l<CR>
+nnoremap <silent> <localleader><Left>  :wincmd h<CR>
 " prova
 
 nmap    <ESC>[5^    <C-PageUp>
@@ -228,7 +223,7 @@ map Q gq
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
-map <F6> :setlocal spell! spelllang=en_us<CR>
+map <F6> :setlocal spell! spelllang=en_gb<CR>
 
 " insert date
 inoremap <F5> <C-R>=strftime("[%Y-%m-%d]")<CR>
@@ -300,23 +295,14 @@ nmap <localleader>ub :Unite -no-split buffer<cr>
 nmap <localleader>ur :Unite -no-split file_mru<cr>
 nmap <localleader>uo :Unite -vertical outline<cr>
 let g:unite_enable_start_insert = 1
+
+nmap <localleader>us :Unite spell_suggest<cr>
 "}}}"
 
 "----------------------------------
 "{{{ UltiSnips
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsListSnippets="<c-l>"
-"}}}
-
-"----------------------------------
-"{{{ AirLine
-" see the theme file for the color definition
-let g:airline_right_sep=''
-let g:airline_left_sep=''
-let g:airline#extensions#default#layout = [
-                  \ [ 'a', 'b', 'c'],
-                  \ [ 'x', 'y', 'z', 'warning']]
-let g:airline#extensions#whitespace#enabled = 0
 "}}}
 
 "----------------------------------
@@ -327,4 +313,11 @@ nnoremap <localleader>t :Thumbnail -include=help<cr>
 "----------------------------------
 "{{{ AutoPairs
 let g:AutoPairs= {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
+"}}}
+
+"----------------------------------
+"{{{ SwapIt
+let b:swap_lists = [
+      \{'name': 'dark/light', 'options': ['dark', 'light']},
+      \]
 "}}}
