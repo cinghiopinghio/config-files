@@ -5,8 +5,8 @@
 # early apps
 
 # automatically turn on attached displays
-srandrd ${HOME}/.local/bin/scripts/display-on &
-${HOME}/.local/bin/scripts/display-on &
+srandrd ${HOME}/.local/bin/display-on &
+${HOME}/.local/bin/display-on &
 compton -b &
 
 
@@ -37,7 +37,7 @@ udiskie --use-udisks2 --tray &
 # start the screen locker
 xautolock -time 10 -notify 30\
   -notifier "notify-send XAUTOLOCK 'Screen locking in 30 secondsi'"\
-  -locker "~/.local/bin/scripts/background --lock" &
+  -locker "~/.local/bin/background --lock" &
 # hide mouse if not in use
 unclutter -root -visible &
 # volume control on panel
@@ -60,7 +60,6 @@ case ${HOSTNAME} in
     albert &
     blueman-applet &
     QSyncthingTray &
-    revolt &
     kalu &
 esac
 

@@ -51,9 +51,9 @@ fi
 
 if [ -z ${SRANDRD_ACTION+x} ];
 then
-	${HOME}/.local/bin/scripts/background
+	${HOME}/.local/bin/background
 else
 	# $SRANDRD_ACTION is set
 	# the script has been called by srandrd
-	${HOME}/.local/bin/scripts/background --update
+	${HOME}/.local/bin/background --update
 fi

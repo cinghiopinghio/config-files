@@ -5,7 +5,7 @@ NOREAD='-unread -inbox'
 
 
 ## Send notification to OS
-~/.local/bin/scripts/carta notify
+~/.local/bin/carta notify
 #s=$(notmuch search --format=json tag:new AND tag:inbox | ${HOME}/.local/bin/scripts/notify-mail); 
 #if [ "$s" != "" ];
 #then
