@@ -3,4 +3,4 @@
 	url = https://github.com/aschn/gnuplot-colorbrewer.git
 [submodule "stowsh"]
 	path = stowsh
-	url = https://github.com/williamsmj/stowsh
+	url = git@github.com:cinghiopinghio/stowsh.git

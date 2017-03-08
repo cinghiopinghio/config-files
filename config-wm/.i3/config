@@ -199,10 +199,10 @@ bindsym $mod+m scratchpad show
 set $mode_system "System [L] lock, [E] logout, [S] suspend, [R] reboot, [X] shutdown, [B] background"
 bindsym $mod+x mode $mode_system
 mode --pango_markup $mode_system {
-    bindsym l exec --no-startup-id bash ~/.local/bin/scripts/background --lock, mode "default"
-    bindsym b exec --no-startup-id bash ~/.local/bin/scripts/background, mode "default"
+    bindsym l exec --no-startup-id bash ~/.local/bin/background --lock, mode "default"
+    bindsym b exec --no-startup-id bash ~/.local/bin/background, mode "default"
     bindsym e exec --no-startup-id i3-msg exit, mode "default"
-    bindsym s exec --no-startup-id bash ~/.local/bin/scripts/background --lock && systemctl suspend, mode "default"
+    bindsym s exec --no-startup-id bash ~/.local/bin/background --lock && systemctl suspend, mode "default"
     # no swap to hibernate
     #bindsym h exec --no-startup-id i3lock -c 502020 && systemctl hibernate, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
