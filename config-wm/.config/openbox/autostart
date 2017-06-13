@@ -27,7 +27,7 @@ case ${XDG_CURRENT_DESKTOP} in
     ;;
 esac
 
-sleep 10
+sleep 5
 
 
 # tray icons and applets
@@ -50,14 +50,12 @@ case ${HOSTNAME} in
     xgamma -quiet -rgamma 1.11 -ggamma 1.01 -bgamma 0.93 &
     ;;
   'spin')
-    echo RELOADAGENT | gpg-connect-agent
     dropbox-cli start
     pidgin &
     ;;
   'dingo')
     nm-applet &
-    pidgin &
-    albert &
+    # /usr/bin/env albert &
     blueman-applet &
     QSyncthingTray &
     kalu &

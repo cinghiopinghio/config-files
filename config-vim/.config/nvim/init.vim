@@ -52,7 +52,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 let g:deoplete#sources#jedi#show_docstring=1
 " prevent slow popups
-let g:jedi#popup_on_dot = 0
+let g:jedi#popup_on_dot = 1
 " Plug 'cinghiopinghio/vim-clevertab', { 'branch': 'filecomplete' }
 " for email address completion
 Plug 'caio/querycommandcomplete.vim'
@@ -73,11 +73,11 @@ Plug 'Konfekt/FastFold'
 Plug 'zhaocai/GoldenView.Vim'
 Plug 'itchyny/thumbnail.vim', { 'on': 'Thumbnail' }
 """"""""""""""""""""""""""""""""""""" unite
-Plug 'Shougo/unite.vim'
+Plug 'Shougo/denite.nvim'
 Plug 'Shougo/unite-outline'
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/vimproc.vim'
-Plug 'kopischke/unite-spell-suggest' " text suggestion
+" Plug 'kopischke/unite-spell-suggest' " text suggestion
 """"""""""""""""""""""""""""""""""""" colors
 Plug 'tomasr/molokai'
 Plug 'junegunn/seoul256.vim'
@@ -113,6 +113,7 @@ Plug 'lervag/vimtex', { 'for': 'tex' }
 "Plug 'fmoralesc/vim-pad'
 "Plug 'blinry/vimboy'
 "Plug 'freitass/todo.txt-vim'
+
 call plug#end()
 "}}}
 
@@ -159,6 +160,8 @@ set smartcase           " upper-case sensitive search
 " tabulation
 setlocal shiftwidth=2 softtabstop=2 expandtab smarttab
 
+set scrolloff=5
+
 set complete+=k         " enable dictionary completion
 set completeopt+=longest
 
@@ -191,7 +194,6 @@ if s:host == 'spin'
   let g:seoul256_light_background = 256
   colorscheme seoul256
 elseif s:host == 'arcinghio'
-  let g:gruvbox_contrast_dark='medium'
   colorscheme gruvbox
 elseif s:host == 'dingo'
   "colorscheme kalisi
@@ -202,6 +204,20 @@ endif
 "set background light
 highlight Normal guibg=NONE ctermbg=NONE
 highlight nonText guifg=#787878 guibg=NONE ctermfg=243 ctermbg=NONE
+
+function! ToggleBackground()
+  if &background == 'dark'
+    set background=light
+  else
+    set background=dark
+  endif
+
+  highlight Normal guibg=NONE ctermbg=NONE
+  highlight nonText guifg=#787878 guibg=NONE ctermfg=243 ctermbg=NONE
+endfunction
+
+nnoremap <F9> :call ToggleBackground()<CR>
+
 
 set makeprg=make
 set grepprg=grep\ -nH\ $*
@@ -321,13 +337,25 @@ let g:deoplete#enable_at_startup = 1
 
 "----------------------------------
 "{{{ Unite
-nmap <localleader>uf :Unite -no-split file buffer<cr>
-nmap <localleader>ub :Unite -no-split buffer<cr>
-nmap <localleader>ur :Unite -no-split file_mru<cr>
-nmap <localleader>uo :Unite -vertical outline<cr>
+nmap <localleader>uf :Denite file buffer<cr>
+nmap <localleader>ub :Denite buffer<cr>
+nmap <localleader>ur :Denite file_mru<cr>
+nmap <localleader>uo :Denite outline<cr>
 let g:unite_enable_start_insert = 1
 
-nmap <localleader>us :Unite spell_suggest<cr>
+call denite#custom#map(
+      \ 'insert',
+      \ '<Down>',
+      \ '<denite:move_to_next_line>',
+      \ 'noremap'
+      \)
+call denite#custom#map(
+      \ 'insert',
+      \ '<Up>',
+      \ '<denite:move_to_previous_line>',
+      \ 'noremap'
+      \)
+" nmap <localleader>us :Unite spell_suggest<cr>
 "}}}"
 
 "----------------------------------
@@ -350,5 +378,6 @@ let g:AutoPairs= {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
 "{{{ SwapIt
 let b:swap_lists = [
       \{'name': 'dark/light', 'options': ['dark', 'light']},
+      \{'name': 'bw', 'options': ['black', 'white']},
       \]
 "}}}

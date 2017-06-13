@@ -23,7 +23,7 @@ case $1 in
     fi
 
     # check internet connection
-    if ! $(check_connection); then echo "No Internet Connection"; exit 1; fi
+    # if ! $(check_connection); then echo "No Internet Connection"; exit 1; fi
 
     # get account name
     ACCOUNT=$2
@@ -48,11 +48,11 @@ case $1 in
 
     echo '+++ DELETE KILLED MAIL +++'
     echo "+++ ${TAGS} +++"
-    files=$(notmuch search --output=files "$TAGS")
+    files=$(notmuch search --exclude=false --output=files "$TAGS")
 
     if [[ $files != '' ]]
     then 
-      notmuch search "$TAGS" | cut -c-$(tput cols)
+      notmuch search --exclude=false "$TAGS" | cut -c-$(tput cols)
       
       read -p '+++ Remove All deleted mails permanently?[y/n] +++  ' -n 1 -r
       echo
@@ -81,6 +81,8 @@ case $1 in
     mbsync -qq -a
     # index new mails
     notmuch new --quiet
+
+    ~/.local/bin/nottoomuch-addresses.sh --update
     ;;
     #}}}
   n|notify)
@@ -119,7 +121,7 @@ case $1 in
     # check if there is some output
     if [[ ${OUT} != "" && ${NQUERY} -gt 0 ]];
     then
-      notify-send -u normal "$TITLE" "$OUT" -i mail_new
+      notify-send -u normal -a "NotMuch Mail" "$TITLE" "$OUT" -i mail_new
     fi
     ;;
   p|print)
@@ -144,3 +146,5 @@ case $1 in
     echo "carta {n,notify} [SEARCH_TERMS]: send notification of mails"
     ;;
 esac
+
+# vim: fdm=indent shiftwidth=2

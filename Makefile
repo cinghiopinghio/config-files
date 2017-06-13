@@ -16,7 +16,7 @@ all: $(CMDS)
 
 $(CMDS):
 	@echo Installing $(@)
-	./stowsh/stowsh -v config-$(@) $(HOME)
+	./stowsh/stowsh -v -s config-$(@) $(HOME)
 
 
 help: main

@@ -97,9 +97,9 @@ bindsym $mod+Shift+Right move right
 set $mode_split Split: (h) horizontal (v) vertical
 mode "$mode_split" {
     # split in horizontal orientation
-    bindsym v split h, mode "default"
+    bindsym v splith, mode "default"
     # split in vertical orientation
-    bindsym h split v, mode "default"
+    bindsym h splitv, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -214,6 +214,7 @@ mode --pango_markup $mode_system {
 }
 
 # resize window (you can also use the mouse for that)
+bindsym $mod+r mode "resize"
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
 
@@ -236,7 +237,6 @@ mode "resize" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
-bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -266,6 +266,7 @@ bindsym $mod+r mode "resize"
 exec_always --no-startup-id ~/.config/polybar/startup
 
 exec --no-startup-id ~/.config/openbox/autostart
+exec --no-startup-id /usr/bin/env albert &
 
 for_window [class="(?i)pinentry|(?i)Arandr"] floating enabled
 for_window [class="(?i)xcalc|(?i)Calculator|(?i)speedCrunch|(?i)gnome-calculator"] floating enabled
@@ -274,8 +275,9 @@ for_window [class="(?i)sxiv"] floating enabled
 for_window [class="(?i)Pidgin|(?i)Skype|(?i)Tox"] floating enabled
 for_window [class="(?i)gnuplot"] floating enabled
 for_window [class="appfinder"] floating enabled
+for_window [class="Cysboard"] fullscreen
 
 # the following make fullscreen slides to appears on secondary screen
 # and time and notes on primary
-workspace 000 output DP1
+workspace 000 output DP1-1
 assign [class="(?i)pdfpc" window_role="presentation"] workspace 000
