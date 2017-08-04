@@ -129,3 +129,5 @@ function virtualenv_prompt() {
 export PS1=$(virtualenv_prompt)$HostColor$Host$Red$GitBranch' '$Yellow$PathShort$Color_Off' '
 
 #}}}
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
