@@ -3,4 +3,4 @@
 #  gpg-connect-agent reloadagent /bye >> /dev/null
 
 
-xcalib -d :0  ${HOME}/.color/icc/Dell_XPS_15_2016_FHD_matt__1203M_LQ156M1_.icm
+# xcalib -d :0  ${HOME}/.color/icc/Dell_XPS_15_2016_FHD_matt__1203M_LQ156M1_.icm
