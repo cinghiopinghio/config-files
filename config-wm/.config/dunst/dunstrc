@@ -1,13 +1,13 @@
 [global]
     font                 = "Fira Sans 10"
-    allow_markup         = yes
-    format               = "<b><big>%s</big></b>\n<i>%a</i>\n%b"
+    markup               = full
+    format               = "<b><big>%s</big></b>\n<i>%a</i>\n%b\n%p"
     sort                 = yes
     indicate_hidden      = true
     # geometry           = "x5"
     idle_threshold       = 0
     geometry             = "400x10-60+40"
-    alignment            = center
+    alignment            = left
     show_age_threshold   = 60
     sticky_history       = yes
     follow               = mouse
@@ -20,12 +20,14 @@
     browser              = /usr/bin/firefox -new-tab
     title = Dunst
     class = Dunst
-    transparency = 20
+#    transparency = 20
 
 #    Align icons left/right/off
     icon_position = left
 #    Paths to default icons.
-    icon_folders = /usr/share/icons/Arc/apps/48/:/usr/share/icons/Arc/categories/48/:/usr/share/icons/Arc/devices/48/:/usr/share/icons/Arc/emblems/48/:/usr/share/icons/Arc/mimetypes/48/:/usr/share/icons/Arc/places/48/:/usr/share/icons/Arc/status/48/ 
+#    icon_folders = /usr/share/icons/Arc/apps/48/:/usr/share/icons/Arc/categories/48/:/usr/share/icons/Arc/devices/48/:/usr/share/icons/Arc/emblems/48/:/usr/share/icons/Arc/mimetypes/48/:/usr/share/icons/Arc/places/48/:/usr/share/icons/Arc/status/48/:/usr/share/icons/Arc/status/symbolic/ 
+#    icon_folders = /usr/share/icons/Arc/mimetypes/48:/usr/share/icons/Arc/status/48:/usr/share/icons/Arc/categories/48:/usr/share/icons/Arc/places/48:/usr/share/icons/Arc/emblems/48:/usr/share/icons/Arc/devices/48:/usr/share/icons/Arc/apps/48:/usr/share/icons/Arc/mimetypes/24@2x:/usr/share/icons/Arc/actions/24@2x:/usr/share/icons/Arc/status/24@2x:/usr/share/icons/Arc/categories/24@2x:/usr/share/icons/Arc/places/24@2x:/usr/share/icons/Arc/emblems/24@2x:/usr/share/icons/Arc/devices/24@2x:/usr/share/icons/Arc/apps/24@2x
+     icon_folders = /usr/share/icons/Numix/48/mimetypes:/usr/share/icons/Numix/48/actions:/usr/share/icons/Numix/48/notifications:/usr/share/icons/Numix/48/animations:/usr/share/icons/Numix/48/emotes:/usr/share/icons/Numix/48/status:/usr/share/icons/Numix/48/categories:/usr/share/icons/Numix/48/places:/usr/share/icons/Numix/48/emblems:/usr/share/icons/Numix/48/devices:/usr/share/icons/Numix/48/apps
 # Numix icons are only svg
 #    icon_folders = /usr/share/icons/Numix/32/mimetypes/:/usr/share/icons/Numix/32/actions/:/usr/share/icons/Numix/32/animations/:/usr/share/icons/Numix/32/emotes/:/usr/share/icons/Numix/32/status/:/usr/share/icons/Numix/32/categories/:/usr/share/icons/Numix/32/places/:/usr/share/icons/Numix/32/emblems/:/usr/share/icons/Numix/32/devices/:/usr/share/icons/Numix/32/apps/
     max_icon_size=48
@@ -47,7 +49,8 @@
     timeout = 10
 
 [urgency_normal]
-    background = "#98971a"
+#    background = "#98971a"
+    background = "#8f9d6a"
     foreground = "#282828"
     timeout = 15
 
