@@ -40,18 +40,8 @@ Xft.dpi:                                  96
 Xft.rgba:                                 rgb
 
 ! -- Fonts -- !
-!URxvt.font:                               xft:dejavu sans mono:size=10.5
-!URxvt.boldFont:                           xft:dejavu sans mono:size=10.5
 URxvt.font:                               xft:liberation mono:size=10.5
 URxvt.boldFont:                           xft:liberation mono:size=10.5:bold
-!URxvt.font:                              xft:droid sans mono slashed:size=10.5
-!URxvt.boldFont:                          xft:droid sans mono slashed:size=10.5
-!URxvt.font:                              xft:luxi mono:regular:size=10
-!URxvt.boldFont:                          xft:luxi mono:regular:size=10
-!URxvt.font:                              xft:envy code r:medium:size=11
-!URxvt.boldFont:                          xft:envy code r:medium:size=11
-!URxvt.font:                              xft:inconsolata:medium:size=13
-!URxvt.boldFont:                          xft:inconsolata:medium:size=13
 
 ! --  Extensions -- !
 !URxvt.perl-ext-common:                    default,matcher,keyboard-select,url-select,clipboard,tabbedex
@@ -66,69 +56,6 @@ URxvt.url-select.launcher:                /usr/bin/firefox
 URxvt.matcher.rend.0:                     -Uline fg16
 !URxvt.matcher.button:                     1
 !URXvt.tabbed.reopen-on-close: yes
-
-! -- ROFI -- !
-
-! rofi.modi:                       run,window,ssh
-! rofi.opacity:                    100
-! rofi.width:                      30
-! rofi.lines:                      30
-! rofi.columns:                    1
-! rofi.font:                       Dejavu Sans Mono 12
-! rofi.color-enabled:              true
-! rofi.hide-scrollbar:             true
-! ! State:                         bg,fg,bgalt,hlbg,hlfg
-! rofi.color-normal:               #282828,#a89984,#262626,#689d6a,#282828
-! rofi.color-urgent:               #282828,#fb4934,#262626,#689d6a,#282828
-! rofi.color-active:               #282828,#fabd2f,#262626,#689d6a,#282828
-! !                                background,border
-! rofi.color-window:               #282828,#689d6a
-! rofi.bw:                         1
-! rofi.location:                   1
-! rofi.padding:                    10
-! rofi.yoffset:                    0
-! rofi.xoffset:                    0
-! rofi.fixed-num-lines:            false
-! rofi.terminal:                   urxvtc
-! rofi.ssh-client:                 ssh
-! rofi.ssh-command:                {terminal} -e {ssh-client} {host}
-! rofi.run-command:                {cmd}
-! rofi.run-list-command:
-! rofi.run-shell-command:          {terminal} -e {cmd}
-! rofi.disable-history:            false
-! rofi.levenshtein-sort:           false
-! rofi.case-sensitive:             false
-! rofi.sidebar-mode:               true
-! rofi.lazy-filter-limit:          5000
-! rofi.eh:                         1
-! rofi.auto-select:                false
-! rofi.parse-hosts:                false
-! rofi.combi-modi:                 window,run
-! rofi.pid:                        /run/user/1000/rofi.pid
-! rofi.kb-primary-paste:           Control+Shift+v,Shift+Insert
-! rofi.kb-secondary-paste:         Control+v,Insert
-! rofi.kb-clear-line:              Control+u
-! rofi.kb-move-front:              Control+a
-! rofi.kb-move-end:                Control+e
-! rofi.kb-move-word-back:          Alt+b
-! rofi.kb-move-word-forward:       Alt+f
-! rofi.kb-move-char-back:          Left,Control+b
-! rofi.kb-move-char-forward:       Right,Control+f
-! rofi.kb-remove-word-back:        Control+Alt+h
-! rofi.kb-remove-word-forward:     Control+Alt+d
-! rofi.kb-remove-char-forward:     Delete,Control+d
-! rofi.kb-remove-char-back:        BackSpace,Control+h
-! rofi.kb-accept-entry:            Control+j,Control+m,Return,KP_Enter
-! rofi.kb-accept-custom:           Control+Return
-! rofi.kb-accept-entry-continue:   Shift+Return
-! rofi.kb-mode-next:               Shift+Right,Control+Tab
-! rofi.kb-mode-previous:           Shift+Left,Control+Shift+Tab
-! rofi.kb-toggle-case-sensitivity: grave,dead_grave
-! rofi.kb-delete-entry:            Shift+Delete
-! rofi.key-window:
-! rofi.key-run:
-! rofi.key-ssh:                        
-! 
 
 ! -- Colours -- !
 ! #include "/home/mauro/.colours/gruvbox-light"
