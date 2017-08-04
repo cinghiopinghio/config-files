@@ -130,6 +130,8 @@ set smartcase           " upper-case sensitive search
 " tabulation
 setlocal shiftwidth=2 softtabstop=2 expandtab smarttab
 
+set scrolloff=5
+
 set complete+=k         " enable dictionary completion
 set completeopt+=longest
 
@@ -155,6 +157,7 @@ let g:lightline = {
       \ 'colorscheme': 'wombat'
       \ }
 
+set termguicolors
 set background=dark
 if s:host == 'spin'
   let g:seoul256_background = 235
@@ -163,8 +166,8 @@ if s:host == 'spin'
 elseif s:host == 'arcinghio'
   colorscheme gruvbox
 elseif s:host == 'dingo'
-  colorscheme kalisi
-  set background=light
+  "colorscheme kalisi
+  colorscheme gruvbox
 else
   colorscheme molokai
 endif
@@ -332,5 +335,6 @@ let g:AutoPairs= {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
 "{{{ SwapIt
 let b:swap_lists = [
       \{'name': 'dark/light', 'options': ['dark', 'light']},
+      \{'name': 'bw', 'options': ['black', 'white']},
       \]
 "}}}
