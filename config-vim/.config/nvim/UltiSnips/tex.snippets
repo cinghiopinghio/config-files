@@ -7,9 +7,34 @@ endsnippet
 # Document Class
 snippet docu "Document Class: Paper" b
 \documentclass[${1:12pt,a4paper}]{${2:article}}
+
+\title{${3:title}}
+\author{${4:author}}
+\date{}
+\begin{document}
+\maketitle
+
+${5}
+\end{document}
 endsnippet
+
 snippet docurev "Document Class: Revtex" b
 \documentclass[${1:12pt,aps,supersciptaddresses,pra}]{${2:revtex4-1}}
+
+\begin{document}
+
+\title{${3:Title}}
+\author{${4:Author}}
+\affiliation{}
+\date{}
+
+\begin{abstract}
+\end{abstract}
+
+\maketitle
+
+${5}
+\end{document}
 endsnippet
 
 # Brackets
