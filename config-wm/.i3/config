@@ -27,12 +27,12 @@ set_from_resource $lightBgCol   i3wm.color8 #444444
 
 # colors                border        backgr        text        indicator     child_border
 client.focused          $primaryCol   $primaryCol   $bgCol      $primaryCol   $primaryCol
-client.focused_inactive $secondaryCol $secondaryCol $bgCol      $secondaryCol $secondaryCol
+client.focused_inactive $secondaryCol $secondaryCol $bgCol      $secondaryCol $bgCol
 client.unfocused        $bgCol        $bgCol        $primaryCol $bgCol        $bgCol
 client.urgent           $alarmCol     $alarmCol     $bgCol      $alarmCol     $alarmCol
 client.background       $bgCol
-new_window pixel 5
-new_float pixel 15
+new_window pixel 2
+new_float pixel 5
 #hide_edge_borders vertical
 
 # Use Mouse+$mod to drag floating windows to their wanted position
@@ -41,8 +41,10 @@ focus_follows_mouse no
 
 ### gaps
 # Examples
-gaps inner 0
-smart_gaps on
+gaps inner 10
+gaps outer 0
+#smart_gaps on
+#smart_borders on
 
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
