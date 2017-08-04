@@ -9,6 +9,7 @@ setopt HIST_REDUCE_BLANKS
 setopt HIST_IGNORE_SPACE
 setopt HIST_IGNORE_ALL_DUPS # ignore duplicates in history
 
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 if whence dircolors >/dev/null; then
   # GNU utils way
@@ -261,3 +262,5 @@ alias -g S='&> /dev/null &'
 # }}}
 #
 #
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
