@@ -12,73 +12,123 @@ syntax on
 
 "----------------------------------------------------------------------
 " Plugin Manager
-""{{{ Vundle: plugin manager
+"{{{ Vundle: plugin manager
 call plug#begin('~/.config/nvim/bundle')
 
-"""""""""""""""""""""""""""""""""""""" syntax checker
-"Plug 'scrooloose/syntastic'
-Plug 'neomake/neomake'
-" {{{ Neomake config
-    let g:neomake_warning_sign = {
-      \ 'text': 'W>',
-      \ 'texthl': 'WarningMsg',
-      \ }
-    let g:neomake_error_sign = {
-      \ 'text': 'E>',
-      \ 'texthl': 'ErrorMsg',
-      \ }
-    " neomake is async => it doesn't block the editor
-    " It's a syntastic alternative. Syntastic was slow for me on python files.
-    " $ sudo pip2/pip3 install flake8 -U
-    " $ sudo pip2/pip3 install vulture -U
-    " let g:neomake_python_enabled_makers = ['flake8', 'pep8', 'vulture']
-    " let g:neomake_python_enabled_makers = ['flake8', 'pep8']
-    let g:neomake_python_enabled_makers = ['flake8']
-    " E501 is line length of 80 characters
-    " let g:neomake_python_flake8_maker = { 'args': ['--ignore=E115,E266,E501'], }
-    " let g:neomake_python_pep8_maker = { 'args': ['--max-line-length=100', '--ignore=E115,E266'], }
- 
-    " run neomake on the current file on every write:
-    autocmd! BufWritePost * Neomake
-" }}}
-""""""""""""""""""""""""""""""""""""" AutoCompletion
+
+"{{{ Syntax, dictionary ...
+
+
+set dictionary+=/usr/share/dict/cracklib-small
+
+
+" It's a syntastic alternative. Syntastic was slow for me on python files.
+if has('nvim') || v:version >= 800
+  Plug 'neomake/neomake'
+  " let g:neomake_warning_sign = {
+  "   \ 'text': 'W',
+  "   \ 'texthl': 'WarningMsg',
+  "   \ }
+  " let g:neomake_error_sign = {
+  "   \ 'text': 'E',
+  "   \ 'texthl': 'ErrorMsg',
+  "   \ }
+  " let g:neomake_python_enabled_makersers = ['flake8']
+  " run neomake on the current file on every write:
+  autocmd! BufWritePost * Neomake
+else
+  " only vimL no python required
+  Plug 'scrooloose/syntastic'
+  let g:syntastic_mode_map = { 'passive_filetypes': ['sass'] }
+
+  let g:syntastic_always_populate_loc_list = 1
+  let g:syntastic_auto_loc_list = 1
+  let g:syntastic_check_on_open = 1
+  let g:syntastic_check_on_wq = 0
+endif
+"}}}
+"{{{ AutoCompletion
+
+set complete+=k         " enable dictionary completion
+" set completeopt+=longest
+set completeopt=menu,menuone,noinsert,noselect
+
+"complete parenthesis
 Plug 'jiangmiao/auto-pairs'
-""Plug 'Raimondi/delimitMate'
-"Plug 'ajh17/VimCompletesMe'
-function! DoRemote(arg)
-  UpdateRemotePlugins
-endfunction
-Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-Plug 'zchee/deoplete-jedi', { 'for': 'python' }
-let g:deoplete#sources#jedi#show_docstring=1
-" prevent slow popups
-let g:jedi#popup_on_dot = 1
-" Plug 'cinghiopinghio/vim-clevertab', { 'branch': 'filecomplete' }
-" for email address completion
-Plug 'caio/querycommandcomplete.vim'
-""""""""""""""""""""""""""""""""""""" snippets
+let g:AutoPairs= {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
+
+"   autocompletion
+Plug 'roxma/nvim-completion-manager'
+
+" function! DoRemote(arg)
+"   UpdateRemotePlugins
+" endfunction
+" Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+" let g:deoplete#enable_at_startup = 1
+" Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+" let g:deoplete#sources#jedi#show_docstring=1
+" " prevent slow popups
+" let g:jedi#popup_on_dot = 1
+
+" {{{snippets
 if has("python")
   Plug 'SirVer/ultisnips'
+  let g:UltiSnipsExpandTrigger="<c-j>"
+  let g:UltiSnipsListSnippets="<c-l>"
 else
   Plug 'MarcWeber/vim-addon-mw-utils'
   Plug 'tomtom/tlib_vim'
   Plug 'garbas/vim-snipmate'
 endif
 Plug 'honza/vim-snippets'
-" Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+"}}}
+
+" {{{swap contrary...
+Plug 'mjbrownie/swapit'
+let b:swap_lists = [
+      \{'name': 'dark/light', 'options': ['dark', 'light']},
+      \{'name': 'bw', 'options': ['black', 'white']},
+      \{'name': 'be', 'options': ['begin', 'end']},
+      \]
+"}}}
+"}}}
+"{{{ Navigation
+
+set scrolloff=5  " never reach the top or bottom of the page
+
 " keep folds as is until save of fold/unfold
 " (save time)
 Plug 'Konfekt/FastFold'
 """"""""""""""""""""""""""""""""""""" window splits control
 Plug 'zhaocai/GoldenView.Vim'
-Plug 'itchyny/thumbnail.vim', { 'on': 'Thumbnail' }
-""""""""""""""""""""""""""""""""""""" unite
+"""""""""""""""""""""""""""""""""""""  
+Plug 'junegunn/fzf', { 'dir': '~/.cache/fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+" get most recent files with preview
+nmap <localleader>ff :Files .<cr>
+nmap <localleader>fb :Buffers<cr>
+nmap <localleader>fr :History<cr>
+nmap <localleader>fo :Tags<cr>
+nmap <localleader>fl :Lines<cr>
 Plug 'Shougo/denite.nvim'
 Plug 'Shougo/unite-outline'
 Plug 'Shougo/neomru.vim'
 Plug 'Shougo/vimproc.vim'
-" Plug 'kopischke/unite-spell-suggest' " text suggestion
-""""""""""""""""""""""""""""""""""""" colors
+nmap <localleader>uf :Denite file buffer<cr>
+nmap <localleader>ub :Denite buffer<cr>
+nmap <localleader>ur :Denite file_mru<cr>
+nmap <localleader>uo :Denite outline<cr>
+nmap <localleader>ul :Denite line<cr>
+let g:unite_enable_start_insert = 1
+
+Plug 'terryma/vim-multiple-cursors'
+Plug 'junegunn/vim-easy-align'
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+"}}}
+"{{{ Colorschemes
 Plug 'tomasr/molokai'
 Plug 'junegunn/seoul256.vim'
 Plug 'morhetz/gruvbox'
@@ -86,36 +136,39 @@ Plug 'freeo/vim-kalisi'
 Plug 'marcopaganini/termschool-vim-theme'
 Plug 'jnurmine/Zenburn'
 "Plug 'cinghiopinghio/xinghio-color.vim'
-""""""""""""""""""""""""""""""""""""" statusbar
-"Plug 'maciakl/vim-neatstatus'
-"Plug 'vim-airline/vim-airline'
-"Plug 'vim-airline/vim-airline-themes'
+"}}}
+"{{{ Statusbar
 Plug 'itchyny/lightline.vim'
-""""""""""""""""""""""""""""""""""""" vary
-Plug 'junegunn/vim-easy-align'
+"}}}
+"{{{ External cmds
 Plug 'thinca/vim-quickrun'
-Plug 'mjbrownie/swapit'
-Plug 'terryma/vim-multiple-cursors'
 " GIT integration
 Plug 'tpope/vim-fugitive'
 " ask if you typed a wrong filename
 Plug 'EinfachToll/DidYouMean'
-
+"}}}
+"{{{ Filetype
 """"""""""""""""""""""""""""""""""""" HTML
-"Plug 'mattn/emmet-vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] } 
 Plug 'othree/html5.vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] }
 Plug 'lepture/vim-jinja'
-"Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss', 'css', 'sass'] }
 """"""""""""""""""""""""""""""""""""" LaTeX
 Plug 'lervag/vimtex', { 'for': 'tex' }
-""""""""""""""""""""""""""""""""""""" Note/Todo writing
-"Plug 'xolox/vim-notes'
-"Plug 'fmoralesc/vim-pad'
-"Plug 'blinry/vimboy'
-"Plug 'freitass/todo.txt-vim'
-
+"}}}
 call plug#end()
 "}}}
+
+call denite#custom#map(
+      \ 'insert',
+      \ '<Down>',
+      \ '<denite:move_to_next_line>',
+      \ 'noremap'
+      \)
+call denite#custom#map(
+      \ 'insert',
+      \ '<Up>',
+      \ '<denite:move_to_previous_line>',
+      \ 'noremap'
+      \)
 
 "----------------------------------------------------------------------
 "{{{ Autocommands
@@ -150,20 +203,13 @@ endif " has("autocmd")}}}
 " Also switch on highlighting the last used search pattern.
 set hlsearch
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
-set history=50                 " keep 50 lines of command line history
+set history=100                 " keep 100 lines of command line history
 set ruler                      " show the cursor position all the time
 set showcmd                    " display incomplete commands
 set incsearch                  " do incremental searching
 set ignorecase          " case-insensitive search
 set smartcase           " upper-case sensitive search
-" set nobackup            " fasten writing process (:w)
-" tabulation
 setlocal shiftwidth=2 softtabstop=2 expandtab smarttab
-
-set scrolloff=5
-
-set complete+=k         " enable dictionary completion
-set completeopt+=longest
 
 set clipboard+=unnamed  " yank and copy to X clipboard
 "wrapping
@@ -172,16 +218,6 @@ set linebreak
 
 " set terminal title
 set title
-
-set splitbelow
-set splitright
-
-set textwidth=78
-if exists('+colorcolumn')
-  set colorcolumn=80
-else
-  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
-endif
 
 let g:lightline = {
       \ 'colorscheme': 'wombat'
@@ -218,6 +254,16 @@ endfunction
 
 nnoremap <F9> :call ToggleBackground()<CR>
 
+
+set splitbelow
+set splitright
+
+set textwidth=78
+if exists('+colorcolumn')
+  set colorcolumn=80
+else
+  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+endif
 
 set makeprg=make
 set grepprg=grep\ -nH\ $*
@@ -282,102 +328,3 @@ nmap ,p "*p
 " reload vimrc
 nmap <leader><leader><leader> :so $MYVIMRC<cr>
 "}}}"
-
-"-------------------------------------------------------------------------
-" PLUGINS SETTINGS
-"{{{
-"----------------------------------
-"{{{ EasyAlign
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
-"}}}
-
-"----------------------------------
-"{{{ Clevertab - complete chain
-
-
-let g:deoplete#enable_at_startup = 1
-" if has("python")
-"   inoremap <silent><tab> <c-r>=CleverTab#Complete('start')<cr>
-"                         \<c-r>=CleverTab#Complete('tab')<cr>
-"                         \<c-r>=CleverTab#Complete('ultisnips')<cr>
-"                         \<c-r>=CleverTab#Complete('omni')<cr>
-"                         \<c-r>=CleverTab#Complete('keyword')<cr>
-"                         \<c-r>=CleverTab#Complete('file')<cr>
-"                         \<c-r>=CleverTab#Complete('stop')<cr>
-" else
-"   inoremap <silent><tab> <c-r>=CleverTab#Complete('start')<cr>
-"                         \<c-r>=CleverTab#Complete('tab')<cr>
-"                         \<c-r>=CleverTab#Complete('keyword')<cr>
-"                         \<c-r>=CleverTab#Complete('omni')<cr>
-"                         \<c-r>=CleverTab#Complete('file')<cr>
-"                         \<c-r>=CleverTab#Complete('stop')<cr>
-" endif
-" inoremap <silent><s-tab> <c-r>=CleverTab#Complete('prev')<cr>
-"}}}
-
-"----------------------------------
-"{{{ Use emmet only in html,css
-"let g:user_emmet_install_global = 0
-"autocmd FileType html,css,scss,sass,htmldjango EmmetInstall
-"}}}
-
-"----------------------------------
-"{{{ Syntastic
-"let g:syntastic_mode_map = { 'passive_filetypes': ['sass'] }
-"
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-"}}}
-
-"----------------------------------
-"{{{ Unite
-nmap <localleader>uf :Denite file buffer<cr>
-nmap <localleader>ub :Denite buffer<cr>
-nmap <localleader>ur :Denite file_mru<cr>
-nmap <localleader>uo :Denite outline<cr>
-let g:unite_enable_start_insert = 1
-
-call denite#custom#map(
-      \ 'insert',
-      \ '<Down>',
-      \ '<denite:move_to_next_line>',
-      \ 'noremap'
-      \)
-call denite#custom#map(
-      \ 'insert',
-      \ '<Up>',
-      \ '<denite:move_to_previous_line>',
-      \ 'noremap'
-      \)
-" nmap <localleader>us :Unite spell_suggest<cr>
-"}}}"
-
-"----------------------------------
-"{{{ UltiSnips
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsListSnippets="<c-l>"
-"}}}
-
-"----------------------------------
-"{{{ Thumbnail
-nnoremap <localleader>t :Thumbnail -include=help<cr>
-"}}}
-
-"----------------------------------
-"{{{ AutoPairs
-let g:AutoPairs= {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
-"}}}
-
-"----------------------------------
-"{{{ SwapIt
-let b:swap_lists = [
-      \{'name': 'dark/light', 'options': ['dark', 'light']},
-      \{'name': 'bw', 'options': ['black', 'white']},
-      \]
-"}}}
