@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+TERMCONFIG=${XDG_CONFIG_HOME:-${HOME}/.config}/termite
+TERMINALTHEME=`cat /tmp/termtheme 2>>/dev/null`
+
+case ${TERMINALTHEME} in
+  light)
+    TERMINALTHEME=dark
+    ;;
+  *)
+    TERMINALTHEME=light
+    ;;
+esac
+
+echo $TERMINALTHEME > /tmp/termtheme
+cat ${TERMCONFIG}/config-root\
+  ${TERMCONFIG}/config-${TERMINALTHEME} > ${TERMCONFIG}/config
+
+killall -USR1 termite
+
