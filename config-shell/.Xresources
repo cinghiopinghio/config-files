@@ -58,6 +58,6 @@ URxvt.matcher.rend.0:                     -Uline fg16
 !URXvt.tabbed.reopen-on-close: yes
 
 ! -- Colours -- !
-#include "/home/mauro/.colours/gruvbox-light"
+#include "/home/mauro/.xcolors/gruvbox-dark"
 ! #include "/home/mauro/.xcolors/base16-twilight-st"
 
