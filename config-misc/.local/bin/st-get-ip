@@ -1,0 +1,71 @@
+#!/usr/bin/env python3
+# encoding: utf-8
+
+import requests
+import xml.etree.ElementTree as etree
+import os
+import sys
+
+
+def get_port(configpath='~/.config/syncthing/config.xml'):
+    tree = etree.parse(os.path.expanduser(configpath))
+    ip = tree.find('gui').find('address').text
+    apikey = tree.find('gui').find('apikey').text
+    return ip.split(':')[-1], apikey
+
+
+def get_devices(port, apikey):
+    config = requests.get("http://localhost:" +
+                          port + "/rest/system/config",
+                          headers={'X-API-Key': apikey}).json()
+
+    devs = {}
+    for dev in config['devices']:
+        devs[dev['deviceID']] = dev['name']
+
+    return devs
+
+
+def get_connections(port, apikey, devID=None):
+    connections = requests.get("http://localhost:" +
+                               port + "/rest/system/connections",
+                               headers={'X-API-Key': apikey}).json()
+    conns = {}
+    for dId, dConn in connections['connections'].items():
+
+        if dConn['connected']:
+            address = connections['connections'][dId]['address']
+            ip, port = address.rsplit(':', maxsplit=1)
+            ip = ip.strip('[]')
+        else:
+            ip = 'Not connected'
+        conns[dId] = ip
+    return conns
+
+
+def main(quiet=False):
+    port, apikey = get_port()
+    devices = get_devices(port, apikey)
+    connections = get_connections(port, apikey)
+
+    status = requests.get("http://localhost:" +
+                          port + "/rest/system/status",
+                          headers={'X-API-Key': apikey}).json()
+    myId = status['myID']
+
+    maxlenght = max([len(k) for k in devices.values()])
+    for d_Id, d_name in devices.items():
+        if d_Id in connections and d_Id != myId:
+            if not quiet or connections[d_Id] != 'Not connected':
+                pr = '{:' + str(maxlenght+1) + 's} .. {}'
+                print(pr.format(d_name, connections[d_Id]))
+
+
+if __name__ == "__main__":
+    args = {}
+    if len(sys.argv) > 1:
+        if '-q' in sys.argv:
+            args['quiet'] = True
+        else:
+            args['quiet'] = False
+    main(**args)

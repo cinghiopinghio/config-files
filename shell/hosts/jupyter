@@ -1,2 +1,0 @@
-export TERM=xterm
-export PATH=${PATH}:/usr/local/anaconda3/bin/

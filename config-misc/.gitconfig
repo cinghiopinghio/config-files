@@ -1,0 +1,62 @@
+[alias]
+  ci = commit -a
+  cim = commit -a -m
+  cif = commit -m
+  co = checkout
+  st = status -b -s
+  br = branch
+  unstage = reset HEAD --
+  last = log -1 HEAD
+  hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+  lg = log --pretty=format:'%C(auto)%h - %<(55,trunc)%s %Cblue%<(18,trunc)%an%Creset %Cgreen%<(15)%ad%Creset %C(auto)%d' --abbrev-commit --date=relative
+
+[core]
+    editor = vim
+	excludesfile = ~/.gitignore
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+    interactive = true
+    ui = true
+
+; diff and merge
+[diff]
+  tool = vimdiff
+[difftool]
+  prompt = false
+[merge]
+  tool = vimdiff
+
+
+
+#; user identification
+#[github]
+#    user = /* GitHub User Name */
+#    token = /* GitHub Token https://github.com/account#admin_bucket */
+# 
+#; customizations
+#[alias]
+#    unstage = reset HEAD
+# 
+#; environment
+#[core]
+#    symlinks = false
+#    autocrlf = true
+#[http]
+#    postBuffer = 52428800
+#[pack]
+#    packSizeLimit = 2g
+# 
+#[diff]
+#    guitool = beyondcompare
+#[merge]
+#    tool = beyondcompare
+#[mergetool]
+#    keepBackup = false
+#    prompt = false
+[push]
+	default = current
+
+
+

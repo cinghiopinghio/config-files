@@ -1,0 +1,68 @@
+! -----------------------------------------------------------------------------
+! File: gruvbox-light.xresources
+! Description: Retro groove colorscheme generalized
+! Author: morhetz <morhetz@gmail.com>
+! Source: https://github.com/morhetz/gruvbox-generalized
+! Last Modified: 6 Sep 2014
+! -----------------------------------------------------------------------------
+
+! hard contrast: 
+urxvt.background: #f9f5d7
+! urxvt.background: #fbf1c7
+! soft contrast: *background: #f2e5bc
+urxvt.foreground: #3c3836
+! black + darkgrey
+urxvt.color0:  #fdf4c1
+urxvt.color8:  #928374
+! darkred + red
+urxvt.color1:  #cc241d
+urxvt.color9:  #9d0006
+! darkgreen + green
+urxvt.color2:  #98971a
+urxvt.color10: #79740e
+! darkyellow + yellow
+urxvt.color3:  #d79921
+urxvt.color11: #b57614
+! darkblue + blue
+urxvt.color4:  #458588
+urxvt.color12: #076678
+! darkmagenta + magenta
+urxvt.color5:  #b16286
+urxvt.color13: #8f3f71
+! darkcyan + cyan
+urxvt.color6:  #689d6a
+urxvt.color14: #427b58
+! lightgrey + white
+urxvt.color7:  #7c6f64
+urxvt.color15: #3c3836
+
+
+! hard contrast: 
+*.background: #f9f5d7
+! urxvt.background: #fbf1c7
+! soft contrast: *background: #f2e5bc
+*.foreground: #3c3836
+! black + darkgrey
+*.color0:  #fdf4c1
+*.color8:  #928374
+! darkred + red
+*.color1:  #cc241d
+*.color9:  #9d0006
+! darkgreen + green
+*.color2:  #98971a
+*.color10: #79740e
+! darkyellow + yellow
+*.color3:  #d79921
+*.color11: #b57614
+! darkblue + blue
+*.color4:  #458588
+*.color12: #076678
+! darkmagenta + magenta
+*.color5:  #b16286
+*.color13: #8f3f71
+! darkcyan + cyan
+*.color6:  #689d6a
+*.color14: #427b58
+! lightgrey + white
+*.color7:  #7c6f64
+*.color15: #3c3836

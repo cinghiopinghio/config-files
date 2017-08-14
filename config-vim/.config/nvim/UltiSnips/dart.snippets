@@ -1,0 +1,135 @@
+snippet lib "lib"
+#library('${1}');
+${2}
+endsnippet
+
+snippet im "im"
+#import('${1}');
+${2}
+endsnippet
+
+snippet so "so"
+#source('${1}');
+${2}
+endsnippet
+
+snippet main "main"
+static void main() {
+  ${1:/* code */}
+}
+endsnippet
+
+snippet st "st"
+static ${1}
+endsnippet
+
+snippet fi "fi"
+final ${1}
+endsnippet
+
+snippet re "re"
+return ${1}
+endsnippet
+
+snippet br "br"
+break;
+endsnippet
+
+snippet th "th"
+throw ${1}
+endsnippet
+
+snippet cl "cl"
+class ${1:`!v Filename("", "untitled")`} ${2}
+endsnippet
+
+snippet in "in"
+interface ${1:`!v Filename("", "untitled")`} ${2}
+endsnippet
+
+snippet imp "imp"
+implements ${1}
+endsnippet
+
+snippet ext "ext"
+extends ${1}
+endsnippet
+
+snippet if "if"
+if (${1:true}) {
+  ${2}
+}
+endsnippet
+
+snippet ife "ife"
+if (${1:true}) {
+  ${2}
+} else {
+  ${3}
+}
+endsnippet
+
+snippet el "el"
+else
+endsnippet
+
+snippet sw "sw"
+switch (${1}) {
+  ${2}
+}
+endsnippet
+
+snippet cs "cs"
+case ${1}:
+  ${2}
+endsnippet
+
+snippet de "de"
+default:
+  ${1}
+endsnippet
+
+snippet for "for"
+for (var ${2:i} = 0, len = ${1:things}.length; $2 < len; ${3:++}$2) {
+  ${4:$1[$2]}
+}
+endsnippet
+
+snippet fore "fore"
+for (final ${2:item} in ${1:itemList}) {
+  ${3:/* code */}
+}
+endsnippet
+
+snippet wh "wh"
+while (${1:/* condition */}) {
+  ${2:/* code */}
+}
+endsnippet
+
+snippet dowh "dowh"
+do {
+  ${2:/* code */}
+} while (${1:/* condition */});
+endsnippet
+
+snippet as "as"
+assert(${1:/* condition */});
+endsnippet
+
+snippet try "try"
+try {
+  ${2}
+} catch (${1:Exception e}) {
+}
+endsnippet
+
+snippet tryf "tryf"
+try {
+  ${2}
+} catch (${1:Exception e}) {
+} finally {
+}
+endsnippet
+
+

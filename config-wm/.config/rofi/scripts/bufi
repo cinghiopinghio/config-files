@@ -1,0 +1,112 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import json
+import buku
+import sys
+import rofi
+import glob
+import os
+from xdg.BaseDirectory import xdg_cache_home
+CACHE = xdg_cache_home + '/bufi.json'
+
+# Format:
+# 0: index
+# 1: url
+# 2: title
+# 3: tags
+# 4: boh
+
+moz_session = '~/.mozilla/firefox/*.default/sessionstore-backups/recovery.js'
+frmt = '{0:4d} -- {2}\n' +\
+       '<span size="x-small">{1:30s}</span>'
+args = sys.argv[1:]
+MAX = 1000
+INIT = 16
+
+CUSTOM_KB = ['Alt+n', 'Alt+x']
+MESG = """\
+Hint: use <b>{}</b> to add a new bookmark
+          <b>{}</b> to remove it from the db""".format(*CUSTOM_KB)
+
+# Get the cache (most used bookmarks)
+try:
+    with open(CACHE, 'rt') as fin:
+        hist = json.load(fin)
+except FileNotFoundError:
+    hist = []
+
+# get all bookmarks from buku
+db = buku.BukuDb()
+buku_db = db.get_rec_all()
+# save a dict and forget about the order
+bk_map = {a[0]: a for a in buku_db}
+
+# get db items present in history
+buku_hist = [bk_map.pop(i) for i, w in hist if i in bk_map]
+buku_hist += [v for v in bk_map.values()]
+
+rf = rofi.Rofi(
+    [frmt.format(*tpl) for tpl in buku_hist],
+    prompt='Bookmarks:',
+    mesg=MESG,
+    sep='|',
+    custom_kb=CUSTOM_KB
+)
+choice, exitcode = rf.run()
+
+if exitcode == 10:
+    tabs = {}
+    for fname in glob.glob(os.path.expanduser(moz_session)):
+        with open(fname, 'r') as fin:
+            data = json.load(fin)
+            for win in data['windows']:
+                for tab in win['tabs']:
+                    url = tab['entries'][tab['index']-1]['url']
+                    tit = tab['entries'][tab['index']-1].get('title', '')
+                    tabs[tab['lastAccessed']] = (
+                        url, tit,
+                        tab['iconLoadingPrincipal'],
+                    )
+
+    tabs = [tabs[k][0] + ' ' + tabs[k][1]
+            for k in sorted(tabs.keys(), reverse=True)]
+    rf_nb = rofi.Rofi(
+        tabs,
+        markup=False,
+        prompt='New Bookmark:',
+    )
+
+    choice, exitcode = rf_nb.run()
+
+    if choice != '' and exitcode == 0:
+        db.add_rec(choice.split()[0])
+elif exitcode == 11:
+    bm_i = int(choice.split()[0])
+    rf_nb = rofi.Rofi(
+        ['Yes', 'No'],
+        prompt='New Bookmark:',
+        mesg='Are you sure you want to delete: ' + choice
+    )
+    choice, exitcode = rf_nb.run()
+
+    if choice == 'Yes' and exitcode == 0:
+        print(choice, exitcode, bm_i)
+        db.delete_rec(bm_i)
+elif exitcode == 0:
+    if choice == '':
+        exit(0)
+    indx = int(choice.split()[0])
+    db.browse_by_index(indx)
+
+    # update the history
+    hist = [[i, j-1] if i != indx else [i, min(j*2, MAX)] for i, j in hist]
+    # append the new ones (if not present)
+    if indx not in [h[0] for h in hist]:
+        hist.append([indx, INIT])
+    # sort the history
+    hist = sorted(hist, key=lambda x: x[1], reverse=True)
+
+    # cache history
+    with open(CACHE, 'wt') as fout:
+        json.dump([fl for fl in hist if fl[1] > 0], fout)

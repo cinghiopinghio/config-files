@@ -1,0 +1,7 @@
+rofi.fixed-num-lines: false
+rofi.terminal:        termite
+rofi.drun-icon-theme: Numix
+rofi.case-sensitive:  false
+rofi.modi:            window,ssh,run,drun
+rofi.theme:           ~/.config/rofi/themes/gruvbox-dark.rasi
+! vim:ft=xdefaults

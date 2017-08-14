@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+XRANDR="xrandr"
+CMD="${XRANDR}"
+BARCMD=""
+
+# xrandr_params_for() {
+#   if [ "${2}" == 'connected' ]
+#   then
+#     eval $(find_mode ${1})  #sets ${WIDTH} and ${HEIGHT}
+#     MODE="${WIDTH}x${HEIGHT}"
+#     CMD="${CMD} --output ${1} --mode ${MODE} --pos ${POS[X]}x${POS[Y]}"
+#     POS[X]=$((${POS[X]}+${WIDTH}))
+#     return 0
+#   else
+#     CMD="${CMD} --output ${1} --off"
+#     return 1
+#   fi
+# }
+
+ISFIRST=true
+for VOUT in `${XRANDR} | grep " connected " | awk '{print $1}'`; do
+	echo $VOUT is connected
+	if ${ISFIRST}; then
+		CMD="${CMD} --output ${VOUT} --auto --pos 0x0 --primary"
+		OLD_VOUT=${VOUT}
+		POS="--above"
+		ISFIRST=false
+	else
+		CMD="${CMD} --output ${VOUT} --auto ${POS} ${OLD_VOUT}"
+		OLD_VOUT=${VOUT}
+		POS="--right-of"
+		BARCMD="${BARCMD} MONITOR=${VOUT} polybar bar2 &;"
+	fi
+done
+for VOUT in `${XRANDR} | grep " disconnected " | awk '{print $1}'`; do
+	echo $VOUT is disconnected
+	CMD="${CMD} --output ${VOUT} --off"
+done
+
+# set -x
+if [[ $1 == '-n' ]];
+then
+	echo ${CMD}
+	echo ${BARCMD}
+else
+	${CMD}
+	${BARCMD}
+fi
+# set +x
+
+if [ -z ${SRANDRD_ACTION+x} ];
+then
+	${HOME}/.local/bin/background
+else
+	# $SRANDRD_ACTION is set
+	# the script has been called by srandrd
+	${HOME}/.local/bin/background --update
+fi

@@ -1,0 +1,27 @@
+
+# Office  documents
+application/msword ; libreoffice %s ;  nametemplate=%s.doc ;
+application/pdf ;    zathura %s ;      nametemplate=%s.pdf ;
+text/x-pdf ;    zathura %s ;      nametemplate=%s.pdf ;
+application/* ;      xdg-open %s ;
+
+# PDFs
+
+# Images
+image/pdf ;          zathura %s ;      nametemplate=%s.pdf ;
+image/jpg ;          sxiv %s ;         nametemplate=%s.jpg ;
+image/jpeg ;         sxiv %s ;         nametemplate=%s.jpg ;
+image/png ;          sxiv %s ;         nametemplate=%s.png ;
+image/* ;            xdg-open %s ;
+
+# Text
+text/html ;          elinks -dump %s ; nametemplate=%s.html ; copiousoutput ;
+text/plain ;         less %s ;         copiousoutput
+text/x-pdf ;    zathura %s ;      nametemplate=%s.pdf ;
+text/x-vcalendar ; khal import -r -a work --batch %s ; nametemplate=%s.ics ;
+text/* ;             xdg-open %s ;
+
+# Media Files
+audio/* ;            mplayer %s
+video/* ;            mplayer %s
+

@@ -1,0 +1,63 @@
+! ---------------------------------------------------
+! file:     ~/.Xresources
+! author:   jason ryan - http://jasonwryan.com/
+! vim:fenc=utf-8:nu:ai:si:et:ts=4:sw=4:ft=xdefaults:
+! ---------------------------------------------------
+
+! Urxvt
+URxvt.buffered:                           true
+URxvt.cursorBlink:                        false
+URxvt.transparent:                        true
+URxvt.urgentOnBell:                       true
+URxvt.letterSpace:                        -2
+URxvt.lineSpace:                          0.9
+URxvt.internalBorder:                     10
+urxvt*termName: rxvt-256color
+URxvt*iso14755: False
+
+! borderless and no scrollbar
+URxvt.scrollBar_right:                    true
+URxvt.scrollBar:                          false
+URxvt.borderLess:                         false
+! scrollbar style - rxvt (default), plain (most compact), next, or xterm
+URxvt.scrollstyle:                        plain
+
+
+! teh transparency stuff
+URxvt.inheritPixmap:                      false
+!URxvt.tintColor:                          #080808
+URxvt.shading:                            30
+urxvt.fading:                             20
+urxvt.fadeColor:                          #080808
+
+! Font settings
+Xft.autohint:                             0
+Xft.lcdfilter:                            lcddefault
+Xft.hintstyle:                            hintfull
+Xft.hinting:                              1
+Xft.antialias:                            1
+Xft.dpi:                                  96
+Xft.rgba:                                 rgb
+
+! -- Fonts -- !
+URxvt.font:                               xft:liberation mono:size=10.5
+URxvt.boldFont:                           xft:liberation mono:size=10.5:bold
+
+! --  Extensions -- !
+!URxvt.perl-ext-common:                    default,matcher,keyboard-select,url-select,clipboard,tabbedex
+URxvt.perl-ext-common:                    default,matcher,keyboard-select,url-select,clipboard
+URxvt.keysym.M-Escape:                    perl:keyboard-select:activate
+URxvt.keysym.M-u:                         perl:url-select:select_next
+URxvt.keysym.M-s:                         perl:keyboard-select:search
+URxvt.keysym.M-c:                         perl:clipboard:copy
+URxvt.keysym.M-v:                         perl:clipboard:paste
+URxvt.keysym.M-C-v:                       perl:clipboard:paste_escaped
+URxvt.url-select.launcher:                /usr/bin/firefox
+URxvt.matcher.rend.0:                     -Uline fg16
+!URxvt.matcher.button:                     1
+!URXvt.tabbed.reopen-on-close: yes
+
+! -- Colours -- !
+#include "/home/mauro/.xcolors/gruvbox-dark"
+! #include "/home/mauro/.xcolors/base16-twilight-st"
+

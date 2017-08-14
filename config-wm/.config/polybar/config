@@ -1,0 +1,354 @@
+;=====================================================
+;
+;   To learn more about how to configure Polybar
+;   go to https://github.com/jaagr/polybar
+;
+;=====================================================
+
+[settings]
+
+screenchange-reload = true
+
+[colors]
+
+background       = ${xrdb:polybar.background:#990000}
+background-solid = ${self.background}
+background-alt   = ${xrdb:polybar.color8:#504945}
+
+foreground       = ${xrdb:polybar.foreground:#ebdbb2}
+foreground-alt   = ${xrdb:polybar.color7:#a89984}
+
+
+; red
+color1           = ${xrdb:polybar.color1}
+; green
+color2           = ${xrdb:polybar.color2}
+; yellow
+color3           = ${xrdb:polybar.color3}
+; blue
+color4           = ${xrdb:polybar.color4}
+; magenta
+color5           = ${xrdb:polybar.color5}
+; cyan
+color6           = ${xrdb:polybar.color6}
+
+easy             = ${colors.color2}
+primary          = ${colors.color3}
+secondary        = ${colors.color4}
+alert            = ${colors.color1}
+
+[vars]
+
+padding  = 2
+oversize = 2
+
+[global/wm]
+
+margin-top    = 5
+margin-bottom = 5
+
+[bar/base]
+monitor             = ${env:MONITOR:eDP1}
+width               = 100%
+offset-x            = 0
+offset-y            = 0
+
+bottom              = false
+
+background          = ${colors.background}
+foreground          = ${colors.foreground}
+
+overline-size       = ${vars.oversize}
+underline-size      = ${vars.oversize}
+
+border-size       = 0
+
+spacing             = 0
+padding-left        = 0
+padding-right       = 0
+module-margin-left  = 0
+module-margin-right = ${vars.padding}
+
+font-0              = Fira:size=10;2
+;font-0              = Monofur:size=12;2
+font-1              = Hack:size=10
+font-2              = FontAwesome:size=12;2
+font-3              = Wuncon Siji:pixelsize=12
+
+[bar/bar1]
+
+inherit          = bar/base
+tray-position    = right
+tray-padding     = 0
+tray-transparent = false
+tray-background  = ${colors.background}
+
+modules-left        = i3 xwindow
+modules-center      = email date
+;modules-right       = backlight volume memory cpu battery powermenu
+modules-right       = backlight volume battery
+
+[bar/bar2]
+
+inherit = bar/base
+
+modules-left        = i3 xwindow
+modules-right      = date
+;modules-right       = memory cpu battery temperature
+
+[module/i3]
+
+type                       = internal/i3
+; display only workspaces on that screen
+pin-workspaces             = true
+format                     = <label-state> <label-mode>
+
+label-mode                 = %mode%
+label-mode-background      = ${colors.alert}
+label-mode-foreground      = ${colors.background}
+label-mode-padding         = ${vars.padding}
+
+label-focused              = %name%
+label-focused-foreground   = ${colors.background-alt}
+label-focused-background   = ${colors.easy}
+label-focused-overline     = ${colors.easy}
+label-focused-underline    = ${colors.easy}
+label-focused-padding      = ${vars.padding}
+
+label-unfocused            = %name%
+label-unfocused-background = ${colors.background-alt}
+label-unfocused-padding    = ${vars.padding}
+
+label-urgent               = %name%
+label-urgent-background    = ${colors.alert}
+label-urgent-padding       = ${vars.padding}
+
+label-visible              = %name%
+label-visible-background   = ${colors.foreground-alt}
+label-visible-foreground   = ${colors.background-alt}
+label-visible-padding      = ${vars.padding}
+
+[module/xwindow]
+
+type = internal/xwindow
+
+[module/backlight]
+
+type                     = internal/xbacklight
+
+; <label> <bar> <ramp>
+format                   = <label> <bar>
+; %percentage%
+label                    = 
+
+bar-width                = 7
+bar-indicator            = │
+bar-fill                 = ─
+bar-empty                = ─
+
+[module/date]
+type                     = internal/date
+interval                 = 5
+
+date                     = %A, %_d %b
+date-alt                 = %x
+
+time                     = %_H:%M
+time-alt                 = %X
+
+label                    = %date% %time%
+
+[module/volume]
+
+type                            = internal/volume
+
+format-volume                   = %{A3:pavucontrol:}%{A} <bar-volume>
+label-volume                    = ""
+label-volume-foreground         = ${colors.foreground}
+
+format-muted-prefix             = ""
+format-muted-foreground         = ${colors.foreground-alt}
+label-muted                     = "M"
+
+bar-volume-width                = 7
+bar-volume-foreground-0         = ${colors.easy}
+bar-volume-foreground-1         = ${colors.easy}
+bar-volume-foreground-2         = ${colors.easy}
+bar-volume-foreground-3         = ${colors.easy}
+bar-volume-foreground-4         = ${colors.primary}
+bar-volume-foreground-5         = ${colors.alert}
+bar-volume-gradient             = false
+bar-volume-indicator            = │
+bar-volume-indicator-foreground = ${colors.foreground}
+bar-volume-fill                 = ─
+bar-volume-empty                = ─
+bar-volume-empty-foreground     = ${colors.foreground-alt}
+
+[module/memory]
+
+type             = internal/memory
+interval         = 2
+format-prefix    = " "
+format-underline = ${colors.color2}
+label            = %percentage_used%
+
+[module/cpu]
+type             = internal/cpu
+interval         = 2
+format-prefix    = " "
+format-underline = ${colors.color3} 
+label            = %percentage%
+
+[module/wlan]
+type                          = internal/network
+interface                     = wlp2s0
+interval                      = 3.0
+
+label-connected               = %essid%
+format-connected-prefix       = " "
+format-connected              = <label-connected> <ramp-signal>
+format-connected-underline    = ${colors.color4} 
+
+label-disconnected            = %ifname% disconnected
+label-disconnected-foreground = ${colors.foreground-alt}
+format-disconnected-underline = ${self.format-connected-underline}
+
+ramp-signal-0                 = ▁
+ramp-signal-1                 = ▂
+ramp-signal-2                 = ▃
+ramp-signal-3                 = ▄
+ramp-signal-4                 = ▅
+ramp-signal-5                 = ▆
+ramp-signal-6                 = ▇
+ramp-signal-7                 = █
+ramp-signal-foreground        = ${colors.foreground}
+
+[module/eth]
+
+type                          = internal/network
+interface                     = enp10s0u1u4
+interval                      = 3.0
+
+format-connected-underline    = ${colors.easy}
+format-connected-prefix       = 
+format-connected-foreground   = ${colors.foreground}
+label-connected               = %local_ip%
+
+label-disconnected            = %ifname% disconnected
+label-disconnected-foreground = ${colors.foreground-alt}
+format-disconnected-underline = ${self.format-connected-underline}
+
+[module/eth2]
+
+# for when my adapter get a different name
+inherit   = module/eth
+interface = enp62s0u1u4
+
+[module/custbat]
+type = custom/script
+
+exec = acpi -b | sed 's/.*, \(.*\)%. .\(.\):\(..\):.. .*/\1% \2H\3 /'
+label =  %output% 
+
+[module/battery]
+type                         = internal/battery
+battery                      = BAT0
+adapter                      = AC
+full-at                      = 98
+time-format                  = %kH%M
+
+; charging
+label-charging               = %percentage%% -%time%
+format-charging-prefix       = 
+format-charging              = <animation-charging> <label-charging>
+format-charging-underline    = ${colors.color5}
+format-charging-foreground   = ${colors.color5}
+
+; discharging
+label-discharging            = %percentage%% %time%
+format-discharging           = <ramp-capacity> <label-discharging>
+format-discharging-underline = ${self.format-charging-underline}
+format-discharging-foreground= ${colors.alert}
+
+; full
+label-full                   = FULL
+format-full-prefix           = " "
+format-full                  = <label-full>
+format-full-underline        = ${self.format-charging-underline}
+format-full-foreground       = ${colors.foreground}
+
+ramp-capacity-0              = 
+ramp-capacity-1              = 
+ramp-capacity-2              = 
+ramp-capacity-3              = 
+ramp-capacity-4              = 
+
+animation-charging-0         = 
+animation-charging-1         = 
+animation-charging-2         = 
+animation-charging-3         = 
+animation-charging-4         = 
+animation-charging-framerate = 750
+
+[module/temperature]
+
+type                  = internal/temperature
+thermal-zone          = 0
+warn-temperature      = 60
+
+format                = <ramp> <label>
+format-underline      = ${colors.color6} 
+format-warn           = <ramp> <label-warn>
+format-warn-underline = ${self.format-underline}
+
+label                 = %temperature%
+label-warn            = %temperature%
+label-warn-foreground = ${colors.alert}
+
+ramp-0                = 
+ramp-1                = 
+ramp-2                = 
+ramp-3                = 
+ramp-4                = 
+ramp-foreground       = ${colors.foreground}
+
+[module/powermenu]
+
+type                   = custom/menu
+
+label-open             = 
+label-open-foreground  = ${colors.alert}
+# label-open-background  = ${colors.alert}
+label-open-padding     = ${vars.padding}
+label-close            = 
+label-close-foreground  = ${colors.background-solid}
+label-close-background  = ${colors.easy}
+label-close-padding     = ${vars.padding}
+
+menu-0-0               = 
+menu-0-0-exec          = systemctl reboot
+menu-0-0-foreground    = ${colors.background-solid}
+menu-0-0-background    = ${colors.primary}
+menu-0-0-padding       = ${vars.padding}
+menu-0-1               = 
+menu-0-1-exec          = systemctl poweroff
+menu-0-1-foreground    = ${colors.background-solid}
+menu-0-1-background    = ${colors.alert}
+menu-0-1-padding       = ${vars.padding}
+
+[module/pacman]
+type = custom/script
+exec = pacaur -Qu | wc -l
+label = i %output%
+format-underline = #a45476
+interval = 60
+click-left = gksudo "pacaur -Sy"
+
+[module/email]
+type = custom/script
+exec = echo `notmuch count tag:unread`/`notmuch count tag:inbox`
+label =   %output%
+format-underline = #a45476
+interval = 30
+
+; vim:ft=dosini

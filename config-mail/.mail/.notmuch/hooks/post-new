@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+NEW='tag:new and '
+NOREAD='-unread -inbox'
+
+
+## Send notification to OS
+~/.local/bin/carta notify
+#s=$(notmuch search --format=json tag:new AND tag:inbox | ${HOME}/.local/bin/scripts/notify-mail); 
+#if [ "$s" != "" ];
+#then
+#    notify-send -u normal MAIL "$s"
+#fi
+
+## update addressbook with new mails
+#for file in $(notmuch search --output=files tag:new) ; do
+#    cat $file | notmuch_abook update
+#done
+
+## clear the 'new' tag
+afew --tag --new
+
+# Update alot
+killall -SIGUSR1 alot 2>/dev/null
+exit 0

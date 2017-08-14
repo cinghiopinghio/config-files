@@ -1,0 +1,94 @@
+/**
+ * Gruvbox color scheme
+ */
+* {
+    background: #282828;
+    foreground: #ebdbb2;
+
+    black:  #282828;
+    lightblack:  #504945;
+    red:  #cc241d;
+    lightred:  #fb4934;
+    green:  #98971a;
+    lightgreen: #b8bb26;
+    yellow:  #d79921;
+    lightyellow: #fabd2f;
+    blue:  #458588;
+    lightblue: #83a598;
+    magenta:  #b16286;
+    lightmagenta: #d3869b;
+    cyan:  #689d6a;
+    lightcyan: #8ec07c;
+    white:  #a89984;
+    lightwhite: #ebdbb2;
+    // Highlights
+    highlight:     bold #ffffff;
+
+}
+
+#window {
+    location: center;
+    anchor:   center;
+    font: "Fira Mono 16";
+}
+
+#window box {
+    background: #282828aa;
+}
+
+#window mainbox box {
+}
+
+#window mainbox inputbar {
+    background: @lightblack;
+    text: @lightgreen;
+    padding: 10px;
+}
+
+#window mainbox inputbar {
+    font: "Fira Mono 18";
+}
+
+#window mainbox message {
+    font: "Fira Mono 12";
+    padding: 6px;
+    foreground: @lightyellow;
+}
+
+#window mainbox message box{
+    margin: 6px;
+    border: 2px;
+    foreground: @yellow;
+    border-radius: 4px;
+}
+
+#window mainbox listview {
+    background: @black;
+}
+
+#window mainbox listview element {
+    padding: 6px 12px;
+}
+#window mainbox listview element {
+   
+}
+
+#window mainbox listview element selected {
+    background: @green;
+}
+#window mainbox listview element alternate {
+    background: #00000020;
+}
+#window mainbox listview element normal active {
+    foreground: @lightblue;
+}
+#window mainbox listview element normal urgent {
+    foreground: @lightred;
+}
+#window mainbox listview element alternate active {
+    foreground: @lightblue;
+}
+#window mainbox listview element alternate urgent {
+    foreground: @lightred;
+}
+

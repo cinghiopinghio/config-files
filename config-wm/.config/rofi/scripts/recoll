@@ -1,0 +1,20 @@
+#!/usr/bin/env python
+
+from recoll import recoll
+import os
+
+db = recoll.connect()
+db.setAbstractParams(maxchars=80, contextwords=4)
+
+query = db.query()
+nres = query.execute("community")
+print("Result count: ", nres)
+for i in range(nres):
+    doc = query.fetchone()
+    print("Result #%d" % (query.rownumber,))
+    for k in ("title", "size", "url"):
+        print(k, ":", getattr(doc, k))
+    abs = db.makeDocAbstract(doc, query)
+    print(os.path.basename(doc["url"]))
+    print(abs)
+    print()

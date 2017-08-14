@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import subprocess
+import yaml
+import sys
+import shlex
+import os
+
+ROOT = '__root__'
+
+try:
+    menufile = sys.argv[1]
+except IndexError:
+    menufile = os.path.expanduser('~/.config/strofi/menu.yaml')
+
+with open(menufile, 'r') as fin:
+    menu = yaml.load(fin)
+menu[ROOT] = True
+
+cmd = ['rofi', '-dmenu']
+backstring = '<- Back'
+
+m = menu
+m_old = menu
+while True:
+    k = set(m.keys())
+    k.discard(ROOT)
+    vals = '\n'.join(sorted(k))
+    if not m.get(ROOT, False):
+        vals += '\n' + backstring
+    choice = subprocess.Popen(
+        cmd,
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE)
+    choice, stderr = choice.communicate(vals.encode())
+    choice = choice.decode().strip()
+
+    if choice == backstring:
+        _m = m
+        m = m_old
+        m_old = _m
+    elif choice == '':
+        exit(0)
+    elif isinstance(m[choice], str):
+        command = m[choice]
+        break
+    else:
+        m_old = m
+        m = m[choice]
+
+for cmd in command.split(';'):
+    out = subprocess.check_output(shlex.split(cmd))
+if out != '':
+    notity_cmd = ['notify-send', 'MENU:', out]
+    subprocess.call(notity_cmd)

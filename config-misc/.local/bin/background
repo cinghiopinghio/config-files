@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+# set a random background from $BGSOURCE
+# depends on feh
+
+# Defaults:
+LOCATION=~/.local/share
+VERBOSE=false
+ACTION=background
+FNAME=background
+SOURCE=${LOCATION}/sfondi/fill
+
+while [[ $# -gt 0 ]]
+do
+  case $1 in
+    -v|--verbose)
+      VERBOSE=true
+      ;;
+    -l|--lock)
+      ACTION=lock
+      FNAME=tiling
+      SOURCE=${LOCATION}/sfondi/tile
+      ;;
+    -u|--update)
+      ACTION=update
+      ;;
+    -h|--help)
+      echo "Change background"
+      echo "Usage:"
+      echo "$0 [-v|--verbose] [-l|--lock] [-h|--help]"
+      echo " -v --verbose:    Verbose"
+      echo " -l --lock:       Lock the screen"
+      echo " -u --update:     Redraw background"
+      echo " -h --help:       Print this and exits"
+      exit 0
+      ;;
+  esac
+  shift
+done
+
+${VERBOSE} && echo "Running, action: ${ACTION}"
+
+randomlink (){
+  sourcedir=$1
+  linkname=$2
+  randfile=$(shuf -n 1 -e ${sourcedir}/*)
+  ext=${randfile/*./}
+  ln -s $randfile ${linkname}.${ext}
+  echo $randfile
+}
+
+case ${ACTION} in
+  background|lock)
+    rm -f ${LOCATION}/${FNAME}.*
+    orig=$(randomlink ${SOURCE} ${LOCATION}/${FNAME})
+    ${VERBOSE} && echo "Installing: ${orig}"
+    ;;
+esac
+
+case ${ACTION} in
+  background|update)
+    feh --bg-fill ${LOCATION}/${FNAME}.*
+    ;;
+  lock)
+    i3lock -c 444444 -t -i ${LOCATION}/${FNAME}.png
+    ;;
+esac

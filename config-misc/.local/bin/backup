@@ -1,0 +1,94 @@
+#!/bin/bash
+
+# TODO:
+# - switch from usb to nas
+# - add exclude-from
+
+# archive name
+ARCHIVENAME=cinBorgBak
+# folders to archive
+FOLDERS='/home /etc'
+# position of archive
+REMOTEARCH="brancamenta:/var/services/homes/mauro/${ARCHIVENAME}"
+# binary path
+REMOTEPATH=/var/services/homes/mauro/.local/bin/borg
+# use timestamps to name backups
+TIMESTAMP=`date +%Y%m%d-%H:%M`
+# options for borg
+OPTS='--verbose'
+CREATEOPTS="--one-file-system --stats --progress"
+PRUNEOPTS="--list --stats"
+
+
+# Excludes
+EXCLUDEFILE=/tmp/borg-exclude.txt
+rm -f ${EXCLUDEFILE}
+cat > ${EXCLUDEFILE} <<EOF
+# Comment line
+/home/lost+found
+pp:/etc/ssl
+sh:/**/.git
+sh:/**/.cache
+sh:/**/.mozilla
+sh:/**/.thubnails
+sh:/**/.local/share/Trash
+sh:/**/.svn
+*.pyc
+EOF
+CREATEOPTS="${CREATEOPTS} --exclude-caches\
+	--exclude-from ${EXCLUDEFILE}"
+
+options=("NAS Brancamenta" "External Drive" "Local Archive")
+PS3="Select from: "
+select opt in "${options[@]}" "Quit"; do
+  POS=${REPLY}
+  case "${REPLY}" in
+    1)
+      ARCHIVE=${REMOTEARCH}
+      OPTS="${OPTS} --remote-path ${REMOTEPATH}"
+      CREATEOPTS="${CREATEOPTS} --compression lz4"
+      export BORG_PASSPHRASE=`pass borg/brancamenta`
+      ;;
+    2)
+      PARTS=( `lsblk --list --output MOUNTPOINT --noheadings` )
+      CREATEOPTS="${CREATEOPTS} --compression zlib,6"
+      select part in "${PARTS[@]}" "Quit"; do
+        ARCHIVE=${part}/${ARCHIVENAME}
+        break
+      done
+      ;;
+    3)
+      ;;
+    *)
+      exit 0
+      ;;
+  esac
+  break
+done
+
+
+export BORG_RSH="ssh -i ${HOME}/.ssh/id_rsa -F ${HOME}/.ssh/config -o UserKnownHostsFile=${HOME}/.ssh/known_hosts"
+SUDOPTS='-E'
+
+# set -x
+# sudo ${SUDOPTS} borg break-lock ${ARCHIVE} ${OPTS}
+
+sudo ${SUDOPTS} borg create ${ARCHIVE}::${TIMESTAMP} ${FOLDERS}\
+  ${CREATEOPTS} ${OPTS}
+
+sudo -n echo "Check" >/dev/null 2>&1 || notify-send -u critical -i info BACKUP "sudo passwd requested"
+
+sudo ${SUDOPTS} borg prune ${PRUNEOPTS} ${OPTS}\
+  --keep-hourly 3 \
+  --keep-daily 7 \
+  --keep-weekly 4 \
+  --keep-monthly 6 \
+  --keep-yearly 1 \
+  ${ARCHIVE}
+# set +x
+
+export BORG_PASSPHRASE=''
+
+
+notify-send "BORG-BACKUP" "Backup done! See log files"
+

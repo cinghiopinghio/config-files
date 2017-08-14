@@ -1,0 +1,285 @@
+# Should you change your keyboard layout some time, delete
+# this file and re-run i3-config-wizard(1).
+#
+
+set $mod Mod4
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+font pango:Hack 10.5
+# Before i3 v4.8, we used to recommend this one as the default:
+# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+# The font above is very space-efficient, that is, it looks good, sharp and
+# clear in small sizes. However, its unicode glyph coverage is limited, the old
+# X core fonts rendering does not support right-to-left and this being a bitmap
+# font, it doesn’t scale on retina/hidpi displays.
+
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+set_from_resource $primaryCol   i3wm.color2 #98971a
+set_from_resource $secondaryCol i3wm.color7 #a89984
+set_from_resource $alarmCol     i3wm.color1 #cc241d
+set_from_resource $bgCol        i3wm.background #282828cc
+set_from_resource $fgCol        i3wm.foreground #ebdbb2
+set_from_resource $lightBgCol   i3wm.color8 #444444
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+# colors                border        backgr        text        indicator     child_border
+client.focused          $primaryCol   $primaryCol   $bgCol      $primaryCol   $primaryCol
+client.focused_inactive $secondaryCol $secondaryCol $bgCol      $secondaryCol $bgCol
+client.unfocused        $bgCol        $bgCol        $primaryCol $bgCol        $bgCol
+client.urgent           $alarmCol     $alarmCol     $bgCol      $alarmCol     $alarmCol
+client.background       $bgCol
+new_window pixel 2
+new_float pixel 5
+#hide_edge_borders vertical
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+focus_follows_mouse no
+
+### gaps
+# Examples
+gaps inner 10
+gaps outer 0
+#smart_gaps on
+#smart_borders on
+
+# start a terminal
+#bindsym $mod+Return exec i3-sensible-terminal
+#bindsym $mod+Return exec urxvtc
+bindsym $mod+Return exec termite
+#bindsym $mod+Return exec st
+
+# kill focused window
+bindsym $mod+Shift+q kill
+bindsym $mod+b border toggle
+
+# start dmenu (a program launcher)
+#bindsym $mod+d exec dmenu_run
+#bindsym $mod+d exec ~/.local/bin/dmenu-recent
+#bindsym $mod+p exec ~/.local/bin/dpass
+#bindsym $mod+d exec "rofi -show run  -switchers 'run,window,ssh'"
+#bindsym $mod+d exec "PATH=$PATH:~/.local/bin/; rofi -show drun"
+#bindsym $mod+p exec "rofi -show pass -switchers 'pass:~/.local/bin/rofi-pass' -markup-rows -theme-str '* { green:@red; lightgreen:@lightred; }'"
+bindsym $mod+d exec "rofi -show drun -show-icons"
+bindsym $mod+p exec "bash ~/.config/rofi/scripts/menu.sh"
+
+# There also is the (new) i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+shift+f exec "skippy-xd"
+bindsym $mod+shift+s exec "scrot"
+bindsym $mod+t exec "buku_run"
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+set $mode_split Split: (h) horizontal (v) vertical
+mode "$mode_split" {
+    # split in horizontal orientation
+    bindsym v splith, mode "default"
+    # split in vertical orientation
+    bindsym h splitv, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+u mode "$mode_split"
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# switch to workspace
+bindsym $mod+1 workspace 001
+bindsym $mod+2 workspace 010
+bindsym $mod+3 workspace 011
+bindsym $mod+4 workspace 100
+bindsym $mod+5 workspace 101
+bindsym $mod+6 workspace 110
+bindsym $mod+7 workspace 111
+bindsym $mod+8 workspace 1000
+bindsym $mod+9 workspace 1001
+bindsym $mod+0 workspace 000
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 001
+bindsym $mod+Shift+2 move container to workspace 010
+bindsym $mod+Shift+3 move container to workspace 011
+bindsym $mod+Shift+4 move container to workspace 100
+bindsym $mod+Shift+5 move container to workspace 101
+bindsym $mod+Shift+6 move container to workspace 110
+bindsym $mod+Shift+7 move container to workspace 111
+bindsym $mod+Shift+8 move container to workspace 1000
+bindsym $mod+Shift+9 move container to workspace 1001
+bindsym $mod+Shift+0 move container to workspace 000
+# move focused container to workspace and go there
+bindsym $mod+Ctrl+1 move container to workspace 001; workspace 001
+bindsym $mod+Ctrl+2 move container to workspace 010; workspace 010
+bindsym $mod+Ctrl+3 move container to workspace 011; workspace 011
+bindsym $mod+Ctrl+4 move container to workspace 100; workspace 100
+bindsym $mod+Ctrl+5 move container to workspace 101; workspace 101
+bindsym $mod+Ctrl+6 move container to workspace 110; workspace 110
+bindsym $mod+Ctrl+7 move container to workspace 111; workspace 111
+bindsym $mod+Ctrl+8 move container to workspace 1000; workspace 1000
+bindsym $mod+Ctrl+9 move container to workspace 1001; workspace 1001
+bindsym $mod+Ctrl+0 move container to workspace 000; workspace 000
+# move to next/previous workspace
+bindsym $mod+i workspace prev_on_output
+bindsym $mod+o workspace next_on_output
+bindsym $mod+z workspace back_and_forth
+bindsym $mod+Shift+z move container to workspace back_and_forth
+
+
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+
+# multimedia keys
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5% #decrease sound volume
+bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle # mute sound
+# Sreen brightness controls
+bindsym XF86MonBrightnessDown exec xbacklight -dec 5 # decrease screen brightness
+bindsym XF86MonBrightnessUp   exec xbacklight -inc 5 # increase screen brightness
+bindsym $mod+F5 exec xbacklight -5 # increase screen brightness
+bindsym $mod+F6 exec xbacklight +5 # decrease screen brightness
+bindsym $mod+F7 exec xbacklight -set 0 # decrease screen brightness
+
+bindsym $mod+F10 exec skippy-xd
+
+# Scratchpad
+bindsym $mod+Shift+m move scratchpad
+bindsym $mod+m scratchpad show
+
+
+#set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (x) shutdown
+set $mode_system "System [L] lock, [E] logout, [S] suspend, [R] reboot, [X] shutdown, [B] background"
+bindsym $mod+x mode $mode_system
+mode --pango_markup $mode_system {
+    bindsym l exec --no-startup-id bash ~/.local/bin/background --lock, mode "default"
+    bindsym b exec --no-startup-id bash ~/.local/bin/background, mode "default"
+    bindsym e exec --no-startup-id i3-msg exit, mode "default"
+    bindsym s exec --no-startup-id bash ~/.local/bin/background --lock && systemctl suspend, mode "default"
+    # no swap to hibernate
+    #bindsym h exec --no-startup-id i3lock -c 502020 && systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym x exec --no-startup-id systemctl poweroff, mode "default"  
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# resize window (you can also use the mouse for that)
+bindsym $mod+r mode "resize"
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+# bar {
+#         i3bar_command i3bar -t
+#         status_command i3status
+#         position bottom
+#         font pango: DejaVu Sans Mono, FontAwesome 10
+# 	tray_padding 0
+#         colors {
+#               statusline         $fgCol
+#               background         $bgCol
+#               separator          $fgCol
+#               focused_workspace  $primaryCol $primaryCol $bgCol 
+#               active_workspace   $lightBgCol $lightBgCol $primaryCol
+#               inactive_workspace $bgCol      $bgCol      $primaryCol
+#               urgent_workspace   $alarmCol   $alarmCol   $bgCol 
+#         }
+# }
+
+#bar {
+#    i3bar_command i3bar -t
+#    status_command polybar Bar
+#    mode invisible
+#}
+
+exec_always --no-startup-id ~/.config/polybar/startup
+exec --no-startup-id ~/.config/openbox/autostart
+
+for_window [class="(?i)pinentry|(?i)Arandr"] floating enabled
+for_window [class="(?i)xcalc|(?i)Calculator|(?i)speedCrunch|(?i)gnome-calculator"] floating enabled
+for_window [class="(?i)MPlayer|(?i)smplayer"] floating enabled
+for_window [class="(?i)sxiv"] floating enabled
+for_window [class="(?i)Pidgin|(?i)Skype|(?i)Tox"] floating enabled
+for_window [class="(?i)gnuplot"] floating enabled
+for_window [class="appfinder"] floating enabled
+for_window [class="Cysboard"] fullscreen
+
+# the following make fullscreen slides to appears on secondary screen
+# and time and notes on primary
+workspace 000 output DP1-1
+assign [class="(?i)pdfpc" window_role="presentation"] workspace 000

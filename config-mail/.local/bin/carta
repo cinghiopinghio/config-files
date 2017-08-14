@@ -1,0 +1,150 @@
+#!/bin/bash
+
+check_connection(){
+  # check internet connection
+  # let's suppose that if I can ping my gateway... everything is ok
+  # if you are not sure, you should ping someone outside your LAN
+
+  #get gateway
+  gwIP=`ip route | grep default | head -1 | cut -d ' ' -f 3`
+  # if gateway not defined: no internet
+  [[ ${gwIP} == '' ]] && exit 1
+  # ping gateway
+  ping -q -w 1 -c 1 ${gwIP} >>/dev/null || exit 1
+}
+
+case $1 in
+  d|deploy)
+    # check if account is passed as argument
+    if [ "$#" -ne 2 ];
+    then
+      echo "Usage: carta deploy ACCOUNTNAME"
+      exit 1
+    fi
+
+    # check internet connection
+    # if ! $(check_connection); then echo "No Internet Connection"; exit 1; fi
+
+    # get account name
+    ACCOUNT=$2
+
+    # get account data from password-store
+    PASS=$(pass email/${ACCOUNT})
+    USER=$(echo "$PASS" | sed '1d' | grep -w "^[Uu]ser" | \
+      sed -e "s/^[Uu]ser[ \t]*:[ \t]*//" -e "s/[ \t]*$//")
+    FROM=$(echo "$PASS" | sed '1d' | grep -w "^[Ff]rom" | \
+      sed -e "s/^[Ff]rom[ \t]*:[ \t]*//" -e "s/[ \t]*$//")
+
+    # define command line
+    MSMTP_CMD="msmtp"
+    MSMTP_OPTS=" -a ${ACCOUNT} --user ${USER} --from ${FROM} -t "
+
+    # send pipe stdin to smtp
+    cat /dev/stdin | ${MSMTP_CMD} ${MSMTP_OPTS}
+    ;;
+  e|empty-basket)
+    # tags to delete
+    TAGS='tag:deleted OR tag:killed'
+
+    echo '+++ DELETE KILLED MAIL +++'
+    echo "+++ ${TAGS} +++"
+    files=$(notmuch search --exclude=false --output=files "$TAGS")
+
+    if [[ $files != '' ]]
+    then 
+      notmuch search --exclude=false "$TAGS" | cut -c-$(tput cols)
+      
+      read -p '+++ Remove All deleted mails permanently?[y/n] +++  ' -n 1 -r
+      echo
+
+      if [[ $REPLY =~ ^[Yy]$ ]]
+      then
+        echo "$files" | xargs -L 1 -d '\n' rm
+        echo '+++ Updating database +++'
+        notmuch new --no-hooks
+        echo '+++ Empty mail trash +++'
+      else
+        echo '+++ Nothing Done +++'
+      fi
+      
+    else
+      echo '+++ No mails to delete +++'
+    fi
+    ;;
+  f|fetch)
+    if ! $(check_connection); then echo "No Internet Connection"; exit 1; fi
+
+    # ensure gpg-agent is running
+    # echo RELOADAGENT | gpg-connect-agent >> /dev/null
+    # gpg-connect-agent /bye >> /dev/null
+    # get new mails
+    mbsync -qq -a
+    # index new mails
+    notmuch new --quiet
+
+    ~/.local/bin/nottoomuch-addresses.sh --update
+    ;;
+    #}}}
+  n|notify)
+    shift
+    case $@ in
+      "")
+        SEARCH='tag:new'
+        TITLE='New MAILs'
+        ;;
+      *)
+        SEARCH=$@
+        TITLE="MAILs ($@)"
+        ;;
+    esac
+
+    OUT=""
+
+    NQUERY=`notmuch count $SEARCH`
+    NUNREAD=`notmuch count tag:unread and not tag:killed`
+    NINBOX=`notmuch count tag:inbox and not tag:killed`
+
+    OUT="You have $NQUERY $TITLE\n$NUNREAD unread and $NINBOX in inbox"
+    
+
+    # for msg in `notmuch search --output=messages $SEARCH`;
+    # do
+    #   auths=`notmuch search --format=json --output=summary $msg |\
+    #     sed -e 's/,/\n/g' | grep authors |\
+    #     sed -e 's/.*:[ \t"]*//' -e 's/[ \t"]*$//'`
+    #   subj=`notmuch search --format=json --output=summary $msg |\
+    #     sed -e 's/,/\n/g' | grep subject |\
+    #     sed -e 's/.*:[ \t"]*//' -e 's/[ \t"]*$//'`
+    #   OUT="$OUT<b>${auths:0:15}:</b> ${subj:0:20}\n"
+    # done
+
+    # check if there is some output
+    if [[ ${OUT} != "" && ${NQUERY} -gt 0 ]];
+    then
+      notify-send -u normal -a "NotMuch Mail" "$TITLE" "$OUT" -i mail_new
+    fi
+    ;;
+  p|print)
+    INPUT=$2
+    OPENWITH=zathura
+    MPOPTIONS="-P A4 -x -H -F Utopia -p -"
+    ESOPTIONS="-Email --pretty-print -G -p -"
+    TMPPDF=$(mktemp --tmpdir mutt-XXXXXX.pdf)
+
+    #enscript $ESOPTIONS 2>/dev/null | ps2pdf - $TMPPDF &>/dev/null
+    muttprint $MPOPTIONS 2>/dev/null | ps2pdf - $TMPPDF &>/dev/null
+    zathura $TMPPDF >/dev/null & 
+    ;;
+  *)
+    echo unknown option
+    echo "Usage:"
+    echo "    carta {deploy,empty-basket,fetch,notify} [ARGS]"
+    echo ""
+    echo "carta {d,deploy} ACCOUNT:        send your messages from stdin with ACCOUNT"
+    echo "carta {e,empty-basket}:          empty your basket"
+    echo "carta {f,fetch}:                 fetch new mails"
+    echo "carta {n,notify} [SEARCH_TERMS]: send notification of mails"
+    ;;
+esac
+
+# vim: fdm=indent shiftwidth=2
