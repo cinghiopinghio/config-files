@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# get the store
+passdir=${PASSWORD_STORE_DIR:-$HOME"/.password-store"}
+
+# run the menu
+menu=$(find $passdir -name "*.gpg" -printf "%P\n" | sed -e 's/\.gpg$//')
+choice=$(echo "$menu" | rofi -dmenu -i -markup-rows -theme-str '* { green:@red; lightgreen:@lightred; }')
+
+# if NO choice exit graciously
+[[ ${choice} == '' ]] && exit 0
+
+# save to clipboard
+pass show --clip ${choice} &> /dev/null 
+# notify
+notify-send --urgency=critical\
+    --app-name=rofi-pass\
+    --icon=lock\
+    'Password Store'\
+    "secret copied to clipboard\n<small>(will be cleared in 45 sec.)</small>"
+
+#vim ft:sh
