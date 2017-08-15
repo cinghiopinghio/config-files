@@ -8,7 +8,8 @@ menu="\
 2. Password Store
 3. LaTeX manuals
 4. Kill'em All
-5. Qalc(ulate)\
+5. Qalc(ulate)
+6. SystemCtl\
 "
 
 choice=$(echo "$menu" | rofi -dmenu -i -p '>' -mesg 'What are you looking for?')
@@ -29,6 +30,8 @@ case $choice in
   5*)
     rofi -show calc -modi "calc:qalc -t"
     ;;
+  6*)
+    ${LOCATION}/scudmenu
   *)
     ;;
 esac
