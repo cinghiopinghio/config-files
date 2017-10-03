@@ -75,9 +75,10 @@ if has('nvim')
   let g:deoplete#sources#jedi#show_docstring=1
   " prevent slow popups
   let g:jedi#popup_on_dot = 1
-elseif v:version > 800
+elseif v:version >= 800
   " with vim8 use completor
   Plug 'maralla/completor.vim'
+  let g:completor_python_binary='python'
 else
   Plug 'ajh17/VimCompletesMe'
 endif
@@ -125,10 +126,10 @@ Plug 'zhaocai/GoldenView.Vim'
 Plug 'junegunn/fzf', { 'dir': '~/.cache/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " This is the default extra key bindings
-" let g:fzf_action = {
-"   \ 'ctrl-t': 'tab split',
-"   \ 'ctrl-x': 'split',
-"   \ 'ctrl-v': 'vsplit' }
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
 
 " Default fzf layout
 " - down / up / left / right

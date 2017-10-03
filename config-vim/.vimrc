@@ -19,7 +19,6 @@ else
 	call plug#begin('~/.vim/bundle')
 endif
 
-
 "{{{ Syntax, dictionary ...
 
 set dictionary+=/usr/share/dict/cracklib-small
@@ -109,6 +108,8 @@ let b:swap_lists = [
       \{'name': 'dark/light', 'options': ['dark', 'light']},
       \{'name': 'bw', 'options': ['black', 'white']},
       \{'name': 'be', 'options': ['begin', 'end']},
+      \{'name': 'rl', 'options': ['right', 'left']},
+      \{'name': 'ab', 'options': ['above', 'bottom']},
       \]
 "}}}
 "}}}
@@ -122,7 +123,7 @@ Plug 'Konfekt/FastFold'
 Plug 'zhaocai/GoldenView.Vim'
 """""""""""""""""""""""""""""""""""""  
 "{{{ FZF
-Plug 'junegunn/fzf', { 'dir': '~/.cache/fzf', 'do': './install --bin' }
+Plug 'junegunn/fzf', { 'dir': '~/.cache/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " This is the default extra key bindings
 let g:fzf_action = {
@@ -149,7 +150,7 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 " get most recent files with preview
-nmap <localleader>ff :Files .<cr>
+nmap <localleader>ff :Files .<CR>
 nmap <localleader>fb :Buffers<cr>
 " use the neomru cache!
 Plug 'Shougo/neomru.vim'
@@ -184,6 +185,10 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 "}}}
 
+Plug 'AndrewRadev/sideways.vim'
+nnoremap <m-left> :SidewaysLeft<cr>
+nnoremap <m-right> :SidewaysRight<cr>
+
 " better search experience
 " {{{ junegunn/vim-slash
 Plug 'junegunn/vim-slash'
@@ -203,14 +208,35 @@ Plug 'jnurmine/Zenburn'
 "}}}
 "{{{ Statusbar
 Plug 'itchyny/lightline.vim'
+Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-rooter'
+" Plug 'ludovicchabant/vim-gutentags'
+" let g:gutentags_cache_dir = '~/.cache/ctags/'
+Plug 'tpope/vim-fugitive'
+" do not set maps
+let g:gitgutter_map_keys = 0
 let g:lightline = {
       \ 'colorscheme': 'gruvbox',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'fugitive', 'filename', 'modified', 'readonly' ] ],
+      \   'right': [ [ 'percent', 'lineinfo' ],
+      \              [ 'fileformat', 'fileencoding', 'filetype' ] ],
+      \ },
+      \ 'component_function': { 
+      \   'fugitive': 'fugitive#head', 
+      \ },
+      \ 'separator': { 'left': '▓▒░', 'right': '░▒▓' },
+      \ 'subseparator': { 'left': '', 'right': '' },
       \ }
+  function! LightLineFugitive()
+    return exists('*fugitive#head') ? fugitive#head() : ''
+  endfunction
 "}}}
 "{{{ External cmds
 Plug 'thinca/vim-quickrun'
+Plug 'skywind3000/asyncrun.vim'
 " GIT integration
-Plug 'tpope/vim-fugitive'
 " ask if you typed a wrong filename
 Plug 'EinfachToll/DidYouMean'
 "}}}
