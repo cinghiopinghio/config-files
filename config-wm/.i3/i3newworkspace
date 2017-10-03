@@ -1,0 +1,52 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import i3ipc
+import random
+import string
+import argparse
+
+
+class Connection(object):
+    def __init__(self):
+        self.i3 = i3ipc.Connection()
+        self.ws = [x['name'] for x in self.i3.get_workspaces()]
+
+    def random_workspace_name(self, N=3):
+        new_ws = '6'*N
+        while new_ws in self.ws:
+            new_ws = ''.join(random.choices(string.ascii_uppercase +
+                                            string.digits,
+                                            k=N))
+        return new_ws
+
+    def open_new_random_workspace(self):
+        self.i3.command('workspace ' + self.random_workspace_name())
+
+    def move_focused_to_workspace(self, workspace=None):
+        ws = self.random_workspace_name(3) if workspace is None else workspace
+        con = self.i3.get_tree().find_focused()
+        con.command('move container to workspace ' +
+                    ws +
+                    '; workspace ' +
+                    ws)
+
+
+def main():
+
+    parser = argparse.ArgumentParser(description='Process i3.')
+    parser.add_argument('-m', '--move',
+                        action='store_true',
+                        )
+    args = parser.parse_args()
+
+    i3 = Connection()
+
+    if args.move:
+        i3.move_focused_to_workspace()
+    else:
+        i3.open_new_random_workspace()
+
+
+if __name__ == "__main__":
+    main()

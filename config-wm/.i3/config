@@ -18,12 +18,12 @@ font pango:Fantasque 10.5
 # font, it doesn’t scale on retina/hidpi displays.
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-set_from_resource $primaryCol   i3wm.color2 #98971a
-set_from_resource $secondaryCol i3wm.color7 #a89984
-set_from_resource $alarmCol     i3wm.color1 #cc241d
-set_from_resource $bgCol        i3wm.background #282828cc
-set_from_resource $fgCol        i3wm.foreground #ebdbb2
-set_from_resource $lightBgCol   i3wm.color8 #444444
+set $primaryCol   #98971a
+set $secondaryCol #a89984
+set $alarmCol     #cc241d
+set $bgCol        #282828bc
+set $fgCol        #ebdbb2
+set $lightBgCol   #444444
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 # colors                border        backgr        text        indicator     child_border
@@ -64,7 +64,7 @@ bindsym $mod+b border toggle
 #bindsym $mod+d exec "rofi -show run  -switchers 'run,window,ssh'"
 #bindsym $mod+d exec "PATH=$PATH:~/.local/bin/; rofi -show drun"
 #bindsym $mod+p exec "rofi -show pass -switchers 'pass:~/.local/bin/rofi-pass' -markup-rows -theme-str '* { green:@red; lightgreen:@lightred; }'"
-bindsym $mod+d exec "PATH=$PATH:~/.local/bin/; rofi -show combi -combi-modi window,drun,run -show-icons -display-combi '>'"
+bindsym $mod+d exec ". ~/.shell/vars; rofi -show combi -combi-modi window,drun,run -modi 'combi,top,ssh,calc:qalc +u8 -nocurrencies' -show-icons"
 bindsym $mod+p exec "bash ~/.config/rofi/scripts/menu.sh"
 
 # There also is the (new) i3-dmenu-desktop which only displays applications
@@ -133,6 +133,8 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # switch to workspace
+bindsym $mod+n exec "~/.i3/i3newworkspace" 
+bindsym $mod+Shift+n exec "~/.i3/i3newworkspace -m" 
 bindsym $mod+1 workspace 001
 bindsym $mod+2 workspace 010
 bindsym $mod+3 workspace 011
