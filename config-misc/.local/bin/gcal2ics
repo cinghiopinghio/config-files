@@ -1,0 +1,119 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import icalendar
+import urllib.request
+import os
+import logging
+import glob
+import hashlib
+logging.basicConfig(level=logging.INFO)
+URL = "https://www.google.com/calendar/ical/{}/public/basic.ics"
+
+
+def display(cal):
+    return cal.to_ical().decode().replace('\r\n', '\n').strip()
+
+
+def compare(eventA, eventB, ignore=[], verbose=False):
+    leA = eventA.copy()
+    leB = eventB.copy()
+    for prop in ignore:
+        leA.pop(prop, '')
+        leB.pop(prop, '')
+    leak = set(leA.keys())
+    lebk = set(leB.keys())
+    if len(leak.symmetric_difference(lebk)) > 0:
+        return False
+    t = [leA[prop].to_ical() == leB[prop].to_ical() for prop in leak]
+    if verbose:
+        for prop in set(leA.keys()).union(set(leB.keys())):
+            propA = leA.get(prop, '')
+            propB = leB.get(prop, '')
+            if propA != propB:
+                print('+++', prop)
+                print('++++++', propA.to_ical())
+                print('++++++', propB.to_ical())
+    return all(t)
+
+
+def config():
+    XDG_CONFIG_HOME = os.environ.get('XDG_CONFIG_HOME', '~/.config')
+    XDG_CONFIG_HOME = os.path.expanduser(XDG_CONFIG_HOME)
+    logging.debug('found XDG_CONFIG_HOME at: {}'.format(XDG_CONFIG_HOME))
+    cals = []
+    try:
+        with open(XDG_CONFIG_HOME + '/gcal2ics.txt', 'rt') as fin:
+            for line in fin:
+                email, ldir = tuple(map(str.strip, line.split(',')))
+                if '@' not in email:
+                    email += '@gmail.com'
+                ldir = os.path.abspath(os.path.expanduser(ldir))
+                cals.append((email, ldir))
+    except FileNotFoundError:
+        email = input('[G]mail of correspondent to the calendar: ')
+        ldir = input('Local dir to store: ')
+        if '@' not in email:
+            email += '@gmail.com'
+        ldir = os.path.abspath(os.path.expanduser(ldir))
+        cals.append((email, ldir))
+    for cal in cals:
+        logging.debug('Will sync: {0[0]} to {0[1]}'.format(cal))
+    return cals
+
+
+def clean(cals, cal, ldir):
+    icss = set(glob.glob('{}/{}-*.ics'.format(ldir, calhash(cal))))
+    logging.info('#files {}, #downloaded {}, #not on remote {}'
+                 .format(len(icss), len(cals), len(icss.difference(cals))))
+    for fname in icss.difference(cals):
+        logging.debug('Removing: ' + fname)
+        os.remove(fname)
+
+
+def calhash(cal):
+    m = hashlib.sha256()
+    m.update(cal.encode())
+    return m.hexdigest().upper()[:20]
+
+
+def sync(cal, ldir):
+    url = URL.format(cal).replace('@', '%40')
+    logging.info('I\'m going to sync ' + url)
+    logging.info('Local store: ' + ldir)
+    ics = urllib.request.urlopen(url).read()
+    calendar = icalendar.Calendar.from_ical(ics)
+
+    fnames = set()
+    for event in calendar.walk(name='VEVENT'):
+        uid = event['UID'].split('@')[0].upper()
+        fname = '{}/{}-{}.ics'.format(ldir, calhash(cal), uid)
+        fnames.add(fname)
+        new_cal = icalendar.Calendar()
+        new_cal.add('version', '2.0')
+        new_cal.add_component(event)
+        try:
+            with open(fname, 'rt') as fin:
+                loc_event = icalendar.Event.from_ical(fin.read())
+            logging.debug('Found previous version at: ' + fname)
+        except FileNotFoundError:
+            with open(fname, 'w') as fout:
+                print(display(new_cal), file=fout)
+            logging.debug('Saved ics file with name: ' + fname)
+            continue
+
+        if not compare(new_cal, loc_event, ignore=['dtstamp'], verbose=False):
+            with open(fname, 'w') as fout:
+                print(display(new_cal), file=fout)
+            logging.debug('Updated to new version')
+        else:
+            logging.debug('The new version seems identical: no changes')
+
+    return fnames
+
+
+if __name__ == "__main__":
+    cals = config()
+    for cal, ldir in cals:
+        icss = sync(cal, ldir)
+        clean(icss, cal, ldir)
