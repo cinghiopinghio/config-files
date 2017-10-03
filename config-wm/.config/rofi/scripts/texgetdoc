@@ -7,7 +7,9 @@ mkdir -p ${PKG_CACHE}
 
 HELP="<i>I'll try to get the manual of your LaTeX package</i>"
 
-PKG=$(ls -1 ${PKG_CACHE} | sed -e 's/\.pdf$//' | rofi -dmenu -p 'LaTeX PKG:' -mesg "${HELP}" -i)
+PKG=$(ls -1 ${PKG_CACHE} |\
+	sed -e 's/\.pdf$//' |\
+	rofi -dmenu -p 'LaTeX PKG:' -mesg "${HELP}" -i)
 
 [[ ${PKG} == '' ]] && exit 0
 

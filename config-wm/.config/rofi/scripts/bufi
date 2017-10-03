@@ -18,15 +18,15 @@ CACHE = xdg_cache_home + '/bufi.json'
 # 4: boh
 
 moz_session = '~/.mozilla/firefox/*.default/sessionstore-backups/recovery.js'
-frmt = '{0:4d} -- {2}\n' +\
-       '<span size="x-small">{1:30s}</span>'
+frmt = '{0:4d} {2}\n' +\
+       '     <span size="x-small">{1:30s}</span>'
 args = sys.argv[1:]
 MAX = 1000
 INIT = 16
 
-CUSTOM_KB = ['Alt+n', 'Alt+x']
+CUSTOM_KB = ['Alt+n', 'Alt+e', 'Alt+x']
 MESG = """\
-Hint: use <b>{}</b> to add a new bookmark
+Hint: use <b>{}</b> to add a new bookmark       <b>{}</b> to edit the bookmark
           <b>{}</b> to remove it from the db""".format(*CUSTOM_KB)
 
 # Get the cache (most used bookmarks)
@@ -47,10 +47,10 @@ buku_hist = [bk_map.pop(i) for i, w in hist if i in bk_map]
 buku_hist += [v for v in bk_map.values()]
 
 rf = rofi.Rofi(
-    [frmt.format(*tpl) for tpl in buku_hist],
+    [frmt.format(*tpl).replace('&', '&amp;') for tpl in buku_hist],
     prompt='Bookmarks:',
     mesg=MESG,
-    sep='|',
+    sep='\t',
     custom_kb=CUSTOM_KB
 )
 choice, exitcode = rf.run()
@@ -83,6 +83,10 @@ if exitcode == 10:
         db.add_rec(choice.split()[0])
 elif exitcode == 11:
     bm_i = int(choice.split()[0])
+    os.environ['EDITOR'] = 'nvim-pygtk3'
+    db.edit_update_rec(bm_i)
+elif exitcode == 12:
+    bm_i = int(choice.split()[0])
     rf_nb = rofi.Rofi(
         ['Yes', 'No'],
         prompt='New Bookmark:',
@@ -97,6 +101,7 @@ elif exitcode == 0:
     if choice == '':
         exit(0)
     indx = int(choice.split()[0])
+    buku.browse.suppress_browser_output = False
     db.browse_by_index(indx)
 
     # update the history

@@ -5,7 +5,8 @@ passdir=${PASSWORD_STORE_DIR:-$HOME"/.password-store"}
 
 # run the menu
 menu=$(find $passdir -name "*.gpg" -printf "%P\n" | sed -e 's/\.gpg$//')
-choice=$(echo "$menu" | rofi -dmenu -i -markup-rows -theme-str '* { green:@red; lightgreen:@lightred; }')
+choice=$(echo "$menu" |\
+	rofi -dmenu -i -p 'Password Store:' -markup-rows -theme-str '* { green:@red; lightgreen:@lightred; }')
 
 # if NO choice exit graciously
 [[ ${choice} == '' ]] && exit 0

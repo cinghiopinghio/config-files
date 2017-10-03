@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
-set -- $(ps -eo pid,pcpu,pmem,comm | sed 1d | sort -n -k2,3 -r | rofi -dmenu -i)
+set -- $(ps -eo pid,pcpu,pmem,comm |\
+	sed 1d |\
+	sort -n -k2,3 -r |\
+	rofi -dmenu -i -p "Kill'em All:")
 
 PID=$1
 CMD=$4

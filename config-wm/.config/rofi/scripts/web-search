@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+echo $0 >> ~/log
+
+PROMPT='🌍'
+echo $PROMPT >> ~/log
+
+QUERY="$(echo '' | rofi -dmenu -p ${PROMPT} -mesg 'Insert string query')"
+echo $QUERY >> ~/log
+
+[[ "${QUERY}" == "" ]] && exit 0;
+
+declare -A SEARCH_ENGINES
+SEARCH_ENGINES=(
+["AUR"]="https://aur.archlinux.org/packages/?K="
+["DuckDuckGo"]="https://ddg.gg/?q="
+["StartPage"]="https://startpage.com/do/search?query="
+["Qwant"]="https://lite.qwant.com/?q="
+["Google Scholar"]="https://scholar.google.be/scholar?hl=en&q="
+["Wikipedia [en]"]="https://en.wikipedia.org/w/index.php?search="
+["Wikipedia [it]"]="https://it.wikipedia.org/w/index.php?search="
+["Arch Wiki"]="https://wiki.archlinux.org/index.php?search="
+)
+
+URL=$(\
+      IFS=$'\n'; echo "${!SEARCH_ENGINES[*]}" |\
+      sort |\
+      rofi -dmenu -i\
+      	-p "${PROMPT}"\
+	-mesg "Search '<i>${QUERY}</i>' in one of the following search engines"\
+      )
+
+[[ ${URL} != '' ]] && ${BROWSER:-firefox} "${SEARCH_ENGINES[${URL}]}$(echo ${QUERY} | sed 's/ /+/g')" &
