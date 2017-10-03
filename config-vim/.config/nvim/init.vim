@@ -123,7 +123,7 @@ Plug 'Konfekt/FastFold'
 Plug 'zhaocai/GoldenView.Vim'
 """""""""""""""""""""""""""""""""""""  
 "{{{ FZF
-Plug 'junegunn/fzf', { 'dir': '~/.cache/fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'dir': '~/codes/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " This is the default extra key bindings
 let g:fzf_action = {
