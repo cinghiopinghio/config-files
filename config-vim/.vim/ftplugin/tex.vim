@@ -11,6 +11,8 @@ let b:vcm_tab_complete='omni'
 let b:AutoPairs={'(':')','[':']','{':'}',"'":"'",'"':'"','$':'$'}
 "}}}
 
+let g:completor_tex_omni_trigger = g:vimtex#re#deoplete
+
 "{{{ delimitMate
 let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
 let b:delimitMate_quotes = "\" ' $"

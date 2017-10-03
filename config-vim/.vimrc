@@ -12,81 +12,223 @@ syntax on
 
 "----------------------------------------------------------------------
 " Plugin Manager
-""{{{ Vundle: plugin manager
-call plug#begin('~/.vim/bundle')
+"{{{ Vundle: plugin manager
+if has('nvim')
+	call plug#begin('~/.config/nvim/bundle')
+else
+	call plug#begin('~/.vim/bundle')
+endif
 
-"""""""""""""""""""""""""""""""""""""" syntax checker
-Plug 'scrooloose/syntastic'
-""""""""""""""""""""""""""""""""""""" AutoCompletion
+
+"{{{ Syntax, dictionary ...
+
+set dictionary+=/usr/share/dict/cracklib-small
+
+" Syntax check
+"{{{ neomake/Syntastic
+if has('nvim') || v:version >= 800
+  Plug 'neomake/neomake'
+  let g:neomake_warning_sign = {
+    \ 'text': 'W',
+    \ 'texthl': 'WarningMsg',
+    \ }
+  let g:neomake_error_sign = {
+    \ 'text': 'E',
+    \ 'texthl': 'ErrorMsg',
+    \ }
+  " let g:neomake_python_enabled_makersers = ['flake8']
+  " run neomake on the current file on every write:
+  autocmd! BufWritePost * Neomake
+else
+  " only vimL no python required
+  Plug 'scrooloose/syntastic'
+  let g:syntastic_mode_map = { 'passive_filetypes': ['sass'] }
+
+  let g:syntastic_always_populate_loc_list = 1
+  let g:syntastic_auto_loc_list = 1
+  let g:syntastic_check_on_open = 1
+  let g:syntastic_check_on_wq = 0
+endif
+"}}}
+"}}}
+"{{{ AutoCompletion
+
+set complete+=k         " enable dictionary completion
+" set completeopt+=longest
+set completeopt=menu,menuone,noinsert,noselect
+
+"  complete parenthesis
+"{{{ jiangmiao/auto-pairs
 Plug 'jiangmiao/auto-pairs'
-""Plug 'Raimondi/delimitMate'
-"Plug 'ajh17/VimCompletesMe'
-Plug 'cinghiopinghio/vim-clevertab', { 'branch': 'filecomplete' }
-" for email address completion
-Plug 'caio/querycommandcomplete.vim'
-""""""""""""""""""""""""""""""""""""" snippets
+let g:AutoPairs= {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
+"}}}
+
+"  autocompletion
+"{{{ deoplete / completor / VimCompletesMe
+if has('nvim')
+  " with neovim use deoplete
+  function! DoRemote(arg)
+    UpdateRemotePlugins
+  endfunction
+  Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+  let g:deoplete#enable_at_startup = 1
+  Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+  let g:deoplete#sources#jedi#show_docstring=1
+  " prevent slow popups
+  let g:jedi#popup_on_dot = 1
+elseif v:version >= 800
+  " with vim8 use completor
+  Plug 'maralla/completor.vim'
+  let g:completor_python_binary='python'
+else
+  Plug 'ajh17/VimCompletesMe'
+endif
+"}}}
+
+"  snippets
+" {{{ ultisnips
 if has("python")
   Plug 'SirVer/ultisnips'
+  let g:UltiSnipsExpandTrigger="<c-j>"
+  let g:UltiSnipsListSnippets="<c-l>"
 else
   Plug 'MarcWeber/vim-addon-mw-utils'
   Plug 'tomtom/tlib_vim'
   Plug 'garbas/vim-snipmate'
+  imap <C-j> <Plug>snipMateNextOrTrigger
+  smap <C-j> <Plug>snipMateNextOrTrigger
+  imap <C-l> <Plug>snipMateShow
 endif
 Plug 'honza/vim-snippets'
-Plug 'davidhalter/jedi-vim', { 'for': 'python' }
-" keep folds as is until save of fold/unfold
-" (save time)
+"}}}
+
+"  word editing
+" {{{ mjbrownie/swapit
+Plug 'mjbrownie/swapit'
+let b:swap_lists = [
+      \{'name': 'dark/light', 'options': ['dark', 'light']},
+      \{'name': 'bw', 'options': ['black', 'white']},
+      \{'name': 'be', 'options': ['begin', 'end']},
+      \]
+"}}}
+"}}}
+"{{{ Navigation
+
+set scrolloff=5  " never reach the top or bottom of the page
+
+" keep folds as is until save of fold/unfold (save time)
 Plug 'Konfekt/FastFold'
-" prevent slow popups
-let g:jedi#popup_on_dot = 0
-""""""""""""""""""""""""""""""""""""" window splits control
+" window splits control
 Plug 'zhaocai/GoldenView.Vim'
-Plug 'itchyny/thumbnail.vim', { 'on': 'Thumbnail' }
-""""""""""""""""""""""""""""""""""""" unite
-Plug 'Shougo/unite.vim'
-Plug 'Shougo/unite-outline'
+"""""""""""""""""""""""""""""""""""""  
+"{{{ FZF
+Plug 'junegunn/fzf', { 'dir': '~/.cache/fzf', 'do': './install --bin' }
+Plug 'junegunn/fzf.vim'
+" This is the default extra key bindings
+let g:fzf_action = {
+  \ 'ctrl-t': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+
+" Default fzf layout
+" - down / up / left / right
+let g:fzf_layout = { 'down': '~40%' }
+
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+" get most recent files with preview
+nmap <localleader>ff :Files .<cr>
+nmap <localleader>fb :Buffers<cr>
+" use the neomru cache!
 Plug 'Shougo/neomru.vim'
-Plug 'Shougo/vimproc.vim'
-Plug 'kopischke/unite-spell-suggest' " text suggestion
-""""""""""""""""""""""""""""""""""""" colors
+nmap <localleader>fr :History<cr>
+command! -bang History
+  \ call fzf#run({
+  \ 'sink': 'e',
+  \ 'options': '--tiebreak=index',
+  \ 'source': 'cat ~/.cache/neomru/file | sed 1d'
+  \ })
+nmap <localleader>fl :Lines<cr>
+"}}}
+"{{{ Denite
+" Plug 'Shougo/denite.nvim'
+" Plug 'Shougo/unite-outline'
+" Plug 'Shougo/neomru.vim'
+" Plug 'Shougo/vimproc.vim'
+" nmap <localleader>uf :Denite file buffer<cr>
+" nmap <localleader>ub :Denite buffer<cr>
+" nmap <localleader>ur :Denite file_mru<cr>
+" nmap <localleader>uo :Denite outline<cr>
+" nmap <localleader>ul :Denite line<cr>
+" let g:unite_enable_start_insert = 1
+"}}}
+
+Plug 'terryma/vim-multiple-cursors'
+"{{{ junegunn/vim-easy-align
+Plug 'junegunn/vim-easy-align'
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+"}}}
+
+" better search experience
+" {{{ junegunn/vim-slash
+Plug 'junegunn/vim-slash'
+if has('timers')
+  " Blink 2 times with 50ms interval
+  noremap <expr> <plug>(slash-after) slash#blink(2, 50)
+endif
+" }}}
+"}}}
+"{{{ Colorschemes
 Plug 'tomasr/molokai'
 Plug 'junegunn/seoul256.vim'
 Plug 'morhetz/gruvbox'
 Plug 'freeo/vim-kalisi'
 Plug 'marcopaganini/termschool-vim-theme'
 Plug 'jnurmine/Zenburn'
-"Plug 'cinghiopinghio/xinghio-color.vim'
-""""""""""""""""""""""""""""""""""""" statusbar
-"Plug 'maciakl/vim-neatstatus'
-"Plug 'vim-airline/vim-airline'
-"Plug 'vim-airline/vim-airline-themes'
+"}}}
+"{{{ Statusbar
 Plug 'itchyny/lightline.vim'
-""""""""""""""""""""""""""""""""""""" vary
-Plug 'junegunn/vim-easy-align'
+let g:lightline = {
+      \ 'colorscheme': 'gruvbox',
+      \ }
+"}}}
+"{{{ External cmds
 Plug 'thinca/vim-quickrun'
-Plug 'mjbrownie/swapit'
-Plug 'terryma/vim-multiple-cursors'
 " GIT integration
 Plug 'tpope/vim-fugitive'
 " ask if you typed a wrong filename
 Plug 'EinfachToll/DidYouMean'
-
+"}}}
+"{{{ Filetype
 """"""""""""""""""""""""""""""""""""" HTML
-"Plug 'mattn/emmet-vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] } 
 Plug 'othree/html5.vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] }
 Plug 'lepture/vim-jinja'
-"Plug 'cakebaker/scss-syntax.vim', { 'for': ['scss', 'css', 'sass'] }
 """"""""""""""""""""""""""""""""""""" LaTeX
-Plug 'lervag/vimtex', { 'for': 'tex' }
-""""""""""""""""""""""""""""""""""""" Note/Todo writing
-"Plug 'xolox/vim-notes'
-"Plug 'fmoralesc/vim-pad'
-"Plug 'blinry/vimboy'
-"Plug 'freitass/todo.txt-vim'
-<<<<<<< HEAD:vimrc
-=======
-
->>>>>>> stowsh:config-vim/.vimrc
+" {{{ lervag/Vimtex
+"There is no reason to lazily load vimtex. Vimtex is a filetype plugin that
+"uses the autoload feature, and it does not load or source any vimscript file
+"until you open a tex file/buffer. Thus my suggestion is that you load vimtex
+"without restricting it to tex files. And in this case, there should be no
+"conflict.
+"https://github.com/lervag/vimtex/issues/885
+Plug 'lervag/vimtex'   ", { 'for': 'tex' }
+" }}}
+"}}}
 call plug#end()
 "}}}
 
@@ -123,20 +265,13 @@ endif " has("autocmd")}}}
 " Also switch on highlighting the last used search pattern.
 set hlsearch
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
-set history=50                 " keep 50 lines of command line history
+set history=100                 " keep 100 lines of command line history
 set ruler                      " show the cursor position all the time
 set showcmd                    " display incomplete commands
 set incsearch                  " do incremental searching
 set ignorecase          " case-insensitive search
 set smartcase           " upper-case sensitive search
-" set nobackup            " fasten writing process (:w)
-" tabulation
 setlocal shiftwidth=2 softtabstop=2 expandtab smarttab
-
-set scrolloff=5
-
-set complete+=k         " enable dictionary completion
-set completeopt+=longest
 
 set clipboard+=unnamed  " yank and copy to X clipboard
 "wrapping
@@ -146,20 +281,6 @@ set linebreak
 " set terminal title
 set title
 
-set splitbelow
-set splitright
-
-set textwidth=78
-if exists('+colorcolumn')
-  set colorcolumn=80
-else
-  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
-endif
-
-let g:lightline = {
-      \ 'colorscheme': 'wombat'
-      \ }
-
 set termguicolors
 set background=dark
 if s:host == 'spin'
@@ -167,10 +288,6 @@ if s:host == 'spin'
   let g:seoul256_light_background = 256
   colorscheme seoul256
 elseif s:host == 'arcinghio'
-<<<<<<< HEAD:vimrc
-  let g:gruvbox_contrast_dark='medium'
-=======
->>>>>>> stowsh:config-vim/.vimrc
   colorscheme gruvbox
 elseif s:host == 'dingo'
   "colorscheme kalisi
@@ -181,8 +298,6 @@ endif
 "set background light
 highlight Normal guibg=NONE ctermbg=NONE
 highlight nonText guifg=#787878 guibg=NONE ctermfg=243 ctermbg=NONE
-<<<<<<< HEAD:vimrc
-=======
 
 function! ToggleBackground()
   if &background == 'dark'
@@ -197,7 +312,16 @@ endfunction
 
 nnoremap <F9> :call ToggleBackground()<CR>
 
->>>>>>> stowsh:config-vim/.vimrc
+
+set splitbelow
+set splitright
+
+set textwidth=78
+if exists('+colorcolumn')
+  set colorcolumn=80
+else
+  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
+endif
 
 set makeprg=make
 set grepprg=grep\ -nH\ $*
@@ -263,88 +387,3 @@ nmap ,p "*p
 nmap <leader><leader><leader> :so $MYVIMRC<cr>
 "}}}"
 
-"-------------------------------------------------------------------------
-" PLUGINS SETTINGS
-"{{{
-"----------------------------------
-"{{{ EasyAlign
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
-"}}}
-
-"----------------------------------
-"{{{ Clevertab - complete chain
-
-
-if has("python")
-  inoremap <silent><tab> <c-r>=CleverTab#Complete('start')<cr>
-                        \<c-r>=CleverTab#Complete('tab')<cr>
-                        \<c-r>=CleverTab#Complete('ultisnips')<cr>
-                        \<c-r>=CleverTab#Complete('omni')<cr>
-                        \<c-r>=CleverTab#Complete('keyword')<cr>
-                        \<c-r>=CleverTab#Complete('file')<cr>
-                        \<c-r>=CleverTab#Complete('stop')<cr>
-else
-  inoremap <silent><tab> <c-r>=CleverTab#Complete('start')<cr>
-                        \<c-r>=CleverTab#Complete('tab')<cr>
-                        \<c-r>=CleverTab#Complete('keyword')<cr>
-                        \<c-r>=CleverTab#Complete('omni')<cr>
-                        \<c-r>=CleverTab#Complete('file')<cr>
-                        \<c-r>=CleverTab#Complete('stop')<cr>
-endif
-inoremap <silent><s-tab> <c-r>=CleverTab#Complete('prev')<cr>
-"}}}
-
-"----------------------------------
-"{{{ Use emmet only in html,css
-"let g:user_emmet_install_global = 0
-"autocmd FileType html,css,scss,sass,htmldjango EmmetInstall
-"}}}
-
-"----------------------------------
-"{{{ Syntastic
-let g:syntastic_mode_map = { 'passive_filetypes': ['sass'] }
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-"}}}
-
-"----------------------------------
-"{{{ Unite
-nmap <localleader>uf :Unite -no-split file buffer<cr>
-nmap <localleader>ub :Unite -no-split buffer<cr>
-nmap <localleader>ur :Unite -no-split file_mru<cr>
-nmap <localleader>uo :Unite -vertical outline<cr>
-let g:unite_enable_start_insert = 1
-
-nmap <localleader>us :Unite spell_suggest<cr>
-"}}}"
-
-"----------------------------------
-"{{{ UltiSnips
-let g:UltiSnipsExpandTrigger="<c-j>"
-let g:UltiSnipsListSnippets="<c-l>"
-"}}}
-
-"----------------------------------
-"{{{ Thumbnail
-nnoremap <localleader>t :Thumbnail -include=help<cr>
-"}}}
-
-"----------------------------------
-"{{{ AutoPairs
-let g:AutoPairs= {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
-"}}}
-
-"----------------------------------
-"{{{ SwapIt
-let b:swap_lists = [
-      \{'name': 'dark/light', 'options': ['dark', 'light']},
-      \{'name': 'bw', 'options': ['black', 'white']},
-      \]
-"}}}

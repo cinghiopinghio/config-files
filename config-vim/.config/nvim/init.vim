@@ -13,26 +13,28 @@ syntax on
 "----------------------------------------------------------------------
 " Plugin Manager
 "{{{ Vundle: plugin manager
-call plug#begin('~/.config/nvim/bundle')
-
+if has('nvim')
+	call plug#begin('~/.config/nvim/bundle')
+else
+	call plug#begin('~/.vim/bundle')
+endif
 
 "{{{ Syntax, dictionary ...
 
-
 set dictionary+=/usr/share/dict/cracklib-small
 
-
-" It's a syntastic alternative. Syntastic was slow for me on python files.
+" Syntax check
+"{{{ neomake/Syntastic
 if has('nvim') || v:version >= 800
   Plug 'neomake/neomake'
-  " let g:neomake_warning_sign = {
-  "   \ 'text': 'W',
-  "   \ 'texthl': 'WarningMsg',
-  "   \ }
-  " let g:neomake_error_sign = {
-  "   \ 'text': 'E',
-  "   \ 'texthl': 'ErrorMsg',
-  "   \ }
+  let g:neomake_warning_sign = {
+    \ 'text': 'W',
+    \ 'texthl': 'WarningMsg',
+    \ }
+  let g:neomake_error_sign = {
+    \ 'text': 'E',
+    \ 'texthl': 'ErrorMsg',
+    \ }
   " let g:neomake_python_enabled_makersers = ['flake8']
   " run neomake on the current file on every write:
   autocmd! BufWritePost * Neomake
@@ -47,30 +49,42 @@ else
   let g:syntastic_check_on_wq = 0
 endif
 "}}}
+"}}}
 "{{{ AutoCompletion
 
 set complete+=k         " enable dictionary completion
 " set completeopt+=longest
 set completeopt=menu,menuone,noinsert,noselect
 
-"complete parenthesis
+"  complete parenthesis
+"{{{ jiangmiao/auto-pairs
 Plug 'jiangmiao/auto-pairs'
 let g:AutoPairs= {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
+"}}}
 
-"   autocompletion
-Plug 'roxma/nvim-completion-manager'
+"  autocompletion
+"{{{ deoplete / completor / VimCompletesMe
+if has('nvim')
+  " with neovim use deoplete
+  function! DoRemote(arg)
+    UpdateRemotePlugins
+  endfunction
+  Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+  let g:deoplete#enable_at_startup = 1
+  Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+  let g:deoplete#sources#jedi#show_docstring=1
+  " prevent slow popups
+  let g:jedi#popup_on_dot = 1
+elseif v:version > 800
+  " with vim8 use completor
+  Plug 'maralla/completor.vim'
+else
+  Plug 'ajh17/VimCompletesMe'
+endif
+"}}}
 
-" function! DoRemote(arg)
-"   UpdateRemotePlugins
-" endfunction
-" Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-" let g:deoplete#enable_at_startup = 1
-" Plug 'zchee/deoplete-jedi', { 'for': 'python' }
-" let g:deoplete#sources#jedi#show_docstring=1
-" " prevent slow popups
-" let g:jedi#popup_on_dot = 1
-
-" {{{snippets
+"  snippets
+" {{{ ultisnips
 if has("python")
   Plug 'SirVer/ultisnips'
   let g:UltiSnipsExpandTrigger="<c-j>"
@@ -79,16 +93,22 @@ else
   Plug 'MarcWeber/vim-addon-mw-utils'
   Plug 'tomtom/tlib_vim'
   Plug 'garbas/vim-snipmate'
+  imap <C-j> <Plug>snipMateNextOrTrigger
+  smap <C-j> <Plug>snipMateNextOrTrigger
+  imap <C-l> <Plug>snipMateShow
 endif
 Plug 'honza/vim-snippets'
 "}}}
 
-" {{{swap contrary...
+"  word editing
+" {{{ mjbrownie/swapit
 Plug 'mjbrownie/swapit'
 let b:swap_lists = [
       \{'name': 'dark/light', 'options': ['dark', 'light']},
       \{'name': 'bw', 'options': ['black', 'white']},
       \{'name': 'be', 'options': ['begin', 'end']},
+      \{'name': 'rl', 'options': ['right', 'left']},
+      \{'name': 'ab', 'options': ['above', 'bottom']},
       \]
 "}}}
 "}}}
@@ -96,37 +116,86 @@ let b:swap_lists = [
 
 set scrolloff=5  " never reach the top or bottom of the page
 
-" keep folds as is until save of fold/unfold
-" (save time)
+" keep folds as is until save of fold/unfold (save time)
 Plug 'Konfekt/FastFold'
-""""""""""""""""""""""""""""""""""""" window splits control
+" window splits control
 Plug 'zhaocai/GoldenView.Vim'
 """""""""""""""""""""""""""""""""""""  
+"{{{ FZF
 Plug 'junegunn/fzf', { 'dir': '~/.cache/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+" This is the default extra key bindings
+" let g:fzf_action = {
+"   \ 'ctrl-t': 'tab split',
+"   \ 'ctrl-x': 'split',
+"   \ 'ctrl-v': 'vsplit' }
+
+" Default fzf layout
+" - down / up / left / right
+let g:fzf_layout = { 'down': '~40%' }
+
+" Customize fzf colors to match your color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
 " get most recent files with preview
-nmap <localleader>ff :Files .<cr>
+nmap <localleader>ff :Files .<CR>
 nmap <localleader>fb :Buffers<cr>
-nmap <localleader>fr :History<cr>
-nmap <localleader>fo :Tags<cr>
-nmap <localleader>fl :Lines<cr>
-Plug 'Shougo/denite.nvim'
-Plug 'Shougo/unite-outline'
+" use the neomru cache!
 Plug 'Shougo/neomru.vim'
-Plug 'Shougo/vimproc.vim'
-nmap <localleader>uf :Denite file buffer<cr>
-nmap <localleader>ub :Denite buffer<cr>
-nmap <localleader>ur :Denite file_mru<cr>
-nmap <localleader>uo :Denite outline<cr>
-nmap <localleader>ul :Denite line<cr>
-let g:unite_enable_start_insert = 1
+nmap <localleader>fr :History<cr>
+command! -bang History
+  \ call fzf#run({
+  \ 'sink': 'e',
+  \ 'options': '--tiebreak=index',
+  \ 'source': 'cat ~/.cache/neomru/file | sed 1d'
+  \ })
+nmap <localleader>fl :Lines<cr>
+"}}}
+"{{{ Denite
+" Plug 'Shougo/denite.nvim'
+" Plug 'Shougo/unite-outline'
+" Plug 'Shougo/neomru.vim'
+" Plug 'Shougo/vimproc.vim'
+" nmap <localleader>uf :Denite file buffer<cr>
+" nmap <localleader>ub :Denite buffer<cr>
+" nmap <localleader>ur :Denite file_mru<cr>
+" nmap <localleader>uo :Denite outline<cr>
+" nmap <localleader>ul :Denite line<cr>
+" let g:unite_enable_start_insert = 1
+"}}}
 
 Plug 'terryma/vim-multiple-cursors'
+"{{{ junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+"}}}
+
+Plug 'AndrewRadev/sideways.vim'
+nnoremap <m-left> :SidewaysLeft<cr>
+nnoremap <m-right> :SidewaysRight<cr>
+
+" better search experience
+" {{{ junegunn/vim-slash
+Plug 'junegunn/vim-slash'
+if has('timers')
+  " Blink 2 times with 50ms interval
+  noremap <expr> <plug>(slash-after) slash#blink(2, 50)
+endif
+" }}}
 "}}}
 "{{{ Colorschemes
 Plug 'tomasr/molokai'
@@ -135,15 +204,38 @@ Plug 'morhetz/gruvbox'
 Plug 'freeo/vim-kalisi'
 Plug 'marcopaganini/termschool-vim-theme'
 Plug 'jnurmine/Zenburn'
-"Plug 'cinghiopinghio/xinghio-color.vim'
 "}}}
 "{{{ Statusbar
 Plug 'itchyny/lightline.vim'
+Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-rooter'
+" Plug 'ludovicchabant/vim-gutentags'
+" let g:gutentags_cache_dir = '~/.cache/ctags/'
+Plug 'tpope/vim-fugitive'
+" do not set maps
+let g:gitgutter_map_keys = 0
+let g:lightline = {
+      \ 'colorscheme': 'gruvbox',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'fugitive', 'filename', 'modified', 'readonly' ] ],
+      \   'right': [ [ 'percent', 'lineinfo' ],
+      \              [ 'fileformat', 'fileencoding', 'filetype' ] ],
+      \ },
+      \ 'component_function': { 
+      \   'fugitive': 'fugitive#head', 
+      \ },
+      \ 'separator': { 'left': '▓▒░', 'right': '░▒▓' },
+      \ 'subseparator': { 'left': '', 'right': '' },
+      \ }
+  function! LightLineFugitive()
+    return exists('*fugitive#head') ? fugitive#head() : ''
+  endfunction
 "}}}
 "{{{ External cmds
 Plug 'thinca/vim-quickrun'
+Plug 'skywind3000/asyncrun.vim'
 " GIT integration
-Plug 'tpope/vim-fugitive'
 " ask if you typed a wrong filename
 Plug 'EinfachToll/DidYouMean'
 "}}}
@@ -152,23 +244,18 @@ Plug 'EinfachToll/DidYouMean'
 Plug 'othree/html5.vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] }
 Plug 'lepture/vim-jinja'
 """"""""""""""""""""""""""""""""""""" LaTeX
-Plug 'lervag/vimtex', { 'for': 'tex' }
+" {{{ lervag/Vimtex
+"There is no reason to lazily load vimtex. Vimtex is a filetype plugin that
+"uses the autoload feature, and it does not load or source any vimscript file
+"until you open a tex file/buffer. Thus my suggestion is that you load vimtex
+"without restricting it to tex files. And in this case, there should be no
+"conflict.
+"https://github.com/lervag/vimtex/issues/885
+Plug 'lervag/vimtex'   ", { 'for': 'tex' }
+" }}}
 "}}}
 call plug#end()
 "}}}
-
-call denite#custom#map(
-      \ 'insert',
-      \ '<Down>',
-      \ '<denite:move_to_next_line>',
-      \ 'noremap'
-      \)
-call denite#custom#map(
-      \ 'insert',
-      \ '<Up>',
-      \ '<denite:move_to_previous_line>',
-      \ 'noremap'
-      \)
 
 "----------------------------------------------------------------------
 "{{{ Autocommands
@@ -218,10 +305,6 @@ set linebreak
 
 " set terminal title
 set title
-
-let g:lightline = {
-      \ 'colorscheme': 'wombat'
-      \ }
 
 set termguicolors
 set background=dark
@@ -328,3 +411,4 @@ nmap ,p "*p
 " reload vimrc
 nmap <leader><leader><leader> :so $MYVIMRC<cr>
 "}}}"
+

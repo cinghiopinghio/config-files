@@ -7,22 +7,24 @@ imap <C-p> <C-O>gqip
 let b:vcm_tab_complete='omni'
 "}}}
 
+" call cm#register_source({
+"       \ 'name' : 'vimtex',
+"       \ 'priority': 8,
+"       \ 'scoping': 1,
+"       \ 'scopes': ['tex'],
+"       \ 'abbreviation': 'tex',
+"       \ 'cm_refresh_patterns': g:vimtex#re#ncm,
+"       \ 'cm_refresh': {'omnifunc': 'vimtex#complete#omnifunc'},
+"       \ })
+
+
+let g:completor_tex_omni_trigger = g:vimtex#re#deoplete
 
 "{{{ Deoplete
 if !exists('g:deoplete#omni#input_patterns')
 let g:deoplete#omni#input_patterns = {}
 endif
-let g:deoplete#omni#input_patterns.tex = '\\(?:'
-\ .  '\w*cite\w*(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
-\ . '|\w*ref(?:\s*\{[^}]*|range\s*\{[^,}]*(?:}{)?)'
-\ . '|hyperref\s*\[[^]]*'
-\ . '|includegraphics\*?(?:\s*\[[^]]*\]){0,2}\s*\{[^}]*'
-\ . '|(?:include(?:only)?|input)\s*\{[^}]*'
-\ . '|\w*(gls|Gls|GLS)(pl)?\w*(\s*\[[^]]*\]){0,2}\s*\{[^}]*'
-\ . '|includepdf(\s*\[[^]]*\])?\s*\{[^}]*'
-\ . '|includestandalone(\s*\[[^]]*\])?\s*\{[^}]*'
-\ .')'
-"}}}
+let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
 
 "{{{ auto-pairs
 let b:AutoPairs={'(':')','[':']','{':'}',"'":"'",'"':'"','$':'$'}
