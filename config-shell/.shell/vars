@@ -3,7 +3,11 @@
 # svn editor variable:
 export SVN_EDITOR=/usr/bin/vim
 # editor variable:
-export EDITOR="nvim"
+if hash nvim 2>/dev/null; then
+	export EDITOR="nvim"
+elif hash vim 2>/dev/null; then
+	export EDITOR='vim'
+fi
 # export BROWSER="iridium-browser"
 export BROWSER=firefox
 # add to PATH .local/bin and subdirectories
@@ -23,3 +27,7 @@ export GPG_AGENT_INFO=$HOME/.gnupg/S.gpg-agent
 
 # change look in qt5
 export QT_QPA_PLATFORMTHEME="qt5ct"
+
+
+# fzf should look also for hidden files
+export FZF_DEFAULT_COMMAND="find . -path '*' ! -path '*.svn*' ! -path '*.git*' -type f"
