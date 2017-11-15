@@ -23,12 +23,15 @@
 ; diff and merge
 [diff]
   tool = vimdiff
+  submodule = log
 [difftool]
   prompt = false
 [merge]
   tool = vimdiff
 
 
+[status]
+  submoduleSummary = true
 
 #; user identification
 #[github]
@@ -57,6 +60,3 @@
 #    prompt = false
 [push]
 	default = current
-
-
-
