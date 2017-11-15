@@ -51,15 +51,14 @@ case ${HOSTNAME} in
     ;;
   'spin')
     dropbox-cli start
-    pidgin &
+    # pidgin &
     ;;
   'dingo')
     nm-applet &
+    # cmst &
     # /usr/bin/env albert &
     blueman-applet &
-    QSyncthingTray &
+    # QSyncthingTray &
     kalu &
+    riot-desktop --hidden &
 esac
-
-# launcher
-# synapse -s
