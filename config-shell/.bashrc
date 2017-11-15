@@ -49,6 +49,9 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+# set up fzf bin path, completion, key bindings
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
 # autocomplete marks
 _completemarks() {
   local curw=${COMP_WORDS[COMP_CWORD]}
