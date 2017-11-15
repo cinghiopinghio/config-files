@@ -12,7 +12,7 @@ main:
 	Warning: this will delete all your config files\n"
 
 
-all: $(CMDS)
+install: $(CMDS)
 
 $(CMDS):
 	@echo Installing $(@)
