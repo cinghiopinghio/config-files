@@ -25,17 +25,12 @@
 #    Align icons left/right/off
     icon_position = left
 #    Paths to default icons.
-#    icon_folders = /usr/share/icons/Arc/apps/48/:/usr/share/icons/Arc/categories/48/:/usr/share/icons/Arc/devices/48/:/usr/share/icons/Arc/emblems/48/:/usr/share/icons/Arc/mimetypes/48/:/usr/share/icons/Arc/places/48/:/usr/share/icons/Arc/status/48/:/usr/share/icons/Arc/status/symbolic/ 
-#    icon_folders = /usr/share/icons/Arc/mimetypes/48:/usr/share/icons/Arc/status/48:/usr/share/icons/Arc/categories/48:/usr/share/icons/Arc/places/48:/usr/share/icons/Arc/emblems/48:/usr/share/icons/Arc/devices/48:/usr/share/icons/Arc/apps/48:/usr/share/icons/Arc/mimetypes/24@2x:/usr/share/icons/Arc/actions/24@2x:/usr/share/icons/Arc/status/24@2x:/usr/share/icons/Arc/categories/24@2x:/usr/share/icons/Arc/places/24@2x:/usr/share/icons/Arc/emblems/24@2x:/usr/share/icons/Arc/devices/24@2x:/usr/share/icons/Arc/apps/24@2x
      icon_folders = /usr/share/icons/Numix/48/mimetypes:/usr/share/icons/Numix/48/actions:/usr/share/icons/Numix/48/notifications:/usr/share/icons/Numix/48/animations:/usr/share/icons/Numix/48/emotes:/usr/share/icons/Numix/48/status:/usr/share/icons/Numix/48/categories:/usr/share/icons/Numix/48/places:/usr/share/icons/Numix/48/emblems:/usr/share/icons/Numix/48/devices:/usr/share/icons/Numix/48/apps
-# Numix icons are only svg
-#    icon_folders = /usr/share/icons/Numix/32/mimetypes/:/usr/share/icons/Numix/32/actions/:/usr/share/icons/Numix/32/animations/:/usr/share/icons/Numix/32/emotes/:/usr/share/icons/Numix/32/status/:/usr/share/icons/Numix/32/categories/:/usr/share/icons/Numix/32/places/:/usr/share/icons/Numix/32/emblems/:/usr/share/icons/Numix/32/devices/:/usr/share/icons/Numix/32/apps/
     max_icon_size=48
 
 
-[frame]
-    width = 0
-    color = "#282828"
+    frame_width = 0
+    frame_color = "#282828"
 
 [shortcuts]
     close     = ctrl+space
