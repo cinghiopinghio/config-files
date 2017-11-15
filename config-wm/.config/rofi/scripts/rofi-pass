@@ -6,7 +6,13 @@ passdir=${PASSWORD_STORE_DIR:-$HOME"/.password-store"}
 # run the menu
 menu=$(find $passdir -name "*.gpg" -printf "%P\n" | sed -e 's/\.gpg$//')
 choice=$(echo "$menu" |\
-	rofi -dmenu -i -p 'Password Store:' -markup-rows -theme-str '* { green:@red; lightgreen:@lightred; }')
+	rofi -dmenu -i -p 'Password Store: '\
+	-mesg "Alt-s to show data"\
+	-kb-custom-1 "Alt+s"\
+	-markup-rows -theme-str '* { green:@red; lightgreen:@lightred; }')
+
+exitcode=$?
+echo $exitcode
 
 # if NO choice exit graciously
 [[ ${choice} == '' ]] && exit 0
@@ -20,4 +26,9 @@ notify-send --urgency=critical\
     'Password Store'\
     "secret copied to clipboard\n<small>(will be cleared in 45 sec.)</small>"
 
+if [[ "${exitcode}" == 10 ]];
+then
+    data="$(pass ${choice} | sed 1d)"
+	rofi -e "$data"
+fi
 #vim ft:sh
