@@ -33,30 +33,30 @@
     spacing: 0px;
 }
 
-#window {
+window {
     location: center;
     anchor:   center;
 }
 
-#mainbox {
+mainbox {
 }
 
-#inputbar {
+inputbar {
     background-color: @background;
     color: @lightgreen;
     padding: 20px;
 }
 
-#prompt,case-indicator,entry {
+prompt,case-indicator,entry {
     font: "Fira Sans 18";
     color: inherit;
 }
 
-#message{
+message{
     background-color: @background;
 }
 
-#textbox {
+textbox {
     font: "Fira Mono 12";
     color: @lightyellow;
     padding: 6px;
@@ -66,50 +66,52 @@
     border-radius: 4px;
 }
 
-#listview {
+listview {
     background-color: @background;
 }
 
-#element {
-    padding: 6px 12px;
+element {
+    padding: 8px 12px;
 }
-#element active {
+element active {
     color: @lightblue;
 }
-#element urgent {
+element urgent {
     color: @lightred;
 }
-#element selected {
+element selected {
     background-color: @green;
     color: @black;
 }
-#element selected active {
+element selected active {
     background-color: @lightblue;
 }
-#element selected urgent {
+element selected urgent {
     background-color: @lightred;
 }
 
-#sidebar {
+sidebar {
 }
 
-#button {
+button {
   padding: 10px;
     background-color: @background;
 }
 
-#button selected {
+button selected {
     color: @black;
     background-color: @green;
 }
 
 configuration {
     display-ssh:                    " ";
-    display-run:                    " ";
-    display-drun:                   " ";
-    display-window:                 " ";
+//    display-run:                    " ";
+//    display-drun:                   " ";
+//    display-window:                 " ";
+    display-run:                    "";
+    display-drun:                   "";
+    display-window:                 "";
     display-combi:                  " ";
-    display-top:                    " ";
     sidebar-mode: true;
 }
 
