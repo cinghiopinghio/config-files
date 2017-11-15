@@ -5,6 +5,7 @@
 *.[oa]
 *~
 *.pyc
+tags
 
 # latex
 *.aux
