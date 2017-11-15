@@ -7,6 +7,7 @@ import sys
 import rofi
 import glob
 import os
+import sqlite3
 from xdg.BaseDirectory import xdg_cache_home
 CACHE = xdg_cache_home + '/bufi.json'
 
@@ -17,11 +18,24 @@ CACHE = xdg_cache_home + '/bufi.json'
 # 3: tags
 # 4: boh
 
-moz_session = '~/.mozilla/firefox/*.default/sessionstore-backups/recovery.js'
-frmt = '{0:4d} {2}\n' +\
-       '     <span size="x-small">{1:30s}</span>'
+LINE_LENGHT = 99
+PANGO_STEP = 1.2
+
+moz_session = '~/.mozilla/firefox/*.default/places.sqlite'
+# frmt = '{0:4d} {2}\n' +\
+#        '     <span size="x-small">{1:30s}</span>'
+
+
+def make_string(i, url, title, p1, p2, p3):
+    len_url = int(len(url) / PANGO_STEP / PANGO_STEP + 1)
+    line = '{:4d} {:s} {:100s}'.format(i, title, ' ')
+    line = line[0: LINE_LENGHT - len_url]
+    return line + '<span size="x-small">{:s}</span>'.format(url)
+
+
+frmt = '{0:4d} {2:50.50s} <span size="x-small">{1:>60s}</span>'
 args = sys.argv[1:]
-MAX = 1000
+MAX = 1000000
 INIT = 16
 
 CUSTOM_KB = ['Alt+n', 'Alt+e', 'Alt+x']
@@ -47,34 +61,37 @@ buku_hist = [bk_map.pop(i) for i, w in hist if i in bk_map]
 buku_hist += [v for v in bk_map.values()]
 
 rf = rofi.Rofi(
-    [frmt.format(*tpl).replace('&', '&amp;') for tpl in buku_hist],
-    prompt='Bookmarks:',
+    [make_string(*tpl).replace('&', '&amp;')
+     for tpl in buku_hist],
+    prompt='Bookmarks: ',
     mesg=MESG,
-    sep='\t',
     custom_kb=CUSTOM_KB
 )
 choice, exitcode = rf.run()
 
 if exitcode == 10:
+    # add new bookmark from open tabs (firefox)
     tabs = {}
     for fname in glob.glob(os.path.expanduser(moz_session)):
-        with open(fname, 'r') as fin:
-            data = json.load(fin)
-            for win in data['windows']:
-                for tab in win['tabs']:
-                    url = tab['entries'][tab['index']-1]['url']
-                    tit = tab['entries'][tab['index']-1].get('title', '')
-                    tabs[tab['lastAccessed']] = (
-                        url, tit,
-                        tab['iconLoadingPrincipal'],
-                    )
+        conn = sqlite3.connect(fname)
+        c = conn.cursor()
+        c.execute('SELECT * FROM moz_places')
+        all_rows = c.fetchall()
+
+        for row in all_rows:
+            # check if time last access
+            if row[9] is not None:
+                # check if url and title are not None
+                url = row[1] if row[1] is not None else ''
+                title = row[2] if row[2] is not None else ''
+                tabs[row[9]] = (url, title, ' ')
 
     tabs = [tabs[k][0] + ' ' + tabs[k][1]
             for k in sorted(tabs.keys(), reverse=True)]
     rf_nb = rofi.Rofi(
         tabs,
         markup=False,
-        prompt='New Bookmark:',
+        prompt='New Bookmark: ',
     )
 
     choice, exitcode = rf_nb.run()
@@ -82,10 +99,12 @@ if exitcode == 10:
     if choice != '' and exitcode == 0:
         db.add_rec(choice.split()[0])
 elif exitcode == 11:
+    # edit the entry
     bm_i = int(choice.split()[0])
     os.environ['EDITOR'] = 'nvim-pygtk3'
     db.edit_update_rec(bm_i)
 elif exitcode == 12:
+    # remove url from database
     bm_i = int(choice.split()[0])
     rf_nb = rofi.Rofi(
         ['Yes', 'No'],
@@ -98,14 +117,24 @@ elif exitcode == 12:
         print(choice, exitcode, bm_i)
         db.delete_rec(bm_i)
 elif exitcode == 0:
+    # if no output exits or search the web
     if choice == '':
         exit(0)
-    indx = int(choice.split()[0])
+
+    # read indx from line
+    try:
+        indx = int(choice.split()[0])
+    except ValueError:
+        import webbrowser
+        webbrowser.open('https://ddg.gg/?q=' + choice, autoraise=True)
+        exit(0)
+
+    # open url
     buku.browse.suppress_browser_output = False
     db.browse_by_index(indx)
 
     # update the history
-    hist = [[i, j-1] if i != indx else [i, min(j*2, MAX)] for i, j in hist]
+    hist = [[i, j-1] if i != indx else [i, min(j+50, MAX)] for i, j in hist]
     # append the new ones (if not present)
     if indx not in [h[0] for h in hist]:
         hist.append([indx, INIT])
