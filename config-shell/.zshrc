@@ -9,8 +9,6 @@ setopt HIST_REDUCE_BLANKS
 setopt HIST_IGNORE_SPACE
 setopt HIST_IGNORE_ALL_DUPS # ignore duplicates in history
 
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-
 if whence dircolors >/dev/null; then
   # GNU utils way
   eval "$(dircolors -b)"
@@ -85,24 +83,20 @@ export PS2="%F{blue}>%F{white}"
 ##################################################################
 # {{{
 
-# comand-extension completione
-#zstyle ':completion::*:(vi|vim):*' file-patterns '*.tex' '*' '*'
-#zstyle ':completion::*:(vi|vim):*' file-patterns '*~*.(aux|dvi|log|idx|pdf|rel|out)' '*'
-
 # allow approximate
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*' completer _complete _match _approximate
 zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
-
-# tab completion for PID :D
-zstyle ':completion:*:*:kill:*' menu yes select
-zstyle ':completion:*:kill:*' force-list always
-
-# cd not select parent dir
-zstyle ':completion:*:cd:*' ignore-parents parent pwd
-
-# ssh completion
+# 
+# # tab completion for PID :D
+# zstyle ':completion:*:*:kill:*' menu yes select
+# zstyle ':completion:*:kill:*' force-list always
+# 
+# # cd not select parent dir
+# zstyle ':completion:*:cd:*' ignore-parents parent pwd
+# 
+# # ssh completion
 hosts=$(awk '/^Host / {printf("%s ",$2)}' ~/.ssh/config 2>/dev/null)
 zstyle ':completion:*:hosts' hosts $hosts
 
@@ -117,12 +111,6 @@ function _completemarks {
 }
 compctl -K _completemarks jump
 compctl -K _completemarks unmark
-
-# vex completion with lazy loading
-if hash vex 2>/dev/null; then
-  eval "$(vex --shell-config zsh)"
-fi
-
 # }}}
 
 ##################################################################
@@ -131,31 +119,34 @@ fi
 # http://www.zsh.org/mla/users/2000/msg00727.html
 # {{{
 typeset -g -A key
-bindkey '^?' backward-delete-char
-bindkey '^[[1~' beginning-of-line
-bindkey '^[[5~' up-line-or-history
-bindkey '^[[3~' delete-char
-bindkey '^[[4~' end-of-line
-bindkey '^[[6~' down-line-or-history
-bindkey '^[[A' up-line-or-search
-bindkey '^[[D' backward-char
-bindkey '^[[B' down-line-or-search
-bindkey '^[[C' forward-char 
-# completion in the middle of a line
-bindkey '^i' expand-or-complete-prefix
-bindkey '^R' history-incremental-search-backward
-
-bindkey '\e[1~'   beginning-of-line  # Linux console
+bindkey '^[[D'    backward-char
+bindkey '^?'      backward-delete-char
+bindkey "^[[1;3D" backward-word
 bindkey '\e[H'    beginning-of-line  # xterm
 bindkey '\eOH'    beginning-of-line  # gnome-terminal
-bindkey '\e[2~'   overwrite-mode     # Linux console, xterm, gnome-terminal
+bindkey '^[[1~'   beginning-of-line
+bindkey '\e[1~'   beginning-of-line  # Linux console
+bindkey '\e[P'    delete-char        # for st term
+bindkey '^[[3~'   delete-char
 bindkey '\e[3~'   delete-char        # Linux console, xterm, gnome-terminal
-bindkey '\e[4~'   end-of-line        # Linux console
+bindkey '^[[6~'   down-line-or-history
+bindkey '^[[B'    down-line-or-search
 bindkey '\e[F'    end-of-line        # xterm
 bindkey '\eOF'    end-of-line        # gnome-terminal
+bindkey '^[[4~'   end-of-line
+bindkey '\e[4~'   end-of-line        # Linux console
+bindkey '^i'      expand-or-complete-prefix # completion in the middle of a line
+bindkey '^[[C'    forward-char
+bindkey "^[[1;3C" forward-word
+bindkey '^R'      history-incremental-search-backward
+bindkey '\e[2~'   overwrite-mode     # Linux console, xterm, gnome-terminal
+bindkey '^[[5~'   up-line-or-history
+bindkey '^[[A'    up-line-or-search
+bindkey "^[."     insert-last-word 
 
-# for st term
-bindkey '\e[P'   delete-char 
+autoload -Uz copy-earlier-word
+zle -N copy-earlier-word
+bindkey "^[m" copy-earlier-word
 
 
 # from archlinux wiki
@@ -263,4 +254,7 @@ alias -g S='&> /dev/null &'
 #
 #
 
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# vim: fdm=marker
