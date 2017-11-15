@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 
 case `hostname -s` in
-  spin|jupyter)
+  spin|jupyter|filoselle)
     . ~/.bashrc
     ;;
-  giove)
-    . ~/.bashrc
-    ;;
+  *)
+    . ~/.zshrc
 esac
 
 . ~/.shell/vars
