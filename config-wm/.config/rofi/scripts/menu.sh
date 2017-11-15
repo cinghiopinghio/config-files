@@ -4,13 +4,14 @@ LOCATION=${XDG_CONFIG_HOME:-${HOME}/.config}/rofi/scripts
 echo ${LOCATION}
 
 menu="\
-1. Bookmarks 🕮
-2. Search the web 🌍
-3. Password Store 🔒 🔑
-4. LaTeX manuals 📚
-5. Kill'em All 🕱
-6. Qalc(ulate) ⌨
-7. SystemCtl 🖥\
+1. Bookmarks
+2. 🌍 Search the web
+3. 🔑 Password Store
+4. LaTeX manuals
+5. 🕱 Kill'em All 
+6. Qalc(ulate)
+7. SystemCtl
+8. Documents\
 "
 
 choice=$(echo "$menu" | rofi -dmenu -i -p '☰' -mesg 'What are you looking for?')
@@ -36,6 +37,10 @@ case $choice in
     ;;
   7*)
     ${LOCATION}/scudmenu
+    ;;
+  8*)
+    f="$(find ~/ -type f -name \*.pdf | rofi -dmenu)"
+    [ -f "$f" ] && zathura "$f"
     ;;
   *)
     ;;
