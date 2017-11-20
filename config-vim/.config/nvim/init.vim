@@ -12,32 +12,43 @@ syntax on
 
 "----------------------------------------------------------------------
 " Plugin Manager
-"{{{ Vundle: plugin manager
+"{{{ Pluc-vim: plugin manager
 if has('nvim')
 	call plug#begin('~/.config/nvim/bundle')
 else
 	call plug#begin('~/.vim/bundle')
 endif
 
+Plug 'mbbill/undotree'
+" Plug 'simnalamburt/vim-mundo'
+" Plug 'jaxbot/selective-undo.vim'
+
 "{{{ Syntax, dictionary ...
 
 set dictionary+=/usr/share/dict/cracklib-small
 
 " Syntax check
-"{{{ neomake/Syntastic
+"{{{ neomake/Syntastic/ALE
 if has('nvim') || v:version >= 800
-  Plug 'neomake/neomake'
-  let g:neomake_warning_sign = {
-    \ 'text': 'W',
-    \ 'texthl': 'WarningMsg',
-    \ }
-  let g:neomake_error_sign = {
-    \ 'text': 'E',
-    \ 'texthl': 'ErrorMsg',
-    \ }
-  " let g:neomake_python_enabled_makersers = ['flake8']
-  " run neomake on the current file on every write:
-  autocmd! BufWritePost * Neomake
+  Plug 'w0rp/ale'
+  " Only lint on save or when switching back to normal mode, not every keystroke in insert mode
+  let g:ale_lint_on_text_changed = 'normal'
+  let g:ale_lint_on_insert_leave = 1
+  " Only fix on save
+  let g:ale_fix_on_save = 1
+
+  " Plug 'neomake/neomake'
+  " let g:neomake_warning_sign = {
+  "   \ 'text': 'W',
+  "   \ 'texthl': 'WarningMsg',
+  "   \ }
+  " let g:neomake_error_sign = {
+  "   \ 'text': 'E',
+  "   \ 'texthl': 'ErrorMsg',
+  "   \ }
+  " " let g:neomake_python_enabled_makersers = ['flake8']
+  " " run neomake on the current file on every write:
+  " autocmd! BufWritePost * Neomake
 else
   " only vimL no python required
   Plug 'scrooloose/syntastic'
@@ -54,7 +65,7 @@ endif
 
 set complete+=k         " enable dictionary completion
 " set completeopt+=longest
-set completeopt=menu,menuone,noinsert,noselect
+set completeopt=menu,menuone,noinsert,noselect,preview
 
 "  complete parenthesis
 "{{{ jiangmiao/auto-pairs
@@ -63,18 +74,18 @@ let g:AutoPairs= {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
 "}}}
 
 "  autocompletion
-"{{{ deoplete / completor / VimCompletesMe
+"{{{ deoplete / completor / VimCompletesMe / NCM
 if has('nvim')
+  " the framework
+  Plug 'roxma/nvim-completion-manager'
   " with neovim use deoplete
-  function! DoRemote(arg)
-    UpdateRemotePlugins
-  endfunction
-  Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-  let g:deoplete#enable_at_startup = 1
-  Plug 'zchee/deoplete-jedi', { 'for': 'python' }
-  let g:deoplete#sources#jedi#show_docstring=1
-  " prevent slow popups
-  let g:jedi#popup_on_dot = 1
+  " function! DoRemote(arg)
+  "   UpdateRemotePlugins
+  " endfunction
+  " Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+  " let g:deoplete#enable_at_startup = 1
+  " Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+  " let g:deoplete#sources#jedi#show_docstring=1
 elseif v:version >= 800
   " with vim8 use completor
   Plug 'maralla/completor.vim'
@@ -122,6 +133,7 @@ Plug 'Konfekt/FastFold'
 " window splits control
 Plug 'zhaocai/GoldenView.Vim'
 """""""""""""""""""""""""""""""""""""  
+Plug 'ludovicchabant/vim-gutentags'
 "{{{ FZF
 Plug 'junegunn/fzf', { 'dir': '~/codes/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -177,6 +189,16 @@ nmap <localleader>fl :Lines<cr>
 "}}}
 
 Plug 'terryma/vim-multiple-cursors'
+if ! exists("g:deoplete_multicursors")
+  " load this only once
+  let g:deoplete_multicursors = 1
+  function g:Multiple_cursors_before()
+   let g:deoplete#disable_auto_complete = 1
+  endfunction
+  function g:Multiple_cursors_after()
+   let g:deoplete#disable_auto_complete = 0
+  endfunction
+endif
 "{{{ junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
 " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -184,7 +206,7 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 "}}}
-
+" move parameters left or right
 Plug 'AndrewRadev/sideways.vim'
 nnoremap <m-left> :SidewaysLeft<cr>
 nnoremap <m-right> :SidewaysRight<cr>
@@ -205,9 +227,13 @@ Plug 'morhetz/gruvbox'
 Plug 'freeo/vim-kalisi'
 Plug 'marcopaganini/termschool-vim-theme'
 Plug 'jnurmine/Zenburn'
+Plug 'fxn/vim-monochrome'
+Plug 'owickstrom/vim-colors-paramount'
+Plug 'pbrisbin/vim-colors-off'
 "}}}
 "{{{ Statusbar
 Plug 'itchyny/lightline.vim'
+Plug 'oldgaro/graynito'  " graysh lightline colorscheme
 Plug 'airblade/vim-gitgutter'
 " Plug 'airblade/vim-rooter'
 " Plug 'ludovicchabant/vim-gutentags'
@@ -216,7 +242,7 @@ Plug 'tpope/vim-fugitive'
 " do not set maps
 let g:gitgutter_map_keys = 0
 let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
+      \ 'colorscheme': 'graynito',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'fugitive', 'filename', 'modified', 'readonly' ] ],
@@ -236,6 +262,9 @@ let g:lightline = {
 "{{{ External cmds
 Plug 'thinca/vim-quickrun'
 Plug 'skywind3000/asyncrun.vim'
+augroup vimrc
+    autocmd User AsyncRunStart call asyncrun#quickfix_toggle(8, 1)
+augroup END
 " GIT integration
 " ask if you typed a wrong filename
 Plug 'EinfachToll/DidYouMean'
@@ -317,7 +346,8 @@ elseif s:host == 'arcinghio'
   colorscheme gruvbox
 elseif s:host == 'dingo'
   "colorscheme kalisi
-  colorscheme gruvbox
+  "colorscheme gruvbox
+  colorscheme paramount
 else
   colorscheme molokai
 endif

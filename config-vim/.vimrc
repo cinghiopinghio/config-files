@@ -26,18 +26,19 @@ set dictionary+=/usr/share/dict/cracklib-small
 " Syntax check
 "{{{ neomake/Syntastic
 if has('nvim') || v:version >= 800
-  Plug 'neomake/neomake'
-  let g:neomake_warning_sign = {
-    \ 'text': 'W',
-    \ 'texthl': 'WarningMsg',
-    \ }
-  let g:neomake_error_sign = {
-    \ 'text': 'E',
-    \ 'texthl': 'ErrorMsg',
-    \ }
-  " let g:neomake_python_enabled_makersers = ['flake8']
-  " run neomake on the current file on every write:
-  autocmd! BufWritePost * Neomake
+  Plug 'w0rp/ale'
+  " Plug 'neomake/neomake'
+  " let g:neomake_warning_sign = {
+  "   \ 'text': 'W',
+  "   \ 'texthl': 'WarningMsg',
+  "   \ }
+  " let g:neomake_error_sign = {
+  "   \ 'text': 'E',
+  "   \ 'texthl': 'ErrorMsg',
+  "   \ }
+  " " let g:neomake_python_enabled_makersers = ['flake8']
+  " " run neomake on the current file on every write:
+  " autocmd! BufWritePost * Neomake
 else
   " only vimL no python required
   Plug 'scrooloose/syntastic'
@@ -54,7 +55,7 @@ endif
 
 set complete+=k         " enable dictionary completion
 " set completeopt+=longest
-set completeopt=menu,menuone,noinsert,noselect
+set completeopt=menu,menuone,noinsert,noselect,preview
 
 "  complete parenthesis
 "{{{ jiangmiao/auto-pairs
@@ -122,6 +123,7 @@ Plug 'Konfekt/FastFold'
 " window splits control
 Plug 'zhaocai/GoldenView.Vim'
 """""""""""""""""""""""""""""""""""""  
+Plug 'ludovicchabant/vim-gutentags'
 "{{{ FZF
 Plug 'junegunn/fzf', { 'dir': '~/codes/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -177,6 +179,12 @@ nmap <localleader>fl :Lines<cr>
 "}}}
 
 Plug 'terryma/vim-multiple-cursors'
+function g:Multiple_cursors_before()
+ let g:deoplete#disable_auto_complete = 1
+endfunction
+function g:Multiple_cursors_after()
+ let g:deoplete#disable_auto_complete = 0
+endfunction
 "{{{ junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
 " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -208,6 +216,7 @@ Plug 'jnurmine/Zenburn'
 "}}}
 "{{{ Statusbar
 Plug 'itchyny/lightline.vim'
+Plug 'oldgaro/graynito'  " graysh lightline colorscheme
 Plug 'airblade/vim-gitgutter'
 " Plug 'airblade/vim-rooter'
 " Plug 'ludovicchabant/vim-gutentags'
