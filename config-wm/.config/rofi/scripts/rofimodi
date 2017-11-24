@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+. ~/.shell/vars; rofi -show combi -modi 'combi,ssh,calc:qalc +u8 -nocurrencies'
