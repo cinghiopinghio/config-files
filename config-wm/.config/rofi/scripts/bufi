@@ -8,6 +8,7 @@ import rofi
 import glob
 import os
 import sqlite3
+import time
 from xdg.BaseDirectory import xdg_cache_home
 CACHE = xdg_cache_home + '/bufi.json'
 
@@ -31,6 +32,19 @@ def make_string(i, url, title, p1, p2, p3):
     line = '{:4d} {:s} {:100s}'.format(i, title, ' ')
     line = line[0: LINE_LENGHT - len_url]
     return line + '<span size="x-small">{:s}</span>'.format(url)
+
+
+def frecency(item, now, indx):
+    if indx != item[0]:
+        item[1] -= 1
+        return item
+    try:
+        from_now = now - item[2]
+    except IndexError:
+        item[1] += 50
+        return item + [now]
+    item[1] = int(item[1] + min(100, 8640000 / from_now))
+    return item
 
 
 frmt = '{0:4d} {2:50.50s} <span size="x-small">{1:>60s}</span>'
@@ -57,8 +71,9 @@ buku_db = db.get_rec_all()
 bk_map = {a[0]: a for a in buku_db}
 
 # get db items present in history
-buku_hist = [bk_map.pop(i) for i, w in hist if i in bk_map]
+buku_hist = [bk_map.pop(h[0]) for h in hist if h[0] in bk_map]
 buku_hist += [v for v in bk_map.values()]
+now = int(time.time())
 
 rf = rofi.Rofi(
     [make_string(*tpl).replace('&', '&amp;')
@@ -134,10 +149,10 @@ elif exitcode == 0:
     db.browse_by_index(indx)
 
     # update the history
-    hist = [[i, j-1] if i != indx else [i, min(j+50, MAX)] for i, j in hist]
+    hist = [frecency(h, now, indx) for h in hist]
     # append the new ones (if not present)
     if indx not in [h[0] for h in hist]:
-        hist.append([indx, INIT])
+        hist.append([indx, INIT, now])
     # sort the history
     hist = sorted(hist, key=lambda x: x[1], reverse=True)
 
