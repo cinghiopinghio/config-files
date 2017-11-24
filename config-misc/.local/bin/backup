@@ -33,6 +33,7 @@ sh:/**/.mozilla
 sh:/**/.thubnails
 sh:/**/.local/share/Trash
 sh:/**/.svn
+sh:/home/*/Downloads
 *.pyc
 EOF
 CREATEOPTS="${CREATEOPTS} --exclude-caches\
