@@ -52,6 +52,7 @@ gaps outer 0
 #bindsym $mod+Return exec i3-sensible-terminal
 #bindsym $mod+Return exec urxvtc
 bindsym $mod+Return exec termite
+bindsym $mod+Shift+Return exec "~/.i3/i3newworkspace", exec --no-startup-id "termite"
 #bindsym $mod+Return exec st
 
 # kill focused window
