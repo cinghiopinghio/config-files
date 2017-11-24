@@ -24,9 +24,15 @@ endif
 set dictionary+=/usr/share/dict/cracklib-small
 
 " Syntax check
-"{{{ neomake/Syntastic
+"{{{ neomake/Syntastic/ALE
 if has('nvim') || v:version >= 800
   Plug 'w0rp/ale'
+  " Only lint on save or when switching back to normal mode, not every keystroke in insert mode
+  let g:ale_lint_on_text_changed = 'normal'
+  let g:ale_lint_on_insert_leave = 1
+  " Only fix on save
+  let g:ale_fix_on_save = 1
+
   " Plug 'neomake/neomake'
   " let g:neomake_warning_sign = {
   "   \ 'text': 'W',
@@ -64,18 +70,18 @@ let g:AutoPairs= {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
 "}}}
 
 "  autocompletion
-"{{{ deoplete / completor / VimCompletesMe
+"{{{ deoplete / completor / VimCompletesMe / NCM
 if has('nvim')
+  " the framework
+  Plug 'roxma/nvim-completion-manager'
   " with neovim use deoplete
-  function! DoRemote(arg)
-    UpdateRemotePlugins
-  endfunction
-  Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-  let g:deoplete#enable_at_startup = 1
-  Plug 'zchee/deoplete-jedi', { 'for': 'python' }
-  let g:deoplete#sources#jedi#show_docstring=1
-  " prevent slow popups
-  let g:jedi#popup_on_dot = 1
+  " function! DoRemote(arg)
+  "   UpdateRemotePlugins
+  " endfunction
+  " Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+  " let g:deoplete#enable_at_startup = 1
+  " Plug 'zchee/deoplete-jedi', { 'for': 'python' }
+  " let g:deoplete#sources#jedi#show_docstring=1
 elseif v:version >= 800
   " with vim8 use completor
   Plug 'maralla/completor.vim'
@@ -158,11 +164,10 @@ nmap <localleader>fb :Buffers<cr>
 Plug 'Shougo/neomru.vim'
 nmap <localleader>fr :History<cr>
 command! -bang History
-  \ call fzf#run({
-  \ 'sink': 'e',
+  \ call fzf#run(fzf#wrap({
   \ 'options': '--tiebreak=index',
   \ 'source': 'cat ~/.cache/neomru/file | sed 1d'
-  \ })
+  \ }, <bang>0))
 nmap <localleader>fl :Lines<cr>
 "}}}
 "{{{ Denite
@@ -179,12 +184,16 @@ nmap <localleader>fl :Lines<cr>
 "}}}
 
 Plug 'terryma/vim-multiple-cursors'
-function g:Multiple_cursors_before()
- let g:deoplete#disable_auto_complete = 1
-endfunction
-function g:Multiple_cursors_after()
- let g:deoplete#disable_auto_complete = 0
-endfunction
+" if ! exists("g:deoplete_multicursors")
+"   " load this only once
+"   let g:deoplete_multicursors = 1
+"   function g:Multiple_cursors_before()
+"    let g:deoplete#disable_auto_complete = 1
+"   endfunction
+"   function g:Multiple_cursors_after()
+"    let g:deoplete#disable_auto_complete = 0
+"   endfunction
+" endif
 "{{{ junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
 " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -192,27 +201,39 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 "}}}
-
+" move parameters left or right
 Plug 'AndrewRadev/sideways.vim'
 nnoremap <m-left> :SidewaysLeft<cr>
 nnoremap <m-right> :SidewaysRight<cr>
 
+"Plug 'xtal8/traces.vim'
+Plug 'haya14busa/incsearch.vim'
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
 " better search experience
 " {{{ junegunn/vim-slash
-Plug 'junegunn/vim-slash'
-if has('timers')
-  " Blink 2 times with 50ms interval
-  noremap <expr> <plug>(slash-after) slash#blink(2, 50)
-endif
+" Plug 'junegunn/vim-slash'
+" if has('timers')
+"   " Blink 2 times with 50ms interval
+"   noremap <expr> <plug>(slash-after) slash#blink(2, 50)
+" endif
 " }}}
 "}}}
 "{{{ Colorschemes
 Plug 'tomasr/molokai'
 Plug 'junegunn/seoul256.vim'
+let g:seoul256_background = 235
+let g:seoul256_light_background = 256
 Plug 'morhetz/gruvbox'
+let g:gruvbox_italic=1
 Plug 'freeo/vim-kalisi'
 Plug 'marcopaganini/termschool-vim-theme'
 Plug 'jnurmine/Zenburn'
+Plug 'fxn/vim-monochrome'
+Plug 'owickstrom/vim-colors-paramount'
+Plug 'pbrisbin/vim-colors-off'
 "}}}
 "{{{ Statusbar
 Plug 'itchyny/lightline.vim'
@@ -225,7 +246,7 @@ Plug 'tpope/vim-fugitive'
 " do not set maps
 let g:gitgutter_map_keys = 0
 let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
+      \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'fugitive', 'filename', 'modified', 'readonly' ] ],
@@ -235,7 +256,7 @@ let g:lightline = {
       \ 'component_function': { 
       \   'fugitive': 'fugitive#head', 
       \ },
-      \ 'separator': { 'left': '▓▒░', 'right': '░▒▓' },
+      \ 'separator': { 'left': '▙', 'right': '▟' },
       \ 'subseparator': { 'left': '', 'right': '' },
       \ }
   function! LightLineFugitive()
@@ -245,6 +266,9 @@ let g:lightline = {
 "{{{ External cmds
 Plug 'thinca/vim-quickrun'
 Plug 'skywind3000/asyncrun.vim'
+augroup vimrc
+    autocmd User AsyncRunStart call asyncrun#quickfix_toggle(8, 1)
+augroup END
 " GIT integration
 " ask if you typed a wrong filename
 Plug 'EinfachToll/DidYouMean'
@@ -319,8 +343,6 @@ set title
 set termguicolors
 set background=dark
 if s:host == 'spin'
-  let g:seoul256_background = 235
-  let g:seoul256_light_background = 256
   colorscheme seoul256
 elseif s:host == 'arcinghio'
   colorscheme gruvbox
@@ -422,3 +444,6 @@ nmap ,p "*p
 nmap <leader><leader><leader> :so $MYVIMRC<cr>
 "}}}"
 
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>

@@ -168,11 +168,10 @@ nmap <localleader>fb :Buffers<cr>
 Plug 'Shougo/neomru.vim'
 nmap <localleader>fr :History<cr>
 command! -bang History
-  \ call fzf#run({
-  \ 'sink': 'e',
+  \ call fzf#run(fzf#wrap({
   \ 'options': '--tiebreak=index',
   \ 'source': 'cat ~/.cache/neomru/file | sed 1d'
-  \ })
+  \ }, <bang>0))
 nmap <localleader>fl :Lines<cr>
 "}}}
 "{{{ Denite
@@ -189,16 +188,16 @@ nmap <localleader>fl :Lines<cr>
 "}}}
 
 Plug 'terryma/vim-multiple-cursors'
-if ! exists("g:deoplete_multicursors")
-  " load this only once
-  let g:deoplete_multicursors = 1
-  function g:Multiple_cursors_before()
-   let g:deoplete#disable_auto_complete = 1
-  endfunction
-  function g:Multiple_cursors_after()
-   let g:deoplete#disable_auto_complete = 0
-  endfunction
-endif
+" if ! exists("g:deoplete_multicursors")
+"   " load this only once
+"   let g:deoplete_multicursors = 1
+"   function g:Multiple_cursors_before()
+"    let g:deoplete#disable_auto_complete = 1
+"   endfunction
+"   function g:Multiple_cursors_after()
+"    let g:deoplete#disable_auto_complete = 0
+"   endfunction
+" endif
 "{{{ junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
 " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -211,19 +210,28 @@ Plug 'AndrewRadev/sideways.vim'
 nnoremap <m-left> :SidewaysLeft<cr>
 nnoremap <m-right> :SidewaysRight<cr>
 
+"Plug 'xtal8/traces.vim'
+Plug 'haya14busa/incsearch.vim'
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
 " better search experience
 " {{{ junegunn/vim-slash
-Plug 'junegunn/vim-slash'
-if has('timers')
-  " Blink 2 times with 50ms interval
-  noremap <expr> <plug>(slash-after) slash#blink(2, 50)
-endif
+" Plug 'junegunn/vim-slash'
+" if has('timers')
+"   " Blink 2 times with 50ms interval
+"   noremap <expr> <plug>(slash-after) slash#blink(2, 50)
+" endif
 " }}}
 "}}}
 "{{{ Colorschemes
 Plug 'tomasr/molokai'
 Plug 'junegunn/seoul256.vim'
+let g:seoul256_background = 235
+let g:seoul256_light_background = 256
 Plug 'morhetz/gruvbox'
+let g:gruvbox_italic=1
 Plug 'freeo/vim-kalisi'
 Plug 'marcopaganini/termschool-vim-theme'
 Plug 'jnurmine/Zenburn'
@@ -242,7 +250,7 @@ Plug 'tpope/vim-fugitive'
 " do not set maps
 let g:gitgutter_map_keys = 0
 let g:lightline = {
-      \ 'colorscheme': 'graynito',
+      \ 'colorscheme': 'wombat',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'fugitive', 'filename', 'modified', 'readonly' ] ],
@@ -252,7 +260,7 @@ let g:lightline = {
       \ 'component_function': { 
       \   'fugitive': 'fugitive#head', 
       \ },
-      \ 'separator': { 'left': '▓▒░', 'right': '░▒▓' },
+      \ 'separator': { 'left': '▙', 'right': '▟' },
       \ 'subseparator': { 'left': '', 'right': '' },
       \ }
   function! LightLineFugitive()
@@ -339,15 +347,12 @@ set title
 set termguicolors
 set background=dark
 if s:host == 'spin'
-  let g:seoul256_background = 235
-  let g:seoul256_light_background = 256
   colorscheme seoul256
 elseif s:host == 'arcinghio'
   colorscheme gruvbox
 elseif s:host == 'dingo'
-  "colorscheme kalisi
-  "colorscheme gruvbox
-  colorscheme paramount
+  " colorscheme paramount
+  colorscheme mangroove
 else
   colorscheme molokai
 endif
@@ -443,3 +448,6 @@ nmap ,p "*p
 nmap <leader><leader><leader> :so $MYVIMRC<cr>
 "}}}"
 
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
