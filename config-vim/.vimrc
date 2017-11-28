@@ -12,7 +12,7 @@ syntax on
 
 "----------------------------------------------------------------------
 " Plugin Manager
-"{{{ Vundle: plugin manager
+"{{{ Pluc-vim: plugin manager
 if has('nvim')
 	call plug#begin('~/.config/nvim/bundle')
 else

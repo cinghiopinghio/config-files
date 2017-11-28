@@ -240,8 +240,8 @@ Plug 'owickstrom/vim-colors-paramount'
 Plug 'pbrisbin/vim-colors-off'
 "}}}
 "{{{ Statusbar
-Plug 'itchyny/lightline.vim'
-Plug 'oldgaro/graynito'  " graysh lightline colorscheme
+"Plug 'itchyny/lightline.vim'
+"Plug 'oldgaro/graynito'  " graysh lightline colorscheme
 Plug 'airblade/vim-gitgutter'
 " Plug 'airblade/vim-rooter'
 " Plug 'ludovicchabant/vim-gutentags'
@@ -249,23 +249,23 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 " do not set maps
 let g:gitgutter_map_keys = 0
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'fugitive', 'filename', 'modified', 'readonly' ] ],
-      \   'right': [ [ 'percent', 'lineinfo' ],
-      \              [ 'fileformat', 'fileencoding', 'filetype' ] ],
-      \ },
-      \ 'component_function': { 
-      \   'fugitive': 'fugitive#head', 
-      \ },
-      \ 'separator': { 'left': '▙', 'right': '▟' },
-      \ 'subseparator': { 'left': '', 'right': '' },
-      \ }
-  function! LightLineFugitive()
-    return exists('*fugitive#head') ? fugitive#head() : ''
-  endfunction
+" let g:lightline = {
+"       \ 'colorscheme': 'wombat',
+"       \ 'active': {
+"       \   'left': [ [ 'mode', 'paste' ],
+"       \             [ 'fugitive', 'filename', 'modified', 'readonly' ] ],
+"       \   'right': [ [ 'percent', 'lineinfo' ],
+"       \              [ 'fileformat', 'fileencoding', 'filetype' ] ],
+"       \ },
+"       \ 'component_function': { 
+"       \   'fugitive': 'fugitive#head', 
+"       \ },
+"       \ 'separator': { 'left': '▙', 'right': '▟' },
+"       \ 'subseparator': { 'left': '', 'right': '' },
+"       \ }
+"   function! LightLineFugitive()
+"     return exists('*fugitive#head') ? fugitive#head() : ''
+"   endfunction
 "}}}
 "{{{ External cmds
 Plug 'thinca/vim-quickrun'
@@ -378,11 +378,11 @@ set splitbelow
 set splitright
 
 set textwidth=78
-if exists('+colorcolumn')
-  set colorcolumn=80
-else
-  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
-endif
+augroup rowcolumn
+  autocmd!
+  autocmd InsertEnter * setlocal colorcolumn=80 cursorline
+  autocmd InsertLeave * setlocal colorcolumn=0 nocursorline
+augroup END
 
 set makeprg=make
 set grepprg=grep\ -nH\ $*
@@ -402,6 +402,42 @@ set ttimeoutlen=50 " fast exit from INSERT (airlin
 set dir=/tmp//,/var/tmp//,.
 set mouse=vi
 "}}}
+
+
+function! WindowNumber()
+  return tabpagewinnr(tabpagenr())
+endfunction
+function! TrailingSpaceWarning()
+  if !exists("b:statline_trailing_space_warning")
+    let lineno = search('\s$', 'nw')
+    if lineno != 0
+      let b:statline_trailing_space_warning = '[trailing:'.lineno.']'
+    else
+      let b:statline_trailing_space_warning = ''
+    endif
+  endif
+  return b:statline_trailing_space_warning
+endfunction
+
+" recalculate when idle, and after saving
+augroup statline_trail
+  autocmd!
+  autocmd cursorhold,bufwritepost * unlet! b:statline_trailing_space_warning
+augroup END
+
+set statusline=
+set statusline+=%6*%m%r%*                          " modified, readonly
+set statusline+=%2*%{expand('%:h')}/               " relative path to file's directory
+set statusline+=%1*%t%*                            " file name
+set statusline+=%<                                 " truncate here if needed
+set statusline+=\ %5*%L\ lines%*                     " number of lines
+set statusline+=\ %3*%{TrailingSpaceWarning()}%*     " trailing whitespace
+
+set statusline+=%=                                 " switch to RHS
+
+set statusline+=%5*col:%-3.c%*                      " column
+set statusline+=\ %2*buf:%-3n%*                      " buffer number
+set statusline+=\ %2*win:%-3.3{WindowNumber()}%*     " window number
 
 "-------------------------------------------------------------------------
 " MAP
@@ -425,7 +461,13 @@ nnoremap <silent> <localleader><Up>    :wincmd k<CR>
 nnoremap <silent> <localleader><Down>  :wincmd j<CR>
 nnoremap <silent> <localleader><Right> :wincmd l<CR>
 nnoremap <silent> <localleader><Left>  :wincmd h<CR>
-" prova
+
+" Use tab and shift-tab to cycle through windows.
+nnoremap <Tab> <C-W>w
+nnoremap <S-Tab> <C-W>W
+" Use | and _ to split windows (while preserving original behaviour of [count]bar and [count]_).
+nnoremap <expr><silent> <Bar> v:count == 0 ? "<C-W>v<C-W><Right>" : ":<C-U>normal! 0".v:count."<Bar><CR>"
+nnoremap <expr><silent> _     v:count == 0 ? "<C-W>s<C-W><Down>"  : ":<C-U>normal! ".v:count."_<CR>"
 
 nmap    <ESC>[5^    <C-PageUp>
 nmap    <ESC>[6^    <C-PageDown>
@@ -434,20 +476,29 @@ map Q gq
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
-map <F6> :setlocal spell! spelllang=en_gb<CR>
 
-" insert date
-inoremap <F5> <C-R>=strftime("[%Y-%m-%d]")<CR>
+" cycle through a number of languages
+function! CycleLang()
+  let langs = ['en_gb', 'it', 'fr', 'en_us', '']
+  let i = index(langs, &spelllang)
+  let j = (i+1)%len(langs)
+  let &spelllang = langs[j]
 
-" paste from clipboard without indentation with F2
-"nnoremap <F2> :set invpaste paste?<CR>
-vmap ,y "*y
-nmap ,p "*p
+  if empty(&spelllang)
+    set nospell
+    echo 'Unset spell language'
+  else
+    set spell
+    echo 'Using: "'.&spelllang.'" spell language'
+  endif
+endfunction
+nnoremap <F6> :call CycleLang()<CR>
 
 " reload vimrc
 nmap <leader><leader><leader> :so $MYVIMRC<cr>
-"}}}"
 
+" show the highlight used (under the cursor)
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+"}}}
