@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+BASE=${HOME}
+VERBOSE=false
+
+NEWFILE=$(realpath "$1")
+SCRIPTPATH=$(realpath "$0")
+SCRIPTDIR=$(dirname "${SCRIPTPATH}")
+
+# print to stderr
+echoerr() { echo "$@" 1>&2; }
+
+[ ! -f "${NEWFILE}" ] && echo "no such file" && exit 1
+
+if [[ "${NEWFILE#$SCRIPTDIR}" != ${NEWFILE} ]]; then
+  echoerr "No! You cannot swallow from this folder"
+  exit 2
+elif [[ "${NEWFILE#$HOME}" == ${NEWFILE} ]]; then
+  echoerr "Please swallow from your home"
+  exit 3
+fi
+
+TO_PKG=$(for f in ${SCRIPTDIR}/config-*; do echo $f; done | fzf)
+TO=$(dirname "${TO_PKG}/${NEWFILE#${BASE}/}")
+
+echo Moving ${NEWFILE}
+echo to ${TO}
+
+read -p "Are you sure? [yN]" -n 1 -r USERINPUT
+echo
+
+if [[ "${USERINPUT}" =~ ^[yY]$ ]]; then
+  ${VERBOSE} && echo OK, kidnapping it
+else
+  ${VERBOSE} && exit 0
+fi
+
+mkdir -p "${TO}"
+mv "${NEWFILE}" "${TO}"
