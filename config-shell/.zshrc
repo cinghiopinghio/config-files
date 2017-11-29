@@ -56,7 +56,7 @@ Host="%m"
 Folder="%f"
 # Prompt color depends on HOST
 case $HOST in
-  "arcinghio") hostColor="%F{green}"  ;;
+  "susto") hostColor="%F{green}"  ;;
   "moma")      hostColor="%F{green}"  ;;
   "spin")      hostColor="%F{blue}"   ;;
   "dingo")     hostColor="%F{yellow}"   ;;

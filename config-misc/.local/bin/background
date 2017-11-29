@@ -58,7 +58,7 @@ esac
 
 case ${ACTION} in
   background|update)
-    feh --bg-fill ${LOCATION}/${FNAME}.*
+    feh --no-fehbg --bg-fill ${LOCATION}/${FNAME}.*
     ;;
   lock)
     i3lock -c 444444 -t -i ${LOCATION}/${FNAME}.png

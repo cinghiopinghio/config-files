@@ -42,7 +42,7 @@ window {
 }
 
 mainbox {
-  margin: 10% 20%;
+  margin: 5% 20%;
 }
 
 dummy {

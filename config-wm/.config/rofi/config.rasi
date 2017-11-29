@@ -1,9 +1,9 @@
 configuration {
 	modi: "window,ssh,run,drun";
 	width: 60;
-/*	lines: 15;*/
+	lines: 14;
 /*	columns: 1;*/
-	font: "Renner* 12";
+	font: "Fira 10";
 	fixed-num-lines: false;
 	show-icons: true;
 	terminal: "termite";
@@ -26,8 +26,6 @@ configuration {
 /*	parse-known-hosts: true;*/
 /*	tokenize: true;*/
 /*	m: "-5";*/
-/*	line-margin: 2;*/
-/*	line-padding: 1;*/
 /*	filter: ;*/
 /*	separator-style: "dash";*/
 /*	hide-scrollbar: false;*/

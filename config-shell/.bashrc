@@ -116,7 +116,7 @@ Host="\h"
 command -v __git_ps1 >/dev/null 2>&1 && GitBranch='$(__git_ps1)' || GitBranch=''
 
 case ${HOSTNAME/.*/} in
-  'arcinghio') HostColor=$Green ;;
+  'susto') HostColor=$Green ;;
   'moma')      HostColor=$IGreen ;;
   'spin')      HostColor=$Blue  ;;
   'dingo')     HostColor=$Yellow;;
