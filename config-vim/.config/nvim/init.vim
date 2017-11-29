@@ -6,7 +6,7 @@
 let maplocalleader=' '
 set nocompatible               " be iMproved
 filetype indent plugin on
-let s:host=substitute(hostname(), "\\..*", "", "") 
+let s:host=substitute(hostname(), "\\..*", "", "")
 syntax on
 "}}}
 
@@ -14,9 +14,9 @@ syntax on
 " Plugin Manager
 "{{{ Pluc-vim: plugin manager
 if has('nvim')
-	call plug#begin('~/.config/nvim/bundle')
+  call plug#begin('~/.config/nvim/bundle')
 else
-	call plug#begin('~/.vim/bundle')
+  call plug#begin('~/.vim/bundle')
 endif
 
 Plug 'mbbill/undotree'
@@ -132,7 +132,7 @@ set scrolloff=5  " never reach the top or bottom of the page
 Plug 'Konfekt/FastFold'
 " window splits control
 Plug 'zhaocai/GoldenView.Vim'
-"""""""""""""""""""""""""""""""""""""  
+"""""""""""""""""""""""""""""""""""""
 Plug 'ludovicchabant/vim-gutentags'
 "{{{ FZF
 Plug 'junegunn/fzf', { 'dir': '~/codes/fzf', 'do': './install --all' }
@@ -240,32 +240,11 @@ Plug 'owickstrom/vim-colors-paramount'
 Plug 'pbrisbin/vim-colors-off'
 "}}}
 "{{{ Statusbar
-"Plug 'itchyny/lightline.vim'
-"Plug 'oldgaro/graynito'  " graysh lightline colorscheme
 Plug 'airblade/vim-gitgutter'
 " Plug 'airblade/vim-rooter'
-" Plug 'ludovicchabant/vim-gutentags'
-" let g:gutentags_cache_dir = '~/.cache/ctags/'
 Plug 'tpope/vim-fugitive'
 " do not set maps
 let g:gitgutter_map_keys = 0
-" let g:lightline = {
-"       \ 'colorscheme': 'wombat',
-"       \ 'active': {
-"       \   'left': [ [ 'mode', 'paste' ],
-"       \             [ 'fugitive', 'filename', 'modified', 'readonly' ] ],
-"       \   'right': [ [ 'percent', 'lineinfo' ],
-"       \              [ 'fileformat', 'fileencoding', 'filetype' ] ],
-"       \ },
-"       \ 'component_function': { 
-"       \   'fugitive': 'fugitive#head', 
-"       \ },
-"       \ 'separator': { 'left': '▙', 'right': '▟' },
-"       \ 'subseparator': { 'left': '', 'right': '' },
-"       \ }
-"   function! LightLineFugitive()
-"     return exists('*fugitive#head') ? fugitive#head() : ''
-"   endfunction
 "}}}
 "{{{ External cmds
 Plug 'thinca/vim-quickrun'
@@ -317,7 +296,7 @@ if has("autocmd") " only with autocommands
   augroup END
 
 else
-  set autoindent		" always set autoindenting on
+  set autoindent    " always set autoindenting on
 endif " has("autocmd")}}}
 
 "-------------------------------------------------------------------------
@@ -344,12 +323,18 @@ set linebreak
 " set terminal title
 set title
 
+" show tabs and trailing whitespaces
+set list
+set listchars=tab:╟─,trail:┄,extends:┄
+
 set termguicolors
 set background=dark
 if s:host == 'spin'
   colorscheme seoul256
 elseif s:host == 'arcinghio'
   colorscheme gruvbox
+elseif s:host == 'susto'
+  colorscheme mangroove
 elseif s:host == 'dingo'
   " colorscheme paramount
   colorscheme mangroove
@@ -402,7 +387,6 @@ set ttimeoutlen=50 " fast exit from INSERT (airlin
 set dir=/tmp//,/var/tmp//,.
 set mouse=vi
 "}}}
-
 
 function! WindowNumber()
   return tabpagewinnr(tabpagenr())
