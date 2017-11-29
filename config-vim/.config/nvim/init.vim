@@ -6,7 +6,7 @@
 let maplocalleader=' '
 set nocompatible               " be iMproved
 filetype indent plugin on
-let s:host=substitute(hostname(), "\\..*", "", "") 
+let s:host=substitute(hostname(), "\\..*", "", "")
 syntax on
 "}}}
 
@@ -132,7 +132,7 @@ set scrolloff=5  " never reach the top or bottom of the page
 Plug 'Konfekt/FastFold'
 " window splits control
 Plug 'zhaocai/GoldenView.Vim'
-"""""""""""""""""""""""""""""""""""""  
+"""""""""""""""""""""""""""""""""""""
 Plug 'ludovicchabant/vim-gutentags'
 "{{{ FZF
 Plug 'junegunn/fzf', { 'dir': '~/codes/fzf', 'do': './install --all' }
@@ -257,8 +257,8 @@ let g:gitgutter_map_keys = 0
 "       \   'right': [ [ 'percent', 'lineinfo' ],
 "       \              [ 'fileformat', 'fileencoding', 'filetype' ] ],
 "       \ },
-"       \ 'component_function': { 
-"       \   'fugitive': 'fugitive#head', 
+"       \ 'component_function': {
+"       \   'fugitive': 'fugitive#head',
 "       \ },
 "       \ 'separator': { 'left': '▙', 'right': '▟' },
 "       \ 'subseparator': { 'left': '', 'right': '' },
@@ -411,7 +411,7 @@ function! TrailingSpaceWarning()
   if !exists("b:statline_trailing_space_warning")
     let lineno = search('\s$', 'nw')
     if lineno != 0
-      let b:statline_trailing_space_warning = '[trailing:'.lineno.']'
+      let b:statline_trailing_space_warning = '[TS:'.lineno.']'
     else
       let b:statline_trailing_space_warning = ''
     endif
@@ -427,17 +427,15 @@ augroup END
 
 set statusline=
 set statusline+=%6*%m%r%*                          " modified, readonly
-set statusline+=%2*%{expand('%:h')}/               " relative path to file's directory
+set statusline+=%2*%{expand('%:p:h')}/               " relative path to file's directory
 set statusline+=%1*%t%*                            " file name
 set statusline+=%<                                 " truncate here if needed
-set statusline+=\ %5*%L\ lines%*                     " number of lines
 set statusline+=\ %3*%{TrailingSpaceWarning()}%*     " trailing whitespace
 
 set statusline+=%=                                 " switch to RHS
 
-set statusline+=%5*col:%-3.c%*                      " column
-set statusline+=\ %2*buf:%-3n%*                      " buffer number
-set statusline+=\ %2*win:%-3.3{WindowNumber()}%*     " window number
+set statusline+=%5*L:%l/%L%*                     " number of lines
+set statusline+=\ %5*W:%{WindowNumber()}%*     " window number
 
 "-------------------------------------------------------------------------
 " MAP
