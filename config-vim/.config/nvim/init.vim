@@ -260,6 +260,7 @@ Plug 'EinfachToll/DidYouMean'
 """"""""""""""""""""""""""""""""""""" HTML
 Plug 'othree/html5.vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] }
 Plug 'lepture/vim-jinja'
+Plug 'Vimjas/vim-python-pep8-indent'
 """"""""""""""""""""""""""""""""""""" LaTeX
 " {{{ lervag/Vimtex
 "There is no reason to lazily load vimtex. Vimtex is a filetype plugin that
