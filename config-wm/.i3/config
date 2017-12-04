@@ -60,8 +60,8 @@ bindsym $mod+Shift+q kill
 bindsym $mod+b border toggle
 
 # start the program launcher
-bindsym $mod+d exec "bash ~/.config/rofi/scripts/rofimodi"
-bindsym $mod+p exec "bash ~/.config/rofi/scripts/menu.sh"
+bindsym $mod+d exec "~/.config/rofi/scripts/rofimodi"
+bindsym $mod+p exec "~/.config/rofi/scripts/menu.sh"
 
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
@@ -129,8 +129,8 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # switch to workspace
-bindsym $mod+n exec "~/.i3/i3newworkspace" 
-bindsym $mod+Shift+n exec "~/.i3/i3newworkspace -m" 
+bindsym $mod+n exec "~/.i3/i3newworkspace"
+bindsym $mod+Shift+n exec "~/.i3/i3newworkspace -m"
 bindsym $mod+1 workspace 001
 bindsym $mod+2 workspace 010
 bindsym $mod+3 workspace 011
@@ -209,7 +209,7 @@ mode --pango_markup $mode_system {
     # no swap to hibernate
     #bindsym h exec --no-startup-id i3lock -c 502020 && systemctl hibernate, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
-    bindsym x exec --no-startup-id systemctl poweroff, mode "default"  
+    bindsym x exec --no-startup-id systemctl poweroff, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -253,10 +253,10 @@ mode "resize" {
 #               statusline         $fgCol
 #               background         $bgCol
 #               separator          $fgCol
-#               focused_workspace  $primaryCol $primaryCol $bgCol 
+#               focused_workspace  $primaryCol $primaryCol $bgCol
 #               active_workspace   $lightBgCol $lightBgCol $primaryCol
 #               inactive_workspace $bgCol      $bgCol      $primaryCol
-#               urgent_workspace   $alarmCol   $alarmCol   $bgCol 
+#               urgent_workspace   $alarmCol   $alarmCol   $bgCol
 #         }
 # }
 

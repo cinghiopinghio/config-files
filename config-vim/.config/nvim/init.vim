@@ -133,7 +133,8 @@ Plug 'Konfekt/FastFold'
 " window splits control
 Plug 'zhaocai/GoldenView.Vim'
 """""""""""""""""""""""""""""""""""""
-Plug 'ludovicchabant/vim-gutentags'
+" Plug 'ludovicchabant/vim-gutentags'
+Plug 'troydm/zoomwintab.vim'
 "{{{ FZF
 Plug 'junegunn/fzf', { 'dir': '~/codes/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'

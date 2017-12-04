@@ -2,14 +2,14 @@
 
 # get the store
 passdir=${PASSWORD_STORE_DIR:-$HOME"/.password-store"}
-
 # run the menu
-menu=$(find $passdir -name "*.gpg" -printf "%P\n" | sed -e 's/\.gpg$//')
+menu=$(find -L $passdir -name "*.gpg" -printf "%P\n" | sed -e 's/\.gpg$//')
 choice=$(echo "$menu" |\
-	rofi -dmenu -i -p 'Password Store: '\
-	-mesg "Alt-s to show data"\
-	-kb-custom-1 "Alt+s"\
-	-markup-rows -theme-str '* { green:@red; lightgreen:@lightred; }')
+  rofi -dmenu -i -p 'Password Store: '\
+  -mesg "Alt-s to show data"\
+  -kb-custom-1 "Alt+s"\
+  -markup-rows -theme-str '* { green:@red; lightgreen:@lightred; }'\
+  )
 
 exitcode=$?
 echo $exitcode
@@ -18,7 +18,7 @@ echo $exitcode
 [[ ${choice} == '' ]] && exit 0
 
 # save to clipboard
-pass show --clip ${choice} &> /dev/null 
+pass show --clip ${choice} &> /dev/null
 # notify
 notify-send --urgency=critical\
     --app-name=rofi-pass\
@@ -29,6 +29,6 @@ notify-send --urgency=critical\
 if [[ "${exitcode}" == 10 ]];
 then
     data="$(pass ${choice} | sed 1d)"
-	rofi -e "$data"
+    rofi -e "$data"
 fi
 #vim ft:sh
