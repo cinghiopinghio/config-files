@@ -35,14 +35,11 @@
 
 window {
     background-color: rgba(0, 0, 0, 0.5);
-    location: center;
-    anchor:   center;
-    height: 100%;
-    width: 100%;
+    location: north;
+    anchor:   north;
 }
 
 mainbox {
-    margin: 5% 20%;
 }
 
 dummy {

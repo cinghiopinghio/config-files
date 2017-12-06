@@ -27,7 +27,7 @@
     // background-color: @background;
     background-color: rgba(0, 0, 0, 0.0);
     color: @foreground;
-    font: "Fira Mono 14";
+    font: "Fira Mono 12";
     padding: 0px;
     margin: 0px;
     spacing: 0px;
@@ -48,7 +48,7 @@ inputbar {
 }
 
 prompt,case-indicator,entry {
-    font: "Fira Sans 18";
+    font: "Fira Sans 14";
     color: inherit;
 }
 
