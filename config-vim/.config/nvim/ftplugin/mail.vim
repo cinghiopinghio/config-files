@@ -1,5 +1,9 @@
-"inoremap <c-a> <ESC>:Unite abook<CR>
-inoremap <C-a> <ESC>"zyiw:exe "Unite abook -input=".@z.""<CR>
+" do not wrap on mail headers
+autocmd CursorMoved,CursorMovedI <buffer> if IsSpecialLine() | setlocal textwidth=0 | else | setlocal textwidth=80 | endif
+
+function IsSpecialLine()
+    return getline('.') =~ '^\(to:\|cc:\|ccn:\|subject\).*'
+endfunction
 
 let g:qcc_query_command = 'notmuch-addrlookup'
 let g:qcc_format_abbr = '${0}' "first column
