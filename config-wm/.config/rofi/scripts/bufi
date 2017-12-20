@@ -1,16 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import json
-import buku
 import sys
-import rofi
+import json
 import glob
 import os
 import sqlite3
 import time
+
+import buku
+import rofi
 from xdg.BaseDirectory import xdg_cache_home
-CACHE = xdg_cache_home + '/bufi.json'
 
 # Format:
 # 0: index
@@ -21,17 +21,17 @@ CACHE = xdg_cache_home + '/bufi.json'
 
 LINE_LENGHT = 99
 PANGO_STEP = 1.2
+CACHE = xdg_cache_home + '/bufi.json'
 
-moz_session = '~/.mozilla/firefox/*.default/places.sqlite'
+MOZ_SESSION = '~/.mozilla/firefox/*.default/places.sqlite'
 # frmt = '{0:4d} {2}\n' +\
 #        '     <span size="x-small">{1:30s}</span>'
 
 
-def make_string(i, url, title, p1, p2, p3):
-    len_url = int(len(url) / PANGO_STEP / PANGO_STEP + 1)
-    line = '{:4d} {:s} {:100s}'.format(i, title, ' ')
-    line = line[0: LINE_LENGHT - len_url]
-    return line + '<span size="x-small">{:s}</span>'.format(url)
+def make_string(*ms_args):
+    ''' Create the output string in pango format for each line '''
+    return '{0:4d} {2:s} <span size="x-small"><i>{1:s}</i>{3} {4}</span>'\
+        .format(*ms_args)
 
 
 def frecency(item, now, indx):
@@ -47,7 +47,7 @@ def frecency(item, now, indx):
     return item
 
 
-frmt = '{0:4d} {2:50.50s} <span size="x-small">{1:>60s}</span>'
+frmt = '{0:4d} {2:50s} <span size="x-small">{1}</span>'
 args = sys.argv[1:]
 MAX = 1000000
 INIT = 16
@@ -87,7 +87,7 @@ choice, exitcode = rf.run()
 if exitcode == 10:
     # add new bookmark from open tabs (firefox)
     tabs = {}
-    for fname in glob.glob(os.path.expanduser(moz_session)):
+    for fname in glob.glob(os.path.expanduser(MOZ_SESSION)):
         conn = sqlite3.connect(fname)
         c = conn.cursor()
         c.execute('SELECT * FROM moz_places')
