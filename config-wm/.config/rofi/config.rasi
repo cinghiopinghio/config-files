@@ -38,7 +38,7 @@ configuration {
 /*    window-format: "{w}    {i}{c}   {t}";*/
 /*    click-to-exit: true;*/
 /*    show-match: true;*/
-    theme: "~/.config/rofi/themes/gruvbox-dark-fullscreen.rasi";
+    theme: "gruvbox-theme-dark.rasi";
 //    plugin-path: "/usr/local/lib/rofi/";
 /*    pid: "/run/user/1000/rofi.pid";*/
 /*    display-windowcd: ;*/
