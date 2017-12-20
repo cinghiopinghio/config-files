@@ -1,0 +1,54 @@
+snippet templ-minimal "Template: Minimal" b
+\documentclass{minimal}
+\begin{document}
+
+Hello World!${0}
+
+\end{document}
+endsnippet
+
+snippet templ-article "Template: standard article" b
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+${1}
+\title{The title}
+\author{Pinco Pallino}
+
+\begin{document}
+\maketitle
+
+${0}
+
+\end{document}
+endsnippet
+
+snippet templ-tikz "Template: standalone Tikz figure" b
+% TEX program = lualatex
+\RequirePackage{luatex85}
+\documentclass[border=5]{standalone}
+
+\usepackage{fontspec}
+\setmainfont{Fira Sans}
+
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
+% \usetikzlibrary{shadows,fadings,matrix}
+% use arrows with bended tips
+% \usetikzlibrary{arrows.meta,bending}
+% use rectangles to fit other nodes
+% \usetikzlibrary{backgrounds,fit}
+
+\begin{document}
+
+\begin{tikzpicture}
+  [
+  thick
+  ]
+${0}
+\end{tikzpicture}
+
+\end{document}
+endsnippet
