@@ -1,10 +1,10 @@
 [colors]
     background= #fbf1c7
     background= rgba(251, 241, 199, 0.9)
-    foreground= #3c3836
+    foreground= #282828
 # Black + DarkGrey
-    color0=  #fdf4c1
-    color8=  #928374
+    color0=  #fbf1c7
+    color8=  #a89984
 # DarkRed + Red
     color1=  #cc241d
     color9=  #9d0006
@@ -25,7 +25,7 @@
     color14= #427b58
 # LightGrey + White
     color7=  #7c6f64
-    color15= #3c3836
+    color15= #282828
 
 [hints]
     foreground = #a40000
