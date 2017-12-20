@@ -1,4 +1,4 @@
 
 set fdm=marker
 
-autocmd BufWritePost * so $MYVIMRC
+" autocmd BufWritePost * so $MYVIMRC
