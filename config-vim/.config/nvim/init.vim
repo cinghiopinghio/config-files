@@ -60,6 +60,9 @@ else
   let g:syntastic_check_on_wq = 0
 endif
 "}}}
+
+" comment uncomment
+Plug 'tpope/vim-commentary'
 "}}}
 "{{{ AutoCompletion
 
@@ -200,7 +203,8 @@ Plug 'terryma/vim-multiple-cursors'
 "   endfunction
 " endif
 "{{{ junegunn/vim-easy-align
-Plug 'junegunn/vim-easy-align'
+"Plug 'junegunn/vim-easy-align'
+Plug 'tommcdo/vim-lion'
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
@@ -239,6 +243,15 @@ Plug 'jnurmine/Zenburn'
 Plug 'fxn/vim-monochrome'
 Plug 'owickstrom/vim-colors-paramount'
 Plug 'pbrisbin/vim-colors-off'
+
+" my colorscheme
+let g:mangroove_transparent_bg = 1
+let g:mangroove_accent_color='aqua'
+if isdirectory(expand('~/codes/mangroove.vim'))
+  Plug '~/codes/mangroove.vim'
+else
+  Plug 'cinghiopinghio/mangroove.vim'
+endif
 "}}}
 "{{{ Statusbar
 Plug 'airblade/vim-gitgutter'
@@ -248,11 +261,12 @@ Plug 'tpope/vim-fugitive'
 let g:gitgutter_map_keys = 0
 "}}}
 "{{{ External cmds
-Plug 'thinca/vim-quickrun'
-Plug 'skywind3000/asyncrun.vim'
-augroup vimrc
-    autocmd User AsyncRunStart call asyncrun#quickfix_toggle(8, 1)
-augroup END
+" Plug 'thinca/vim-quickrun'
+" Plug 'skywind3000/asyncrun.vim'
+" augroup vimrc
+"     autocmd User AsyncRunStart call asyncrun#quickfix_toggle(8, 1)
+" augroup END
+Plug 'hauleth/asyncdo.vim'
 " GIT integration
 " ask if you typed a wrong filename
 Plug 'EinfachToll/DidYouMean'
@@ -344,8 +358,8 @@ else
   colorscheme molokai
 endif
 "set background light
-highlight Normal guibg=NONE ctermbg=NONE
-highlight nonText guifg=#787878 guibg=NONE ctermfg=243 ctermbg=NONE
+" highlight Normal guibg=NONE ctermbg=NONE
+" highlight nonText guifg=#787878 guibg=NONE ctermfg=243 ctermbg=NONE
 
 function! ToggleBackground()
   if &background == 'dark'
@@ -354,8 +368,8 @@ function! ToggleBackground()
     set background=dark
   endif
 
-  highlight Normal guibg=NONE ctermbg=NONE
-  highlight nonText guifg=#787878 guibg=NONE ctermfg=243 ctermbg=NONE
+  "highlight Normal guibg=NONE ctermbg=NONE
+  "highlight nonText guifg=#787878 guibg=NONE ctermfg=243 ctermbg=NONE
 endfunction
 
 nnoremap <F9> :call ToggleBackground()<CR>
@@ -412,16 +426,17 @@ augroup statline_trail
 augroup END
 
 set statusline=
-set statusline+=%6*%m%r%*                          " modified, readonly
-set statusline+=%2*%{expand('%:p:h')}/               " relative path to file's directory
-set statusline+=%1*%t%*                            " file name
-set statusline+=%<                                 " truncate here if needed
-set statusline+=\ %3*%{TrailingSpaceWarning()}%*     " trailing whitespace
+set statusline+=%5*%m%r%*                        " modified, readonly
+set statusline+=%2*%{expand('%:~:h')}/           " full path to file's directory
+set statusline+=%1*%t%*                          " file name
+set statusline+=%<                               " truncate here if needed
+set statusline+=\ %3*%{TrailingSpaceWarning()}%* " trailing whitespace
 
-set statusline+=%=                                 " switch to RHS
+set statusline+=%=                               " switch to RHS
 
-set statusline+=%5*L:%l/%L%*                     " number of lines
-set statusline+=\ %5*W:%{WindowNumber()}%*     " window number
+set statusline+=%1*%Y%*                          " file type
+set statusline+=\ %2*L:%l/%L%*                   " number of lines
+set statusline+=\ %2*W:%{WindowNumber()}%*       " window number
 
 "-------------------------------------------------------------------------
 " MAP
