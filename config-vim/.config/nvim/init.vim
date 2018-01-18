@@ -19,10 +19,6 @@ else
   call plug#begin('~/.vim/bundle')
 endif
 
-Plug 'mbbill/undotree'
-" Plug 'simnalamburt/vim-mundo'
-" Plug 'jaxbot/selective-undo.vim'
-
 "{{{ Syntax, dictionary ...
 
 set dictionary+=/usr/share/dict/cracklib-small
@@ -36,19 +32,6 @@ if has('nvim') || v:version >= 800
   let g:ale_lint_on_insert_leave = 1
   " Only fix on save
   let g:ale_fix_on_save = 1
-
-  " Plug 'neomake/neomake'
-  " let g:neomake_warning_sign = {
-  "   \ 'text': 'W',
-  "   \ 'texthl': 'WarningMsg',
-  "   \ }
-  " let g:neomake_error_sign = {
-  "   \ 'text': 'E',
-  "   \ 'texthl': 'ErrorMsg',
-  "   \ }
-  " " let g:neomake_python_enabled_makersers = ['flake8']
-  " " run neomake on the current file on every write:
-  " autocmd! BufWritePost * Neomake
 else
   " only vimL no python required
   Plug 'scrooloose/syntastic'
@@ -78,21 +61,9 @@ let g:AutoPairs= {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
 
 "  autocompletion
 "{{{ deoplete / completor / VimCompletesMe / NCM
-if has('nvim')
+if has('nvim') || v:version >= 800
   " the framework
   Plug 'roxma/nvim-completion-manager'
-  " with neovim use deoplete
-  " function! DoRemote(arg)
-  "   UpdateRemotePlugins
-  " endfunction
-  " Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-  " let g:deoplete#enable_at_startup = 1
-  " Plug 'zchee/deoplete-jedi', { 'for': 'python' }
-  " let g:deoplete#sources#jedi#show_docstring=1
-elseif v:version >= 800
-  " with vim8 use completor
-  Plug 'maralla/completor.vim'
-  let g:completor_python_binary='python'
 else
   Plug 'ajh17/VimCompletesMe'
 endif
@@ -117,15 +88,59 @@ Plug 'honza/vim-snippets'
 
 "  word editing
 " {{{ mjbrownie/swapit
-Plug 'mjbrownie/swapit'
-let b:swap_lists = [
-      \{'name': 'dark/light', 'options': ['dark', 'light']},
-      \{'name': 'bw', 'options': ['black', 'white']},
-      \{'name': 'be', 'options': ['begin', 'end']},
-      \{'name': 'rl', 'options': ['right', 'left']},
-      \{'name': 'ab', 'options': ['above', 'bottom']},
-      \]
+" Plug 'mjbrownie/swapit'
+" let b:swap_lists = [
+"       \{'name': 'dark/light', 'options': ['dark', 'light']},
+"       \{'name': 'bw', 'options': ['black', 'white']},
+"       \{'name': 'be', 'options': ['begin', 'end']},
+"       \{'name': 'rl', 'options': ['right', 'left']},
+"       \{'name': 'ab', 'options': ['above', 'bottom']},
+"       \]
 "}}}
+Plug 'bootleq/vim-cycle'
+let g:cycle_no_mappings = 1    " just set my keys
+let g:cycle_max_conflict = 1   " do not handle conflicts (better performance)
+nmap <silent> <C-A> <Plug>CycleNext
+nmap <silent> <C-X> <Plug>CyclePrev
+noremap <silent> <Plug>CycleFallbackNext <C-A>
+noremap <silent> <Plug>CycleFallbackPrev <C-X>
+let g:cycle_default_groups = [
+      \   [['true', 'false']],
+      \   [['yes', 'no']],
+      \   [['on', 'off']],
+      \   [['+', '-']],
+      \   [['>', '<']],
+      \   [['"', "'"]],
+      \   [['==', '!=']],
+      \   [['and', 'or']],
+      \   [["in", "out"]],
+      \   [["up", "down"]],
+      \   [["min", "max"]],
+      \   [["get", "set"]],
+      \   [["add", "remove"]],
+      \   [["to", "from"]],
+      \   [["read", "write"]],
+      \   [['without', 'with']],
+      \   [["exclude", "include"]],
+      \   [['{:}', '[:]', '(:)'], 'sub_pairs'],
+      \   [['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday',
+      \     'Friday', 'Saturday'], 'hard_case', {'name': 'Days'}],
+      \ ]
+let g:cycle_default_groups_for_tex = [
+        \   [['tiny', 'scriptsize', 'footnotesize', 'small', 'normalsize', 'large', 'Large', 'LARGE', 'huge', 'Huge'], 'hard_case', 'match_case'],
+        \   [['displaystyle', 'scriptstyle', 'scriptscriptstyle', 'textstyle']],
+        \   [['part', 'chapter', 'section', 'subsection', 'subsubsection', 'paragraph', 'subparagraph']],
+        \   [['article', 'report', 'book', 'letter', 'slides']],
+        \   [['scrbook', 'scrreprt', 'scrartcl', 'scrlttr2']],
+        \   [['oneside', 'twoside']],
+        \   [['onecolumn', 'twocolumn']],
+        \   [['draft', 'final']],
+        \   [['\big(:\big)', '\Big(:\Big)', '\bigg(:\bigg)', '\Bigg(:\Bigg)'], 'sub_pairs', 'hard_case', 'match_case'],
+        \   [['\big[:\big]', '\Big[:\Big]', '\bigg[:\bigg]', '\Bigg[:\Bigg]'], 'sub_pairs', 'hard_case', 'match_case'],
+        \   [['\big\{:\big\}', '\Big\{:\Big\}', '\bigg\{:\bigg\}', '\Bigg\{:\Bigg\}'], 'sub_pairs', 'hard_case', 'match_case'],
+        \   [['\big\l:\big\r', '\Big\l:\Big\r', '\bigg\l:\bigg\r', '\Bigg\l:\Bigg\r'], 'sub_pairs', 'hard_case', 'match_case'],
+        \   [['\big', '\Big', '\bigg', '\Bigg'], 'hard_case', 'match_case'],
+        \ ]
 "}}}
 "{{{ Navigation
 
@@ -232,17 +247,18 @@ map g/ <Plug>(incsearch-stay)
 "}}}
 "{{{ Colorschemes
 Plug 'tomasr/molokai'
-Plug 'junegunn/seoul256.vim'
+
 let g:seoul256_background = 235
 let g:seoul256_light_background = 256
-Plug 'morhetz/gruvbox'
+Plug 'junegunn/seoul256.vim'
+
 let g:gruvbox_italic=1
+Plug 'morhetz/gruvbox'
+
 Plug 'freeo/vim-kalisi'
 Plug 'marcopaganini/termschool-vim-theme'
 Plug 'jnurmine/Zenburn'
-Plug 'fxn/vim-monochrome'
 Plug 'owickstrom/vim-colors-paramount'
-Plug 'pbrisbin/vim-colors-off'
 
 " my colorscheme
 let g:mangroove_transparent_bg = 1
@@ -253,37 +269,21 @@ else
   Plug 'cinghiopinghio/mangroove.vim'
 endif
 "}}}
-"{{{ Statusbar
 Plug 'airblade/vim-gitgutter'
-" Plug 'airblade/vim-rooter'
+let g:gitgutter_map_keys = 0   " do not set maps
 Plug 'tpope/vim-fugitive'
-" do not set maps
-let g:gitgutter_map_keys = 0
-"}}}
 "{{{ External cmds
-" Plug 'thinca/vim-quickrun'
-" Plug 'skywind3000/asyncrun.vim'
-" augroup vimrc
-"     autocmd User AsyncRunStart call asyncrun#quickfix_toggle(8, 1)
-" augroup END
 Plug 'hauleth/asyncdo.vim'
-" GIT integration
 " ask if you typed a wrong filename
 Plug 'EinfachToll/DidYouMean'
 "}}}
 "{{{ Filetype
-""""""""""""""""""""""""""""""""""""" HTML
-Plug 'othree/html5.vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] }
-Plug 'lepture/vim-jinja'
 Plug 'Vimjas/vim-python-pep8-indent'
-""""""""""""""""""""""""""""""""""""" LaTeX
 " {{{ lervag/Vimtex
-"There is no reason to lazily load vimtex. Vimtex is a filetype plugin that
-"uses the autoload feature, and it does not load or source any vimscript file
-"until you open a tex file/buffer. Thus my suggestion is that you load vimtex
-"without restricting it to tex files. And in this case, there should be no
-"conflict.
-"https://github.com/lervag/vimtex/issues/885
+" There is no reason to lazily load vimtex. Vimtex is a filetype plugin that
+" uses the autoload feature, and it does not load or source any vimscript file
+" until you open a tex file/buffer.
+" https://github.com/lervag/vimtex/issues/885
 Plug 'lervag/vimtex'   ", { 'for': 'tex' }
 " }}}
 "}}}
@@ -451,11 +451,11 @@ nnoremap <C-down> :resize +5<cr>
 nnoremap <C-up> :resize -5<cr>
 nnoremap <C-right> :vertical resize +5<cr>
 
-" move through wrapped lines
-"imap <silent> <Down> <C-o>gj
-"imap <silent> <Up> <C-o>gk
-"nmap <silent> <Down> gj
-"nmap <silent> <Up> gk
+" move through wrapped lines (you shouldn't do it in insert mode)
+" imap <silent> <Down> <C-o>gj
+" imap <silent> <Up> <C-o>gk
+nmap <silent> <Down> gj
+nmap <silent> <Up> gk
 nnoremap <silent> <localleader><Up>    :wincmd k<CR>
 nnoremap <silent> <localleader><Down>  :wincmd j<CR>
 nnoremap <silent> <localleader><Right> :wincmd l<CR>
