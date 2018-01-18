@@ -25,7 +25,7 @@
 #    Align icons left/right/off
     icon_position = left
 #    Paths to default icons.
-     icon_folders = /usr/share/icons/Numix/48/mimetypes:/usr/share/icons/Numix/48/actions:/usr/share/icons/Numix/48/notifications:/usr/share/icons/Numix/48/animations:/usr/share/icons/Numix/48/emotes:/usr/share/icons/Numix/48/status:/usr/share/icons/Numix/48/categories:/usr/share/icons/Numix/48/places:/usr/share/icons/Numix/48/emblems:/usr/share/icons/Numix/48/devices:/usr/share/icons/Numix/48/apps
+    icon_path = /usr/share/icons/Numix/48/mimetypes:/usr/share/icons/Numix/48/actions:/usr/share/icons/Numix/48/notifications:/usr/share/icons/Numix/48/animations:/usr/share/icons/Numix/48/emotes:/usr/share/icons/Numix/48/status:/usr/share/icons/Numix/48/categories:/usr/share/icons/Numix/48/places:/usr/share/icons/Numix/48/emblems:/usr/share/icons/Numix/48/devices:/usr/share/icons/Numix/48/apps
     max_icon_size=48
 
 
