@@ -76,9 +76,10 @@ padding-right       = 1
 module-margin-left  = 0
 module-margin-right = ${vars.padding}
 
-font-0              = Fira Mono:size=10;2
-font-1              = Hack:size=10
-font-2              = FontAwesome:size=12;2
+ font-0              = Fira Mono:size=10;2
+;font-0              = Hack:size=10
+font-1              = Symbola:size=11;2
+font-2              = FontAwesome5Free:size=12;2
 font-3              = Wuncon Siji:pixelsize=12
 
 [bar/bar1]
@@ -92,7 +93,7 @@ tray-background  = ${colors.transparent}
 modules-left        = menu i3
 modules-center      = date
 ;modules-right       = backlight volume memory cpu battery powermenu
-modules-right       = backlight volume battery 
+modules-right       = backlight volume battery
 enable-ipc = true
 
 [bar/bar2]
@@ -146,7 +147,7 @@ type                     = internal/xbacklight
 ; <label> <bar> <ramp>
 format                   = <label> <bar>
 ; %percentage%
-label                    = 
+label                    = LIGHT
 
 bar-width                = 7
 bar-indicator            = │
@@ -172,13 +173,13 @@ label                    = %date% %time%
 
 type                            = internal/volume
 
-format-volume                   = %{A3:pavucontrol:}%{A} <bar-volume>
-label-volume                    = ""
+format-volume                   = %{A3:pavucontrol:}VOL%{A} <bar-volume>
+label-volume                    = VOL
 label-volume-foreground         = ${colors.foreground}
 
-format-muted-prefix             = ""
+; format-muted-prefix             = ""
 format-muted-foreground         = ${colors.foreground-alt}
-label-muted                     = "M"
+label-muted                     = "🔇"
 
 bar-volume-width                = 7
 bar-volume-foreground-0         = ${colors.easy}
@@ -194,72 +195,6 @@ bar-volume-fill                 = ─
 bar-volume-empty                = ─
 bar-volume-empty-foreground     = ${colors.foreground-alt}
 
-[module/memory]
-
-type             = internal/memory
-interval         = 2
-format-prefix    = " "
-format-underline = ${colors.color2}
-label            = %percentage_used%
-
-[module/cpu]
-type             = internal/cpu
-interval         = 2
-format-prefix    = " "
-format-underline = ${colors.color3} 
-label            = %percentage%
-
-[module/wlan]
-type                          = internal/network
-interface                     = wlp2s0
-interval                      = 3.0
-
-label-connected               = %essid%
-format-connected-prefix       = " "
-format-connected              = <label-connected> <ramp-signal>
-format-connected-underline    = ${colors.color4} 
-
-label-disconnected            = %ifname% disconnected
-label-disconnected-foreground = ${colors.foreground-alt}
-format-disconnected-underline = ${self.format-connected-underline}
-
-ramp-signal-0                 = ▁
-ramp-signal-1                 = ▂
-ramp-signal-2                 = ▃
-ramp-signal-3                 = ▄
-ramp-signal-4                 = ▅
-ramp-signal-5                 = ▆
-ramp-signal-6                 = ▇
-ramp-signal-7                 = █
-ramp-signal-foreground        = ${colors.foreground}
-
-[module/eth]
-
-type                          = internal/network
-interface                     = enp10s0u1u4
-interval                      = 3.0
-
-format-connected-underline    = ${colors.easy}
-format-connected-prefix       = 
-format-connected-foreground   = ${colors.foreground}
-label-connected               = %local_ip%
-
-label-disconnected            = %ifname% disconnected
-label-disconnected-foreground = ${colors.foreground-alt}
-format-disconnected-underline = ${self.format-connected-underline}
-
-[module/eth2]
-
-# for when my adapter get a different name
-inherit   = module/eth
-interface = enp62s0u1u1u1
-
-[module/custbat]
-type = custom/script
-
-exec = acpi -b | sed 's/.*, \(.*\)%. .\(.\):\(..\):.. .*/\1% \2H\3 /'
-label =  %output% 
-
 [module/battery]
 type                         = internal/battery
 battery                      = BAT0
@@ -269,107 +204,51 @@ time-format                  = %kH%M
 
 ; charging
 label-charging               = %percentage%%
-format-charging-prefix       = " " 
-format-charging              = <label-charging>
+format-charging-prefix       = "BAT "
+format-charging              = <ramp-capacity> <label-charging>
 
 ; discharging
 label-discharging            = %time%
 format-discharging           = <ramp-capacity> <label-discharging>
 
 ; full
-label-full                   = FULL
-format-full-prefix           = " "
+label-full                   = BAT FULL
 format-full                  = <label-full>
 
-ramp-capacity-0              = 
+ramp-capacity-0                 = ▁
+ramp-capacity-1                 = ▂
+ramp-capacity-2                 = ▃
+ramp-capacity-3                 = ▄
+ramp-capacity-4                 = ▅
+ramp-capacity-5                 = ▆
+ramp-capacity-6                 = ▇
+ramp-capacity-7                 = █
 ramp-capacity-0-foreground   = ${colors.foreground}
 ramp-capacity-0-background   = ${colors.alert}
 ramp-capacity-0-padding      = 1
-ramp-capacity-1              = 
-ramp-capacity-2              = 
-ramp-capacity-3              = 
-ramp-capacity-4              = 
 
-animation-charging-0         = 
-animation-charging-1         = 
-animation-charging-2         = 
-animation-charging-3         = 
-animation-charging-4         = 
+animation-charging-0                 = ▁
+animation-charging-1                 = ▂
+animation-charging-2                 = ▃
+animation-charging-3                 = ▄
+animation-charging-4                 = ▅
+animation-charging-5                 = ▆
+animation-charging-6                 = ▇
+animation-charging-7                 = █
 animation-charging-framerate = 750
-
-[module/temperature]
-
-type                  = internal/temperature
-thermal-zone          = 0
-warn-temperature      = 60
-
-format                = <ramp> <label>
-format-underline      = ${colors.color6} 
-format-warn           = <ramp> <label-warn>
-format-warn-underline = ${self.format-underline}
-
-label                 = %temperature%
-label-warn            = %temperature%
-label-warn-foreground = ${colors.alert}
-
-ramp-0                = 
-ramp-1                = 
-ramp-2                = 
-ramp-3                = 
-ramp-4                = 
-ramp-foreground       = ${colors.foreground}
-
-[module/powermenu]
-
-type                   = custom/menu
-
-label-open             = 
-label-open-foreground  = ${colors.alert}
-# label-open-background  = ${colors.alert}
-label-open-padding     = ${vars.padding}
-label-close            = 
-label-close-foreground  = ${colors.background-solid}
-label-close-background  = ${colors.easy}
-label-close-padding     = ${vars.padding}
-
-menu-0-0               = 
-menu-0-0-exec          = systemctl reboot
-menu-0-0-foreground    = ${colors.background-solid}
-menu-0-0-background    = ${colors.primary}
-menu-0-0-padding       = ${vars.padding}
-menu-0-1               = 
-menu-0-1-exec          = systemctl poweroff
-menu-0-1-foreground    = ${colors.background-solid}
-menu-0-1-background    = ${colors.alert}
-menu-0-1-padding       = ${vars.padding}
 
 [module/menu]
 type = custom/menu
-label-open = ""
-label-close = " "
+label-open = "MENU"
+label-close = "CLOSE "
 label-close-foreground  = ${colors.alert}
-menu-0-0 = " "
+menu-0-0 = "MENU "
 menu-0-0-exec = "bash ~/.config/rofi/scripts/rofimodi"
-menu-0-1 = " "
+menu-0-1 = "WEB "
 menu-0-1-exec = "bash ~/.config/rofi/scripts/menu.sh"
-menu-0-2 = " "
+menu-0-2 = "TERM "
 menu-0-2-exec = termite
-menu-0-3 = ""
+menu-0-3 = "RELOAD"
 menu-0-3-exec = "bash ~/.config/polybar/startup"
-
-[module/pacman]
-type = custom/script
-exec = pacaur -Qu | wc -l
-label = i %output%
-format-underline = #a45476
-interval = 60
-click-left = gksudo "pacaur -Sy"
-
-[module/email]
-type = custom/script
-exec = echo `notmuch count tag:unread`/`notmuch count tag:inbox`
-label =   %output%
-format-underline = #a45476
-interval = 30
 
 ; vim:ft=dosini
