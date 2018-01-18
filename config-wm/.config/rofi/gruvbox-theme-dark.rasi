@@ -110,10 +110,7 @@ button selected {
 }
 
 configuration {
-    display-ssh:                    " ";
-//    display-run:                    " ";
-//    display-drun:                   " ";
-//    display-window:                 " ";
+    display-ssh:                    "SSH ";
     display-run:                    "";
     display-drun:                   "";
     display-window:                 "";
