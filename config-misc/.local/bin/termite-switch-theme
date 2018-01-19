@@ -1,18 +1,17 @@
 #!/usr/bin/env bash
 
 TERMCONFIG=${XDG_CONFIG_HOME:-${HOME}/.config}/termite
-TERMINALTHEME=`cat /tmp/termtheme 2>>/dev/null`
+THEME_STATUS_FILE=/tmp/theme_status_light
 
-case ${TERMINALTHEME} in
-  light)
+if [[ -e ${THEME_STATUS_FILE} ]];
+then
     TERMINALTHEME=dark
-    ;;
-  *)
+    rm -f ${THEME_STATUS_FILE}
+else
     TERMINALTHEME=light
-    ;;
-esac
+    touch ${THEME_STATUS_FILE}
+fi
 
-echo $TERMINALTHEME > /tmp/termtheme
 cat ${TERMCONFIG}/config-root\
   ${TERMCONFIG}/config-${TERMINALTHEME} > ${TERMCONFIG}/config
 
