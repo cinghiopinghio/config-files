@@ -273,7 +273,12 @@ Plug 'airblade/vim-gitgutter'
 let g:gitgutter_map_keys = 0   " do not set maps
 Plug 'tpope/vim-fugitive'
 "{{{ External cmds
-Plug 'hauleth/asyncdo.vim'
+if has('nvim') || v:version >= 800
+  Plug 'hauleth/asyncdo.vim'
+else
+  Plug 'thinca/vim-quickrun'
+fi
+
 " ask if you typed a wrong filename
 Plug 'EinfachToll/DidYouMean'
 "}}}
