@@ -277,7 +277,7 @@ if has('nvim') || v:version >= 800
   Plug 'hauleth/asyncdo.vim'
 else
   Plug 'thinca/vim-quickrun'
-fi
+endif
 
 " ask if you typed a wrong filename
 Plug 'EinfachToll/DidYouMean'
