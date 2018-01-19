@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 case `hostname -s` in
-  spin|jupyter|filoselle)
+  spin|jupyter|filoselle|brancamenta)
     . ~/.bashrc
     ;;
   *)
