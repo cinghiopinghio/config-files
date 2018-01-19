@@ -1,24 +1,26 @@
 #!/usr/bin/env bash
 
-CMD=`basename $0`
-PKG=$1
 PKG_CACHE=${XDG_CACHE_HOME:-${HOME}/.cache}/texdoc
 mkdir -p ${PKG_CACHE}
 
-HELP="<i>I'll try to get the manual of your LaTeX package</i>"
+HELP="<i>I'll try to get the manual of your LaTeX package</i>
+Use <b>Alt+u</b> to update that package"
+PROMPT="\usepackage: "
+ROFIARGS="-sort -kb-custom-1 Alt+u"
 
-PKG=$(ls -1 ${PKG_CACHE} |\
-	sed -e 's/\.pdf$//' |\
-	rofi -dmenu -p 'LaTeX PKG:' -mesg "${HELP}" -i)
+PKG=$(find /usr/share/tex* -name '*.sty' -printf "%f\n" 2>>/dev/null |\
+	sed 's/.sty$//' |\
+	sort |\
+	rofi -dmenu -p "${PROMPT}" -mesg "${HELP}" ${ROFIARGS})
+exitcode=$?
 
 [[ ${PKG} == '' ]] && exit 0
 
 PKG_FILE=${PKG_CACHE}/${PKG}.pdf
 
-if [[ -e ${PKG_FILE} ]];
+if [ ! -e ${PKG_FILE} ] || [ "${exitcode}" == 10 ];
 then
-  xdg-open ${PKG_FILE} &
-else
+  echo getting file
   wget -O ${PKG_FILE} "http://texdoc.net/pkg/${PKG}"
-  xdg-open ${PKG_FILE} &
 fi
+xdg-open ${PKG_FILE} &
