@@ -343,8 +343,14 @@ set title
 set list
 set listchars=tab:╟─,trail:┄,extends:┄
 
-set termguicolors
-set background=dark
+if has('termguicolors')
+  set termguicolors
+endif
+if filereadable('/tmp/theme_status_light')
+  set background=light
+else
+  set background=dark
+endif
 if s:host == 'spin'
   colorscheme seoul256
 elseif s:host == 'arcinghio'
