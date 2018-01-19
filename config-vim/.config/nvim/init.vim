@@ -6,7 +6,7 @@
 let maplocalleader=' '
 set nocompatible               " be iMproved
 filetype indent plugin on
-let s:host=substitute(hostname(), "\\..*", "", "")
+let s:host=substitute(hostname(), "\\..*", "", "") 
 syntax on
 "}}}
 

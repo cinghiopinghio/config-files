@@ -14,9 +14,9 @@ syntax on
 " Plugin Manager
 "{{{ Pluc-vim: plugin manager
 if has('nvim')
-	call plug#begin('~/.config/nvim/bundle')
+  call plug#begin('~/.config/nvim/bundle')
 else
-	call plug#begin('~/.vim/bundle')
+  call plug#begin('~/.vim/bundle')
 endif
 
 "{{{ Syntax, dictionary ...
@@ -32,19 +32,6 @@ if has('nvim') || v:version >= 800
   let g:ale_lint_on_insert_leave = 1
   " Only fix on save
   let g:ale_fix_on_save = 1
-
-  " Plug 'neomake/neomake'
-  " let g:neomake_warning_sign = {
-  "   \ 'text': 'W',
-  "   \ 'texthl': 'WarningMsg',
-  "   \ }
-  " let g:neomake_error_sign = {
-  "   \ 'text': 'E',
-  "   \ 'texthl': 'ErrorMsg',
-  "   \ }
-  " " let g:neomake_python_enabled_makersers = ['flake8']
-  " " run neomake on the current file on every write:
-  " autocmd! BufWritePost * Neomake
 else
   " only vimL no python required
   Plug 'scrooloose/syntastic'
@@ -56,6 +43,9 @@ else
   let g:syntastic_check_on_wq = 0
 endif
 "}}}
+
+" comment uncomment
+Plug 'tpope/vim-commentary'
 "}}}
 "{{{ AutoCompletion
 
@@ -71,21 +61,9 @@ let g:AutoPairs= {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
 
 "  autocompletion
 "{{{ deoplete / completor / VimCompletesMe / NCM
-if has('nvim')
+if has('nvim') || v:version >= 800
   " the framework
   Plug 'roxma/nvim-completion-manager'
-  " with neovim use deoplete
-  " function! DoRemote(arg)
-  "   UpdateRemotePlugins
-  " endfunction
-  " Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-  " let g:deoplete#enable_at_startup = 1
-  " Plug 'zchee/deoplete-jedi', { 'for': 'python' }
-  " let g:deoplete#sources#jedi#show_docstring=1
-elseif v:version >= 800
-  " with vim8 use completor
-  Plug 'maralla/completor.vim'
-  let g:completor_python_binary='python'
 else
   Plug 'ajh17/VimCompletesMe'
 endif
@@ -110,15 +88,59 @@ Plug 'honza/vim-snippets'
 
 "  word editing
 " {{{ mjbrownie/swapit
-Plug 'mjbrownie/swapit'
-let b:swap_lists = [
-      \{'name': 'dark/light', 'options': ['dark', 'light']},
-      \{'name': 'bw', 'options': ['black', 'white']},
-      \{'name': 'be', 'options': ['begin', 'end']},
-      \{'name': 'rl', 'options': ['right', 'left']},
-      \{'name': 'ab', 'options': ['above', 'bottom']},
-      \]
+" Plug 'mjbrownie/swapit'
+" let b:swap_lists = [
+"       \{'name': 'dark/light', 'options': ['dark', 'light']},
+"       \{'name': 'bw', 'options': ['black', 'white']},
+"       \{'name': 'be', 'options': ['begin', 'end']},
+"       \{'name': 'rl', 'options': ['right', 'left']},
+"       \{'name': 'ab', 'options': ['above', 'bottom']},
+"       \]
 "}}}
+Plug 'bootleq/vim-cycle'
+let g:cycle_no_mappings = 1    " just set my keys
+let g:cycle_max_conflict = 1   " do not handle conflicts (better performance)
+nmap <silent> <C-A> <Plug>CycleNext
+nmap <silent> <C-X> <Plug>CyclePrev
+noremap <silent> <Plug>CycleFallbackNext <C-A>
+noremap <silent> <Plug>CycleFallbackPrev <C-X>
+let g:cycle_default_groups = [
+      \   [['true', 'false']],
+      \   [['yes', 'no']],
+      \   [['on', 'off']],
+      \   [['+', '-']],
+      \   [['>', '<']],
+      \   [['"', "'"]],
+      \   [['==', '!=']],
+      \   [['and', 'or']],
+      \   [["in", "out"]],
+      \   [["up", "down"]],
+      \   [["min", "max"]],
+      \   [["get", "set"]],
+      \   [["add", "remove"]],
+      \   [["to", "from"]],
+      \   [["read", "write"]],
+      \   [['without', 'with']],
+      \   [["exclude", "include"]],
+      \   [['{:}', '[:]', '(:)'], 'sub_pairs'],
+      \   [['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday',
+      \     'Friday', 'Saturday'], 'hard_case', {'name': 'Days'}],
+      \ ]
+let g:cycle_default_groups_for_tex = [
+        \   [['tiny', 'scriptsize', 'footnotesize', 'small', 'normalsize', 'large', 'Large', 'LARGE', 'huge', 'Huge'], 'hard_case', 'match_case'],
+        \   [['displaystyle', 'scriptstyle', 'scriptscriptstyle', 'textstyle']],
+        \   [['part', 'chapter', 'section', 'subsection', 'subsubsection', 'paragraph', 'subparagraph']],
+        \   [['article', 'report', 'book', 'letter', 'slides']],
+        \   [['scrbook', 'scrreprt', 'scrartcl', 'scrlttr2']],
+        \   [['oneside', 'twoside']],
+        \   [['onecolumn', 'twocolumn']],
+        \   [['draft', 'final']],
+        \   [['\big(:\big)', '\Big(:\Big)', '\bigg(:\bigg)', '\Bigg(:\Bigg)'], 'sub_pairs', 'hard_case', 'match_case'],
+        \   [['\big[:\big]', '\Big[:\Big]', '\bigg[:\bigg]', '\Bigg[:\Bigg]'], 'sub_pairs', 'hard_case', 'match_case'],
+        \   [['\big\{:\big\}', '\Big\{:\Big\}', '\bigg\{:\bigg\}', '\Bigg\{:\Bigg\}'], 'sub_pairs', 'hard_case', 'match_case'],
+        \   [['\big\l:\big\r', '\Big\l:\Big\r', '\bigg\l:\bigg\r', '\Bigg\l:\Bigg\r'], 'sub_pairs', 'hard_case', 'match_case'],
+        \   [['\big', '\Big', '\bigg', '\Bigg'], 'hard_case', 'match_case'],
+        \ ]
 "}}}
 "{{{ Navigation
 
@@ -128,8 +150,9 @@ set scrolloff=5  " never reach the top or bottom of the page
 Plug 'Konfekt/FastFold'
 " window splits control
 Plug 'zhaocai/GoldenView.Vim'
-"""""""""""""""""""""""""""""""""""""  
-Plug 'ludovicchabant/vim-gutentags'
+"""""""""""""""""""""""""""""""""""""
+" Plug 'ludovicchabant/vim-gutentags'
+Plug 'troydm/zoomwintab.vim'
 "{{{ FZF
 Plug 'junegunn/fzf', { 'dir': '~/codes/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -195,7 +218,8 @@ Plug 'terryma/vim-multiple-cursors'
 "   endfunction
 " endif
 "{{{ junegunn/vim-easy-align
-Plug 'junegunn/vim-easy-align'
+"Plug 'junegunn/vim-easy-align'
+Plug 'tommcdo/vim-lion'
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
@@ -223,68 +247,43 @@ map g/ <Plug>(incsearch-stay)
 "}}}
 "{{{ Colorschemes
 Plug 'tomasr/molokai'
-Plug 'junegunn/seoul256.vim'
+
 let g:seoul256_background = 235
 let g:seoul256_light_background = 256
-Plug 'morhetz/gruvbox'
+Plug 'junegunn/seoul256.vim'
+
 let g:gruvbox_italic=1
+Plug 'morhetz/gruvbox'
+
 Plug 'freeo/vim-kalisi'
 Plug 'marcopaganini/termschool-vim-theme'
 Plug 'jnurmine/Zenburn'
-Plug 'fxn/vim-monochrome'
 Plug 'owickstrom/vim-colors-paramount'
-Plug 'pbrisbin/vim-colors-off'
+
+" my colorscheme
+let g:mangroove_transparent_bg = 1
+let g:mangroove_accent_color='aqua'
+if isdirectory(expand('~/codes/mangroove.vim'))
+  Plug '~/codes/mangroove.vim'
+else
+  Plug 'cinghiopinghio/mangroove.vim'
+endif
 "}}}
-"{{{ Statusbar
-Plug 'itchyny/lightline.vim'
-Plug 'oldgaro/graynito'  " graysh lightline colorscheme
 Plug 'airblade/vim-gitgutter'
-" Plug 'airblade/vim-rooter'
-" Plug 'ludovicchabant/vim-gutentags'
-" let g:gutentags_cache_dir = '~/.cache/ctags/'
+let g:gitgutter_map_keys = 0   " do not set maps
 Plug 'tpope/vim-fugitive'
-" do not set maps
-let g:gitgutter_map_keys = 0
-let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'fugitive', 'filename', 'modified', 'readonly' ] ],
-      \   'right': [ [ 'percent', 'lineinfo' ],
-      \              [ 'fileformat', 'fileencoding', 'filetype' ] ],
-      \ },
-      \ 'component_function': { 
-      \   'fugitive': 'fugitive#head', 
-      \ },
-      \ 'separator': { 'left': '▙', 'right': '▟' },
-      \ 'subseparator': { 'left': '', 'right': '' },
-      \ }
-  function! LightLineFugitive()
-    return exists('*fugitive#head') ? fugitive#head() : ''
-  endfunction
-"}}}
 "{{{ External cmds
-Plug 'thinca/vim-quickrun'
-Plug 'skywind3000/asyncrun.vim'
-augroup vimrc
-    autocmd User AsyncRunStart call asyncrun#quickfix_toggle(8, 1)
-augroup END
-" GIT integration
+Plug 'hauleth/asyncdo.vim'
 " ask if you typed a wrong filename
 Plug 'EinfachToll/DidYouMean'
 "}}}
 "{{{ Filetype
-""""""""""""""""""""""""""""""""""""" HTML
-Plug 'othree/html5.vim', { 'for': ['html', 'scss', 'css', 'sass', 'htmldjango'] }
-Plug 'lepture/vim-jinja'
-""""""""""""""""""""""""""""""""""""" LaTeX
+Plug 'Vimjas/vim-python-pep8-indent'
 " {{{ lervag/Vimtex
-"There is no reason to lazily load vimtex. Vimtex is a filetype plugin that
-"uses the autoload feature, and it does not load or source any vimscript file
-"until you open a tex file/buffer. Thus my suggestion is that you load vimtex
-"without restricting it to tex files. And in this case, there should be no
-"conflict.
-"https://github.com/lervag/vimtex/issues/885
+" There is no reason to lazily load vimtex. Vimtex is a filetype plugin that
+" uses the autoload feature, and it does not load or source any vimscript file
+" until you open a tex file/buffer.
+" https://github.com/lervag/vimtex/issues/885
 Plug 'lervag/vimtex'   ", { 'for': 'tex' }
 " }}}
 "}}}
@@ -313,7 +312,7 @@ if has("autocmd") " only with autocommands
   augroup END
 
 else
-  set autoindent		" always set autoindenting on
+  set autoindent    " always set autoindenting on
 endif " has("autocmd")}}}
 
 "-------------------------------------------------------------------------
@@ -340,21 +339,33 @@ set linebreak
 " set terminal title
 set title
 
-set termguicolors
-set background=dark
+" show tabs and trailing whitespaces
+set list
+set listchars=tab:╟─,trail:┄,extends:┄
+
+if has('termguicolors')
+  set termguicolors
+endif
+if filereadable('/tmp/theme_status_light')
+  set background=light
+else
+  set background=dark
+endif
 if s:host == 'spin'
   colorscheme seoul256
 elseif s:host == 'arcinghio'
   colorscheme gruvbox
+elseif s:host == 'susto'
+  colorscheme mangroove
 elseif s:host == 'dingo'
-  "colorscheme kalisi
-  colorscheme gruvbox
+  " colorscheme paramount
+  colorscheme mangroove
 else
   colorscheme molokai
 endif
 "set background light
-highlight Normal guibg=NONE ctermbg=NONE
-highlight nonText guifg=#787878 guibg=NONE ctermfg=243 ctermbg=NONE
+" highlight Normal guibg=NONE ctermbg=NONE
+" highlight nonText guifg=#787878 guibg=NONE ctermfg=243 ctermbg=NONE
 
 function! ToggleBackground()
   if &background == 'dark'
@@ -363,8 +374,8 @@ function! ToggleBackground()
     set background=dark
   endif
 
-  highlight Normal guibg=NONE ctermbg=NONE
-  highlight nonText guifg=#787878 guibg=NONE ctermfg=243 ctermbg=NONE
+  "highlight Normal guibg=NONE ctermbg=NONE
+  "highlight nonText guifg=#787878 guibg=NONE ctermfg=243 ctermbg=NONE
 endfunction
 
 nnoremap <F9> :call ToggleBackground()<CR>
@@ -374,11 +385,11 @@ set splitbelow
 set splitright
 
 set textwidth=78
-if exists('+colorcolumn')
-  set colorcolumn=80
-else
-  au BufWinEnter * let w:m2=matchadd('ErrorMsg', '\%>80v.\+', -1)
-endif
+augroup rowcolumn
+  autocmd!
+  autocmd InsertEnter * setlocal colorcolumn=80 cursorline
+  autocmd InsertLeave * setlocal colorcolumn=0 nocursorline
+augroup END
 
 set makeprg=make
 set grepprg=grep\ -nH\ $*
@@ -399,6 +410,40 @@ set dir=/tmp//,/var/tmp//,.
 set mouse=vi
 "}}}
 
+function! WindowNumber()
+  return tabpagewinnr(tabpagenr())
+endfunction
+function! TrailingSpaceWarning()
+  if !exists("b:statline_trailing_space_warning")
+    let lineno = search('\s$', 'nw')
+    if lineno != 0
+      let b:statline_trailing_space_warning = '[TS:'.lineno.']'
+    else
+      let b:statline_trailing_space_warning = ''
+    endif
+  endif
+  return b:statline_trailing_space_warning
+endfunction
+
+" recalculate when idle, and after saving
+augroup statline_trail
+  autocmd!
+  autocmd cursorhold,bufwritepost * unlet! b:statline_trailing_space_warning
+augroup END
+
+set statusline=
+set statusline+=%5*%m%r%*                        " modified, readonly
+set statusline+=%2*%{expand('%:~:h')}/           " full path to file's directory
+set statusline+=%1*%t%*                          " file name
+set statusline+=%<                               " truncate here if needed
+set statusline+=\ %3*%{TrailingSpaceWarning()}%* " trailing whitespace
+
+set statusline+=%=                               " switch to RHS
+
+set statusline+=%1*%Y%*                          " file type
+set statusline+=\ %2*L:%l/%L%*                   " number of lines
+set statusline+=\ %2*W:%{WindowNumber()}%*       " window number
+
 "-------------------------------------------------------------------------
 " MAP
 "{{{ Key mappings
@@ -412,16 +457,22 @@ nnoremap <C-down> :resize +5<cr>
 nnoremap <C-up> :resize -5<cr>
 nnoremap <C-right> :vertical resize +5<cr>
 
-" move through wrapped lines
-"imap <silent> <Down> <C-o>gj
-"imap <silent> <Up> <C-o>gk
-"nmap <silent> <Down> gj
-"nmap <silent> <Up> gk
+" move through wrapped lines (you shouldn't do it in insert mode)
+" imap <silent> <Down> <C-o>gj
+" imap <silent> <Up> <C-o>gk
+nmap <silent> <Down> gj
+nmap <silent> <Up> gk
 nnoremap <silent> <localleader><Up>    :wincmd k<CR>
 nnoremap <silent> <localleader><Down>  :wincmd j<CR>
 nnoremap <silent> <localleader><Right> :wincmd l<CR>
 nnoremap <silent> <localleader><Left>  :wincmd h<CR>
-" prova
+
+" Use tab and shift-tab to cycle through windows.
+nnoremap <Tab> <C-W>w
+nnoremap <S-Tab> <C-W>W
+" Use | and _ to split windows (while preserving original behaviour of [count]bar and [count]_).
+nnoremap <expr><silent> <Bar> v:count == 0 ? "<C-W>v<C-W><Right>" : ":<C-U>normal! 0".v:count."<Bar><CR>"
+nnoremap <expr><silent> _     v:count == 0 ? "<C-W>s<C-W><Down>"  : ":<C-U>normal! ".v:count."_<CR>"
 
 nmap    <ESC>[5^    <C-PageUp>
 nmap    <ESC>[6^    <C-PageDown>
@@ -430,20 +481,29 @@ map Q gq
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
-map <F6> :setlocal spell! spelllang=en_gb<CR>
 
-" insert date
-inoremap <F5> <C-R>=strftime("[%Y-%m-%d]")<CR>
+" cycle through a number of languages
+function! CycleLang()
+  let langs = ['en_gb', 'it', 'fr', 'en_us', '']
+  let i = index(langs, &spelllang)
+  let j = (i+1)%len(langs)
+  let &spelllang = langs[j]
 
-" paste from clipboard without indentation with F2
-"nnoremap <F2> :set invpaste paste?<CR>
-vmap ,y "*y
-nmap ,p "*p
+  if empty(&spelllang)
+    set nospell
+    echo 'Unset spell language'
+  else
+    set spell
+    echo 'Using: "'.&spelllang.'" spell language'
+  endif
+endfunction
+nnoremap <F6> :call CycleLang()<CR>
 
 " reload vimrc
 nmap <leader><leader><leader> :so $MYVIMRC<cr>
-"}}}"
 
+" show the highlight used (under the cursor)
 map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+"}}}
