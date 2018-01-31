@@ -92,8 +92,8 @@ tray-background  = ${colors.transparent}
 
 modules-left        = menu i3
 modules-center      = date
-;modules-right       = backlight volume memory cpu battery powermenu
-modules-right       = backlight volume battery
+;modules-right       = backlight alsa memory cpu battery powermenu
+modules-right       = backlight alsa battery
 enable-ipc = true
 
 [bar/bar2]
@@ -169,9 +169,9 @@ time-alt                 = %X
 
 label                    = %date% %time%
 
-[module/volume]
+[module/alsa]
 
-type                            = internal/volume
+type                            = internal/alsa
 
 format-volume                   = %{A3:pavucontrol:}VOL%{A} <bar-volume>
 label-volume                    = VOL
@@ -194,6 +194,10 @@ bar-volume-indicator-foreground = ${colors.foreground}
 bar-volume-fill                 = ─
 bar-volume-empty                = ─
 bar-volume-empty-foreground     = ${colors.foreground-alt}
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
 
 [module/battery]
 type                         = internal/battery
