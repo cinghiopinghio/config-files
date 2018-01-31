@@ -14,7 +14,7 @@ alias l='ls -lFh'
 alias l1='ls -1'
 
 # calendar
-alias c="{when c; when; echo; grep "^-" ~/casolin/casolin/notes/todo.diff 2>/dev/null}"
+# alias c="{when c; when; echo; grep "^-" ~/casolin/casolin/notes/todo.diff 2>/dev/null}"
 alias k="khal calendar; echo; todo"
 # braces serve to pipe the outputs altogether
 
@@ -26,7 +26,7 @@ fi
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal ||
-	echo error)" ALERT "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+    echo error)" ALERT "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 alias scr='save-vars; screen -dRR'
 
@@ -54,10 +54,10 @@ else
 fi
 alias alot-u='alot search tag:unread'
 
-alias pa='pacaur'
-alias pau='pacaur -Syu'
-alias pai='pacaur -S'
-alias pas='pacaur -Ss'
+alias pa='trizen'
+alias pau='trizen -Syu'
+alias pai='trizen -S'
+alias pas='trizen -Ss'
 
 # GIT + SVN
 svnhist(){
@@ -102,13 +102,13 @@ alias ipynb='ipython2 notebook --no-browser'
 # mark dirs
 export MARKPATH=$HOME/.marks
 alias j='jump'
-function jump { 
+function jump {
     cd -P "$MARKPATH/$1" 2>/dev/null || echo "No such mark: $1"
 }
-function mark { 
+function mark {
     mkdir -p "$MARKPATH"; ln -s "$(pwd)" "$MARKPATH/$1"
 }
-function unmark { 
+function unmark {
     rm -i "$MARKPATH/$1"
 }
 function marks {
@@ -139,16 +139,16 @@ rm_git_submodules(){
 
 
 function countdown(){
-   date1=$((`date +%s` + $1)); 
-   while [ "$date1" -ne `date +%s` ]; do 
+   date1=$((`date +%s` + $1));
+   while [ "$date1" -ne `date +%s` ]; do
      echo -ne "\r$(date -u --date @$(($date1 - `date +%s`)) +%H:%M:%S)";
      sleep 0.1
    done
 }
 function stopwatch(){
-  date1=`date +%s`; 
-   while true; do 
-    echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r"; 
+  date1=`date +%s`;
+   while true; do
+    echo -ne "$(date -u --date @$((`date +%s` - $date1)) +%H:%M:%S)\r";
     sleep 0.1
    done
 }
