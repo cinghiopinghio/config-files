@@ -11,7 +11,8 @@ menu="\
 5. 🕱 Kill'em All
 6. Qalc(ulate)
 7. SystemCtl
-8. Documents\
+8. Documents
+9. Packages\
 "
 
 choice=$(echo "$menu" | rofi -dmenu -i -p '☰' -mesg 'What are you looking for?')
@@ -41,6 +42,9 @@ case $choice in
   8*)
     f="$(find ~/ -type f -name \*.pdf | rofi -dmenu)"
     [ -f "$f" ] && zathura "$f"
+    ;;
+  9*)
+    rofi -show pacui -modi "pacui:~/.config/rofi/scripts/pacui" &
     ;;
   *)
     ;;
