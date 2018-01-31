@@ -4,9 +4,11 @@
 " PREABLE
 "{{{ PREAMBLE
 let maplocalleader=' '
-set nocompatible               " be iMproved
+if !has('nvim')
+  set nocompatible               " be iMproved
+endif
 filetype indent plugin on
-let s:host=substitute(hostname(), "\\..*", "", "") 
+let s:host=substitute(hostname(), "\\..*", "", "")
 syntax on
 "}}}
 
@@ -14,8 +16,18 @@ syntax on
 " Plugin Manager
 "{{{ Pluc-vim: plugin manager
 if has('nvim')
+  if empty(glob('~/.config/nvim/autoload/plug.vim'))
+    silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  endif
   call plug#begin('~/.config/nvim/bundle')
 else
+  if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  endif
   call plug#begin('~/.vim/bundle')
 endif
 
@@ -26,7 +38,7 @@ set dictionary+=/usr/share/dict/cracklib-small
 " Syntax check
 "{{{ neomake/Syntastic/ALE
 if has('nvim') || v:version >= 800
-  Plug 'w0rp/ale'
+  " Plug 'w0rp/ale'
   " Only lint on save or when switching back to normal mode, not every keystroke in insert mode
   let g:ale_lint_on_text_changed = 'normal'
   let g:ale_lint_on_insert_leave = 1
@@ -48,6 +60,24 @@ endif
 Plug 'tpope/vim-commentary'
 "}}}
 "{{{ AutoCompletion
+Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/echodoc.vim'
+" Required for operations modifying multiple buffers like rename.
+set hidden
+
+let g:LanguageClient_serverCommands = {
+    \ 'python': ['pyls'],
+    \ 'html': ['html-languageserver'],
+    \ 'css': ['css-languageserver'],
+    \ 'json': ['json-languageserver'],
+    \ }
+
+" Automatically start language servers.
+let g:LanguageClient_autoStart = 1
+
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
 set complete+=k         " enable dictionary completion
 " set completeopt+=longest
@@ -64,6 +94,9 @@ let g:AutoPairs= {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
 if has('nvim') || v:version >= 800
   " the framework
   Plug 'roxma/nvim-completion-manager'
+  " Requires vim8 with has('python') or has('python3')
+  " Requires the installation of msgpack-python. (pip install msgpack-python)
+  Plug 'roxma/vim-hug-neovim-rpc', has('nvim') ? { 'on': [] } : {}
 else
   Plug 'ajh17/VimCompletesMe'
 endif
@@ -148,11 +181,11 @@ set scrolloff=5  " never reach the top or bottom of the page
 
 " keep folds as is until save of fold/unfold (save time)
 Plug 'Konfekt/FastFold'
-" window splits control
-Plug 'zhaocai/GoldenView.Vim'
+" " window splits control
+" Plug 'zhaocai/GoldenView.Vim'
 """""""""""""""""""""""""""""""""""""
 " Plug 'ludovicchabant/vim-gutentags'
-Plug 'troydm/zoomwintab.vim'
+" Plug 'troydm/zoomwintab.vim'
 "{{{ FZF
 Plug 'junegunn/fzf', { 'dir': '~/codes/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -206,7 +239,8 @@ nmap <localleader>fl :Lines<cr>
 " let g:unite_enable_start_insert = 1
 "}}}
 
-Plug 'terryma/vim-multiple-cursors'
+Plug 'hauleth/sad.vim'
+" Plug 'terryma/vim-multiple-cursors'
 " if ! exists("g:deoplete_multicursors")
 "   " load this only once
 "   let g:deoplete_multicursors = 1
@@ -220,6 +254,7 @@ Plug 'terryma/vim-multiple-cursors'
 "{{{ junegunn/vim-easy-align
 "Plug 'junegunn/vim-easy-align'
 Plug 'tommcdo/vim-lion'
+let g:lion_squeeze_spaces=1
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
@@ -259,6 +294,8 @@ Plug 'freeo/vim-kalisi'
 Plug 'marcopaganini/termschool-vim-theme'
 Plug 'jnurmine/Zenburn'
 Plug 'owickstrom/vim-colors-paramount'
+Plug 'hauleth/blame.vim'
+Plug 'tpozzi/Sidonia'
 
 " my colorscheme
 let g:mangroove_transparent_bg = 1
@@ -300,20 +337,17 @@ call plug#end()
 if has("autocmd") " only with autocommands
   " Put these in an autocmd group, so that we can delete them easily.
   augroup vimrcEx
-  au!
+    au!
 
-  " set wrap in vimdiff
-  au FilterWritePre * if &diff | set wrap | endif
-
-  " When editing a file, always jump to the last known cursor position.
-  " Don't do it when the position is invalid or when inside an event handler
-  " (happens when dropping a file on gvim).
-  " Also don't do it when the mark is in the first line, that is the default
-  " position when opening a file.
-  autocmd BufReadPost *
-    \ if line("'\"") > 1 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
+    " When editing a file, always jump to the last known cursor position.
+    " Don't do it when the position is invalid or when inside an event handler
+    " (happens when dropping a file on gvim).
+    " Also don't do it when the mark is in the first line, that is the default
+    " position when opening a file.
+    autocmd BufReadPost *
+      \ if line("'\"") > 1 && line("'\"") <= line("$") |
+      \   exe "normal! g`\"" |
+      \ endif
   augroup END
 
 else
@@ -326,20 +360,30 @@ endif " has("autocmd")}}}
 
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
-set hlsearch
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
 set history=100                 " keep 100 lines of command line history
-set ruler                      " show the cursor position all the time
-set showcmd                    " display incomplete commands
+" set ruler                      " show the cursor position all the time
+" set showcmd                    " display incomplete commands
+
+set clipboard+=unnamed  " yank and copy to X clipboard
+
+" SEARCH
+set hlsearch
 set incsearch                  " do incremental searching
 set ignorecase          " case-insensitive search
 set smartcase           " upper-case sensitive search
 setlocal shiftwidth=2 softtabstop=2 expandtab smarttab
 
-set clipboard+=unnamed  " yank and copy to X clipboard
+set textwidth=78
+set colorcolumn=80
+set cursorline
+
 "wrapping
 set wrap
 set linebreak
+
+set splitbelow
+set splitright
 
 " set terminal title
 set title
@@ -348,6 +392,7 @@ set title
 set list
 set listchars=tab:╟─,trail:┄,extends:┄
 
+"{{{ THEME and COLORS
 if has('termguicolors')
   set termguicolors
 endif
@@ -384,17 +429,7 @@ function! ToggleBackground()
 endfunction
 
 nnoremap <F9> :call ToggleBackground()<CR>
-
-
-set splitbelow
-set splitright
-
-set textwidth=78
-augroup rowcolumn
-  autocmd!
-  autocmd InsertEnter * setlocal colorcolumn=80 cursorline
-  autocmd InsertLeave * setlocal colorcolumn=0 nocursorline
-augroup END
+"}}}
 
 set makeprg=make
 set grepprg=grep\ -nH\ $*
@@ -403,18 +438,18 @@ set showmode
 " Wildmenu
 if has("wildmenu")
   set wildignore+=*.a,*.o
-  set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
+  " set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png
   set wildignore+=.DS_Store,.git,.hg,.svn
   set wildignore+=*~,*.swp,*.tmp
   set wildmenu
   set wildmode=longest,full
 endif
-set ls=2  " show statusline always (airline)
-set ttimeoutlen=50 " fast exit from INSERT (airlin
+set ls=2  " show statusline always
 set dir=/tmp//,/var/tmp//,.
 set mouse=vi
 "}}}
 
+"{{{ Status line
 function! WindowNumber()
   return tabpagewinnr(tabpagenr())
 endfunction
@@ -448,6 +483,7 @@ set statusline+=%=                               " switch to RHS
 set statusline+=%1*%Y%*                          " file type
 set statusline+=\ %2*L:%l/%L%*                   " number of lines
 set statusline+=\ %2*W:%{WindowNumber()}%*       " window number
+"}}}
 
 "-------------------------------------------------------------------------
 " MAP
@@ -467,10 +503,6 @@ nnoremap <C-right> :vertical resize +5<cr>
 " imap <silent> <Up> <C-o>gk
 nmap <silent> <Down> gj
 nmap <silent> <Up> gk
-nnoremap <silent> <localleader><Up>    :wincmd k<CR>
-nnoremap <silent> <localleader><Down>  :wincmd j<CR>
-nnoremap <silent> <localleader><Right> :wincmd l<CR>
-nnoremap <silent> <localleader><Left>  :wincmd h<CR>
 
 " Use tab and shift-tab to cycle through windows.
 nnoremap <Tab> <C-W>w
@@ -489,7 +521,7 @@ inoremap <C-U> <C-G>u<C-U>
 
 " cycle through a number of languages
 function! CycleLang()
-  let langs = ['en_gb', 'it', 'fr', 'en_us', '']
+  let langs = ['en_gb', 'it', 'fr', 'en_us', 'es', '']
   let i = index(langs, &spelllang)
   let j = (i+1)%len(langs)
   let &spelllang = langs[j]
