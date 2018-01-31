@@ -61,6 +61,7 @@ case ${ACTION} in
     feh --no-fehbg --bg-fill ${LOCATION}/${FNAME}.*
     ;;
   lock)
-    i3lock -c 444444 -t -i ${LOCATION}/${FNAME}.png
+    # i3lock -c 444444 -t -i ${LOCATION}/${FNAME}.png
+    bash ~/.i3/lock.sh
     ;;
 esac
