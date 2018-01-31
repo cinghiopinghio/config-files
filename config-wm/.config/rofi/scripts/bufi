@@ -8,7 +8,6 @@ This scipt interacts with buku database through the rofi interface to:
 - edit bookmarks
 """
 
-import sys
 import json
 import glob
 import os
@@ -27,8 +26,6 @@ import rofi
 # 4: boh
 
 INIT = 16
-LINE_LENGHT = 99
-PANGO_STEP = 1.2
 CACHE = xdg_cache_home + '/bufi.json'
 
 MOZ_SESSION = '~/.mozilla/firefox/*.default/places.sqlite'
@@ -47,14 +44,12 @@ def make_string(*ms_args):
 
 def frecency(item, now, indx):
     """ compute the frecency of `item`. """
+    from_now = now - item[2]
     if indx != item[0]:
-        item[1] -= 1
+        # if not visited last week: punish it
+        if from_now > 604800:
+            item[1] -= 10
         return item
-    try:
-        from_now = now - item[2]
-    except IndexError:
-        item[1] += 50
-        return item + [now]
     item[1] = int(item[1] + min(100, 8640000 / from_now))
     return item
 
@@ -113,7 +108,7 @@ def buku_edit_bookmark(line, buku_database):
     Edit bookmark in external editor
     """
     bm_i = int(line.split()[0])
-    os.environ['EDITOR'] = 'nvim-pygtk3'
+    os.environ['EDITOR'] = 'nvim-qt --nofork'
     buku_database.edit_update_rec(bm_i)
 
 
