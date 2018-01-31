@@ -50,11 +50,19 @@ inputbar {
     color: @lightgreen;
     padding: 20px;
     margin: 10px 0;
+    children:   [ prompt,textbox-prompt-colon,entry,case-indicator ];
 }
 
 prompt,case-indicator,entry {
     font: "Fira Sans 14";
     color: inherit;
+}
+
+textbox-prompt-colon {
+    expand:     false;
+    str:        ":";
+    margin:     0px 0.3000em 0.0000em 0.0000em ;
+    text-color: inherit;
 }
 
 message{
