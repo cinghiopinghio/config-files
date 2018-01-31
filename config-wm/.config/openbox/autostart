@@ -54,11 +54,11 @@ case ${HOSTNAME} in
     # pidgin &
     ;;
   'dingo'|'susto')
-    nm-applet &
     # cmst &
     # /usr/bin/env albert &
-    blueman-applet &
     # QSyncthingTray &
     kalu &
-    riot-desktop --hidden &
 esac
+
+# start xdg autostat apps
+dex -a -e i3wm
