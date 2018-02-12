@@ -27,6 +27,7 @@ case ${XDG_CURRENT_DESKTOP} in
     ;;
 esac
 
+syndaemon -d -i 1.0 -K -R
 sleep 5
 
 
