@@ -1,4 +1,4 @@
-###########################################################        
+###########################################################
 # Options for Zsh
 
 # History
@@ -21,7 +21,7 @@ else
 fi
 
 fpath=(${HOME}/.local/share/zsh $fpath)
-autoload -U compinit 
+autoload -U compinit
 compinit
 setopt autopushd pushdminus pushdsilent pushdtohome
 setopt autocd
@@ -42,12 +42,12 @@ setopt nohup
 setopt prompt_subst
 vcs_prompt(){
   while [[ ! -d .git && ! -d .svn && ! `pwd` = "/" ]]; do cd ..; done
-  if [ -e ./.git ];   
+  if [ -e ./.git ];
   then
     BRANCH=$(awk -F'/' '{print $NF}' .git/HEAD)
     echo '%F{red}[git]%f - %F{yellow}'$BRANCH'%f'
-  elif [ -e ./.svn ]; 
-  then 
+  elif [ -e ./.svn ];
+  then
     echo '%F{red}[svn]%f'
   fi
 }
@@ -88,14 +88,14 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 zstyle ':completion:*' completer _complete _match _approximate
 zstyle ':completion:*:match:*' original only
 zstyle ':completion:*:approximate:*' max-errors 1 numeric
-# 
+#
 # # tab completion for PID :D
 # zstyle ':completion:*:*:kill:*' menu yes select
 # zstyle ':completion:*:kill:*' force-list always
-# 
+#
 # # cd not select parent dir
 # zstyle ':completion:*:cd:*' ignore-parents parent pwd
-# 
+#
 # # ssh completion
 hosts=$(awk '/^Host / {printf("%s ",$2)}' ~/.ssh/config 2>/dev/null)
 zstyle ':completion:*:hosts' hosts $hosts
@@ -142,7 +142,7 @@ bindkey '^R'      history-incremental-search-backward
 bindkey '\e[2~'   overwrite-mode     # Linux console, xterm, gnome-terminal
 bindkey '^[[5~'   up-line-or-history
 bindkey '^[[A'    up-line-or-search
-bindkey "^[."     insert-last-word 
+bindkey "^[."     insert-last-word
 
 autoload -Uz copy-earlier-word
 zle -N copy-earlier-word
@@ -185,7 +185,7 @@ key[Delete]=${terminfo[kdch1]}
 #if (( ${+terminfo[smkx]} )) && (( ${+terminfo[rmkx]} )); then
 #    function zle-line-init () {
 #        printf '%s' "${terminfo[smkx]}"
-#    
+#
 #    function zle-line-finish () {
 #        printf '%s' "${terminfo[rmkx]}"
 #    }
@@ -245,7 +245,7 @@ alias -s txt=$EDITOR
 alias -s PKGBUILD=$EDITOR
 
 # command L equivalent to command |less
-alias -g L='|less' 
+alias -g L='|less'
 
 # command S equivalent to command &> /dev/null &
 alias -g S='&> /dev/null &'
