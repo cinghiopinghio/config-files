@@ -13,6 +13,7 @@ import glob
 import os
 import sqlite3
 import time
+import random
 
 import buku
 from xdg.BaseDirectory import xdg_cache_home
@@ -51,6 +52,7 @@ def frecency(item, now, indx):
             item[1] -= 10
         return item
     item[1] = int(item[1] + min(100, 8640000 / from_now))
+    item[2] = now
     return item
 
 
@@ -127,8 +129,11 @@ def main():
     # save a dict and forget about the order
     bk_map = {a[0]: a for a in buku_database.get_rec_all()}
 
+    buku_hist = []
+    # get a random element to put first
+    buku_hist += [bk_map.pop(random.randrange(len(bk_map)))]
     # get db items present in history
-    buku_hist = [bk_map.pop(h[0]) for h in hist if h[0] in bk_map]
+    buku_hist += [bk_map.pop(h[0]) for h in hist if h[0] in bk_map]
     buku_hist += [v for v in bk_map.values()]
     now = int(time.time())
 
