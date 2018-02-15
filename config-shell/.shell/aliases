@@ -25,8 +25,10 @@ fi
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal ||
-    echo error)" ALERT "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+alias alert='RES=$? && notify-send --urgency=low\
+   -i "$([ $RES = 0 ] && echo info || echo error)"\
+   ALERT\
+   "$([ $RES = 0 ] && echo Some of your scripts may have finished || echo Ahhh, Error. Check your script)"'
 
 alias scr='save-vars; screen -dRR'
 
