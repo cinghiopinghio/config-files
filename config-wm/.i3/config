@@ -107,6 +107,8 @@ mode "$mode_split" {
 }
 bindsym $mod+u mode "$mode_split"
 
+default_orientation horizontal
+
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen
 
