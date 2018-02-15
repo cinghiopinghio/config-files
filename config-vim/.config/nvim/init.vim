@@ -8,7 +8,7 @@ if !has('nvim')
   set nocompatible               " be iMproved
 endif
 filetype indent plugin on
-let s:host=substitute(hostname(), "\\..*", "", "")
+let s:host=substitute(hostname(), "\\..*", '', '')
 syntax on
 "}}}
 
@@ -38,12 +38,15 @@ set dictionary+=/usr/share/dict/cracklib-small
 " Syntax check
 "{{{ neomake/Syntastic/ALE
 if has('nvim') || v:version >= 800
-  " Plug 'w0rp/ale'
+  Plug 'w0rp/ale'
   " Only lint on save or when switching back to normal mode, not every keystroke in insert mode
   let g:ale_lint_on_text_changed = 'normal'
   let g:ale_lint_on_insert_leave = 1
   " Only fix on save
   let g:ale_fix_on_save = 1
+  let g:ale_linters = {
+    \ 'python': ['pyls'],
+    \ }
 else
   " only vimL no python required
   Plug 'scrooloose/syntastic'
@@ -60,16 +63,18 @@ endif
 Plug 'tpope/vim-commentary'
 "}}}
 "{{{ AutoCompletion
-Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+Plug 'autozimu/LanguageClient-neovim', {
+  \ 'branch': 'next',
+  \ 'do': 'bash install.sh' }
 Plug 'Shougo/echodoc.vim'
 " Required for operations modifying multiple buffers like rename.
-set hidden
+" set hidden
 
 let g:LanguageClient_serverCommands = {
     \ 'python': ['pyls'],
-    \ 'html': ['html-languageserver'],
-    \ 'css': ['css-languageserver'],
-    \ 'json': ['json-languageserver'],
+    \ 'html': ['html-languageserver', '--stdio'],
+    \ 'css': ['css-languageserver', '--stdio'],
+    \ 'json': ['json-languageserver', '--stdio'],
     \ }
 
 " Automatically start language servers.
@@ -216,6 +221,7 @@ let g:fzf_colors =
 " get most recent files with preview
 nmap <localleader>ff :Files .<CR>
 nmap <localleader>fb :Buffers<cr>
+nmap <localleader>fg :GitFiles<cr>
 " use the neomru cache!
 Plug 'Shougo/neomru.vim'
 nmap <localleader>fr :History<cr>
@@ -327,6 +333,7 @@ Plug 'Vimjas/vim-python-pep8-indent'
 " until you open a tex file/buffer.
 " https://github.com/lervag/vimtex/issues/885
 Plug 'lervag/vimtex'   ", { 'for': 'tex' }
+Plug 'othree/html5.vim'
 " }}}
 "}}}
 call plug#end()
@@ -391,6 +398,8 @@ set title
 " show tabs and trailing whitespaces
 set list
 set listchars=tab:╟─,trail:┄,extends:┄
+
+iabbrev mf Mauro Faccin
 
 "{{{ THEME and COLORS
 if has('termguicolors')
@@ -471,18 +480,24 @@ augroup statline_trail
   autocmd cursorhold,bufwritepost * unlet! b:statline_trailing_space_warning
 augroup END
 
+function! StatuslineGit()
+  let l:branchname = GitBranch()
+  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+endfunction
+
 set statusline=
-set statusline+=%5*%m%r%*                        " modified, readonly
-set statusline+=%2*%{expand('%:~:h')}/           " full path to file's directory
-set statusline+=%1*%t%*                          " file name
+set statusline+=%#CursorLineNr#%m%r%*                        " modified, readonly
+set statusline+=%#LineNr#%{expand('%:~:h')}/           " full path to file's directory
+set statusline+=%#Pmenu#%t%*                          " file name
 set statusline+=%<                               " truncate here if needed
-set statusline+=\ %3*%{TrailingSpaceWarning()}%* " trailing whitespace
+set statusline+=\ %#CursorLineNr#%{TrailingSpaceWarning()}%* " trailing whitespace
+set statusline+=\ %{fugitive#head(8)}
 
 set statusline+=%=                               " switch to RHS
 
-set statusline+=%1*%Y%*                          " file type
-set statusline+=\ %2*L:%l/%L%*                   " number of lines
-set statusline+=\ %2*W:%{WindowNumber()}%*       " window number
+set statusline+=%#Pmenu#%Y%*                          " file type
+set statusline+=\ %#LineNR#L:%l/%L%*                   " number of lines
+set statusline+=\ %#LineNR#W:%{WindowNumber()}%*       " window number
 "}}}
 
 "-------------------------------------------------------------------------
@@ -540,7 +555,7 @@ nnoremap <F6> :call CycleLang()<CR>
 nmap <leader><leader><leader> :so $MYVIMRC<cr>
 
 " show the highlight used (under the cursor)
-map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name")
+       \ . '> trans<' . synIDattr(synID(line("."),col("."),0),"name")
+          \ . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 "}}}
