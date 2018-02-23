@@ -93,7 +93,7 @@ tray-background  = ${colors.transparent}
 modules-left        = menu i3
 modules-center      = date
 ;modules-right       = backlight alsa memory cpu battery powermenu
-modules-right       = backlight alsa battery
+modules-right       = backlight alsa battery lkscreen
 enable-ipc = true
 
 [bar/bar2]
@@ -162,12 +162,12 @@ format-background = ${colors.background}
 format-padding = ${vars.padding}
 
 date                     = %A, %d %b
-date-alt                 = %x
+; date-alt                 = %x
 
 time                     = %H:%M
-time-alt                 = %X
+; time-alt                 = %X
 
-label                    = %date% %time%
+label                    = %{A1:termite --class=float --exec ikhal --geometry 700x1000:}%date% %time%%{A}
 
 [module/alsa]
 
@@ -254,5 +254,18 @@ menu-0-2 = "TERM "
 menu-0-2-exec = termite
 menu-0-3 = "RELOAD"
 menu-0-3-exec = "bash ~/.config/polybar/startup"
+
+[module/screen]
+type = custom/script
+exec = ~/.config/polybar/screen.sh
+click-left = ~/.config/polybar/screen.sh -t
+
+[module/lkscreen]
+type = custom/ipc
+hook-0 = ~/.config/polybar/screen.sh -t
+hook-1 = echo SCREEN
+initial = 2
+click-left = polybar-msg -p %pid% hook lkscreen 1
+
 
 ; vim:ft=dosini

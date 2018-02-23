@@ -279,6 +279,8 @@ for_window [class="(?i)gnuplot"] floating enabled
 for_window [class="appfinder"] floating enabled
 for_window [class="Cysboard"] fullscreen
 
+for_window [title="float"] floating enabled
+
 # the following make fullscreen slides to appears on secondary screen
 # and time and notes on primary
 workspace 000 output DP1-1
