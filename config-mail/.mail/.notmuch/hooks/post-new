@@ -10,7 +10,7 @@ NOREAD='-unread -inbox'
 ## clear the 'new' tag
 afew --tag --new
 
-astroid --stop-polling
+pgrep astroid && astroid --stop-polling
 
 # Update alot
 killall -SIGUSR1 alot 2>/dev/null
