@@ -63,30 +63,36 @@ endif
 Plug 'tpope/vim-commentary'
 "}}}
 "{{{ AutoCompletion
-Plug 'autozimu/LanguageClient-neovim', {
-  \ 'branch': 'next',
-  \ 'do': 'bash install.sh' }
-Plug 'Shougo/echodoc.vim'
-" Required for operations modifying multiple buffers like rename.
-" set hidden
+if has('nvim') || v:version >= 800
+  Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh' }
+  Plug 'Shougo/echodoc.vim'
+  " Required for operations modifying multiple buffers like rename.
+  " set hidden
 
-let g:LanguageClient_serverCommands = {
-    \ 'python': ['pyls'],
-    \ 'html': ['html-languageserver', '--stdio'],
-    \ 'css': ['css-languageserver', '--stdio'],
-    \ 'json': ['json-languageserver', '--stdio'],
-    \ }
+  let g:LanguageClient_serverCommands = {
+      \ 'python': ['pyls'],
+      \ 'html': ['html-languageserver', '--stdio'],
+      \ 'css': ['css-languageserver', '--stdio'],
+      \ 'json': ['json-languageserver', '--stdio'],
+      \ }
+  nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+  nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+  nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
-" Automatically start language servers.
-let g:LanguageClient_autoStart = 1
-
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+  " Automatically start language servers.
+  let g:LanguageClient_autoStart = 1
+else
+  Plug 'lifepillar/vim-mucomplete'
+  let g:mucomplete#enable_auto_at_startup = 1
+endif
 
 set complete+=k         " enable dictionary completion
-" set completeopt+=longest
-set completeopt=menu,menuone,noinsert,noselect,preview
+set completeopt=menuone,preview
+if (v:version >= 704 && has('patch755')) || has('nvim')
+  set completeopt+=noinsert,noselect
+endif
 
 "  complete parenthesis
 "{{{ jiangmiao/auto-pairs
@@ -385,6 +391,9 @@ set textwidth=78
 set colorcolumn=80
 set cursorline
 
+set number
+set relativenumber
+
 "wrapping
 set wrap
 set linebreak
@@ -400,6 +409,7 @@ set list
 set listchars=tab:╟─,trail:┄,extends:┄
 
 iabbrev mf Mauro Faccin
+iabbrev ... …
 
 "{{{ THEME and COLORS
 if has('termguicolors')
@@ -458,10 +468,7 @@ set dir=/tmp//,/var/tmp//,.
 set mouse=vi
 "}}}
 
-"{{{ Status line
-function! WindowNumber()
-  return tabpagewinnr(tabpagenr())
-endfunction
+" Status Line: {{{
 function! TrailingSpaceWarning()
   if !exists("b:statline_trailing_space_warning")
     let lineno = search('\s$', 'nw')
@@ -479,26 +486,103 @@ augroup statline_trail
   autocmd!
   autocmd cursorhold,bufwritepost * unlet! b:statline_trailing_space_warning
 augroup END
+" Status Function: {{{2
+function! Status(winnum)
+  let active = a:winnum == winnr()
+  let bufnum = winbufnr(a:winnum)
 
-function! StatuslineGit()
-  let l:branchname = GitBranch()
-  return strlen(l:branchname) > 0?'  '.l:branchname.' ':''
+  let stat = ''
+
+  " this function just outputs the content colored by the
+  " supplied colorgroup number, e.g. num = 2 -> User2
+  " it only colors the input if the window is the currently
+  " focused one
+
+  function! Color(active, num, content)
+    if a:active
+      return '%' . a:num . '*' . a:content . '%*'
+    else
+      return a:content
+    endif
+  endfunction
+
+  " this handles alternative statuslines
+  let usealt = 0
+
+  let type = getbufvar(bufnum, '&buftype')
+  let name = bufname(bufnum)
+
+  if type ==# 'help'
+    let altstat = ' ' . fnamemodify(name, ':t:r')
+    let usealt = 1
+  elseif name ==# '__Gundo__'
+    let altstat = ' Gundo'
+    let usealt = 1
+  elseif name ==# '__Gundo_Preview__'
+    let altstat = ' Gundo Preview'
+    let usealt = 1
+  endif
+
+  if usealt
+    return altstat . "%=%Y "
+  endif
+
+  " file name
+  let stat .= Color(active, 3, expand('#' . bufnum . ':p:h:~') . '/' )
+  let stat .= Color(active, 1, expand('#' . bufnum . ':t'))
+  let stat .= ' %<'  " truncate here if too long
+
+  " file modified + readonly
+  let stat .= Color(active, 1, '%m%r')
+
+  " paste
+  if active && &paste
+    let stat .= Color(active, 2, 'P')
+  endif
+
+  if active
+     let stat .= TrailingSpaceWarning()
+  endif
+
+  " right side
+  let stat .= '%='
+
+  " git branch
+  let head = fugitive#head(8)
+  if active && !empty(head)
+    let stat .= Color(active, 3, ' [' . head . ']')
+  endif
+
+  if active
+    let stat .= Color(active, 2, ' %l/%L')
+  endif
+
+  return stat
+endfunction
+" }}}
+
+" Status AutoCMD: {{{
+
+function! s:RefreshStatus()
+  for nr in range(1, winnr('$'))
+    call setwinvar(nr, '&statusline', '%!Status(' . nr . ')')
+  endfor
 endfunction
 
-set statusline=
-set statusline+=%#CursorLineNr#%m%r%*                        " modified, readonly
-set statusline+=%#LineNr#%{expand('%:~:h')}/           " full path to file's directory
-set statusline+=%#Pmenu#%t%*                          " file name
-set statusline+=%<                               " truncate here if needed
-set statusline+=\ %#CursorLineNr#%{TrailingSpaceWarning()}%* " trailing whitespace
-set statusline+=\ %{fugitive#head(8)}
+augroup status
+  autocmd!
+  autocmd VimEnter,WinEnter,BufWinEnter * call <SID>RefreshStatus()
+augroup END
+" }}}
 
-set statusline+=%=                               " switch to RHS
+" Status Colors: {{{
+hi! link User1 CursorLineNr
+hi! link User2 LineNr
+hi! link User3 Pmenu
+hi! link User4 LineNr
+" }}}
 
-set statusline+=%#Pmenu#%Y%*                          " file type
-set statusline+=\ %#LineNR#L:%l/%L%*                   " number of lines
-set statusline+=\ %#LineNR#W:%{WindowNumber()}%*       " window number
-"}}}
+" }}}
 
 "-------------------------------------------------------------------------
 " MAP
