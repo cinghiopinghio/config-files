@@ -126,6 +126,8 @@ esac
 function virtualenv_prompt() {
     if [ -n "$VIRTUAL_ENV" ]; then
         echo $Red"(${VIRTUAL_ENV##*/}) "$Color_Off
+    elif [ -n "${CONDA_DEFAULT_ENV}" ]; then
+        echo $Red"(${CONDA_DEFAULT_ENV##*/}) "$Color_Off
     fi
 }
 
