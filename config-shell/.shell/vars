@@ -8,16 +8,11 @@ if hash nvim 2>/dev/null; then
 elif hash vim 2>/dev/null; then
 	export EDITOR='vim'
 fi
-# export BROWSER="iridium-browser"
 export BROWSER=firefox
 # add to PATH .local/bin and subdirectories
 export PATH=$PATH:$(find -L ~/.local/bin -type d | tr '\n' ':' | sed 's/:$//')
-#export PATH=$PATH:~/.gem/ruby/1.9.1/bin
-#export PATH=$PATH:~/.gem/ruby/2.1.0/bin
 # nice java fonts
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
-
-export WORKON_HOME=~/.envs
 
 PERL_MB_OPT="--install_base \"$HOME/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
