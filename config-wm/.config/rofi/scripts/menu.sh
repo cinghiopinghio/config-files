@@ -11,15 +11,14 @@ menu="\
 5. 🕱 Kill'em All
 6. Qalc(ulate)
 7. SystemCtl
-8. Documents
-9. Packages\
+8. Documents\
 "
 
 choice=$(echo "$menu" | rofi -dmenu -i -p '☰' -mesg 'What are you looking for?')
 
 case $choice in
   1*)
-    ${LOCATION}/bufi 2>> ~/bufi.log
+    ${LOCATION}/bufi 2>>/dev/null
     ;;
   2*)
     . ${LOCATION}/web-search
@@ -40,11 +39,7 @@ case $choice in
     ${LOCATION}/scudmenu
     ;;
   8*)
-    f="$(find ~/ -type f -name \*.pdf | rofi -dmenu)"
-    [ -f "$f" ] && zathura "$f"
-    ;;
-  9*)
-    rofi -show pacui -modi "pacui:~/.config/rofi/scripts/pacui" &
+    ${LOCATION}/docufi 2>>/dev/null
     ;;
   *)
     ;;
