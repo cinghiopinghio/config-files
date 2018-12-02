@@ -42,10 +42,12 @@ if has('nvim') || v:version >= 800
   " Only lint on save or when switching back to normal mode, not every keystroke in insert mode
   let g:ale_lint_on_text_changed = 'normal'
   let g:ale_lint_on_insert_leave = 1
+  let g:ale_completion_enabled = 0
   " Only fix on save
   let g:ale_fix_on_save = 1
   let g:ale_linters = {
     \ 'python': ['pyls'],
+    \ 'sh': ['bash-language-server'],
     \ }
 else
   " only vimL no python required
@@ -67,12 +69,17 @@ if has('nvim') || v:version >= 800
   Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh' }
+
   Plug 'Shougo/echodoc.vim'
+  set cmdheight=2
+  let g:echodoc#enable_at_startup = 1
+  let g:echodoc#type = 'signature'
   " Required for operations modifying multiple buffers like rename.
   " set hidden
 
   let g:LanguageClient_serverCommands = {
       \ 'python': ['pyls'],
+      \ 'sh': ['bash-language-server', 'start'],
       \ 'html': ['html-languageserver', '--stdio'],
       \ 'css': ['css-languageserver', '--stdio'],
       \ 'json': ['json-languageserver', '--stdio'],
@@ -102,23 +109,28 @@ let g:AutoPairs= {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
 
 "  autocompletion
 "{{{ deoplete / completor / VimCompletesMe / NCM
-if has('nvim') || v:version >= 800
-  " the framework
-  Plug 'roxma/nvim-completion-manager'
-  " Requires vim8 with has('python') or has('python3')
-  " Requires the installation of msgpack-python. (pip install msgpack-python)
-  Plug 'roxma/vim-hug-neovim-rpc', has('nvim') ? { 'on': [] } : {}
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  " Plug 'zchee/deoplete-jedi'
+elseif v:version >= 800
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+  " Plug 'zchee/deoplete-jedi'
 else
   Plug 'ajh17/VimCompletesMe'
 endif
+
+let g:deoplete#enable_at_startup = 1
+
 "}}}
 
 "  snippets
 " {{{ ultisnips
-if has("python")
+if has('python')
   Plug 'SirVer/ultisnips'
-  let g:UltiSnipsExpandTrigger="<c-j>"
-  let g:UltiSnipsListSnippets="<c-l>"
+  let g:UltiSnipsExpandTrigger='<c-j>'
+  let g:UltiSnipsListSnippets='<c-l>'
 else
   Plug 'MarcWeber/vim-addon-mw-utils'
   Plug 'tomtom/tlib_vim'
@@ -228,6 +240,7 @@ let g:fzf_colors =
 nmap <localleader>ff :Files .<CR>
 nmap <localleader>fb :Buffers<cr>
 nmap <localleader>fg :GitFiles<cr>
+nmap <localleader>ft :call LanguageClient_textDocument_documentSymbol()<CR>
 " use the neomru cache!
 Plug 'Shougo/neomru.vim'
 nmap <localleader>fr :History<cr>
@@ -252,17 +265,6 @@ nmap <localleader>fl :Lines<cr>
 "}}}
 
 Plug 'hauleth/sad.vim'
-" Plug 'terryma/vim-multiple-cursors'
-" if ! exists("g:deoplete_multicursors")
-"   " load this only once
-"   let g:deoplete_multicursors = 1
-"   function g:Multiple_cursors_before()
-"    let g:deoplete#disable_auto_complete = 1
-"   endfunction
-"   function g:Multiple_cursors_after()
-"    let g:deoplete#disable_auto_complete = 0
-"   endfunction
-" endif
 "{{{ junegunn/vim-easy-align
 "Plug 'junegunn/vim-easy-align'
 Plug 'tommcdo/vim-lion'
@@ -276,6 +278,18 @@ nmap ga <Plug>(EasyAlign)
 Plug 'AndrewRadev/sideways.vim'
 nnoremap <m-left> :SidewaysLeft<cr>
 nnoremap <m-right> :SidewaysRight<cr>
+
+" highlight current word
+Plug 'RRethy/vim-illuminate'
+" Don't highlight word under cursor (default: 1)
+let g:Illuminate_highlightUnderCursor = 0
+
+" Plug 'dominikduda/vim_current_word'
+" " Twins of word under cursor:
+" let g:vim_current_word#highlight_twins = 1
+" " The word under cursor:
+" let g:vim_current_word#highlight_current_word = 0
+
 
 "Plug 'xtal8/traces.vim'
 Plug 'haya14busa/incsearch.vim'
@@ -301,6 +315,7 @@ Plug 'junegunn/seoul256.vim'
 
 let g:gruvbox_italic=1
 Plug 'morhetz/gruvbox'
+Plug 'andreypopp/vim-colors-plain'
 
 Plug 'freeo/vim-kalisi'
 Plug 'marcopaganini/termschool-vim-theme'
@@ -321,6 +336,9 @@ endif
 Plug 'airblade/vim-gitgutter'
 let g:gitgutter_map_keys = 0   " do not set maps
 Plug 'tpope/vim-fugitive'
+Plug 'Yggdroot/indentLine'
+let g:indentLine_fileTypeExclude = ['tex', 'markdown']
+
 "{{{ External cmds
 if has('nvim') || v:version >= 800
   Plug 'hauleth/asyncdo.vim'
@@ -342,8 +360,12 @@ Plug 'lervag/vimtex'   ", { 'for': 'tex' }
 Plug 'othree/html5.vim'
 " }}}
 "}}}
+" Used from gonvim to set fonts
+Plug 'equalsraf/neovim-gui-shim'
+Plug 'https://gitlab.com/dbeniamine/todo.txt-vim'
 call plug#end()
 "}}}
+hi link illuminatedWord Visual
 
 "----------------------------------------------------------------------
 "{{{ Autocommands
@@ -386,6 +408,7 @@ set incsearch                  " do incremental searching
 set ignorecase          " case-insensitive search
 set smartcase           " upper-case sensitive search
 setlocal shiftwidth=2 softtabstop=2 expandtab smarttab
+set autochdir
 
 set textwidth=78
 set colorcolumn=80
@@ -397,6 +420,7 @@ set relativenumber
 "wrapping
 set wrap
 set linebreak
+let &showbreak="~> "
 
 set splitbelow
 set splitright
@@ -407,6 +431,8 @@ set title
 " show tabs and trailing whitespaces
 set list
 set listchars=tab:╟─,trail:┄,extends:┄
+
+let g:tex_conceal="a"
 
 iabbrev mf Mauro Faccin
 iabbrev ... …
@@ -470,7 +496,7 @@ set mouse=vi
 
 " Status Line: {{{
 function! TrailingSpaceWarning()
-  if !exists("b:statline_trailing_space_warning")
+  if !exists('b:statline_trailing_space_warning')
     let lineno = search('\s$', 'nw')
     if lineno != 0
       let b:statline_trailing_space_warning = '[TS:'.lineno.']'
@@ -521,6 +547,12 @@ function! Status(winnum)
   elseif name ==# '__Gundo_Preview__'
     let altstat = ' Gundo Preview'
     let usealt = 1
+  elseif type ==# 'quickfix'
+    let altstat = ' QuickFix'
+    let usealt = 1
+  elseif name == ''
+    let altstat = ' NoName'
+    let usealt = 1
   endif
 
   if usealt
@@ -529,6 +561,7 @@ function! Status(winnum)
 
   " file name
   let stat .= Color(active, 3, expand('#' . bufnum . ':p:h:~') . '/' )
+  " let stat .= expand('#' . bufnum . ':p:h:~') . '/'
   let stat .= Color(active, 1, expand('#' . bufnum . ':t'))
   let stat .= ' %<'  " truncate here if too long
 
@@ -550,7 +583,7 @@ function! Status(winnum)
   " git branch
   let head = fugitive#head(8)
   if active && !empty(head)
-    let stat .= Color(active, 3, ' [' . head . ']')
+    let stat .= ' [' . head . ']'
   endif
 
   if active
@@ -571,18 +604,40 @@ endfunction
 
 augroup status
   autocmd!
-  autocmd VimEnter,WinEnter,BufWinEnter * call <SID>RefreshStatus()
+  " autocmd VimEnter,WinEnter,BufWinEnter * call <SID>RefreshStatus()
+  autocmd BufWinEnter,VimEnter,WinEnter * call setwinvar(winnr(), '&statusline', '%!Status(' . winnr() . ')')
+  autocmd WinLeave * call setwinvar(winnr(), '&statusline', '%!Status(' . winnr() . ')')
 augroup END
 " }}}
 
 " Status Colors: {{{
 hi! link User1 CursorLineNr
 hi! link User2 LineNr
-hi! link User3 Pmenu
-hi! link User4 LineNr
+hi! link User3 StatusLineNC
 " }}}
 
 " }}}
+
+"{{{ Run it
+
+function Runnit(runner)
+  if exists('b:runnitBuffer') && bufwinnr(b:runnitBuffer) > 0
+    exec 'bdelete! ' . b:runnitBuffer
+  endif
+  vsplit
+  exec 'terminal ' . a:runner expand('%')
+  let l:runnitBuffer = winbufnr(0)
+  execute "normal G"
+  wincmd p
+  let b:runnitBuffer = l:runnitBuffer
+endfunction
+
+augroup runner_filetype
+  au!
+  au FileType python nnoremap <buffer> <F7> :call Runnit('python')<CR>
+  au FileType sh nnoremap <buffer> <F7> :call Runnit('bash')<CR>
+augroup END
+"}}}
 
 "-------------------------------------------------------------------------
 " MAP
@@ -596,6 +651,8 @@ nnoremap <C-left> :vertical resize -5<cr>
 nnoremap <C-down> :resize +5<cr>
 nnoremap <C-up> :resize -5<cr>
 nnoremap <C-right> :vertical resize +5<cr>
+
+nnoremap <c-t> :newtab<cr>
 
 " move through wrapped lines (you shouldn't do it in insert mode)
 " imap <silent> <Down> <C-o>gj
