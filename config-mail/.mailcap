@@ -15,6 +15,7 @@ image/png ;          sxiv %s ;         nametemplate=%s.png ;
 image/* ;            xdg-open %s ;
 
 # Text
+text/html;  w3m -dump -o document_charset=%{charset} '%s'; nametemplate=%s.html; copiousoutput
 text/html ;          elinks -dump %s ; nametemplate=%s.html ; copiousoutput ;
 text/plain ;         less %s ;         copiousoutput
 text/x-pdf ;    zathura %s ;      nametemplate=%s.pdf ;
