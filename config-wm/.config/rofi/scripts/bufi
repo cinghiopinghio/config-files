@@ -14,11 +14,16 @@ import os
 import sqlite3
 import time
 import random
+import shutil
+import tempfile
+
+import subprocess
 
 import buku
 from xdg.BaseDirectory import xdg_cache_home
 import rofi
 
+buku.browse.override_text_browser = False
 # Format:
 # 0: index
 # 1: url
@@ -56,16 +61,41 @@ def frecency(item, now, indx):
     return item
 
 
+def copy_to_tmp(filepath):
+    """Return file-object"""
+    # tmpfile = tempfile.NamedTemporaryFile('r+b', prefix='bufi')
+    tmpfile, tmpfname = tempfile.mkstemp(prefix='bufi', suffix='.sqlite')
+    shutil.copy(filepath, tmpfname)
+    return tmpfname
+
+
+def get_moz_places(flpath):
+    conn = sqlite3.connect(flpath, timeout=1)
+    cursor = conn.cursor()
+    try:
+        cursor.execute('SELECT * FROM moz_places')
+    except sqlite3.OperationalError:
+        conn.close()
+    else:
+        all_rows = cursor.fetchall()
+        conn.close()
+        return all_rows
+
+    tmpfl = copy_to_tmp(flpath)
+    conn = sqlite3.connect(tmpfl)
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM moz_places')
+    all_rows = cursor.fetchall()
+    return all_rows
+
+
 def buku_add_new_from_firefox(buku_database):
     """
     add new bookmark from open tabs (firefox)
     """
     tabs = {}
     for fname in glob.glob(os.path.expanduser(MOZ_SESSION)):
-        conn = sqlite3.connect(fname)
-        cursor = conn.cursor()
-        cursor.execute('SELECT * FROM moz_places')
-        all_rows = cursor.fetchall()
+        all_rows = get_moz_places(fname)
 
         for row in all_rows:
             # check if time last access
@@ -142,7 +172,8 @@ def main():
          for tpl in buku_hist],
         prompt='Bookmarks: ',
         mesg=MESG,
-        custom_kb=CUSTOM_KB
+        custom_kb=CUSTOM_KB,
+        args=['-matching', 'normal'],
     )
     choice, exitcode = rofi_out.run()
 
@@ -164,13 +195,20 @@ def main():
         try:
             indx = int(choice.split()[0])
         except ValueError:
-            import webbrowser
-            webbrowser.open('https://ddg.gg/?q=' + choice, autoraise=True)
+            # import webbrowser
+            # webbrowser.open('https://ddg.gg/?q=' + choice, autoraise=True)
+            subprocess.call(["firefox", 'https://ddg.gg/?q=' + choice])
             exit(0)
 
         # open url
         buku.browse.suppress_browser_output = False
-        buku_database.browse_by_index(indx)
+        rec = buku_database.get_rec_by_id(indx)
+        if rec is not None:
+            # print(rec)
+            subprocess.call(["firefox", rec[1]])
+        # buku_database.browse_by_index(indx)
+
+        subprocess.call(["wmctrl", "-a", os.environ.get("BROWSER", "Firefox")])
 
         # update the history
         hist = [frecency(h, now, indx) for h in hist]
