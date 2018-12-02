@@ -1,8 +1,8 @@
 configuration {
     modi: "window,ssh,run,drun";
     lines: 14;
-/*    columns: 1;*/
-    font: "Fira 10";
+    /* columns: 1; */
+    font: "Fira Code 12";
     fixed-num-lines: false;
     show-icons: true;
     terminal: "termite";
@@ -16,10 +16,10 @@ configuration {
 /*    sort: false;*/
     combi-modi: "window,drun,run";
     matching: "normal";
-    levenshtein-sort: true;
+    sorting-method: "levenshtein";
     case-sensitive: false;
-/*    cycle: true;*/
-    sidebar-mode: true;
+    cycle: true;
+    sidebar-mode: false;
 /*    auto-select: false;*/
 /*    parse-hosts: false;*/
 /*    parse-known-hosts: true;*/
@@ -38,11 +38,16 @@ configuration {
 /*    window-format: "{w}    {i}{c}   {t}";*/
 /*    click-to-exit: true;*/
 /*    show-match: true;*/
-    theme: "gruvbox-theme-dark.rasi";
+      theme: "gruvbox-theme-dark.rasi";
 //    plugin-path: "/usr/local/lib/rofi/";
 /*    pid: "/run/user/1000/rofi.pid";*/
 /*    display-windowcd: ;*/
 /*    display-keys: ;*/
+      display-ssh:                    "SSH ";
+      display-run:                    "";
+      display-drun:                   "";
+      display-window:                 "";
+      display-combi:                  " ";
 /*    kb-primary-paste:           "Control+V,Shift+Insert";*/
 /*    kb-secondary-paste:         "Control+v,Insert";*/
 /*    kb-clear-line:              "Control+w";*/
@@ -115,3 +120,5 @@ configuration {
 /*    me-accept-entry:            "MouseD1";*/
 /*    me-accept-custom:           "Control+MouseD1";*/
 }
+
+// vim: ft=css
