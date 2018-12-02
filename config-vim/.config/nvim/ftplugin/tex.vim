@@ -1,4 +1,5 @@
 setlocal shiftwidth=2 softtabstop=2 expandtab smarttab
+set wrap linebreak nolist textwidth=0 wrapmargin=0
 "setlocal formatoptions+=w
 
 imap <C-p> <C-O>gqip
@@ -25,10 +26,21 @@ augroup END
 "}}}
 
 "{{{ Deoplete
-if !exists('g:deoplete#omni#input_patterns')
-  let g:deoplete#omni#input_patterns = {}
+if exists('g:deoplete#enable_at_startup')
+	" call deoplete#custom#var('omni',
+	" 			\'input_patterns',
+	" 			\{'tex': g:vimtex#re#deoplete},
+	" )
+  call deoplete#custom#var('omni',
+			  \'input_patterns',
+			  \{
+			  \'tex': g:vimtex#re#deoplete 
+			  \})
 endif
-let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
+" if !exists('g:deoplete#omni#input_patterns')
+"   let g:deoplete#omni#input_patterns = {}
+" endif
+" let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
 "}}}
 
 "{{{ auto-pairs
