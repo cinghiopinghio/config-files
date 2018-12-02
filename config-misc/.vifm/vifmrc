@@ -190,7 +190,7 @@ filetype *.wav,*.mp3,*.flac,*.m4a,*.wma,*.ape,*.ac3,*.og[agx],*.spx,*.opus
        \ ffplay -nodisp %c,
        \ {Play using MPlayer}
        \ mplayer %f,
-fileviewer *.mp3 mp3info
+fileviewer *.mp3 id3info %f
 fileviewer *.flac soxi
 
 " Video
@@ -236,7 +236,7 @@ filextype *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
         \ {View in gimp}
         \ gimp %f,
 fileviewer *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
-         \ convert -identify %f -verbose /dev/null
+         \ exiftool %f
 
 " Raw image files
 filextype *.orf,*.nef,*.dng
@@ -363,6 +363,7 @@ filextype */
 " Or leave it for automatic detection
 "
 " fileviewer *[^/] pygmentize -O style=monokai -f console256 -g
+" fileviewer *.md,*.py,*.js,*.json bat --color always %f
 
 " Displaying pictures in terminal
 "
