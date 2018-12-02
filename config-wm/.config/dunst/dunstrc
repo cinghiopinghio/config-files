@@ -6,7 +6,7 @@
     indicate_hidden      = true
     # geometry           = "x5"
     idle_threshold       = 0
-    geometry             = "400x10-60+40"
+    geometry             = "400x10-40+40"
     alignment            = left
     show_age_threshold   = 60
     sticky_history       = yes
