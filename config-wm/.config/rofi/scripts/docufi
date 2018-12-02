@@ -1,0 +1,44 @@
+#!/usr/bin/env sh
+
+LISTCMD=""
+HISTFILE="${HOME}/.cache/docufi"
+
+# load history and put it up front
+if [ -f ${HISTFILE} ];
+then
+  LISTCMD+="cat ${HISTFILE}; "
+fi
+
+LISTCMD+="sed '1d' ${HOME}/.cache/neomru/file; "
+LISTCMD+="find ${HOME} -type f -iname \*.pdf -not -path ".cache" -not -path
+".mozilla" 2>>/dev/null"
+
+file=$(eval "${LISTCMD}" | sed "s|${HOME}|~|" | rofi -dmenu -i)
+file=$(eval echo ${file})
+
+case ${file} in
+  *.pdf)
+    zathura "${file}"
+    ;;
+  "")
+    ;;
+  *)
+    nvim-gtk ${file} &
+    ;;
+esac
+
+if [ -f ${HISTFILE} ];
+then
+  sed -i "1i${file}" ${HISTFILE}
+
+  TMP=`mktemp -p /tmp docufi.XXXXX`
+  # remove duplicates
+  awk '!seen[$0]++' ${HISTFILE} > ${TMP}
+  rm ${HISTFILE}
+  # mv ${TMP} ${HISTFILE}
+  head -50 ${TMP} > ${HISTFILE}
+else
+  echo ${file} > ${HISTFILE}
+fi
+
+# vim: ft=sh

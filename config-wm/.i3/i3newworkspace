@@ -5,7 +5,6 @@ import i3ipc
 import random
 import string
 import argparse
-import os
 
 
 class Connection(object):
@@ -36,16 +35,20 @@ class Connection(object):
             self.get_random_workspace_name()
             workspace = self.new_ws
         con = self.i3.get_tree().find_focused()
-        con.command('move container to workspace ' +
-                    workspace +
-                    '; workspace ' +
-                    workspace)
+        con.command(
+            " ".join(['move container to workspace', workspace + ';',
+                      'workspace ', workspace])
+        )
 
 
 def main():
     parser = argparse.ArgumentParser(description='Process i3.')
     parser.add_argument('-m', '--move',
-                        action='store_true',
+                        nargs="?",  # add optional argument
+                        const=True,  # -m without arg
+                        default=False,  # without -m
+                        # action='store_true',
+                        # choices=["left", "right"]
                         )
     args = parser.parse_args()
 
