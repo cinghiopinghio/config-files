@@ -43,16 +43,18 @@ focus_follows_mouse yes
 
 ### gaps
 # Examples
-gaps inner 6
+gaps inner 2
 gaps outer 0
-#smart_gaps on
-#smart_borders on
+smart_gaps on
+smart_borders on
 
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
 #bindsym $mod+Return exec urxvtc
 bindsym $mod+Return exec termite
 bindsym $mod+Shift+Return exec "~/.i3/i3newworkspace", exec --no-startup-id "termite"
+bindsym $mod+Shift+underscore splitv, exec termite
+bindsym $mod+Shift+bar splith, exec termite
 #bindsym $mod+Return exec st
 
 # kill focused window
@@ -165,6 +167,8 @@ bindsym $mod+Ctrl+8 move container to workspace 1000; workspace 1000
 bindsym $mod+Ctrl+9 move container to workspace 1001; workspace 1001
 bindsym $mod+Ctrl+0 move container to workspace 000; workspace 000
 # move to next/previous workspace
+bindsym $mod+Shift+i move container to workspace prev_on_output; workspace prev_on_output
+bindsym $mod+Shift+o move container to workspace next_on_output; workspace next_on_output
 bindsym $mod+i workspace prev_on_output
 bindsym $mod+o workspace next_on_output
 bindsym $mod+z workspace back_and_forth
@@ -201,7 +205,8 @@ bindsym $mod+m scratchpad show
 
 #set $mode_system System (l) lock, (e) logout, (s) suspend, (h) hibernate, (r) reboot, (x) shutdown
 set $mode_system "System [L] lock, [E] logout, [S] suspend, [R] reboot, [X] shutdown, [B] background"
-bindsym $mod+x mode $mode_system
+# bindsym $mod+x mode $mode_system
+bindsym $mod+x exec rofi -show session -modi session:"~/.config/rofi/scripts/powerfi" -font "Fira Sans 18" -auto-select
 mode --pango_markup $mode_system {
     bindsym l exec --no-startup-id bash ~/.local/bin/background --lock, mode "default"
     bindsym b exec --no-startup-id bash ~/.local/bin/background, mode "default"
@@ -268,6 +273,8 @@ mode "resize" {
 #}
 
 exec_always --no-startup-id ~/.config/polybar/startup
+# exec_always --no-startup-id mate-panel
+# exec_always --no-startup-id xfce4-panel
 exec --no-startup-id ~/.config/openbox/autostart
 
 for_window [class="(?i)pinentry|(?i)Arandr"] floating enabled
