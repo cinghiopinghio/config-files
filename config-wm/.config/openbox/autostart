@@ -41,25 +41,6 @@ xautolock -time 10 -notify 30\
   -locker "~/.local/bin/background --lock" &
 # hide mouse if not in use
 unclutter -root -visible &
-# volume control on panel
-# volumeicon &
-
-# Machine specific start apps
-case ${HOSTNAME} in
-  'arcinghio')
-    # battery tray icon
-    xgamma -quiet -rgamma 1.11 -ggamma 1.01 -bgamma 0.93 &
-    ;;
-  'spin')
-    dropbox-cli start
-    # pidgin &
-    ;;
-  'dingo'|'susto')
-    # cmst &
-    # /usr/bin/env albert &
-    # QSyncthingTray &
-    kalu &
-esac
 
 # start xdg autostat apps
 dex -a -e i3wm
