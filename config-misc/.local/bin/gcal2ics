@@ -15,9 +15,9 @@ def display(cal):
     return cal.to_ical().decode().replace('\r\n', '\n').strip()
 
 
-def compare(eventA, eventB, ignore=[], verbose=False):
-    leA = eventA.copy()
-    leB = eventB.copy()
+def compare(eventA, eventB, ignore=[]):
+    leA = eventA.subcomponents[0].copy()
+    leB = eventB.subcomponents[0].copy()
     for prop in ignore:
         leA.pop(prop, '')
         leB.pop(prop, '')
@@ -25,16 +25,21 @@ def compare(eventA, eventB, ignore=[], verbose=False):
     lebk = set(leB.keys())
     if len(leak.symmetric_difference(lebk)) > 0:
         return False
-    t = [leA[prop].to_ical() == leB[prop].to_ical() for prop in leak]
-    if verbose:
-        for prop in set(leA.keys()).union(set(leB.keys())):
-            propA = leA.get(prop, '')
-            propB = leB.get(prop, '')
-            if propA != propB:
-                print('+++', prop)
-                print('++++++', propA.to_ical())
-                print('++++++', propB.to_ical())
-    return all(t)
+
+    for prop in leak:
+        if isinstance(leA[prop], list) and isinstance(leB[prop], list):
+            if len(leA[prop]) != len(leB[prop]):
+                print(len(leA[prop]), len(leB[prop]))
+                return False
+            for _A, _B in zip(leA[prop], leB[prop]):
+                if _A.to_ical() != _B.to_ical():
+                    print(_A.to_ical(), _B.to_ical())
+                    return False
+        elif leA[prop].to_ical() != leA[prop].to_ical():
+            print(leA[prop].to_ical(), leA[prop].to_ical())
+            return False
+
+    return True
 
 
 def config():
@@ -102,10 +107,10 @@ def sync(cal, ldir):
             logging.debug('Saved ics file with name: ' + fname)
             continue
 
-        if not compare(new_cal, loc_event, ignore=['dtstamp'], verbose=False):
+        if not compare(new_cal, loc_event, ignore=['dtstamp']):
             with open(fname, 'w') as fout:
                 print(display(new_cal), file=fout)
-            logging.debug('Updated to new version')
+            logging.info('Updated to new version')
         else:
             logging.debug('The new version seems identical: no changes')
 
