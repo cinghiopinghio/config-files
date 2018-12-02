@@ -52,3 +52,41 @@ ${0}
 
 \end{document}
 endsnippet
+
+
+snippet templ-slides "Template: beamer slides" b
+\documentclass{beamer}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+
+\usepackage{tikz}
+\usetikzlibrary{calc, matrix, positioning}
+
+\usepackage{amsmath,amsthm, amssymb, latexsym}
+\boldmath%
+
+\usepackage{pgfplots}
+\usepgfplotslibrary{dateplot}
+
+\usetheme[%progressbar=frametitle,
+          sectionpage=none,
+          background=light,
+          block=fill]{metropolis}
+
+\title{${0}}
+\author[]{${1}}
+\institute{${2}}
+\date{${3}}
+\titlegraphic{%
+  \tikz[remember picture, overlay]\node[opacity=.2, anchor=center] at (current
+  page.center){\includegraphics[width=1.2\textwidth]{${4}}};
+}
+
+\begin{document}
+
+\begin{frame}[plain] %Title
+  \maketitle
+\end{frame}
+
+\end{document}
+endsnippet
