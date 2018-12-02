@@ -30,9 +30,9 @@ case $1 in
 
     # get account data from password-store
     PASS=$(pass email/${ACCOUNT})
-    USER=$(echo "$PASS" | sed '1d' | grep -w "^[Uu]ser" | \
+    USER=$(echo "$PASS" | sed '1d' | grep -w "^[Uu]ser" | head -1 |\
       sed -e "s/^[Uu]ser[ \t]*:[ \t]*//" -e "s/[ \t]*$//")
-    FROM=$(echo "$PASS" | sed '1d' | grep -w "^[Ff]rom" | \
+    FROM=$(echo "$PASS" | sed '1d' | grep -w "^[Ff]rom" | head -1 |\
       sed -e "s/^[Ff]rom[ \t]*:[ \t]*//" -e "s/[ \t]*$//")
 
     # define command line
