@@ -32,7 +32,7 @@ class Rofi(object):
         self._ckb = []
         if custom_kb is not None:
             for n, ckb in enumerate(custom_kb):
-                self._ckb.extend(['-kb-custom-' + str(n+1), ckb])
+                self._ckb.extend(['-kb-custom-' + str(n + 1), ckb])
 
         self._mesg = [] if mesg is None else ['-mesg', mesg]
         if markup:
@@ -57,6 +57,6 @@ class Rofi(object):
 
     def _rofi_args(self):
         return self._prompt +\
-                self._mesg +\
-                self._ckb +\
-                self._args
+            self._mesg +\
+            self._ckb +\
+            self._args
