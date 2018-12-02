@@ -36,7 +36,7 @@ easy             = ${colors.color2}
 primary          = ${colors.color3}
 secondary        = ${colors.color4}
 alert            = ${colors.color1}
-transparent      = #00000000
+transparent      = #202020
 semitransparent  = #20000000
 
 [vars]
@@ -67,7 +67,7 @@ line-size           = 0
 line-color          = #005500
 
 border-size         = 0
-border-top-size     = 5
+border-top-size     = 0
 border-bottom-size  = 0
 border-color        = #00000000
 
@@ -76,24 +76,25 @@ padding-right       = 1
 module-margin-left  = 0
 module-margin-right = ${vars.padding}
 
- font-0              = Fira Mono:size=10;2
-;font-0              = Hack:size=10
-font-1              = Symbola:size=11;2
-font-2              = FontAwesome5Free:size=12;2
-font-3              = Wuncon Siji:pixelsize=12
+font-0              = Fira Mono:size=10;2
+font-1              = Symbola:size  =11;2
+font-2              = Fira Sans:size=11;2
+; font-3 = Twitter Color Emoji:size=11
+font-3 = Material Icons:size=11
+; font-2 = Cantarell:size=11;2
 
 [bar/bar1]
 
 inherit          = bar/base
 tray-position    = right
 tray-padding     = 2
-tray-transparent = true
+tray-transparent = false
 tray-background  = ${colors.transparent}
 
 modules-left        = menu i3
 modules-center      = date
 ;modules-right       = backlight alsa memory cpu battery powermenu
-modules-right       = backlight alsa battery lkscreen
+modules-right       = backlight pulseaudio battery lkscreen
 enable-ipc = true
 
 [bar/bar2]
@@ -168,6 +169,7 @@ time                     = %H:%M
 ; time-alt                 = %X
 
 label                    = %{A1:termite --class=float --exec ikhal --geometry 700x1000:}%date% %time%%{A}
+label-font = 3
 
 [module/alsa]
 
@@ -196,8 +198,33 @@ bar-volume-empty                = ─
 bar-volume-empty-foreground     = ${colors.foreground-alt}
 
 [module/pulseaudio]
-type = internal/pulseaudio
 
+type                            = internal/pulseaudio
+sink = alsa_output.pci-0000_00_1f.3.analog-stereo
+interval = 5
+
+format-volume                   = %{A3:pavucontrol:}VOL <bar-volume>%{A}
+label-volume                    = VOL
+label-volume-foreground         = ${colors.foreground}
+
+; format-muted-prefix             = ""
+format-muted-foreground         = ${colors.foreground-alt}
+label-muted                     = "🔇"
+label-muted-font = 3
+
+bar-volume-width                = 7
+bar-volume-foreground-0         = ${colors.easy}
+bar-volume-foreground-1         = ${colors.easy}
+bar-volume-foreground-2         = ${colors.easy}
+bar-volume-foreground-3         = ${colors.easy}
+bar-volume-foreground-4         = ${colors.primary}
+bar-volume-foreground-5         = ${colors.alert}
+bar-volume-gradient             = false
+bar-volume-indicator            = │
+bar-volume-indicator-foreground = ${colors.foreground}
+bar-volume-fill                 = ─
+bar-volume-empty                = ─
+bar-volume-empty-foreground     = ${colors.foreground-alt}
 
 [module/battery]
 type                         = internal/battery
