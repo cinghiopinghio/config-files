@@ -2,7 +2,8 @@
 
 let s:default_fontsize = 11
 let s:fontsize = s:default_fontsize
-let s:font = "Fira Code"
+" let s:font = "Fira Code"
+let s:font = "Iosevka"
 " GuiLinespace 2
 
 function! SetFont() abort
