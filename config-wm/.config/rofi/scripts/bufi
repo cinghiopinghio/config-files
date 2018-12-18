@@ -44,7 +44,8 @@ Hint: use <b>{}</b> to add a new bookmark      <b>{}</b> to edit the bookmark
 
 def make_string(*ms_args):
     ''' Create the output string in pango format for each line '''
-    return '{0:4d} {2:s} <span size="x-small"><i>{1:s}</i>{3} {4}</span>'\
+    ms_args = [ms if ms is not None else "" for ms in ms_args]
+    return '{0:4d} {2:s} <span size="small" weight="ultralight" stretch="ultracondensed"><i>{1:s}</i>{3} {4}</span>'\
         .format(*ms_args)
 
 
@@ -140,7 +141,7 @@ def buku_edit_bookmark(line, buku_database):
     Edit bookmark in external editor
     """
     bm_i = int(line.split()[0])
-    os.environ['EDITOR'] = 'nvim-qt --nofork'
+    os.environ['EDITOR'] = 'nvim-gtk'
     buku_database.edit_update_rec(bm_i)
 
 
@@ -161,14 +162,14 @@ def main():
 
     buku_hist = []
     # get a random element to put first
-    buku_hist += [bk_map.pop(random.randrange(len(bk_map)))]
+    # buku_hist += [bk_map.pop(random.randrange(len(bk_map)))]
     # get db items present in history
     buku_hist += [bk_map.pop(h[0]) for h in hist if h[0] in bk_map]
     buku_hist += [v for v in bk_map.values()]
     now = int(time.time())
 
     rofi_out = rofi.Rofi(
-        [make_string(*tpl).replace('&', '&amp;')
+        [make_string(*tpl).replace('&', '&amp;')  # .replace("\n", " ")
          for tpl in buku_hist],
         prompt='Bookmarks: ',
         mesg=MESG,
