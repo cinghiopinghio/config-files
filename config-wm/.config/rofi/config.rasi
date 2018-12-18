@@ -2,7 +2,8 @@ configuration {
     modi: "window,ssh,run,drun";
     lines: 14;
     /* columns: 1; */
-    font: "Fira Code 12";
+    /* font: "Fira Code 12"; */
+    font: "Iosevka 14";
     fixed-num-lines: false;
     show-icons: true;
     terminal: "termite";
