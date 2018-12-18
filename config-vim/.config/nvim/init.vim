@@ -33,6 +33,7 @@ endif
 
 "{{{ Syntax, dictionary ...
 
+set complete+=k         " enable dictionary completion
 set dictionary+=/usr/share/dict/cracklib-small
 
 " Syntax check
@@ -43,6 +44,7 @@ if has('nvim') || v:version >= 800
   let g:ale_lint_on_text_changed = 'normal'
   let g:ale_lint_on_insert_leave = 1
   let g:ale_completion_enabled = 0
+  let g:ale_set_balloons = 1
   " Only fix on save
   let g:ale_fix_on_save = 1
   let g:ale_linters = {
@@ -65,6 +67,9 @@ endif
 Plug 'tpope/vim-commentary'
 "}}}
 "{{{ AutoCompletion
+"
+set completeopt=menuone
+
 if has('nvim') || v:version >= 800
   Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
@@ -93,12 +98,6 @@ if has('nvim') || v:version >= 800
 else
   Plug 'lifepillar/vim-mucomplete'
   let g:mucomplete#enable_auto_at_startup = 1
-endif
-
-set complete+=k         " enable dictionary completion
-set completeopt=menuone,preview
-if (v:version >= 704 && has('patch755')) || has('nvim')
-  set completeopt+=noinsert,noselect
 endif
 
 "  complete parenthesis
@@ -621,23 +620,32 @@ hi! link User3 StatusLineNC
 "{{{ Run it
 
 function Runnit(runner)
-  if exists('b:runnitBuffer') && bufwinnr(b:runnitBuffer) > 0
-    exec 'bdelete! ' . b:runnitBuffer
+  if !exists('b:runnitBuffer')
+    let b:runnitBuffer = {}
   endif
+  if has_key(b:runnitBuffer, a:runner) && bufwinnr(b:runnitBuffer[a:runner]) > 0
+    let l:buff=remove(b:runnitBuffer, a:runner)
+    exec 'bdelete! ' . l:buff
+  endif
+  " if exists('b:runnitBuffer') && bufwinnr(b:runnitBuffer) > 0
+  "   exec 'bdelete! ' . b:runnitBuffer
+  " endif
   vsplit
-  exec 'terminal ' . a:runner expand('%')
+  exec 'terminal ' . a:runner
   let l:runnitBuffer = winbufnr(0)
   execute "normal G"
   wincmd p
-  let b:runnitBuffer = l:runnitBuffer
+  let b:runnitBuffer[a:runner] = l:runnitBuffer
 endfunction
 
 augroup runner_filetype
   au!
-  au FileType python nnoremap <buffer> <F7> :call Runnit('python')<CR>
-  au FileType sh nnoremap <buffer> <F7> :call Runnit('bash')<CR>
+  au FileType python nnoremap <buffer> <F7> :call Runnit('python ' . expand('%'))<CR>
+  au FileType sh nnoremap <buffer> <F7> :call Runnit('bash ' . expand('%'))<CR>
 augroup END
 "}}}
+
+command Top call Runnit("top")
 
 "-------------------------------------------------------------------------
 " MAP
