@@ -30,14 +30,13 @@ esac
 syndaemon -d -i 0.3 -K -R
 sleep 5
 
-
 # tray icons and applets
 
 # automount devices
 udiskie --use-udisks2 --tray &
 # start the screen locker
 xautolock -time 10 -notify 30\
-  -notifier "notify-send XAUTOLOCK 'Screen locking in 30 secondsi'"\
+  -notifier "notify-send --icon=lock --app-name=screensaver XAUTOLOCK 'Screen locking in 30 seconds'"\
   -locker "~/.local/bin/background --lock" &
 # hide mouse if not in use
 unclutter -root -visible &
