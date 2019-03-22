@@ -11,10 +11,12 @@ filetype indent plugin on
 let s:host=substitute(hostname(), "\\..*", '', '')
 syntax on
 "}}}
+"
 
 "----------------------------------------------------------------------
 " Plugin Manager
 "{{{ Pluc-vim: plugin manager
+"{{{ Install it
 if has('nvim')
   if empty(glob('~/.config/nvim/autoload/plug.vim'))
     silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
@@ -30,52 +32,36 @@ else
   endif
   call plug#begin('~/.vim/bundle')
 endif
-
-"{{{ Syntax, dictionary ...
-
-set dictionary+=/usr/share/dict/cracklib-small
-
-" Syntax check
-"{{{ neomake/Syntastic/ALE
-if has('nvim') || v:version >= 800
-  Plug 'w0rp/ale'
-  " Only lint on save or when switching back to normal mode, not every keystroke in insert mode
-  let g:ale_lint_on_text_changed = 'normal'
-  let g:ale_lint_on_insert_leave = 1
-  " Only fix on save
-  let g:ale_fix_on_save = 1
-  let g:ale_linters = {
-    \ 'python': ['pyls'],
-    \ }
-else
-  " only vimL no python required
-  Plug 'scrooloose/syntastic'
-  let g:syntastic_mode_map = { 'passive_filetypes': ['sass'] }
-
-  let g:syntastic_always_populate_loc_list = 1
-  let g:syntastic_auto_loc_list = 1
-  let g:syntastic_check_on_open = 1
-  let g:syntastic_check_on_wq = 0
-endif
 "}}}
+
+"{{{ Syntax, dictionary ... AutoCompletion
+
+set complete+=k         " enable dictionary completion
+set dictionary+=/usr/share/dict/cracklib-small
 
 " comment uncomment
 Plug 'tpope/vim-commentary'
-"}}}
-"{{{ AutoCompletion
+
+set completeopt=noinsert,menuone,noselect
 if has('nvim') || v:version >= 800
   Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh' }
-  Plug 'Shougo/echodoc.vim'
+
+  " Plug 'Shougo/echodoc.vim'
+  " set cmdheight=2
+  " let g:echodoc#enable_at_startup = 1
+  " let g:echodoc#type = 'echo'
   " Required for operations modifying multiple buffers like rename.
   " set hidden
 
   let g:LanguageClient_serverCommands = {
       \ 'python': ['pyls'],
+      \ 'sh': ['bash-language-server', 'start'],
       \ 'html': ['html-languageserver', '--stdio'],
       \ 'css': ['css-languageserver', '--stdio'],
       \ 'json': ['json-languageserver', '--stdio'],
+      \ 'tex': ['~/.luarocks/bin/digestif'],
       \ }
   nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
   nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
@@ -83,15 +69,16 @@ if has('nvim') || v:version >= 800
 
   " Automatically start language servers.
   let g:LanguageClient_autoStart = 1
+  let g:LanguageClient_useVirtualText = 1
+  let g:LanguageClient_hasSnippetSupport = 0
 else
   Plug 'lifepillar/vim-mucomplete'
   let g:mucomplete#enable_auto_at_startup = 1
-endif
-
-set complete+=k         " enable dictionary completion
-set completeopt=menuone,preview
-if (v:version >= 704 && has('patch755')) || has('nvim')
-  set completeopt+=noinsert,noselect
+  	let g:mucomplete#chains = {
+              \ 'default' : ['path', 'omni', 'keyn', 'dict', 'uspl'],
+              \ 'vim'     : ['path', 'cmd', 'keyn']
+              \ 'python'  : ['path', 'cmd', 'keyn', 'uspl']
+              \ }
 endif
 
 "  complete parenthesis
@@ -102,32 +89,58 @@ let g:AutoPairs= {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
 
 "  autocompletion
 "{{{ deoplete / completor / VimCompletesMe / NCM
-if has('nvim') || v:version >= 800
-  " the framework
-  Plug 'roxma/nvim-completion-manager'
-  " Requires vim8 with has('python') or has('python3')
-  " Requires the installation of msgpack-python. (pip install msgpack-python)
-  Plug 'roxma/vim-hug-neovim-rpc', has('nvim') ? { 'on': [] } : {}
+if has('nvim')
+  " Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  " Plug 'ncm2/ncm2'
+  " Plug 'roxma/nvim-yarp'
+  " Plug 'ncm2/ncm2-bufword'
+  " Plug 'ncm2/ncm2-path'
+  " Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
+  " Plug 'fgrsnau/ncm2-aspell'
+  " autocmd BufEnter  *  call ncm2#enable_for_buffer()
+elseif v:version >= 800
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+  " Plug 'zchee/deoplete-jedi'
 else
   Plug 'ajh17/VimCompletesMe'
 endif
+
+let g:deoplete#enable_at_startup = 1
+
 "}}}
 
 "  snippets
 " {{{ ultisnips
-if has("python")
-  Plug 'SirVer/ultisnips'
-  let g:UltiSnipsExpandTrigger="<c-j>"
-  let g:UltiSnipsListSnippets="<c-l>"
-else
-  Plug 'MarcWeber/vim-addon-mw-utils'
-  Plug 'tomtom/tlib_vim'
-  Plug 'garbas/vim-snipmate'
-  imap <C-j> <Plug>snipMateNextOrTrigger
-  smap <C-j> <Plug>snipMateNextOrTrigger
-  imap <C-l> <Plug>snipMateShow
+" if has('python')
+"   Plug 'SirVer/ultisnips'
+"   let g:UltiSnipsExpandTrigger='<c-j>'
+"   let g:UltiSnipsListSnippets='<c-l>'
+" else
+"   Plug 'MarcWeber/vim-addon-mw-utils'
+"   Plug 'tomtom/tlib_vim'
+"   Plug 'garbas/vim-snipmate'
+"   imap <C-j> <Plug>snipMateNextOrTrigger
+"   smap <C-j> <Plug>snipMateNextOrTrigger
+"   imap <C-l> <Plug>snipMateShow
+" endif
+" Plug 'honza/vim-snippets'
+" Plug 'Shougo/neosnippet.vim'
+" Plug 'Shougo/neosnippet-snippets'
+" Plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+" imap <C-j>     <Plug>(neosnippet_expand_or_jump)
+" smap <C-j>     <Plug>(neosnippet_expand_or_jump)
+" xmap <C-j>     <Plug>(neosnippet_expand_target)
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
 endif
-Plug 'honza/vim-snippets'
+" let g:neosnippet#enable_completed_snippet = 1
+" autocmd CompleteDone * call neosnippet#complete_done()
 "}}}
 
 "  word editing
@@ -186,17 +199,22 @@ let g:cycle_default_groups_for_tex = [
         \   [['\big', '\Big', '\bigg', '\Bigg'], 'hard_case', 'match_case'],
         \ ]
 "}}}
+
 "{{{ Navigation
 
 set scrolloff=5  " never reach the top or bottom of the page
+
+" navigate tags
+Plug 'majutsushi/tagbar'
+nmap <F8> :TagbarToggle<CR>
 
 " keep folds as is until save of fold/unfold (save time)
 Plug 'Konfekt/FastFold'
 " " window splits control
 " Plug 'zhaocai/GoldenView.Vim'
+" Plug 'justincampbell/vim-eighties'
+Plug 'roman/golden-ratio'
 """""""""""""""""""""""""""""""""""""
-" Plug 'ludovicchabant/vim-gutentags'
-" Plug 'troydm/zoomwintab.vim'
 "{{{ FZF
 Plug 'junegunn/fzf', { 'dir': '~/codes/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -205,6 +223,20 @@ let g:fzf_action = {
   \ 'ctrl-t': 'tab split',
   \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit' }
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
 
 " Default fzf layout
 " - down / up / left / right
@@ -228,6 +260,7 @@ let g:fzf_colors =
 nmap <localleader>ff :Files .<CR>
 nmap <localleader>fb :Buffers<cr>
 nmap <localleader>fg :GitFiles<cr>
+nmap <localleader>ft :call LanguageClient_textDocument_documentSymbol()<CR>
 " use the neomru cache!
 Plug 'Shougo/neomru.vim'
 nmap <localleader>fr :History<cr>
@@ -238,31 +271,8 @@ command! -bang History
   \ }, <bang>0))
 nmap <localleader>fl :Lines<cr>
 "}}}
-"{{{ Denite
-" Plug 'Shougo/denite.nvim'
-" Plug 'Shougo/unite-outline'
-" Plug 'Shougo/neomru.vim'
-" Plug 'Shougo/vimproc.vim'
-" nmap <localleader>uf :Denite file buffer<cr>
-" nmap <localleader>ub :Denite buffer<cr>
-" nmap <localleader>ur :Denite file_mru<cr>
-" nmap <localleader>uo :Denite outline<cr>
-" nmap <localleader>ul :Denite line<cr>
-" let g:unite_enable_start_insert = 1
-"}}}
 
 Plug 'hauleth/sad.vim'
-" Plug 'terryma/vim-multiple-cursors'
-" if ! exists("g:deoplete_multicursors")
-"   " load this only once
-"   let g:deoplete_multicursors = 1
-"   function g:Multiple_cursors_before()
-"    let g:deoplete#disable_auto_complete = 1
-"   endfunction
-"   function g:Multiple_cursors_after()
-"    let g:deoplete#disable_auto_complete = 0
-"   endfunction
-" endif
 "{{{ junegunn/vim-easy-align
 "Plug 'junegunn/vim-easy-align'
 Plug 'tommcdo/vim-lion'
@@ -276,6 +286,17 @@ nmap ga <Plug>(EasyAlign)
 Plug 'AndrewRadev/sideways.vim'
 nnoremap <m-left> :SidewaysLeft<cr>
 nnoremap <m-right> :SidewaysRight<cr>
+
+" highlight current word
+Plug 'RRethy/vim-illuminate'
+" Don't highlight word under cursor (default: 1)
+let g:Illuminate_highlightUnderCursor = 0
+
+" Plug 'dominikduda/vim_current_word'
+" " Twins of word under cursor:
+" let g:vim_current_word#highlight_twins = 1
+" " The word under cursor:
+" let g:vim_current_word#highlight_current_word = 0
 
 "Plug 'xtal8/traces.vim'
 Plug 'haya14busa/incsearch.vim'
@@ -292,6 +313,7 @@ map g/ <Plug>(incsearch-stay)
 " endif
 " }}}
 "}}}
+
 "{{{ Colorschemes
 Plug 'tomasr/molokai'
 
@@ -301,6 +323,7 @@ Plug 'junegunn/seoul256.vim'
 
 let g:gruvbox_italic=1
 Plug 'morhetz/gruvbox'
+Plug 'andreypopp/vim-colors-plain'
 
 Plug 'freeo/vim-kalisi'
 Plug 'marcopaganini/termschool-vim-theme'
@@ -318,9 +341,22 @@ else
   Plug 'cinghiopinghio/mangroove.vim'
 endif
 "}}}
-Plug 'airblade/vim-gitgutter'
+"
+Plug 'mhinz/vim-signify'
+let g:signify_vcs_list = [ 'git', 'svn' ]
+let g:signify_disable_by_default = 1
+
+Plug 'itchyny/lightline.vim'
+let g:lightline = {
+      \ 'colorscheme': 'jellybeans',
+      \ }
+
+" Plug 'airblade/vim-gitgutter'
 let g:gitgutter_map_keys = 0   " do not set maps
 Plug 'tpope/vim-fugitive'
+Plug 'Yggdroot/indentLine'
+let g:indentLine_fileTypeExclude = ['tex', 'markdown']
+
 "{{{ External cmds
 if has('nvim') || v:version >= 800
   Plug 'hauleth/asyncdo.vim'
@@ -340,11 +376,16 @@ Plug 'Vimjas/vim-python-pep8-indent'
 " https://github.com/lervag/vimtex/issues/885
 Plug 'lervag/vimtex'   ", { 'for': 'tex' }
 Plug 'othree/html5.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'ap/vim-css-color'
 " }}}
 "}}}
+" Used from gonvim to set fonts
+Plug 'equalsraf/neovim-gui-shim'
+Plug 'https://gitlab.com/dbeniamine/todo.txt-vim'
 call plug#end()
 "}}}
-
+"
 "----------------------------------------------------------------------
 "{{{ Autocommands
 if has("autocmd") " only with autocommands
@@ -386,8 +427,10 @@ set incsearch                  " do incremental searching
 set ignorecase          " case-insensitive search
 set smartcase           " upper-case sensitive search
 setlocal shiftwidth=2 softtabstop=2 expandtab smarttab
+set autochdir
 
-set textwidth=78
+set textwidth=0
+set wrapmargin=0
 set colorcolumn=80
 set cursorline
 
@@ -397,6 +440,7 @@ set relativenumber
 "wrapping
 set wrap
 set linebreak
+let &showbreak="~> "
 
 set splitbelow
 set splitright
@@ -407,6 +451,8 @@ set title
 " show tabs and trailing whitespaces
 set list
 set listchars=tab:╟─,trail:┄,extends:┄
+
+let g:tex_conceal="a"
 
 iabbrev mf Mauro Faccin
 iabbrev ... …
@@ -442,9 +488,6 @@ function! ToggleBackground()
   else
     set background=dark
   endif
-
-  "highlight Normal guibg=NONE ctermbg=NONE
-  "highlight nonText guifg=#787878 guibg=NONE ctermfg=243 ctermbg=NONE
 endfunction
 
 nnoremap <F9> :call ToggleBackground()<CR>
@@ -468,127 +511,164 @@ set dir=/tmp//,/var/tmp//,.
 set mouse=vi
 "}}}
 
-" Status Line: {{{
-function! TrailingSpaceWarning()
-  if !exists("b:statline_trailing_space_warning")
-    let lineno = search('\s$', 'nw')
-    if lineno != 0
-      let b:statline_trailing_space_warning = '[TS:'.lineno.']'
-    else
-      let b:statline_trailing_space_warning = ''
-    endif
+" " Status Line: {{{
+" function! TrailingSpaceWarning()
+"   if !exists('b:statline_trailing_space_warning')
+"     let lineno = search('\s$', 'nw')
+"     if lineno != 0
+"       let b:statline_trailing_space_warning = '[TS:'.lineno.']'
+"     else
+"       let b:statline_trailing_space_warning = ''
+"     endif
+"   endif
+"   return b:statline_trailing_space_warning
+" endfunction
+
+" " recalculate when idle, and after saving
+" augroup statline_trail
+"   autocmd!
+"   autocmd cursorhold,bufwritepost * unlet! b:statline_trailing_space_warning
+" augroup END
+" " Status Function: {{{2
+" function! Status(winnum)
+"   let active = a:winnum == winnr()
+"   let bufnum = winbufnr(a:winnum)
+
+"   let stat = ''
+
+"   " this function just outputs the content colored by the
+"   " supplied colorgroup number, e.g. num = 2 -> User2
+"   " it only colors the input if the window is the currently
+"   " focused one
+
+"   function! Color(active, num, content)
+"     if a:active
+"       return '%' . a:num . '*' . a:content . '%*'
+"     else
+"       return a:content
+"     endif
+"   endfunction
+
+"   " this handles alternative statuslines
+"   let usealt = 0
+
+"   let type = getbufvar(bufnum, '&buftype')
+"   let name = bufname(bufnum)
+
+"   if type ==# 'help'
+"     let altstat = ' ' . fnamemodify(name, ':t:r')
+"     let usealt = 1
+"   elseif name ==# '__Gundo__'
+"     let altstat = ' Gundo'
+"     let usealt = 1
+"   elseif name ==# '__Gundo_Preview__'
+"     let altstat = ' Gundo Preview'
+"     let usealt = 1
+"   elseif type ==# 'quickfix'
+"     let altstat = ' QuickFix'
+"     let usealt = 1
+"   elseif name == ''
+"     let altstat = ' NoName'
+"     let usealt = 1
+"   endif
+
+"   if usealt
+"     return altstat . "%=%Y "
+"   endif
+
+"   " file name
+"   let stat .= Color(active, 3, expand('#' . bufnum . ':p:h:~') . '/' )
+"   " let stat .= expand('#' . bufnum . ':p:h:~') . '/'
+"   let stat .= Color(active, 1, expand('#' . bufnum . ':t'))
+"   let stat .= ' %<'  " truncate here if too long
+
+"   " file modified + readonly
+"   let stat .= Color(active, 1, '%m%r')
+
+"   " paste
+"   if active && &paste
+"     let stat .= Color(active, 2, 'P')
+"   endif
+
+"   if active
+"      let stat .= TrailingSpaceWarning()
+"   endif
+
+"   " right side
+"   let stat .= '%='
+
+"   " git branch
+"   let head = fugitive#head(8)
+"   if active && !empty(head)
+"     let stat .= ' [' . head . ']'
+"   endif
+
+"   if active
+"     let stat .= Color(active, 2, ' %l/%L')
+"   endif
+
+"   return stat
+" endfunction
+" " }}}
+
+" " Status AutoCMD: {{{
+
+" function! s:RefreshStatus()
+"   for nr in range(1, winnr('$'))
+"     call setwinvar(nr, '&statusline', '%!Status(' . nr . ')')
+"   endfor
+" endfunction
+
+" augroup status
+"   autocmd!
+"   " autocmd VimEnter,WinEnter,BufWinEnter * call <SID>RefreshStatus()
+"   autocmd BufWinEnter,VimEnter,WinEnter * call setwinvar(winnr(), '&statusline', '%!Status(' . winnr() . ')')
+"   autocmd WinLeave * call setwinvar(winnr(), '&statusline', '%!Status(' . winnr() . ')')
+" augroup END
+" " }}}
+
+" " Status Colors: {{{
+" hi! link User1 CursorLineNr
+" hi! link User2 LineNr
+" hi! link User3 StatusLineNC
+" " }}}
+
+" " }}}
+
+"{{{ Run it
+
+function Runnit(runner)
+  if !exists('b:runnitBuffer')
+    let b:runnitBuffer = {}
   endif
-  return b:statline_trailing_space_warning
+  if has_key(b:runnitBuffer, a:runner) && bufwinnr(b:runnitBuffer[a:runner]) > 0
+    let l:buff=remove(b:runnitBuffer, a:runner)
+    exec 'bdelete! ' . l:buff
+  endif
+  " if exists('b:runnitBuffer') && bufwinnr(b:runnitBuffer) > 0
+  "   exec 'bdelete! ' . b:runnitBuffer
+  " endif
+  vsplit
+  exec 'terminal ' . a:runner
+  let l:runnitBuffer = winbufnr(0)
+  execute "normal G"
+  wincmd p
+  let b:runnitBuffer[a:runner] = l:runnitBuffer
 endfunction
 
-" recalculate when idle, and after saving
-augroup statline_trail
-  autocmd!
-  autocmd cursorhold,bufwritepost * unlet! b:statline_trailing_space_warning
+augroup runner_filetype
+  au!
+  au FileType python nnoremap <buffer> <F7> :call Runnit('python ' . expand('%'))<CR>
+  au FileType sh nnoremap <buffer> <F7> :call Runnit('bash ' . expand('%'))<CR>
 augroup END
-" Status Function: {{{2
-function! Status(winnum)
-  let active = a:winnum == winnr()
-  let bufnum = winbufnr(a:winnum)
+"}}}
 
-  let stat = ''
-
-  " this function just outputs the content colored by the
-  " supplied colorgroup number, e.g. num = 2 -> User2
-  " it only colors the input if the window is the currently
-  " focused one
-
-  function! Color(active, num, content)
-    if a:active
-      return '%' . a:num . '*' . a:content . '%*'
-    else
-      return a:content
-    endif
-  endfunction
-
-  " this handles alternative statuslines
-  let usealt = 0
-
-  let type = getbufvar(bufnum, '&buftype')
-  let name = bufname(bufnum)
-
-  if type ==# 'help'
-    let altstat = ' ' . fnamemodify(name, ':t:r')
-    let usealt = 1
-  elseif name ==# '__Gundo__'
-    let altstat = ' Gundo'
-    let usealt = 1
-  elseif name ==# '__Gundo_Preview__'
-    let altstat = ' Gundo Preview'
-    let usealt = 1
-  endif
-
-  if usealt
-    return altstat . "%=%Y "
-  endif
-
-  " file name
-  let stat .= Color(active, 3, expand('#' . bufnum . ':p:h:~') . '/' )
-  let stat .= Color(active, 1, expand('#' . bufnum . ':t'))
-  let stat .= ' %<'  " truncate here if too long
-
-  " file modified + readonly
-  let stat .= Color(active, 1, '%m%r')
-
-  " paste
-  if active && &paste
-    let stat .= Color(active, 2, 'P')
-  endif
-
-  if active
-     let stat .= TrailingSpaceWarning()
-  endif
-
-  " right side
-  let stat .= '%='
-
-  " git branch
-  let head = fugitive#head(8)
-  if active && !empty(head)
-    let stat .= Color(active, 3, ' [' . head . ']')
-  endif
-
-  if active
-    let stat .= Color(active, 2, ' %l/%L')
-  endif
-
-  return stat
-endfunction
-" }}}
-
-" Status AutoCMD: {{{
-
-function! s:RefreshStatus()
-  for nr in range(1, winnr('$'))
-    call setwinvar(nr, '&statusline', '%!Status(' . nr . ')')
-  endfor
-endfunction
-
-augroup status
-  autocmd!
-  autocmd VimEnter,WinEnter,BufWinEnter * call <SID>RefreshStatus()
-augroup END
-" }}}
-
-" Status Colors: {{{
-hi! link User1 CursorLineNr
-hi! link User2 LineNr
-hi! link User3 Pmenu
-hi! link User4 LineNr
-" }}}
-
-" }}}
+command Top call Runnit("top")
 
 "-------------------------------------------------------------------------
 " MAP
 "{{{ Key mappings
 """ open file under cursor on a tab
-"map gf :tabe<cfile><CR>
 "toggle buffers
 nnoremap <F5> :buffers<CR>:buffer<Space>
 " resize current buffer by +/- 5
@@ -596,6 +676,8 @@ nnoremap <C-left> :vertical resize -5<cr>
 nnoremap <C-down> :resize +5<cr>
 nnoremap <C-up> :resize -5<cr>
 nnoremap <C-right> :vertical resize +5<cr>
+
+nnoremap <c-t> :tabnew<cr>
 
 " move through wrapped lines (you shouldn't do it in insert mode)
 " imap <silent> <Down> <C-o>gj
