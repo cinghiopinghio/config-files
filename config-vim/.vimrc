@@ -98,14 +98,14 @@ elseif v:version >= 800
   Plug 'roxma/vim-hug-neovim-rpc'
   " Plug 'zchee/deoplete-jedi'
 else
-  " Plug 'ajh17/VimCompletesMe'
-  Plug 'lifepillar/vim-mucomplete'
-  let g:mucomplete#enable_auto_at_startup = 1
-  	let g:mucomplete#chains = {
-              \ 'default' : ['path', 'omni', 'keyn', 'dict', 'uspl'],
-              \ 'vim'     : ['path', 'cmd', 'keyn'],
-              \ 'python'  : ['path', 'cmd', 'keyn', 'uspl']
-              \ }
+  Plug 'ajh17/VimCompletesMe'
+  " Plug 'lifepillar/vim-mucomplete'
+  " let g:mucomplete#enable_auto_at_startup = 1
+  " 	let g:mucomplete#chains = {
+  "             \ 'default' : ['path', 'omni', 'keyn', 'dict', 'uspl'],
+  "             \ 'vim'     : ['path', 'cmd', 'keyn'],
+  "             \ 'python'  : ['path', 'cmd', 'keyn', 'uspl']
+  "             \ }
 endif
 
 let g:deoplete#enable_at_startup = 1
