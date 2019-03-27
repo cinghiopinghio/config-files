@@ -7,4 +7,4 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/openblas/lib
 
 export PATH=${HOME}/miniconda3/bin:${PATH}
 
-source activate gt
+conda activate gt
