@@ -3,6 +3,8 @@ export LAPACK=~/openblas/lib/libopenblas.a
 export BLAS=~/openblas/lib/libopenblas.a
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:~/openblas/lib
 
+. /etc/profile.d/bash_completion.sh
+
 export PATH=${HOME}/miniconda3/bin:${PATH}
 
 source activate gt
