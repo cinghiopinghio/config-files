@@ -16,6 +16,7 @@ else
 		export PATH=${HOME}/miniconda3/bin:${PATH}
 	fi
 fi
+unset __conda_setup
 
 conda activate gt
 
