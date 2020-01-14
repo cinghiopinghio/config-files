@@ -8,23 +8,15 @@ set $mod Mod4
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-# font pango:Hack 10.5
-# font pango:Fantasque 10.5
-font pango:Fira Mono 10
-# Before i3 v4.8, we used to recommend this one as the default:
-# font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-# The font above is very space-efficient, that is, it looks good, sharp and
-# clear in small sizes. However, its unicode glyph coverage is limited, the old
-# X core fonts rendering does not support right-to-left and this being a bitmap
-# font, it doesn’t scale on retina/hidpi displays.
+font pango:Iosevka 11
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 set $primaryCol   #98971a
 set $secondaryCol #a89984
 set $alarmCol     #cc241d
-set $bgCol        #282828bc
+set $bgCol        #333333
 set $fgCol        #ebdbb2
-set $lightBgCol   #444444
+set $lightBgCol   #424242
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 # colors                border        backgr        text        indicator     child_border
@@ -33,7 +25,7 @@ client.focused_inactive $secondaryCol $secondaryCol $bgCol      $secondaryCol $b
 client.unfocused        $bgCol        $bgCol        $primaryCol $bgCol        $bgCol
 client.urgent           $alarmCol     $alarmCol     $bgCol      $alarmCol     $alarmCol
 client.background       $bgCol
-new_window pixel 2
+new_window pixel 1
 new_float pixel 5
 #hide_edge_borders vertical
 
@@ -43,19 +35,16 @@ focus_follows_mouse yes
 
 ### gaps
 # Examples
-gaps inner 2
+gaps inner 0
 gaps outer 0
 smart_gaps on
 smart_borders on
 
 # start a terminal
-#bindsym $mod+Return exec i3-sensible-terminal
-#bindsym $mod+Return exec urxvtc
 bindsym $mod+Return exec termite
 bindsym $mod+Shift+Return exec "~/.i3/i3newworkspace", exec --no-startup-id "termite"
 bindsym $mod+Shift+underscore splitv, exec termite
 bindsym $mod+Shift+bar splith, exec termite
-#bindsym $mod+Return exec st
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -278,15 +267,11 @@ exec_always --no-startup-id ~/.config/polybar/startup
 exec --no-startup-id ~/.config/openbox/autostart
 
 for_window [class="(?i)pinentry|(?i)Arandr"] floating enabled
-for_window [class="(?i)xcalc|(?i)Calculator|(?i)speedCrunch|(?i)gnome-calculator"] floating enabled
-for_window [class="(?i)MPlayer|(?i)smplayer"] floating enabled
-for_window [class="(?i)sxiv"] floating enabled
-for_window [class="(?i)Pidgin|(?i)Skype|(?i)Tox"] floating enabled
 for_window [class="(?i)gnuplot"] floating enabled
-for_window [class="appfinder"] floating enabled
-for_window [class="Cysboard"] fullscreen
-
 for_window [class="float"] floating enabled
+for_window [class="float"] border none
+for_window [class="ikhal"] move position 665 px 24 px
+for_window [class="rpanel"] move position 1420 px 24 px
 
 # the following make fullscreen slides to appears on secondary screen
 # and time and notes on primary
