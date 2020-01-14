@@ -16,6 +16,7 @@ class Source(Base):
         self.matchers = ['matcher_full_fuzzy']
         self.mark = '[@]'
         self.is_async = True
+        self.rank = 1000
 
     def gather_candidates(self, context):
         """Gather candidates from github API
