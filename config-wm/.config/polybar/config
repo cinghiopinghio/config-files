@@ -1,47 +1,23 @@
-;=====================================================
-;
-;   To learn more about how to configure Polybar
-;   go to https://github.com/jaagr/polybar
-;
-;=====================================================
-
 [settings]
 
 screenchange-reload = true
 
 [colors]
 
-background       = ${xrdb:polybar.background:#990000}
-background-solid = ${self.background}
-background-alt   = ${xrdb:polybar.color8:#504945}
+background       = #333333
+background-solid = #333333
+background-alt   = #424242
 
-foreground       = ${xrdb:polybar.foreground:#ebdbb2}
-foreground-alt   = ${xrdb:polybar.color7:#a89984}
+foreground       = #ebdbb2
+foreground-alt   = #a89984
 
-
-; red
-color1           = ${xrdb:polybar.color1}
-; green
-color2           = ${xrdb:polybar.color2}
-; yellow
-color3           = ${xrdb:polybar.color3}
-; blue
-color4           = ${xrdb:polybar.color4}
-; magenta
-color5           = ${xrdb:polybar.color5}
-; cyan
-color6           = ${xrdb:polybar.color6}
-
-easy             = ${colors.color2}
-primary          = ${colors.color3}
-secondary        = ${colors.color4}
-alert            = ${colors.color1}
-transparent      = #202020
-semitransparent  = #20000000
+easy             = ${env:GREEN:#00ff00}
+alert            = ${env:RED:#ff0000}
+transparent      = ${colors.background}
 
 [vars]
 
-padding  = 2
+padding  = 1
 oversize = 2
 
 [global/wm]
@@ -57,44 +33,37 @@ offset-y            = 0
 
 bottom              = false
 
-;background          = ${colors.background}
-background          = ${colors.transparent}
+background          = ${colors.background-alt}
 foreground          = ${colors.foreground}
 
-;line-size      = ${vars.oversize}
-;line-color = ${colors.transparent}
-line-size           = 0
+line-size           = 1
 line-color          = #005500
 
 border-size         = 0
 border-top-size     = 0
 border-bottom-size  = 0
-border-color        = #00000000
+border-color        = ${colors.background-alt}
 
-padding-left        = 1
+padding-left        = 0
 padding-right       = 1
 module-margin-left  = 0
-module-margin-right = ${vars.padding}
+module-margin-right = 1
+format-padding = 1
 
-font-0              = Fira Mono:size=10;2
-font-1              = Symbola:size  =11;2
-font-2              = Fira Sans:size=11;2
-; font-3 = Twitter Color Emoji:size=11
-font-3 = Material Icons:size=11
-; font-2 = Cantarell:size=11;2
+font-0 = Fira Mono:size=10;2
+font-1 = Fira Sans:size=11;2
+font-2 = Material Design Icons:size=13;4
 
 [bar/bar1]
 
 inherit          = bar/base
 tray-position    = right
 tray-padding     = 2
-tray-transparent = false
 tray-background  = ${colors.transparent}
 
 modules-left        = menu i3
 modules-center      = date
-;modules-right       = backlight alsa memory cpu battery powermenu
-modules-right       = backlight pulseaudio battery lkscreen
+modules-right       = radio mpd backlight pulseaudio battery lkscreen rpanel
 enable-ipc = true
 
 [bar/bar2]
@@ -103,7 +72,17 @@ inherit = bar/base
 
 modules-left        = i3
 modules-center      = date
-;modules-right       = memory cpu battery temperature
+
+[module/mpd]
+
+type                     = internal/mpd
+format-online            = %{A1:cantata:}%{A} <icon-play> <icon-pause>
+label-offline            = None
+format-online-padding    = ${vars.padding}
+format-online-background = ${colors.background}
+icon-play                = %{T4}%{T-}
+icon-pause               = %{T4}%{T-}
+
 
 [module/i3]
 
@@ -137,162 +116,140 @@ label-visible-background   = ${colors.foreground-alt}
 label-visible-foreground   = ${colors.background-alt}
 label-visible-padding      = ${vars.padding}
 
-[module/xwindow]
-
-type = internal/xwindow
-
 [module/backlight]
 
-type                     = internal/xbacklight
+type              = internal/xbacklight
+format            = <label> <ramp>
+label             = %{T3}%{T-}
+format-background = ${colors.background}
+format-padding    = ${vars.padding}
 
-; <label> <bar> <ramp>
-format                   = <label> <bar>
-; %percentage%
-label                    = LIGHT
-
-bar-width                = 7
-bar-indicator            = │
-bar-fill                 = ─
-bar-empty                = ─
+ramp-0            = ▁
+ramp-1            = ▂
+ramp-2            = ▃
+ramp-3            = ▄
+ramp-4            = ▅
+ramp-5            = ▆
+ramp-6            = ▇
+ramp-7            = █
 
 [module/date]
-type                     = internal/date
-interval                 = 5
+type              = internal/date
+interval          = 5
 
 format-background = ${colors.background}
-format-padding = ${vars.padding}
+format-padding    = ${vars.padding}
 
-date                     = %A, %d %b
-; date-alt                 = %x
-
-time                     = %H:%M
-; time-alt                 = %X
-
-label                    = %{A1:termite --class=float --exec ikhal --geometry 700x1000:}%date% %time%%{A}
-label-font = 3
-
-[module/alsa]
-
-type                            = internal/volume
-
-format-volume                   = %{A3:pavucontrol:}VOL%{A} <bar-volume>
-label-volume                    = VOL
-label-volume-foreground         = ${colors.foreground}
-
-; format-muted-prefix             = ""
-format-muted-foreground         = ${colors.foreground-alt}
-label-muted                     = "🔇"
-
-bar-volume-width                = 7
-bar-volume-foreground-0         = ${colors.easy}
-bar-volume-foreground-1         = ${colors.easy}
-bar-volume-foreground-2         = ${colors.easy}
-bar-volume-foreground-3         = ${colors.easy}
-bar-volume-foreground-4         = ${colors.primary}
-bar-volume-foreground-5         = ${colors.alert}
-bar-volume-gradient             = false
-bar-volume-indicator            = │
-bar-volume-indicator-foreground = ${colors.foreground}
-bar-volume-fill                 = ─
-bar-volume-empty                = ─
-bar-volume-empty-foreground     = ${colors.foreground-alt}
+date              = %A, %d %b
+time              = %H:%M
+label             = %{A1:termite --class "ikhal float" --exec ikhal:}%{T3}僧 %{T2}%date% %time% %{T-}%{A}
 
 [module/pulseaudio]
 
-type                            = internal/pulseaudio
-sink = alsa_output.pci-0000_00_1f.3.analog-stereo
-interval = 5
+type                     = internal/pulseaudio
+sink                     = alsa_output.pci-0000_00_1f.3.analog-stereo
+interval                 = 5
 
-format-volume                   = %{A3:pavucontrol:}VOL <bar-volume>%{A}
-label-volume                    = VOL
-label-volume-foreground         = ${colors.foreground}
+format-volume            = %{A3:pavucontrol:}<label-volume><ramp-volume>%{A}
+format-volume-background = ${colors.background}
+format-volume-padding    = ${vars.padding}
+label-volume             = %{T3} %{T-}
+label-volume-foreground  = ${colors.foreground}
 
-; format-muted-prefix             = ""
-format-muted-foreground         = ${colors.foreground-alt}
-label-muted                     = "🔇"
-label-muted-font = 3
+; format-muted-prefix    = ""
+format-muted-foreground  = ${colors.foreground-alt}
+format-muted-background  = ${colors.background-alt}
+format-muted-padding     = ${vars.padding}
+label-muted              = %{T3}%{T-}
 
-bar-volume-width                = 7
-bar-volume-foreground-0         = ${colors.easy}
-bar-volume-foreground-1         = ${colors.easy}
-bar-volume-foreground-2         = ${colors.easy}
-bar-volume-foreground-3         = ${colors.easy}
-bar-volume-foreground-4         = ${colors.primary}
-bar-volume-foreground-5         = ${colors.alert}
-bar-volume-gradient             = false
-bar-volume-indicator            = │
-bar-volume-indicator-foreground = ${colors.foreground}
-bar-volume-fill                 = ─
-bar-volume-empty                = ─
-bar-volume-empty-foreground     = ${colors.foreground-alt}
+ramp-volume-0            = ▁
+ramp-volume-1            = ▂
+ramp-volume-2            = ▃
+ramp-volume-3            = ▄
+ramp-volume-4            = ▅
+ramp-volume-5            = ▆
+ramp-volume-6            = ▇
+ramp-volume-7            = █
 
 [module/battery]
-type                         = internal/battery
-battery                      = BAT0
-adapter                      = AC
-full-at                      = 95
-time-format                  = %kH%M
+type                          = internal/battery
+battery                       = BAT0
+adapter                       = AC
+full-at                       = 95
+time-format                   = %kH%M
 
 ; charging
-label-charging               = %percentage%%
-format-charging-prefix       = "BAT "
-format-charging              = <ramp-capacity> <label-charging>
+label-charging                = %percentage%%
+format-charging               = <animation-charging><label-charging>
+format-charging-padding       = ${vars.padding}
+format-charging-background    = ${colors.background}
 
 ; discharging
-label-discharging            = %time%
-format-discharging           = <ramp-capacity> <label-discharging>
+label-discharging             = %time%
+format-discharging            = <ramp-capacity><label-discharging>
+format-discharging-padding    = ${vars.padding}
+format-discharging-background = ${colors.background}
 
 ; full
-label-full                   = BAT FULL
-format-full                  = <label-full>
+format-full-prefix            = %{T3}%{T-}
+format-full                   = FULL
+format-full-padding           = ${vars.padding}
+format-full-background        = ${colors.background}
 
-ramp-capacity-0                 = ▁
-ramp-capacity-1                 = ▂
-ramp-capacity-2                 = ▃
-ramp-capacity-3                 = ▄
-ramp-capacity-4                 = ▅
-ramp-capacity-5                 = ▆
-ramp-capacity-6                 = ▇
-ramp-capacity-7                 = █
-ramp-capacity-0-foreground   = ${colors.foreground}
-ramp-capacity-0-background   = ${colors.alert}
-ramp-capacity-0-padding      = 1
+ramp-capacity-0               = 
+ramp-capacity-1               = 
+ramp-capacity-2               = 
+ramp-capacity-3               = 
+ramp-capacity-4               = 
+ramp-capacity-5               = 
+ramp-capacity-6               = 
+ramp-capacity-7               = 
+ramp-capacity-8               = 
+ramp-capacity-9               = 
+ramp-capacity-0-foreground    = ${colors.foreground}
+ramp-capacity-0-background    = ${colors.alert}
+ramp-capacity-0-padding       = 1
+ramp-capacity-1-foreground    = ${colors.foreground}
+ramp-capacity-1-background    = ${colors.alert}
+ramp-capacity-1-padding       = 1
+ramp-capacity-font            = 3
 
-animation-charging-0                 = ▁
-animation-charging-1                 = ▂
-animation-charging-2                 = ▃
-animation-charging-3                 = ▄
-animation-charging-4                 = ▅
-animation-charging-5                 = ▆
-animation-charging-6                 = ▇
-animation-charging-7                 = █
-animation-charging-framerate = 750
-
-[module/menu]
-type = custom/menu
-label-open = "MENU"
-label-close = "CLOSE "
-label-close-foreground  = ${colors.alert}
-menu-0-0 = "MENU "
-menu-0-0-exec = "bash ~/.config/rofi/scripts/rofimodi"
-menu-0-1 = "WEB "
-menu-0-1-exec = "bash ~/.config/rofi/scripts/menu.sh"
-menu-0-2 = "TERM "
-menu-0-2-exec = termite
-menu-0-3 = "RELOAD"
-menu-0-3-exec = "bash ~/.config/polybar/startup"
-
-[module/screen]
-type = custom/script
-exec = ~/.config/polybar/screen.sh
-click-left = ~/.config/polybar/screen.sh -t
+animation-charging-0          = 
+animation-charging-1          = 
+animation-charging-2          = 
+animation-charging-3          = 
+animation-charging-4          = 
+animation-charging-5          = 
+animation-charging-6          = 
+animation-charging-framerate  = 750
+animation-charging-font       = 3
 
 [module/lkscreen]
-type = custom/ipc
-hook-0 = ~/.config/polybar/screen.sh -t
-hook-1 = echo SCREEN
-initial = 2
+type       = custom/ipc
+hook-0     = ~/.config/polybar/screen.sh -t
+hook-1     = ~/.config/polybar/screen.sh -x
+initial    = 2
 click-left = polybar-msg -p %pid% hook lkscreen 1
 
+[module/radio]
+type           = custom/script
+exec           = ~/.config/polybar/blackout.sh
+click-left     = ~/.config/polybar/blackout.sh toggle
+format-padding = ${vars.padding}
+format-font    = 3
+
+[module/menu]
+type = custom/text
+content = 
+click-left = jgmenu_run
+content-padding = ${vars.padding}
+content-background = ${colors.background}
+
+[module/rpanel]
+type = custom/text
+content = 
+click-left = ~/.config/polybar/conky_panel.sh
+content-padding = ${vars.padding}
+content-background = ${colors.background}
 
 ; vim:ft=dosini
