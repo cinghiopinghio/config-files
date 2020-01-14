@@ -11,7 +11,7 @@
 " If you would like to use another vi clone such as Elvis or Vile
 " you will need to change this setting.
 
-set vicmd=nvim
+set vicmd="NOGUI=1 nvim"
 " set vicmd=elvis\ -G\ termcap
 " set vicmd=vile
 
@@ -30,7 +30,7 @@ set history=100
 
 " Automatically resolve symbolic links on l or Enter.
 
-set followlinks
+" set followlinks
 
 " With this option turned on you can run partially entered commands with
 " unambiguous beginning using :! (e.g. :!Te instead of :!Terminal or :!Te<tab>).
@@ -61,7 +61,8 @@ set noiec
 
 " Selected color scheme
 
-colorscheme Default
+" colorscheme Default
+colorscheme new
 
 " Format for displaying time in file list. For example:
 " TIME_STAMP_FORMAT=%m/%d-%H:%M
@@ -166,6 +167,9 @@ filetype *.ssh FUSE_MOUNT2|sshfs %PARAM %DESTINATION_DIR
 " You can also add %CLEAR if you want to clear screen before running FUSE
 " program.
 
+" NPZ (Numpy)
+fileviewer *.npz npzview
+
 " Pdf
 filextype *.pdf zathura %c %i &, apvlv %c, xpdf %c
 fileviewer *.pdf pdftotext -nopgbrk %c -
@@ -228,15 +232,17 @@ filetype *.[1-8] man ./%c
 fileviewer *.[1-8] man ./%c | col -b
 
 " Images
-filextype *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
-        \ {View in sxiv}
-        \ sxiv %f,
+filextype *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm,*.svg
+        \ {View in imv}
+        \ imv %f,
         \ {View in geeqie}
         \ geeqie %f,
         \ {View in gimp}
         \ gimp %f,
-fileviewer *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
+fileviewer *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm,*.svg
          \ exiftool %f
+
+fileviewer *.tif,*geotif gdalinfo %f
 
 " Raw image files
 filextype *.orf,*.nef,*.dng
@@ -363,11 +369,15 @@ filextype */
 " Or leave it for automatic detection
 "
 " fileviewer *[^/] pygmentize -O style=monokai -f console256 -g
-" fileviewer *.md,*.py,*.js,*.json bat --color always %f
+fileviewer *.md,*.py,*.js,*.json bat --color=always --theme=ansi-dark %f
 
 " Displaying pictures in terminal
 "
 " fileviewer *.jpg,*.png shellpic %c
+"
+
+fileview */ tree %c
+
 
 " Open all other files with default system programs (you can also remove all
 " :file[x]type commands above to ensure they don't interfere with system-wide
