@@ -21,6 +21,7 @@
     cursor_shape = block
 
     # $BROWSER is used by default
+    browser = "MOZ_ENABLE_WAYLAND=1 ${BROWSER}"
 
     # word characters used for word selection
     # (default if unset: all graphic non-punctuation/space characters)
@@ -29,7 +30,7 @@
     # font = Consola Mono Book 10.5
     # font = DejaVu Sans Mono 10.5
     # font = Liberation Mono 10.5
-    font = Hack 10.5
+    font = Hack 10
 
 
 # vim:ft=dosini
