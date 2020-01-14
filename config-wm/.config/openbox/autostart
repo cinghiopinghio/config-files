@@ -1,31 +1,10 @@
 #!/usr/bin/env bash
 # this file autostart stuff
 
-
-# early apps
-
 # automatically turn on attached displays
 srandrd ${HOME}/.local/bin/display-on &
 ${HOME}/.local/bin/display-on &
 compton -b &
-
-
-case ${XDG_CURRENT_DESKTOP} in
-  'openbox')
-    # start panel
-    tint2 -c ~/.config/tint2/sottone.tint2rc &
-  
-    #lal & # clock in tray
-    lal -c green -f "%a %d-%m" &
-    lal -c green -f "%H:%M" &
-
-    # start a docking application (system Tray)
-    docker-tray &
-    ;;
-  'i3')
-    # i3-msg reload
-    ;;
-esac
 
 syndaemon -d -i 0.3 -K -R
 sleep 5
@@ -43,3 +22,5 @@ unclutter -root -visible &
 
 # start xdg autostat apps
 dex -a -e i3wm
+
+# ~/.i3/volume_bar.py | xob 2>>1 1>>/dev/null &
