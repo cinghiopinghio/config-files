@@ -4,9 +4,9 @@
 export SVN_EDITOR=/usr/bin/vim
 # editor variable:
 if hash nvim 2>/dev/null; then
-	export EDITOR="nvim"
+    export EDITOR="nvim"
 elif hash vim 2>/dev/null; then
-	export EDITOR='vim'
+    export EDITOR='vim'
 fi
 export BROWSER=firefox
 # add to PATH .local/bin and subdirectories
@@ -14,15 +14,20 @@ export PATH=$PATH:$(find -L ~/.local/bin -type d | tr '\n' ':' | sed 's/:$//')
 # nice java fonts
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 
-PERL_MB_OPT="--install_base \"$HOME/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
+PERL_MB_OPT="--install_base \"$HOME/perl5\""
+export PERL_MB_OPT
+PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"
+export PERL_MM_OPT
 
 export GPG_TTY=$(tty)
 export GPG_AGENT_INFO=$HOME/.gnupg/S.gpg-agent
 
 # change look in qt5
 export QT_QPA_PLATFORMTHEME="qt5ct"
+# export QT_STYLE_OVERRIDE=kvantum
 
+# use wayland
+# export MOZ_ENABLE_WAYLAND=1
 
 # fzf should look also for hidden files
 export FZF_DEFAULT_COMMAND="find . -path '*' ! -path '*.svn*' ! -path '*.git*' -type f"

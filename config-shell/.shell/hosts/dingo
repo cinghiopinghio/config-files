@@ -4,3 +4,11 @@
 
 
 # xcalib -d :0  ${HOME}/.color/icc/Dell_XPS_15_2016_FHD_matt__1203M_LQ156M1_.icm
+export SDL_VIDEODRIVER=wayland
+
+if [[ $XDG_SESSION_TYPE == 'wayland' ]]; then
+	# check
+	# https://github.com/swaywm/sway/wiki/Running-programs-natively-under-Wayland
+	export _JAVA_AWT_WM_NONREPARENTING=1
+	export QT_QPA_PLATFORM=wayland-egl
+fi
