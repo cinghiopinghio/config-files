@@ -11,7 +11,8 @@ FOLDERS='/home /etc'
 # position of archive
 REMOTEARCH="brancamenta:/var/services/homes/mauro/${ARCHIVENAME}"
 # binary path
-REMOTEPATH=/var/services/homes/mauro/.local/bin/borg
+# REMOTEPATH=/var/services/homes/mauro/.local/bin/borg
+REMOTEPATH=/usr/local/bin/borg
 # use timestamps to name backups
 TIMESTAMP=`date +%Y%m%d-%H:%M`
 # options for borg
@@ -90,6 +91,5 @@ sudo ${SUDOPTS} borg prune ${PRUNEOPTS} ${OPTS}\
 
 export BORG_PASSPHRASE=''
 
-
-notify-send "BORG-BACKUP" "Backup done! See log files"
+notify-send -i drive-harddisk "BORG-BACKUP" "Backup done! See log files"
 
