@@ -10,10 +10,16 @@ then
 fi
 
 LISTCMD+="sed '1d' ${HOME}/.cache/neomru/file; "
-LISTCMD+="find ${HOME} -type f -iname \*.pdf -not -path ".cache" -not -path
-".mozilla" 2>>/dev/null"
+if command -v fd >>/dev/null 2>>1;
+then
+  echo using fd
+  LISTCMD+="fd --extension pdf --extension ps --extension docx --full-path \'${HOME}\'"
+else
+  echo not using fd
+  LISTCMD+="find ${HOME} -type f -iname \*.pdf -not -path ".cache" -not -path ".mozilla" 2>>/dev/null"
+fi
 
-file=$(eval "${LISTCMD}" | sed "s|${HOME}|~|" | rofi -dmenu -i)
+file=$(eval "${LISTCMD}" | sed "s|${HOME}|~|" | rofi -dmenu -i -matching fuzzy)
 file=$(eval echo ${file})
 
 case ${file} in

@@ -13,12 +13,14 @@ import glob
 import os
 import sqlite3
 import time
-import random
 import shutil
 import tempfile
+import sys
 
 import subprocess
+import lz4.block
 
+sys.path.append('/usr/bin')
 import buku
 from xdg.BaseDirectory import xdg_cache_home
 import rofi
@@ -35,6 +37,7 @@ INIT = 16
 CACHE = xdg_cache_home + '/bufi.json'
 
 MOZ_SESSION = '~/.mozilla/firefox/*.default/places.sqlite'
+MOZ_SESSION = '~/.mozilla/firefox/*.default/sessionstore-backups/recovery.js*'
 
 CUSTOM_KB = ['Alt+n', 'Alt+e', 'Alt+x']
 MESG = """\
@@ -70,7 +73,53 @@ def copy_to_tmp(filepath):
     return tmpfname
 
 
+def get_moz_places_bak(flpath):
+    conn = sqlite3.connect(flpath, timeout=1)
+    cursor = conn.cursor()
+    try:
+        cursor.execute('SELECT * FROM moz_places')
+    except sqlite3.OperationalError:
+        conn.close()
+    else:
+        all_rows = cursor.fetchall()
+        conn.close()
+        return all_rows
+
+    tmpfl = copy_to_tmp(flpath)
+    conn = sqlite3.connect(tmpfl)
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM moz_places')
+    all_rows = cursor.fetchall()
+    return all_rows
+
+
 def get_moz_places(flpath):
+    with open(flpath, 'rb') as fin:
+        b = fin.read()
+        if b[:8] == b'mozLz40\0':
+            b = lz4.block.decompress(b[8:])
+    j = json.loads(b)
+    # for w in j['windows']:
+    #     for t in w['tabs']:
+    #         i = t['index'] - 1
+    #         print(template % (
+    #             t['entries'][i]['title'],
+    #             t['entries'][i]['url']
+    #             ))
+
+    return [
+        {
+            'title': t['entries'][t['index'] - 1]['title'],
+            'url': t['entries'][t['index'] - 1]['url'],
+            'time': t['lastAccessed']
+        }
+        for w in j['windows'] for t in w['tabs']
+    ]
+
+
+
+
+
     conn = sqlite3.connect(flpath, timeout=1)
     cursor = conn.cursor()
     try:
@@ -98,13 +147,15 @@ def buku_add_new_from_firefox(buku_database):
     for fname in glob.glob(os.path.expanduser(MOZ_SESSION)):
         all_rows = get_moz_places(fname)
 
-        for row in all_rows:
-            # check if time last access
-            if row[9] is not None:
-                # check if url and title are not None
-                url = row[1] if row[1] is not None else ''
-                title = row[2] if row[2] is not None else ''
-                tabs[row[9]] = (url, title, ' ')
+        for tab in all_rows:
+            tabs[tab['time']] = (tab['url'], tab['title'], ' ')
+        # for row in all_rows:
+        #     # check if time last access
+        #     if row[9] is not None:
+        #         # check if url and title are not None
+        #         url = row[1] if row[1] is not None else ''
+        #         title = row[2] if row[2] is not None else ''
+        #         tabs[row[9]] = (url, title, ' ')
 
     tabs = [tabs[k][0] + ' ' + tabs[k][1]
             for k in sorted(tabs.keys(), reverse=True)]
@@ -161,8 +212,6 @@ def main():
     bk_map = {a[0]: a for a in buku_database.get_rec_all()}
 
     buku_hist = []
-    # get a random element to put first
-    # buku_hist += [bk_map.pop(random.randrange(len(bk_map)))]
     # get db items present in history
     buku_hist += [bk_map.pop(h[0]) for h in hist if h[0] in bk_map]
     buku_hist += [v for v in bk_map.values()]
@@ -206,7 +255,7 @@ def main():
         rec = buku_database.get_rec_by_id(indx)
         if rec is not None:
             # print(rec)
-            subprocess.call(["firefox", rec[1]])
+            subprocess.call(["firefox", rec[1]], shell=False)
         # buku_database.browse_by_index(indx)
 
         subprocess.call(["wmctrl", "-a", os.environ.get("BROWSER", "Firefox")])

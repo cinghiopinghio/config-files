@@ -1,45 +1,46 @@
 #!/usr/bin/env bash
 
+. ~/.shell/vars
 LOCATION=${XDG_CONFIG_HOME:-${HOME}/.config}/rofi/scripts
-echo ${LOCATION}
 
 menu="\
-1. Bookmarks
-2. 🌍 Search the web
-3. 🔑 Password Store
-4. LaTeX manuals
-5. 🕱 Kill'em All
-6. Qalc(ulate)
-7. SystemCtl
-8. Documents\
+1. Bookmarks\x0icon\x1fbookmarks
+2. Documents\x0icon\x1fdocument
+3. Search the web\x0icon\x1fweb-browser
+4. Password Store\x0icon\x1fpassword
+5. LaTeX manuals\x0icon\x1ftext-x-tex
+6. Kill'em All\x0icon\x1fstop
+7. Screenshot\x0icon\x1fgscreenshot
+8. SystemCtl\x0icon\x1fkcontrol\
 "
 
-choice=$(echo "$menu" | rofi -dmenu -i -p '☰' -mesg 'What are you looking for?')
+choice=$(echo -e "$menu" | rofi -dmenu -i -p '☰' -mesg 'What are you looking for?' -show-icons)
 
 case $choice in
   1*)
     ${LOCATION}/bufi 2>>/dev/null
     ;;
   2*)
-    . ${LOCATION}/web-search
+    rofi -show docufi -modi "docufi:${LOCATION}/docufi.sh"
     ;;
   3*)
-    ${LOCATION}/rofi-pass
+    . ${LOCATION}/web-search
     ;;
   4*)
-    ${LOCATION}/texgetdoc
+    ${LOCATION}/rofi-pass
     ;;
   5*)
-    ${LOCATION}/killbill
+    ${LOCATION}/texgetdoc
     ;;
   6*)
-    rofi -show calc -modi "calc:qalc -t"
+    ${LOCATION}/killbill
     ;;
   7*)
-    ${LOCATION}/scudmenu
+    grim ~/Downloads/$(date +'screenshot-%Y-%m-%d-%H%M%S.png')
+    # grim -g "$(slurp)" ~/Downloads/$(date +'screenshot-%Y-%m-%d-%H%M%S.png')
     ;;
   8*)
-    ${LOCATION}/docufi 2>>/dev/null
+    ${LOCATION}/scudmenu
     ;;
   *)
     ;;
