@@ -1,0 +1,107 @@
+
+@define-color background       rgba(40, 40, 40, 0.6);
+@define-color background-alt   rgba(80, 80, 80, 0.6);
+@define-color foreground       #ebdbb2;
+@define-color foreground-alt   #a89984;
+@define-color alarm            #cc241d;
+
+* {
+        border: none;
+        border-radius: 0;
+        font-family: Fira Sans, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        min-height: 0;
+        padding: 0 5px;
+        margin: 0;
+}
+
+#window {
+        padding: 0;
+        background: red;
+}
+
+window#waybar {
+        background: rgba(40, 40, 40, 0.5);
+        border-bottom: 2px rgba(50, 50, 50, 0.7);
+        color: @foreground;
+        padding: 0;
+}
+
+#workspaces {
+        padding-left: 0;
+}
+
+#workspaces button {
+        color: @foreground;
+        border-bottom: 2px solid transparent;
+}
+
+#workspaces button.focused {
+        background: @background-alt;
+        border-bottom: 2px solid @foreground;
+}
+
+#workspaces button.urgent {
+        background: @alarm;
+        border-bottom: 2px solid @foreground;
+}
+
+#mode {
+        background: @background-alt;
+        border-bottom: 2px solid @foreground;
+}
+
+#clock, #battery, #memory, #backlight, #pulseaudio {
+        color: @foreground;
+        background-color: @background-alt;
+        border-bottom: 2px solid @background;
+}
+
+#battery, #network, #mode, #cpu, #custom-fs, #idle_inhibitor.activated {
+        color: @foreground;
+        background-color: @background;
+        border-bottom: 2px solid @background-alt;
+}
+
+#idle_inhibitor {
+        background-color: transparent;
+}
+
+#pulseaudio.muted {
+        background-color: transparent;
+	border-bottom: 0px;
+}
+
+#network.disconnected, #custom-ping, #custom-arch {
+        background: #f53c3c;
+}
+
+#battery.charging {
+        color: @foreground;
+        background-color: #557711;
+}
+
+@keyframes blink {
+        to {
+                background-color: @foreground;
+                color: @alarm;
+        }
+}
+
+#battery.critical.discharging {
+        background: @alarm;
+        color: @foreground;
+        animation-name: blink;
+        animation-duration: 0.5s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+}
+
+#battery.warning.discharging {
+        background: @alarm;
+        color: @foreground;
+}
+
+#tray {
+}

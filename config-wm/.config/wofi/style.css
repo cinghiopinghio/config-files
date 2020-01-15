@@ -1,0 +1,23 @@
+#outer-box {
+    margin: 20px;
+}
+
+#input {
+    padding: 15px;
+    margin: 15px 0px;
+}
+
+#inner-box {
+    margin: 15px 0px;
+}
+
+#text {
+    padding: 5px 15px;
+}
+
+#selected {
+    /* margin: 5px; */
+    /* border: 2px solid yellow; */
+    /* background-color: #55ffdd; */
+    /* color: #282828 */
+}

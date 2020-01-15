@@ -1,0 +1,19 @@
+[options]
+
+background = 888888
+overlay = true
+overlay_font = Fira Mono:12
+upscaling_method = nearest_neighbour
+
+[aliases]
+
+folder = open *.png *.jpg *.gif
+
+[binds]
+
+bw = background ffffff
+bb = background 000000
+bg = background 888888
+i = overlay
+
+

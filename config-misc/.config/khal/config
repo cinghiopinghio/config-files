@@ -1,0 +1,53 @@
+[calendars]
+
+  [[cal]]
+    path = ~/casolin/casolin/dav/calendars/cp-calendar/
+    color = light red
+
+  [[work]]
+    path = ~/casolin/casolin/dav/calendars/work/
+    color = light blue
+
+  [[karate]]
+    path = ~/casolin/casolin/dav/calendars/karate/
+    color = yellow
+
+  [[contacts]]
+    path = ~/casolin/casolin/dav/contacts/cp-contacts/
+    color = light green
+    type = birthdays
+    readonly = True
+
+  [[cumples]]
+    path = ~/casolin/casolin/dav/contacts/cumples/
+    color = light magenta
+    type = birthdays
+    readonly = True
+
+[locale]
+  local_timezone = Europe/Berlin
+  default_timezone = Europe/Berlin
+  timeformat= %H:%M
+  dateformat= %d-%m
+  longdateformat= %d-%m-%Y
+  datetimeformat= %d-%m %H:%M
+  longdatetimeformat= %d-%m-%Y %H:%M
+  firstweekday = 0
+  unicode_symbols = True
+
+[default]
+  default_calendar = cal
+  highlight_event_days = True
+  print_new = event
+  timedelta = 15d
+  show_all_days = False
+
+[highlight_days]
+  method = fg
+
+[view]
+  agenda_day_format = {bold}{date} -> {name}{reset}
+  agenda_event_format = {calendar-color} {start-end-time-style:16}{title}{repeat-symbol}{reset}
+  bold_for_light_color = False
+  frame = width
+  theme = dark

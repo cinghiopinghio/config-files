@@ -1,1 +1,0 @@
-wget -O - --header="Accept-Encoding: gzip" https://aur.archlinux.org/packages.gz 2>>/dev/null | gunzip | sed 1d | rofi -dmenu

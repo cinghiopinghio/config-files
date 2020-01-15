@@ -1,0 +1,12 @@
+{
+    output eDP-1 position 0,0
+}
+{
+    output eDP-1 position 0,1050
+    output "Acer Technologies Acer B223W LBV081124238" mode 1680x1050 position 0,0
+}
+{
+    output eDP-1 position 0,1200
+    output "Hewlett Packard HP LP2475w CNC02403SL" mode 1920x1200 position 0,0
+
+}

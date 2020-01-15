@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+if [ x"$@" = x"quit" ]
+then
+    exit 0
+fi
+
+if [ "$@" ]
+then
+    case $@ in
+      Poweroff)
+        systemctl poweroff
+        ;;
+      Reboot)
+        systemctl reboot
+        ;;
+      Logout)
+        i3-msg exit || swaymsg exit
+        ;;
+      Suspend)
+        killall rofi
+        systemctl suspend
+        ;;
+      Lock)
+        killall rofi
+        bash ~/.local/bin/background --lock &
+        ;;
+    esac
+else
+    echo -en "\x00prompt\x1fSession ${USER}:\n"
+    echo -en "\0markup-rows\x1ftrue\n"
+
+    echo -en "Poweroff\0icon\x1fsystem-shutdown\n"
+    echo -en "Reboot\0icon\x1fsystem-reboot\n"
+    echo -en "Logout\0icon\x1fsystem-log-out\n"
+    echo -en "Suspend\0icon\x1fsystem-suspend\n"
+    echo -en "Lock\0icon\x1fsystem-lock-screen\n"
+  fi
+
+# vim:ft=sh

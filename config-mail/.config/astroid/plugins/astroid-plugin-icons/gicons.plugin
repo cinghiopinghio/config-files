@@ -1,0 +1,11 @@
+[Plugin]
+Module=gicons
+Depends=
+Loader=python3
+Name=icons plugin
+Description=plugin
+Authors=Cinghio Pinghio
+Copyright=GPLv3
+Website=
+Help=
+Hidden=false

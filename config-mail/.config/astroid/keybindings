@@ -1,0 +1,14 @@
+# Search
+main_window.search=/ # Search, default: o
+main_window.search_tag=C-/ # Search for tag:, default: L
+
+# toggle tags
+# Killed
+thread_index.run(hooks::toggleTag killed %1)=X
+thread_view.run(hooks::toggleMailTag killed %2)=X
+
+# Inbox
+thread_index.archive_thread=A # Toggle 'inbox' tag on the whole thread, default: a
+thread_index.multi.archive=A # Toggle archive, default: a
+thread_index.archive=A # Toggle 'inbox' tag on thread, default: a
+

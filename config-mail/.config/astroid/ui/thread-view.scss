@@ -1,0 +1,27 @@
+/* ui-version: 5 (do not change when modifying theme for yourself) */
+/* Variables */
+/* Background colors associated with received emails: */
+$recv-normal: #ffffff;
+$recv-quoted: #e8e8e8;
+$recv-collapsed: #f5f5f5;
+/* Background colors associated with sent emails: */
+$sent-normal: #bbffbb;
+$sent-quoted: #a8e8a8;
+$sent-collapsed: #a5f5a5;
+/* Fonts */
+$font-base-size: 14px;
+$font-mono: "Fira Mono", "Inconsolata", monospace;
+$font-sans: "Fira Sans", "Roboto", sans-serif;
+$font-family-default: $font-sans;
+/* Colours */
+$email-solid: #d8d8d8;
+$focused-solid: #d94a50;
+
+@import '/usr/share/astroid/ui/thread-view.scss';
+
+.email_container, .message_container {
+    background-color: #eeeeee;
+}
+#filename {
+    color: black;
+}

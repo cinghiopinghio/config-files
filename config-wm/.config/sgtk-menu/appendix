@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Lock",
+    "exec": "swaylock -f -c 000000",
+    "icon": "lock"
+  },
+  {
+    "name": "Logout",
+    "exec": "swaynag -t error -m ' Exit sway session?' -b ' Logout ' 'swaymsg exit'",
+    "icon": "exit"
+  },
+  {
+    "name": "Reboot",
+    "exec": "swaynag -t error -m ' Reboot the machine?' -b ' Reboot ' 'systemctl reboot'",
+    "icon": "reload"
+  },
+  {
+    "name": "Shutdown",
+    "exec": "swaynag -t error -m ' Shutdown the machine?' -b ' Shutdown ' 'systemctl -i poweroff'",
+    "icon": "window-close"
+  }
+]

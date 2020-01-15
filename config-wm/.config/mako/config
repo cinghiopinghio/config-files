@@ -1,0 +1,70 @@
+
+# Globals
+
+max-visible=5
+sort=-time
+layer=top
+anchor=top-right
+
+# Style
+
+font=Fira Sans 10
+background-color=#333333cc
+text-color=#ebdbb2
+border-color=#424242
+progress-color=over #666666
+
+icons=true
+max-icon-size=64
+icon-path=/usr/share/icons/Numix:/usr/share/icons/Numix-Circle
+
+width=350
+height=200
+margin=10
+padding=15
+border-size=1
+
+markup=1
+actions=1
+format=<span size='14000'><b>%s</b></span>\n<i><small>%a</small></i>\n%b
+
+default-timeout=10000
+ignore-timeout=0
+
+group-by=app-name
+
+# General styles
+
+[actionable]
+format=(A) <span size='14000'><b>%s</b></span>\n<i><small>%a</small></i>\n%b
+
+[urgency=low]
+background-color=#424242cc
+
+[urgency=high]
+background-color=#cc241d
+text-color=#333333
+default-timeout=0
+
+[grouped]
+default-timeout=1000
+format=<span size='14000'><b>%s</b></span>\n<i><small>%a</small></i>\n%b
+
+# App specific styles
+
+[app-name="Slack"]
+background-color=#600070aa
+
+[app-name="NotMuch Mail"]
+background-color=#d79921cc
+border-color=#d79921
+
+[app-name=rofi-pass]
+background-color=#cc241dcc
+border-color=#cc241d
+text-color=#333333
+
+[app-name="Syncthing GTK"]
+background-color=#147394cc
+border-color=#147394
+# vim ft=dosini
