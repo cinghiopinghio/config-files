@@ -3,7 +3,7 @@
     "height": 24,
     "modules-left": ["sway/hide", "custom/menu", "sway/workspaces", "sway/mode", "custom/mpd"],
     "modules-center": ["clock", "custom/tasks", "custom/nightandday"],
-    "modules-right": ["idle_inhibitor", "pulseaudio", "cpu", "memory", "custom/fs" , "backlight", "battery", "custom/ping",  "custom/arch", "tray"],
+    "modules-right": ["idle_inhibitor", "pulseaudio", "custom/cpu", "cpu", "memory", "custom/fs" , "backlight", "battery", "custom/ping",  "custom/arch", "tray"],
     // Modules configuration
     "sway/workspaces": {
         "format": "{name}"
@@ -63,6 +63,11 @@
         "format": "{:%a %d %b <big><span rise='-2000' font_desc='Material Design Icons'>肋</span></big> %H:%M}",
         "format-alt": "{:%a %d %b <big><span rise='-2000' font_desc='Material Design Icons'>肋</span></big> %H:%M}",
         "on-click": "termite --class 'ikhal float' --exec ikhal"
+    },
+    "custom/cpu": {
+        "format": "{}",
+        "interval": 10,
+        "exec": "psuinfo -Cg"
     },
     "cpu": {
         "format": "{usage}% <big><span rise='-2000' font_desc='Material Design Icons'></span></big>"
