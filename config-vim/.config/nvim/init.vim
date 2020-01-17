@@ -65,8 +65,9 @@ if has('nvim') || v:version >= 800
     nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
 
     " Automatically start language servers.
+    let g:LanguageClient_loggingFile = expand('~/LanguageClient.log')
     let g:LanguageClient_autoStart = 1
-    let g:LanguageClient_useVirtualText = 1
+    let g:LanguageClient_useVirtualText = 'All'
     let g:LanguageClient_hasSnippetSupport = 1
     let g:LanguageClient_diagnosticsDisplay = {
                 \ 1: {
@@ -145,7 +146,7 @@ if has('nvim')
     " Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
     " Plug 'fgrsnau/ncm2-aspell'
     " autocmd BufEnter  *  call ncm2#enable_for_buffer()
-    Plug 'deoplete-plugins/deoplete-jedi'
+    " Plug 'deoplete-plugins/deoplete-jedi'
 
 elseif v:version >= 800
     Plug 'Shougo/deoplete.nvim'
@@ -714,6 +715,11 @@ if has("wildmenu")
     set wildignore+=*~,*.swp,*.tmp
     set wildmenu
     set wildmode=longest,full
+endif
+if has('nvim')
+    set wildoptions=pum
+    set pumblend=20
+    hi PmenuSel blend=0
 endif
 set ls=2  " show statusline always
 set dir=/tmp//,/var/tmp//,.
