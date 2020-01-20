@@ -840,3 +840,25 @@ call deoplete#custom#source('around',        'mark', '[]')
 call deoplete#custom#source('buffer',        'mark', 'B')
 call deoplete#custom#source('syntax',        'mark', '#')
 call deoplete#custom#source('member',        'mark', '.')
+
+
+" LanguageClient
+" Automatically call highlight and hover
+function! LspMaybeHover(is_running) abort
+  if a:is_running.result
+    call LanguageClient_textDocument_hover()
+  endif
+endfunction
+
+function! LspMaybeHighlight(is_running) abort
+  if a:is_running.result
+    call LanguageClient_clearDocumentHighlight()
+    call LanguageClient#textDocument_documentHighlight()
+  endif
+endfunction
+
+augroup lsp_aucommands
+  au!
+  " au CursorHold * call LanguageClient#isAlive(function('LspMaybeHover'))
+  au CursorMoved * call LanguageClient#isAlive(function('LspMaybeHighlight'))
+augroup END
