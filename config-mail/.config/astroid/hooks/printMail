@@ -1,0 +1,9 @@
+#!/usr/bin/bash
+
+EML=`notmuch search --output=files id:${1}`
+TMPFILE=$(mktemp /tmp/printfile_XXXX.html)
+mhonarc -single ${EML} > ${TMPFILE}
+
+firefox ${TMPFILE}
+
+rm ${TMPFILE}
