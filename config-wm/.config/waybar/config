@@ -3,7 +3,7 @@
     "height": 24,
     "modules-left": ["sway/hide", "custom/menu", "sway/workspaces", "sway/mode", "custom/mpd"],
     "modules-center": ["clock", "custom/tasks", "custom/nightandday"],
-    "modules-right": ["idle_inhibitor", "pulseaudio", "custom/cpu", "cpu", "memory", "custom/fs" , "backlight", "battery", "custom/ping",  "custom/arch", "tray"],
+    "modules-right": ["idle_inhibitor", "pulseaudio", "custom/cpu", "memory", "custom/fs" , "backlight", "battery", "custom/ping",  "custom/arch", "tray"],
     // Modules configuration
     "sway/workspaces": {
         "format": "{name}"
@@ -65,8 +65,8 @@
         "on-click": "termite --class 'ikhal float' --exec ikhal"
     },
     "custom/cpu": {
-        "format": "{}",
-        "interval": 10,
+        "format": "<span font_desc='Fira Mono'>{}</span>",
+        "interval": 3,
         "exec": "psuinfo -Cg"
     },
     "cpu": {

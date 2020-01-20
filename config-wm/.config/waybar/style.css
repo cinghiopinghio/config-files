@@ -1,9 +1,8 @@
-
-@define-color background       rgba(40, 40, 40, 0.6);
-@define-color background-alt   rgba(80, 80, 80, 0.6);
-@define-color foreground       #ebdbb2;
-@define-color foreground-alt   #a89984;
-@define-color alarm            #cc241d;
+@define-color background rgba(40, 40, 40, 0.6);
+@define-color background-alt rgba(80, 80, 80, 0.6);
+@define-color foreground #ebdbb2;
+@define-color foreground-alt #a89984;
+@define-color alarm #cc241d;
 
 * {
         border: none;
@@ -51,13 +50,23 @@ window#waybar {
         border-bottom: 2px solid @foreground;
 }
 
-#clock, #battery, #memory, #backlight, #pulseaudio {
+#clock,
+#battery,
+#memory,
+#backlight,
+#pulseaudio {
         color: @foreground;
         background-color: @background-alt;
         border-bottom: 2px solid @background;
 }
 
-#battery, #network, #mode, #cpu, #custom-fs, #idle_inhibitor.activated {
+#battery,
+#network,
+#mode,
+#cpu,
+#custom-cpu,
+#custom-fs,
+#idle_inhibitor.activated {
         color: @foreground;
         background-color: @background;
         border-bottom: 2px solid @background-alt;
@@ -69,10 +78,12 @@ window#waybar {
 
 #pulseaudio.muted {
         background-color: transparent;
-	border-bottom: 0px;
+        border-bottom: 0px;
 }
 
-#network.disconnected, #custom-ping, #custom-arch {
+#network.disconnected,
+#custom-ping,
+#custom-arch {
         background: #f53c3c;
 }
 
@@ -103,5 +114,4 @@ window#waybar {
         color: @foreground;
 }
 
-#tray {
-}
+#tray {}
