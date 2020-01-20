@@ -104,6 +104,7 @@ if has('nvim') || v:version >= 800
     Plug 'Shougo/echodoc.vim'
     let g:echodoc#enable_at_startup = 1
     let g:echodoc#type = 'floating'
+    let g:echodoc#events=['CursorMovedI', 'InsertEnter', 'CompleteDone']
     hi link EchoDocFloat Pmenu
 endif
 set cmdheight=2
@@ -862,3 +863,4 @@ augroup lsp_aucommands
   " au CursorHold * call LanguageClient#isAlive(function('LspMaybeHover'))
   au CursorMoved * call LanguageClient#isAlive(function('LspMaybeHighlight'))
 augroup END
+

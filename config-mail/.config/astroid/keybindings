@@ -6,6 +6,7 @@ main_window.search_tag=C-/ # Search for tag:, default: L
 # Killed
 thread_index.run(hooks::toggleTag killed %1)=X
 thread_view.run(hooks::toggleMailTag killed %2)=X
+thread_view.run(hooks::printMail %2)=P
 
 # Inbox
 thread_index.archive_thread=A # Toggle 'inbox' tag on the whole thread, default: a
