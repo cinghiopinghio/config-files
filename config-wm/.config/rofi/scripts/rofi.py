@@ -5,19 +5,24 @@
 import subprocess
 
 
+rofi_cdm = ['wofi', '--dmenu']
 rofi_cdm = ['rofi', '-dmenu', '-i']
 
 
 class Rofi(object):
     """Docstring for Rofi. """
 
-    def __init__(self, str_list,
-                 args=None,
-                 markup=True,
-                 custom_kb=None,
-                 prompt='Menu:',
-                 sep=None,
-                 mesg=None):
+    def __init__(
+        self,
+        str_list,
+        args=None,
+        markup=True,
+        custom_kb=None,
+        prompt='Menu:',
+        sep=None,
+        mesg=None,
+        row_formatter=None,
+    ):
         """TODO: to be defined1.
 
         :cmd: TODO
@@ -44,6 +49,11 @@ class Rofi(object):
             self._sep = sep
             self._args.extend(['-sep', sep, '-eh', '2', '-lines', '10'])
 
+        if row_formatter is None:
+            self._row_formatter = lambda x: x
+        else:
+            self._row_formatter = row_formatter
+
     def run(self):
         print(rofi_cdm + self._rofi_args())
         prc = subprocess.Popen(rofi_cdm + self._rofi_args(),
@@ -51,7 +61,13 @@ class Rofi(object):
                                stdout=subprocess.PIPE,
                                )
 
-        out = prc.communicate(input=self._sep.join(self._list).encode())[0]
+        for row in self._list:
+            prc.stdin.write((self._row_formatter(row) + self._sep).encode())
+            prc.stdin.flush()
+        prc.stdin.close()
+        prc.wait()
+        out = prc.stdout.read()
+        # out = prc.communicate(input=self._sep.join(self._list).encode())[0]
         prc.terminate()
         return out.decode().strip(), prc.returncode
 

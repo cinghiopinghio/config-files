@@ -16,6 +16,7 @@ import time
 import shutil
 import tempfile
 import sys
+import urllib
 
 import subprocess
 import lz4.block
@@ -44,12 +45,32 @@ MESG = """\
 Hint: use <b>{}</b> to add a new bookmark      <b>{}</b> to edit the bookmark
           <b>{}</b> to remove it from the db""".format(*CUSTOM_KB)
 
+ROWFORMAT = '{0:4d} {2:s} <span size="small" weight="ultralight" stretch="ultracondensed"><i>{1:s}</i>{3} {4}</span>'
+ROWFORMAT_ICON = '{0:4d} {2:s} <span size="small" weight="ultralight" stretch="ultracondensed"><i>{1:s}</i>{3} {4}</span>\x00icon\x1f{6}'
 
-def make_string(*ms_args):
-    ''' Create the output string in pango format for each line '''
+
+def get_iconpath(url, cachedir):
+    url = urllib.parse.urlparse(url)
+    baseurl = url.scheme + '://' + url.netloc
+    filename_it = glob.iglob(os.path.join(cachedir, url.netloc) + '*')
+    try:
+        filename = next(filename_it)
+    except StopIteration:
+        return 'web-browser', baseurl  # , os.path.join(cachedir, url.netloc) * ".png"
+    return filename, baseurl
+
+
+def make_string(ms_args, cache=xdg_cache_home + '/bukuicon'):
+    ''' Create the output string in pango format for each line.
+    input:
+        ms_args: [id, url, title, keywords, comments]
+    '''
+
+    iconfile = get_iconpath(ms_args[1], cache)[0]
     ms_args = [ms if ms is not None else "" for ms in ms_args]
-    return '{0:4d} {2:s} <span size="small" weight="ultralight" stretch="ultracondensed"><i>{1:s}</i>{3} {4}</span>'\
-        .format(*ms_args)
+    if iconfile is None:
+        return ROWFORMAT.format(*ms_args).replace('&', '&amp;')
+    return ROWFORMAT_ICON.format(*ms_args, iconfile).replace('&', '&amp;')
 
 
 def frecency(item, now, indx):
@@ -111,32 +132,11 @@ def get_moz_places(flpath):
         {
             'title': t['entries'][t['index'] - 1]['title'],
             'url': t['entries'][t['index'] - 1]['url'],
-            'time': t['lastAccessed']
+            'time': t['lastAccessed'],
+            'icon': t['image'][25:]  # this remove 'data:image/x-icon;base64,'
         }
         for w in j['windows'] for t in w['tabs']
     ]
-
-
-
-
-
-    conn = sqlite3.connect(flpath, timeout=1)
-    cursor = conn.cursor()
-    try:
-        cursor.execute('SELECT * FROM moz_places')
-    except sqlite3.OperationalError:
-        conn.close()
-    else:
-        all_rows = cursor.fetchall()
-        conn.close()
-        return all_rows
-
-    tmpfl = copy_to_tmp(flpath)
-    conn = sqlite3.connect(tmpfl)
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM moz_places')
-    all_rows = cursor.fetchall()
-    return all_rows
 
 
 def buku_add_new_from_firefox(buku_database):
@@ -148,21 +148,19 @@ def buku_add_new_from_firefox(buku_database):
         all_rows = get_moz_places(fname)
 
         for tab in all_rows:
-            tabs[tab['time']] = (tab['url'], tab['title'], ' ')
-        # for row in all_rows:
-        #     # check if time last access
-        #     if row[9] is not None:
-        #         # check if url and title are not None
-        #         url = row[1] if row[1] is not None else ''
-        #         title = row[2] if row[2] is not None else ''
-        #         tabs[row[9]] = (url, title, ' ')
+            tabs[tab['time']] = tab
 
-    tabs = [tabs[k][0] + ' ' + tabs[k][1]
-            for k in sorted(tabs.keys(), reverse=True)]
+    tabs = [
+        (k, tab['url'], tab['title'], k, ' ', ' ')
+        for k, tab in sorted(tabs.items())
+    ]
+    # tabs = [tabs[k][0] + ' ' + tabs[k][1]
+    #         for k in sorted(tabs.keys(), reverse=True)]
     rf_nb = rofi.Rofi(
         tabs,
         markup=False,
         prompt='New Bookmark: ',
+        row_formatter=make_string,
     )
 
     choice, exitcode = rf_nb.run()
@@ -218,14 +216,18 @@ def main():
     now = int(time.time())
 
     rofi_out = rofi.Rofi(
-        [make_string(*tpl).replace('&', '&amp;')  # .replace("\n", " ")
-         for tpl in buku_hist],
+        # [make_string(tpl) for tpl in buku_hist],
+        buku_hist,
         prompt='Bookmarks: ',
         mesg=MESG,
         custom_kb=CUSTOM_KB,
         args=['-matching', 'normal'],
+        row_formatter=make_string,
     )
-    choice, exitcode = rofi_out.run()
+    try:
+        choice, exitcode = rofi_out.run()
+    except BrokenPipeError:
+        raise
 
     if exitcode == 10:
         # add new bookmark from open tabs (firefox)

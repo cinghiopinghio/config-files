@@ -1,2 +1,11 @@
 allow_images=true
 image_size=42
+
+allow_markup=true
+
+parse_action=true
+mode=drun
+
+insensitive=true
+halign=fill
+valign=center

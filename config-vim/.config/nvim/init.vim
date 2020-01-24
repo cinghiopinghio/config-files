@@ -363,6 +363,30 @@ function! Fzf_dev()
         \ 'down':    '40%' })
 endfunction
 "}}}
+"
+if has('nvim')
+  Plug 'kizza/actionmenu.nvim'
+endif
+func! TheMenu()
+  let l:items = [
+    \ { 'word': 'First' , 'cmd': 'echo "Custom data 1"' },
+    \ { 'word': 'Second', 'cmd': 'echo "Custom data 2"' },
+    \ { 'word': 'Third' , 'cmd': 'echo "Custom data 3"' }
+    \ ]
+
+  call actionmenu#open(
+    \ l:items,
+    \ { index, item -> TheMenu_Callback(index, item) },
+    \ { 'icon': { 'character': '#', 'foreground': 'yellow' } }
+    \ )
+endfunc
+
+func! TheMenu_Callback(index, item)
+  if a:index >= 0
+      execute a:item['cmd']
+  endif
+endfunc
+nnoremap <localleader> :call TheMenu()<cr>
 
 Plug 'tommcdo/vim-lion'
 let g:lion_squeeze_spaces=1
@@ -864,3 +888,4 @@ augroup lsp_aucommands
   au CursorMoved * call LanguageClient#isAlive(function('LspMaybeHighlight'))
 augroup END
 
+inoremap <C-i> <esc>:call LanguageClient#textDocument_signatureHelp()<cr>a
