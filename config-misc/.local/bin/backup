@@ -31,6 +31,7 @@ pp:/etc/ssl
 sh:/**/.git
 sh:/**/.cache
 sh:/**/.mozilla
+sh:/**/old-stuff
 sh:/**/.thubnails
 sh:/**/.local/share/Trash
 sh:/**/.svn
