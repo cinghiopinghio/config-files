@@ -14,11 +14,11 @@ menu="\
 8. SystemCtl\x0icon\x1fkcontrol\
 "
 
-choice=$(echo -e "$menu" | rofi -dmenu -i -p '☰' -mesg 'What are you looking for?' -show-icons)
+choice=$(echo -e "$menu" | rofi -dmenu -i -p '' -mesg 'What are you looking for?' -show-icons)
 
 case $choice in
   1*)
-    ${LOCATION}/bufi 2>>/dev/null
+    ${LOCATION}/bufi-nobuku 2>>/dev/null
     ;;
   2*)
     rofi -show docufi -modi "docufi:${LOCATION}/docufi.sh"

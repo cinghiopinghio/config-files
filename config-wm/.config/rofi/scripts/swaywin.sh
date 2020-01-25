@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ "$@" ]; then
-    echo $@ > log
+    # echo $@ > log
     con_id=`echo $@ | cut -d ' ' -f 1`
     swaymsg -q [con_id =${con_id}] focus
 else
