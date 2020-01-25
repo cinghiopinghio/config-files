@@ -1,0 +1,12 @@
+[Unit]
+Description=Check Mail
+RefuseManualStart=no
+RefuseManualStop=yes
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/mbsync -qq -a
+ExecStartPost=/usr/bin/notmuch new --quiet
