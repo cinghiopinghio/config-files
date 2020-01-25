@@ -12,7 +12,7 @@
         "format": "<span style=\"italic\">{}</span>"
     },
     "idle_inhibitor": {
-        "format": "{icon}",
+        "format": "<big>{icon}</big>",
         "format-icons": {
             "activated": "",
             "deactivated": ""
