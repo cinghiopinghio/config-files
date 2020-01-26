@@ -37,7 +37,7 @@ INIT = 16
 CACHE = xdg_cache_home + '/bufi.json'
 
 MOZ_SESSION = '~/.mozilla/firefox/*.default/places.sqlite'
-MOZ_SESSION = '~/.mozilla/firefox/*.default/sessionstore-backups/recovery.js*'
+MOZ_SESSION = '~/.mozilla/firefox/*.default*/sessionstore-backups/recovery.js*'
 
 CUSTOM_KB = ['Alt+n', 'Alt+e', 'Alt+x']
 MESG = """\
@@ -122,6 +122,8 @@ def get_moz_places(flpath):
     # for w in j['windows']:
     #     for t in w['tabs']:
     #         i = t['index'] - 1
+    #         print(t['entries'][i])
+    #         print(t)
     #         print(template % (
     #             t['entries'][i]['title'],
     #             t['entries'][i]['url']
