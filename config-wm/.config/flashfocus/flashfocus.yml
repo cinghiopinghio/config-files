@@ -91,3 +91,7 @@ flash-lone-windows: 'always'
 rules:
     - window-class: rofi
       flash-on-focus: False
+    - app-id: waybar
+      flash-on-focus: False
+    - app_id: wob
+      default-opacity: 0.5
