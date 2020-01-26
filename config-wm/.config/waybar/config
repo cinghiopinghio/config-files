@@ -78,8 +78,8 @@
     "backlight": {
         // "device": "acpi_video1",
         "format": "{percent}% <big><span rise='-2000' font_desc='Material Design Icons'>{icon}</span></big>",
-        "on-scroll-up" : "light -A 1",
-        "on-scroll-down" : "light -U 1",
+        "on-scroll-up" : "light -A 1 && light -G | cut -d'.' -f1 > $SWAYSOCK.wob",
+        "on-scroll-down" : "light -U 1 && light -G | cut -d'.' -f1 > $SWAYSOCK.wob",
         "format-icons": ["", ""]
     },
     "battery": {
@@ -118,7 +118,9 @@
             "default": ["", "", ""]
         },
         "on-click": "pactl set-sink-mute 0 toggle",
-        "on-click-right": "pavucontrol"
+        "on-click-right": "pavucontrol",
+        "on-scroll-up" : "pamixer -ui 1 && pamixer --get-volume > $SWAYSOCK.wob",
+        "on-scroll-down" : "pamixer -ud 1 && pamixer --get-volume > $SWAYSOCK.wob"
     },
     "custom/menu": {
         "format": "<big><span rise='-2000' font_desc='Material Design Icons'></span></big>",
