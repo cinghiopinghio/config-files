@@ -362,12 +362,14 @@ exec udiskie --smart-tray --appindicator
 exec sleep 1 && dex -ae sway
 exec_always kanshi
 
+set $bgpic ~/.local/share/background.jpg
+
 exec swayidle -w \
-        timeout 300 'swaylock -f -c 000000 -i ~/.local/share/background.jpg' \
+        timeout 300 'swaylock -f -c 000000 -i $bgpic' \
         timeout 600 'swaymsg "output * dpms off"' \
         resume 'swaymsg "output * dpms on"' \
-        before-sleep 'swaylock -f -c 000000 -i ~/.local/share/background.jpg'\
-        lock 'swaylock -f -c 000000 -i ~/.local/share/background.jpg'
+        before-sleep 'swaylock -f -c 000000 -i $bgpic'\
+        lock 'swaylock -f -c 000000 -i $bgpic'
 
 exec_always flashfocus --no-flash-fullscreen
 exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
