@@ -6,7 +6,7 @@ RefuseManualStop=no
 [Timer]
 Persistent=false
 OnBootSec= 1min
-OnUnitActiveSec= 1min
+OnUnitActiveSec= 3min
 Unit=checkinbox.service
 
 [Install]
