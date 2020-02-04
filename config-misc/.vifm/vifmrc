@@ -68,7 +68,7 @@ colorscheme new
 " TIME_STAMP_FORMAT=%m/%d-%H:%M
 " See man date or man strftime for details.
 
-set timefmt=\ %d/%m\ %H:%M
+set timefmt=\ %F\ %H:%M
 
 " Show list of matches on tab completion in command-line mode
 
@@ -369,7 +369,9 @@ filextype */
 " Or leave it for automatic detection
 "
 " fileviewer *[^/] pygmentize -O style=monokai -f console256 -g
-fileviewer *.md,*.py,*.js,*.json bat --color=always --theme=ansi-dark %f
+fileviewer *.md,*.py,*.js bat --color=always --theme=ansi-dark %f
+fileviewer *.json,*.geojson jq --color-output .
+fileviewer *.gz zcat
 
 " Displaying pictures in terminal
 "
