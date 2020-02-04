@@ -49,7 +49,9 @@ inputbar {
         color: @lightgreen;
         padding: 15px;
         margin: 10px 0 5px 0;
-        children: [ prompt, textbox-prompt-colon, entry, case-indicator];
+        children: [ icon-k, spacer, entry, case-indicator, num-filtered-rows, textbox-sep, num-rows];
+        /* children: [entry]; */
+        /* children: [ wrapper]; */
 }
 
 prompt,
@@ -64,11 +66,34 @@ entry {
         placeholder-color: grey;
 }
 
+spacer {
+        expand: false;
+        str: " ";
+        margin: 0px 0.3000em 0.0000em 0.0000em;
+        text-color: inherit;
+}
+
 textbox-prompt-colon {
         expand: false;
         str: "";
         margin: 0px 0.3000em 0.0000em 0.0000em;
         text-color: inherit;
+}
+
+
+textbox-sep, num-filtered-rows, num-rows {
+    text-color: grey;
+    expand: false;
+    str: "/";
+    vertical-align: 0.5;
+}
+
+icon-k {
+    expand: false;
+    filename: "input-keyboard";
+    size: 24;
+    vertical-align: 0.5;
+
 }
 
 message {

@@ -1,5 +1,5 @@
 configuration {
-    modi: "window,ssh,run,drun,json-menu";
+    modi: "window,ssh,run,drun";
     lines: 8;
     /* columns: 1; */
     font: "Fira Sans 14";
