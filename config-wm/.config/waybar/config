@@ -3,7 +3,7 @@
     "height": 24,
     "modules-left": ["sway/hide", "custom/menu", "sway/workspaces", "sway/mode", "custom/mpd"],
     "modules-center": ["clock", "custom/tasks", "custom/nightandday"],
-    "modules-right": ["idle_inhibitor", "pulseaudio", "custom/cpu", "memory", "custom/fs" , "backlight", "battery", "custom/ping",  "custom/arch", "tray"],
+    "modules-right": ["idle_inhibitor", "pulseaudio", "backlight", "custom/system", "custom/fs" , "battery", "custom/ping",  "custom/arch", "tray"],
     // Modules configuration
     "sway/workspaces": {
         "format": "{name}"
@@ -74,6 +74,11 @@
     },
     "memory": {
         "format": "{}% <big><span rise='-2000' font_desc='Material Design Icons'></span></big>"
+    },
+    "custom/system": {
+        "format": "<span font_desc='Fira Mono'>{}</span>",
+        "interval": 1,
+        "exec": "~/.config/waybar/system_graph.sh"
     },
     "backlight": {
         // "device": "acpi_video1",
