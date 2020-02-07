@@ -11,7 +11,7 @@
   lg = log --pretty=format:'%C(auto)%h - %<(55,trunc)%s %Cblue%<(18,trunc)%an%Creset %Cgreen%<(15)%ad%Creset %C(auto)%d' --abbrev-commit --date=relative
 
 [core]
-    editor = vim
+    editor = nvim
 	excludesfile = ~/.gitignore
 [color]
     diff = auto
