@@ -410,6 +410,9 @@ set vifminfo=dhistory,savedirs,chistory,state,tui,shistory,
 "
 " windo set viewcolumns=-{name}..,6{}.
 
+set timefmt=%y-%m-%d
+windo set viewcolumns=-{name}..,16{mtime},6{}.
+
 " Filter-out build and temporary files
 "
 " windo filter! /^.*\.(lo|o|d|class|py[co])$|.*~$/
