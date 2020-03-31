@@ -3,6 +3,12 @@ set wrap linebreak nolist textwidth=0 wrapmargin=0
 
 imap <C-p> <C-O>gqip
 
+inoremap <expr> <c-x><c-a> fzf#vim#complete(fzf#wrap({
+            \ 'source': 'bibtex-ls *.bib',
+            \ 'options': '--multi --reverse --ansi --prompt "cite> "',
+            \ 'reducer': { lines -> system("bibtex-cite -prefix='' -postfix='' -separator=', ' ", lines) }},
+            \ ))
+
 "{{{ Deoplete
 if exists('g:deoplete#enable_at_startup')
 	call deoplete#custom#var('omni',
@@ -40,7 +46,7 @@ augroup END
 
 set omnifunc=vimtex#complete#omnifunc
 let g:vimtex_quickfix_mode=2
-let g:vimtex_quickfix_method = 'pplatex'
+" let g:vimtex_quickfix_method = 'pplatex'
 let g:vimtex_quickfix_latexlog = {
                         \ 'overfull' : 0,
                         \ 'underfull' : 0,
@@ -60,3 +66,11 @@ let g:vimtex_compiler_latexmk = {
         \}
 
 "}}}
+"
+
+" let g:neoformat_tex_latexindent = {
+"         \ 'exe': 'latexindent',
+"         \ 'args': [],
+"         \ 'stdin': 0,
+"         \ 'replace': 1
+"         \ }

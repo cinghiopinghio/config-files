@@ -1,6 +1,12 @@
 " do not wrap on mail headers
 autocmd CursorMoved,CursorMovedI <buffer> if IsSpecialLine() | setlocal textwidth=0 | else | setlocal textwidth=80 | endif
 
+inoremap <expr> <c-x><c-a> fzf#vim#complete(fzf#wrap({
+            \ 'source': 'notmuch address "*"',
+            \ 'options': '--multi --reverse --ansi --prompt "Addresses> "',
+            \ 'reducer': { lines -> join(lines, ', ') }},
+            \ ))
+
 function IsSpecialLine()
     return getline('.') =~ '^\(to:\|cc:\|ccn:\|subject\).*'
 endfunction
