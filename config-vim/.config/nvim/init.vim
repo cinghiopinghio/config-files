@@ -34,145 +34,38 @@ else
 endif
 "}}}
 
-"{{{ Syntax, dictionary ... AutoCompletion
-
 set complete+=k         " enable dictionary completion
 set dictionary+=/usr/share/dict/words
 
-" comment uncomment
-Plug 'tpope/vim-commentary'
-
 set completeopt=noinsert,menuone,noselect,preview
-
-if has('nvim') || v:version >= 800
-    Plug 'autozimu/LanguageClient-neovim', {
-                \ 'branch': 'next',
-                \ 'do': 'bash install.sh' }
-
-    let g:LanguageClient_serverCommands = {
-                \ 'python': ['pyls'],
-                \ 'sh': ['bash-language-server', 'start'],
-                \ 'html': ['html-languageserver', '--stdio'],
-                \ 'css': ['css-languageserver', '--stdio'],
-                \ 'json': ['json-languageserver', '--stdio'],
-                \ 'javascript': ['typescript-language-server', '--stdio'],
-                \ 'typescript': ['typescript-language-server', '--stdio'],
-                \ 'tex': ['texlab'],
-                \ }
-                " \ 'tex': ['~/.luarocks/bin/digestif'],
-    nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-    nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-    nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-
-    " Automatically start language servers.
-    let g:LanguageClient_loggingFile = expand('~/LanguageClient.log')
-    let g:LanguageClient_autoStart = 1
-    let g:LanguageClient_useVirtualText = 'All'
-    let g:LanguageClient_hasSnippetSupport = 1
-    let g:LanguageClient_diagnosticsDisplay = {
-                \ 1: {
-                \       "name": "Error",
-                \       "texthl": "ALEError",
-                \       "signText": "✕",
-                \       "signTexthl": "ALEErrorSign",
-                \       "virtualTexthl": "Error",
-                \ },
-                \ 2: {
-                \       "name": "Warning",
-                \        "texthl": "ALEWarning",
-                \        "signText": "~",
-                \        "signTexthl": "ALEWarningSign",
-                \        "virtualTexthl": "Todo",
-                \    },
-                \    3: {
-                \        "name": "Information",
-                \        "texthl": "ALEInfo",
-                \        "signText": "I",
-                \        "signTexthl": "ALEInfoSign",
-                \        "virtualTexthl": "Todo",
-                \    },
-                \    4: {
-                \        "name": "Hint",
-                \        "texthl": "ALEInfo",
-                \        "signText": "➤",
-                \        "signTexthl": "ALEInfoSign",
-                \        "virtualTexthl": "Todo",
-                \    },
-                \}
-
-    " Show the docs
-    Plug 'Shougo/echodoc.vim'
-    let g:echodoc#enable_at_startup = 1
-    let g:echodoc#type = 'floating'
-    let g:echodoc#events=['CursorMovedI', 'InsertEnter', 'CompleteDone']
-    hi link EchoDocFloat Pmenu
-endif
 set cmdheight=2
 
-"  complete parenthesis
-"{{{ jiangmiao/auto-pairs
-Plug 'jiangmiao/auto-pairs'
-let g:AutoPairs= {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
-"}}}
+" comment uncomment with gcc
+Plug 'tpope/vim-commentary'
 
-"  autocompletion
-"{{{ deoplete / completor / VimCompletesMe / NCM
+Plug 'dense-analysis/ale'
 if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-    Plug 'deathlyfrantic/deoplete-spell'
-    Plug 'Shougo/neosnippet.vim'
-    Plug 'Shougo/neosnippet-snippets'
-    Plug 'deoplete-plugins/deoplete-dictionary'
-    " Plugin key-mappings.
-    " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-    imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-    smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-    xmap <C-k>     <Plug>(neosnippet_expand_target)
-    
-    " SuperTab like snippets behavior.
-    " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-    "imap <expr><TAB>
-    " \ pumvisible() ? "\<C-n>" :
-    " \ neosnippet#expandable_or_jumpable() ?
-    " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-    smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-    \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-
-
-    " Plug 'ncm2/ncm2'
-    Plug 'ncm2/float-preview.nvim'
-    " Plug 'roxma/nvim-yarp'
-    " Plug 'ncm2/ncm2-bufword'
-    " Plug 'ncm2/ncm2-path'
-    " Plug 'ncm2/ncm2-syntax' | Plug 'Shougo/neco-syntax'
-    " Plug 'fgrsnau/ncm2-aspell'
-    " autocmd BufEnter  *  call ncm2#enable_for_buffer()
-    " Plug 'deoplete-plugins/deoplete-jedi'
-
-elseif v:version >= 800
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
-    " Plug 'zchee/deoplete-jedi'
-    " Plug 'deoplete-plugins/deoplete-jedi'
-
-else
-    Plug 'ajh17/VimCompletesMe'
-    " Plug 'lifepillar/vim-mucomplete'
-    " let g:mucomplete#enable_auto_at_startup = 1
-    "     let g:mucomplete#chains = {
-    "             \ 'default' : ['path', 'omni', 'keyn', 'dict', 'uspl'],
-    "             \ 'vim'     : ['path', 'cmd', 'keyn'],
-    "             \ 'python'  : ['path', 'cmd', 'keyn', 'uspl']
-    "             \ }
+    Plug 'neovim/nvim-lsp'
+    " Plug 'haorenW1025/diagnostic-nvim'
+    let g:diagnostic_enable_virtual_text = 1
+    Plug 'haorenW1025/completion-nvim'
 endif
 
-let g:deoplete#enable_at_startup = 1
+"  autocompletion
+Plug 'lifepillar/vim-mucomplete'
+if has('nvim')
+    let g:mucomplete#enable_auto_at_startup = 0
+else
+    let g:mucomplete#enable_auto_at_startup = 1
+endif
+let g:mucomplete#chains = {
+            \ 'default' : ['path', 'incl', 'dict', 'uspl', 'nsnp'],
+            \ 'vim'     : ['path', 'cmd', 'incl'],
+            \ }
 
-"}}}
-
-Plug 'sbdchd/neoformat'
-noremap <F3> :Neoformat<CR>
+"  complete parenthesis
+Plug 'jiangmiao/auto-pairs'
+let g:AutoPairs= {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
 
 "  word editing
 Plug 'bootleq/vim-cycle'
@@ -219,22 +112,24 @@ let g:cycle_default_groups_for_tex = [
             \   [['\big\l:\big\r', '\Big\l:\Big\r', '\bigg\l:\bigg\r', '\Bigg\l:\Bigg\r'], 'sub_pairs', 'hard_case', 'match_case'],
             \   [['\big', '\Big', '\bigg', '\Bigg'], 'hard_case', 'match_case'],
             \ ]
-"}}}
-
-"{{{ Navigation
 
 set scrolloff=5  " never reach the top or bottom of the page
 
 " navigate tags
 " Plug 'majutsushi/tagbar'
 " nmap <F8> :TagbarToggle<CR>
-Plug 'liuchengxu/vista.vim'
-nmap <F8> :Vista!!<CR>
+" Plug 'liuchengxu/vista.vim'
+" nmap <F8> :Vista!!<CR>
 
 Plug 'voldikss/vim-floaterm'
 let g:floaterm_keymap_toggle = '<F12>'
 let g:floaterm_winblend=20
 let g:floaterm_position='center'
+
+" Plug 'camspiers/lens.vim'
+" let g:lens#animate = 0
+" let g:lens#width_resize_max = 80
+" let g:lens#width_resize_min = 20
 
 " keep folds as is until save of fold/unfold (save time)
 Plug 'Konfekt/FastFold'
@@ -242,21 +137,8 @@ Plug 'Konfekt/FastFold'
 " Plug 'zhaocai/GoldenView.Vim'
 " Plug 'justincampbell/vim-eighties'
 " Plug 'roman/golden-ratio'
-Plug 'junegunn/goyo.vim'
-function! s:goyo_enter()
-    set noshowmode
-    set noshowcmd
-    set scrolloff=999
-endfunction
-
-function! s:goyo_leave()
-    set showmode
-    set showcmd
-    set scrolloff=5
-endfunction
-
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
+" plugin to remove search highlight once the cursor moved
+Plug 'romainl/vim-cool'
 """""""""""""""""""""""""""""""""""""
 "{{{ FZF
 Plug 'junegunn/fzf', { 'dir': '~/codes/fzf', 'do': './install --all' }
@@ -286,7 +168,8 @@ let g:fzf_colors = {
 " let g:fzf_layout = { 'down': '~40%' }
 " let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
 let $FZF_DEFAULT_COMMAND =  "fd --hidden --ignore-case --type f --type l 2> /dev/null"
-let $FZF_DEFAULT_OPTS=' --layout=reverse  --margin=1,2 --preview "bat --color always --theme ansi-dark {}" --preview-window :hidden --bind "ctrl-p:toggle-preview"'
+" let $FZF_DEFAULT_OPTS=' --layout=reverse  --margin=1,2 --preview "bat --color always --theme ansi-dark {}"'
+let $FZF_DEFAULT_OPTS=' --layout=reverse  --margin=1,2'
 " let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 " load lua functions for navigation
 lua require("navigation")
@@ -317,125 +200,52 @@ endfunction
 nmap <localleader>ff :Files .<CR>
 nmap <localleader>fb :Buffers<cr>
 nmap <localleader>fg :GitFiles<cr>
-nmap <localleader>ft :call LanguageClient_textDocument_documentSymbol()<CR>
+" nmap <localleader>ft :call LanguageClient_textDocument_documentSymbol()<CR>
 " use the neomru cache!
 Plug 'Shougo/neomru.vim'
-nmap <localleader>fr :History<cr>
 command! -bang History
             \ call fzf#run(fzf#wrap({
             \ 'options': '--tiebreak=index',
             \ 'source': 'cat ~/.cache/neomru/file | sed 1d'
             \ }, <bang>0))
+nmap <localleader>fr :History<cr>
 nmap <localleader>fl :Lines<cr>
 au FileType fzf silent! tunmap <Esc>
-
-" Files + devicons
-function! Fzf_dev()
-  let l:fzf_files_options = '--preview "bat --theme="OneHalfDark" --style=numbers,changes --color always {2..-1} | head -'.&lines.'"'
-
-  function! s:files()
-    let l:files = split(system($FZF_DEFAULT_COMMAND), '\n')
-    " return s:prepend_icon(l:files)
-    return l:files
-  endfunction
-
-  function! s:prepend_icon(candidates)
-    let l:result = []
-    for l:candidate in a:candidates
-      let l:filename = fnamemodify(l:candidate, ':p:t')
-      let l:icon = WebDevIconsGetFileTypeSymbol(l:filename, isdirectory(l:filename))
-      call add(l:result, printf('%s %s', l:icon, l:candidate))
-    endfor
-
-    return l:result
-  endfunction
-
-  function! s:edit_file(item)
-    let l:pos = stridx(a:item, ' ')
-    let l:file_path = a:item[pos+1:-1]
-    execute 'silent e' l:file_path
-  endfunction
-
-  call fzf#run({
-        \ 'source': <sid>files(),
-        \ 'sink':   function('s:edit_file'),
-        \ 'options': '-m ' . l:fzf_files_options,
-        \ 'down':    '40%' })
-endfunction
 "}}}
-"
-if has('nvim')
-  Plug 'kizza/actionmenu.nvim'
-endif
-func! TheMenu()
-  let l:items = [
-    \ { 'word': 'First' , 'cmd': 'echo "Custom data 1"' },
-    \ { 'word': 'Second', 'cmd': 'echo "Custom data 2"' },
-    \ { 'word': 'Third' , 'cmd': 'echo "Custom data 3"' }
-    \ ]
 
-  call actionmenu#open(
-    \ l:items,
-    \ { index, item -> TheMenu_Callback(index, item) },
-    \ { 'icon': { 'character': '#', 'foreground': 'yellow' } }
-    \ )
-endfunc
-
-func! TheMenu_Callback(index, item)
-  if a:index >= 0
-      execute a:item['cmd']
-  endif
-endfunc
-nnoremap <localleader> :call TheMenu()<cr>
-
+" Align blocks
 Plug 'tommcdo/vim-lion'
 let g:lion_squeeze_spaces=1
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
-"}}}
 " move parameters left or right
+
+" switch position of arguments
 Plug 'AndrewRadev/sideways.vim'
 nnoremap <m-left> :SidewaysLeft<cr>
 nnoremap <m-right> :SidewaysRight<cr>
 
-" These plugin are built-in nvim
-" Plug 'xtal8/traces.vim'
-" Plug 'haya14busa/incsearch.vim'
-" map /  <Plug>(incsearch-forward)
-" map ?  <Plug>(incsearch-backward)
-" map g/ <Plug>(incsearch-stay)
+" A plugin to expand args brtween parenthesis
+Plug 'FooSoft/vim-argwrap'
+nnoremap <silent> <localleader>a :ArgWrap<CR>
 
-" better search experience
-" {{{ junegunn/vim-slash
-" Plug 'junegunn/vim-slash'
-" if has('timers')
-"   " Blink 2 times with 50ms interval
-"   noremap <expr> <plug>(slash-after) slash#blink(2, 50)
-" endif
-" }}}
-"}}}
+" A vim plugin to display the indention levels with thin vertical lines
+Plug 'Yggdroot/indentLine'
+let g:indentLine_fileTypeExclude = ['tex', 'markdown']
+" let g:indentLine_setColors = 0
+let g:indentLine_defaultGroup = 'Comment'
+let g:indentLine_setConceal = 0
+let g:indentLine_char = '▏'
 
 "{{{ Colorschemes
 
 Plug 'lifepillar/vim-colortemplate'
-let g:seoul256_background = 235
-let g:seoul256_light_background = 256
-Plug 'junegunn/seoul256.vim'
-
-let g:gruvbox_italic=1
 Plug 'andreypopp/vim-colors-plain'
 Plug 'pgdouyon/vim-yin-yang'
-Plug 'reedes/vim-colors-pencil'
 Plug 'axvr/photon.vim'
-
 Plug 'freeo/vim-kalisi'
-Plug 'marcopaganini/termschool-vim-theme'
-Plug 'owickstrom/vim-colors-paramount'
-let g:falcon_lightline = 1
-let g:falcon_background = 0
-let g:falcon_inactive = 0
 
 " my colorscheme
 let g:mangroove_transparent_bg = 1
@@ -449,34 +259,22 @@ endif
 
 " find and replace with s {substitute, search}
 Plug 'hauleth/sad.vim'
-let g:mkdp_preview_options = {
-    \ 'mkit': {},
-    \ 'katex': {},
-    \ 'uml': {},
-    \ 'maid': { 'theme': 'dark'},
-    \ 'disable_sync_scroll': 0,
-    \ 'sync_scroll_type': 'middle',
-    \ 'hide_yaml_meta': 1,
-    \ 'sequence_diagrams': {}
-    \ }
-let g:mkdp_markdown_css='app/_static/markdown.css'
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 
-Plug 'mhinz/vim-signify'
-let g:signify_vcs_list = [ 'git', 'svn' ]
-let g:signify_disable_by_default = 1
-
+" {{{ lightline
 Plug 'itchyny/lightline.vim'
 let g:lightline = {
             \ 'colorscheme': 'jellybeans',
             \ 'active': {
-            \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+            \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
+            \ 'right': [ [ 'lineinfo' ],
+            \            [ 'percent' ],
+            \            [ 'filetype', 'spell' ] ]
             \ },
             \ 'component_function': {
-            \   'fugitive': 'LightlineFugitive',
+            \   'fugitive': 'GitHead',
             \   'filename': 'LightlineFilename'
             \ },
-	    \ 'separator': {'left': '', 'right': ''}
+            \ 'separator': {'left': '', 'right': ''}
             \ }
 function! LightlineModified()
     return &ft =~ 'help\|vimfiler' ? '' : &modified ? '+' : &modifiable ? '' : '-'
@@ -492,6 +290,15 @@ function! LightlineFilename()
                 \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
                 \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
 endfunction
+
+function! GitHead()
+    let l:head = ' ' . system("git rev-parse --abbrev-ref HEAD")
+    if v:shell_error
+        let l:head = ''
+    endif
+    return substitute(l:head, '\n', '', 'g')
+endfunction
+
 function! LightlineFugitive()
     if &ft !~? 'vimfiler' && exists('*fugitive#head')
         return ' ' . fugitive#head()
@@ -511,43 +318,25 @@ let g:lightline.mode_map = {
             \ "\<C-s>": 'SB',
             \ 't': 'T',
             \ }
-
-" Plug 'liuchengxu/eleline.vim'
-" Plug 'airblade/vim-gitgutter'
-" let g:gitgutter_map_keys = 0   " do not set maps
-Plug 'tpope/vim-fugitive'
-" A vim plugin to display the indention levels with thin vertical lines
-" Plug 'yomi322/vim-indentmarker'
-Plug 'Yggdroot/indentLine'
-let g:indentLine_fileTypeExclude = ['tex', 'markdown']
-" let g:indentLine_setColors = 0
-let g:indentLine_defaultGroup = 'Comment'
-let g:indentLine_setConceal = 0
-let g:indentLine_char = '▏'
-Plug 'FooSoft/vim-argwrap'
-nnoremap <silent> <localleader>a :ArgWrap<CR>
+" }}}
 
 Plug 'AndrewRadev/linediff.vim'
+" Plug 'rhysd/vim-grammarous'
+Plug 'vigoux/LanguageTool.nvim'
+let g:languagetool_server_jar='/usr/share/java/languagetool/languagetool-server.jar'
+Plug 'reedes/vim-wordy'
 
-"{{{ External cmds
-
-" ask if you typed a wrong filename
-Plug 'EinfachToll/DidYouMean'
-"}}}
 "{{{ Filetype
-Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'cespare/vim-toml'
-" {{{ lervag/Vimtex
+
+Plug 'lervag/vimtex'   ", { 'for': ['tex', 'bib'] }
 " There is no reason to lazily load vimtex. Vimtex is a filetype plugin that
 " uses the autoload feature, and it does not load or source any vimscript file
 " until you open a tex file/buffer.
 " https://github.com/lervag/vimtex/issues/885
 
-Plug 'lervag/vimtex'   ", { 'for': ['tex', 'bib'] }
 Plug 'othree/html5.vim'
 Plug 'pangloss/vim-javascript'
-
-Plug 'reedes/vim-wordy'
 
 " Plug 'RRethy/vim-hexokinase'
 " Enable for css and xml
@@ -555,20 +344,37 @@ Plug 'reedes/vim-wordy'
 " let g:Hexokinase_virtualText = '██'
 if has('nvim')
     Plug 'norcalli/nvim-colorizer.lua'
-    " lua require'colorizer'.setup()
 else
     Plug 'ap/vim-css-color'
 endif
 " }}}
-"}}}
-" Used from gonvim to set fonts
-" Plug 'equalsraf/neovim-gui-shim'
-" Plug 'https://gitlab.com/dbeniamine/todo.txt-vim'
 call plug#end()
 "}}}
-"
-"
-if has('nvim')
+
+
+if has ("nvim")
+    "lua require'nvim_lsp'.pyls.setup{on_attach=require'diagnostic'.on_attach}
+    lua require'nvim_lsp'.pyls.setup{
+                \ on_attach=require'completion'.on_attach;
+                \ capabilities = {
+                \   textDocument = {
+                \     completion = {
+                \       completionItem = {
+                \         snippetSupport = true
+                \       }
+                \     }
+                \   }
+                \ },
+                \ init_options = {
+                \   usePlaceholders = true,
+                \   completeUnimported = true
+                \ }
+                \ }
+    lua require'nvim_lsp'.bashls.setup{on_attach=require'completion'.on_attach}
+    lua require'nvim_lsp'.sumneko_lua.setup{
+                \ on_attach=require'completion'.on_attach;
+                \ cmd = { "/usr/bin/lua-language-server" };
+                \ }
     set termguicolors
     " let DEFAULT_OPTIONS = {
     "             \ RGB      = true;         " #RGB hex codes
@@ -583,9 +389,9 @@ if has('nvim')
     "             \ }
     lua require'colorizer'.setup (
                 \ { '*'; '!vim-plug'; 'lua'; },
-                \ { rgb_fn=true; }
+                \ { rgb_fn=true; RRGGBBAA=true; }
                 \ )
-" autocmd FileType scss lua require'colorizer/sass'.attach_to_buffer()
+    " autocmd FileType scss lua require'colorizer/sass'.attach_to_buffer()
 endif
 
 "----------------------------------------------------------------------
@@ -628,8 +434,10 @@ set hlsearch
 set incsearch                  " do incremental searching
 set ignorecase          " case-insensitive search
 set smartcase           " upper-case sensitive search
-setlocal shiftwidth=4 softtabstop=4 expandtab smarttab
+set shiftwidth=4 softtabstop=4 expandtab smarttab
 set autochdir
+" show command output as-you-type
+set inccommand=nosplit
 
 set textwidth=0
 set wrapmargin=0
@@ -663,11 +471,10 @@ if has('termguicolors')
     set termguicolors
 endif
 
-if filereadable('/tmp/theme_status_light')
-    set background=light
-else
-    set background=dark
-endif
+" set to dark
+set background=dark
+" use this script to know the background
+exec 'set background=' . system("~/.local/bin/day2night")
 
 function! ToggleBackground()
     if &background == 'dark'
@@ -720,7 +527,7 @@ endif
 if s:host == 'spin'
     colorscheme seoul256
 elseif s:host == 'dingo'
-	let g:futon_transp_bg=1
+    let g:futon_transp_bg=1
     colorscheme futon
 else
     colorscheme molokai
@@ -775,6 +582,9 @@ augroup runner_filetype
     au!
     au FileType python nnoremap <buffer> <F7> :call Runnit('python ' . expand('%'))<CR>
     au FileType sh nnoremap <buffer> <F7> :call Runnit('bash ' . expand('%'))<CR>
+    au FileType javascript nnoremap <buffer> <F7> :call Runnit('node ' . expand('%'))<CR>
+    au FileType make nnoremap <buffer> <F7> :call Runnit('make --always-make --silent --dry-run')<CR>
+    au FileType lua nnoremap <buffer> <F7> :call Runnit('lua ' . expand('%'))<CR>
 augroup END
 "}}}
 
@@ -824,7 +634,7 @@ let g:local_dictionaries = {
             \ }
 
 function! CycleLang()
-    let langs = ['en_gb', 'it', 'fr', 'en_us', 'es', '']
+    let langs = ['en_gb', 'it', 'fr', 'es', '']
     set dictionary=/usr/share/dict/words
     let i = index(langs, &spelllang)
     let j = (i+1)%len(langs)
@@ -860,11 +670,11 @@ tnoremap <Esc> <C-\><C-n>
 "
 " DEOPLETE
 "
-call deoplete#custom#source('vim',           'mark', 'V')
-call deoplete#custom#source('around',        'mark', '[]')
-call deoplete#custom#source('buffer',        'mark', 'B')
-call deoplete#custom#source('syntax',        'mark', '#')
-call deoplete#custom#source('member',        'mark', '.')
+" call deoplete#custom#source('vim',           'mark', 'V')
+" call deoplete#custom#source('around',        'mark', '[]')
+" call deoplete#custom#source('buffer',        'mark', 'B')
+" call deoplete#custom#source('syntax',        'mark', '#')
+" call deoplete#custom#source('member',        'mark', '.')
 
 
 " LanguageClient
@@ -885,7 +695,7 @@ endfunction
 augroup lsp_aucommands
   au!
   " au CursorHold * call LanguageClient#isAlive(function('LspMaybeHover'))
-  au CursorMoved * call LanguageClient#isAlive(function('LspMaybeHighlight'))
+  " au CursorMoved * call LanguageClient#isAlive(function('LspMaybeHighlight'))
 augroup END
 
-inoremap <C-i> <esc>:call LanguageClient#textDocument_signatureHelp()<cr>a
+" inoremap <C-i> <esc>:call LanguageClient#textDocument_signatureHelp()<cr>a
