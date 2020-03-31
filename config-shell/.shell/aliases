@@ -27,7 +27,7 @@ if [ -e '/usr/bin/nvim' ]; then
 else
     alias v='vim'
     alias vdiff='vim -d'
-    alias vrc='nvim ~/.vimrc'
+    alias vrc='vim ~/.vimrc'
 fi
 
 alias head1='head -1'
