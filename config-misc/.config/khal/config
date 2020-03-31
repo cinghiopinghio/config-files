@@ -12,6 +12,9 @@
     path = ~/casolin/casolin/dav/calendars/karate/
     color = yellow
 
+  [[decsync]]
+    path = ~/.var/lib/radicale/collections/collection-root/mauro/calendars-colID14241/
+
   [[contacts]]
     path = ~/casolin/casolin/dav/contacts/cp-contacts/
     color = light green
