@@ -5,12 +5,14 @@ export SVN_EDITOR=/usr/bin/vim
 # editor variable:
 if hash nvim 2>/dev/null; then
     export EDITOR="nvim"
+    export DIFFPROG="nvim -d"
 elif hash vim 2>/dev/null; then
     export EDITOR='vim'
+    export DIFFPROG="vimdiff"
 fi
 export BROWSER=firefox
 # add to PATH .local/bin and subdirectories
-export PATH=$PATH:$(find -L ~/.local/bin -type d | tr '\n' ':' | sed 's/:$//')
+export PATH=$PATH:$(find -L ~/.local/bin -type d | tr '\n' ':' | sed 's/:$//'):~/go/bin
 # nice java fonts
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 
