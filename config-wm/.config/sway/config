@@ -91,27 +91,30 @@ font pango:Iosevka 11
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 set $primaryCol   #ffffffaa
+set $accennt      #aa66aa
 set $secondaryCol #aaaaaa
 set $alarmCol     #cc241d
-set $bgCol        #282828f0
+set $bgCol        #28282828
 set $fgCol        #dddddd
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
-# colors                border        backgr        text        indicator     child_border
-client.focused          $primaryCol $bgCol    $fgCol  $primaryCol $primaryCol
-client.unfocused        $bgCol      $bgCol    #aaaaaa $bgCol      $bgCol
-client.focused_inactive $bgCol      $bgCol    #aaaaaa $bgCol      $bgCol
-client.urgent           $alarmCol   $alarmCol $bgCol  $alarmCol   $alarmCol
-client.background       $bgCol
+include theme_light.config
 
-default_border pixel 1
+#                       border        backgr          text        indicator     child_border
+client.focused          "$col-accent" "$col-accent"aa "$col-inv"  "$col-accent" "$col-accent"
+client.unfocused        "$col-bg"00   "$col-bg"44     "$col-gray" "$col-bg"00   "$col-bg"00
+client.focused_inactive "$col-bg"00   "$col-bg"44     "$col-gray" "$col-bg"00   "$col-bg"00
+client.urgent           "$col-alarm"  "$col-alarm"    "$col-bg"   "$col-alarm"  "$col-alarm"
+client.background       "$col-bg"
+
+default_border pixel 2
 default_floating_border pixel 5
-smart_borders on
+smart_borders off
 
 titlebar_border_thickness 1
 
-gaps inner 0
-gaps outer 0
+gaps inner 2
+gaps outer 5
 smart_gaps on
 
 ### Key bindings
@@ -129,7 +132,9 @@ smart_gaps on
     # bindsym $mod+Shift+d exec albert show
     bindsym $mod+Shift+d exec $menu2
     bindsym $mod+p exec $altmenu
-    bindsym $mod+x exec rofi -show session -modi session:"~/.config/rofi/scripts/powerfi" -font "Fira Sans 18" -theme-str "listview {layout: horizontal;} element {orientation: vertical;} element-icon {size: 50px;} element-text {horizontal-align: 0.5; width:13ch;}" -auto-select
+    # bindsym $mod+x exec rofi -show session -modi session:"~/.config/rofi/scripts/powerfi"
+    # bindsym $mod+x exec bash ~/.config/rofi/scripts/powerfi2
+    bindsym $mod+x exec wlogout
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -335,6 +340,7 @@ for_window [title="Gnuplot*"] floating enabled
 for_window [title="Waydisplay*"] floating enabled
 for_window [title="Choose*"] floating enabled
 for_window [title="Connect to*"] floating enabled
+for_window [app_id="zenity"] floating enabled
 for_window [app_id="waybar" floating] {
     move position cursor
     exec python ~/.config/sway/movemenu.py
@@ -349,8 +355,7 @@ for_window [app_id="firefox" title="^Picture-in-Picture$"] floating enable, move
 # workaround to tell gtk which theme to pick from
 set $gnome-schema org.gnome.desktop.interface
 exec_always {
-    # gsettings set $gnome-schema gtk-theme 'Vimix-Dark-Laptop-Ruby'
-    gsettings set $gnome-schema gtk-theme 'Shades-of-gray-Firebrick'
+    gsettings set $gnome-schema gtk-theme 'oomox-pinko'
     gsettings set $gnome-schema icon-theme 'Numix-Circle'
     gsettings set $gnome-schema cursor-theme 'Breeze_Amber'
 }
@@ -371,6 +376,7 @@ exec swayidle -w \
         before-sleep 'swaylock -f -c 000000 -i $bgpic'\
         lock 'swaylock -f -c 000000 -i $bgpic'
 
+exec sed -i 's/^colors: .light$/colors: *dark/' ~/.config/alacritty/alacritty.yml
 exec_always flashfocus --no-flash-fullscreen
 exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
 bindsym $mod+shift+return exec flash_window
