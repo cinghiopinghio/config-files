@@ -11,14 +11,15 @@ menu="\
 5. LaTeX manuals\x0icon\x1ftext-x-tex
 6. Kill'em All\x0icon\x1fstop
 7. Screenshot\x0icon\x1fgscreenshot
-8. SystemCtl\x0icon\x1fkcontrol\
+8. Printers queue\x0icon\x1fprinter\
 "
 
 choice=$(echo -e "$menu" | rofi -dmenu -i -p '' -mesg 'What are you looking for?' -show-icons)
 
 case $choice in
   1*)
-    ${LOCATION}/bufi-nobuku 2>>/dev/null
+    # ${LOCATION}/bufi-nobuku 2>>/dev/null
+    jb.lua
     ;;
   2*)
     rofi -show docufi -modi "docufi:${LOCATION}/docufi.sh"
@@ -40,7 +41,7 @@ case $choice in
     # grim -g "$(slurp)" ~/Downloads/$(date +'screenshot-%Y-%m-%d-%H%M%S.png')
     ;;
   8*)
-    ${LOCATION}/scudmenu
+    system-config-printer --show-jobs --embedded
     ;;
   *)
     ;;

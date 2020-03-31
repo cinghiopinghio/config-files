@@ -9,7 +9,7 @@ configuration {
     /*  xoffset: 0;*/
     fixed-num-lines: false;
     show-icons: true;
-    terminal: "termite";
+    terminal: "alacritty";
     ssh-client: "ssh";
     ssh-command: "{terminal} -e "{ssh-client} {host}"";
     /*  run-command: "{cmd}";*/

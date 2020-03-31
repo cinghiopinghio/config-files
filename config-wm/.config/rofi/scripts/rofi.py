@@ -6,7 +6,7 @@ import subprocess
 
 
 rofi_cdm = ['wofi', '--dmenu']
-rofi_cdm = ['rofi', '-dmenu', '-i']
+rofi_cdm = ['rofi', '-dmenu', '-i', '-sync']
 
 
 class Rofi(object):
