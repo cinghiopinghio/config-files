@@ -37,7 +37,11 @@ endif
 set complete+=k         " enable dictionary completion
 set dictionary+=/usr/share/dict/words
 
-set completeopt=noinsert,menuone,noselect,preview
+if has('nvim') || v:version > 800
+    set completeopt=noinsert,menuone,noselect,preview
+else
+    set completeopt=menuone,preview
+endif
 set cmdheight=2
 
 " comment uncomment with gcc
@@ -126,6 +130,8 @@ if has('terminal') || has('nvim')
     let g:floaterm_keymap_toggle = '<F12>'
     let g:floaterm_winblend=20
     let g:floaterm_position='center'
+    " exit from terminal mode
+    tnoremap <Esc> <C-\><C-n>
 endif
 
 " Plug 'camspiers/lens.vim'
@@ -668,8 +674,6 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name")
             \ . '> trans<' . synIDattr(synID(line("."),col("."),0),"name")
             \ . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
-" exit from terminal mode
-tnoremap <Esc> <C-\><C-n>
 "}}}
 "
 "
