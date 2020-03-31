@@ -8,4 +8,4 @@ mode=drun
 
 insensitive=true
 halign=fill
-valign=center
+valign=start
