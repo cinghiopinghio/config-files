@@ -91,7 +91,7 @@
 			"message_count_length": 4,
 			"authors_length": 25,
 			"subject_color_selected": "#ffffff",
-			"subject_color": "#dddddd",
+			"subject_color": "#888888",
 			"background_color_marked": "#584584",
 			"background_color_marked_selected": "#458458",
 			"tags_length": 80,
