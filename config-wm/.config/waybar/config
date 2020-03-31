@@ -1,9 +1,9 @@
 {
-    "layer": "overlay",
+    "layer": "top",
     "height": 24,
     "modules-left": ["sway/hide", "custom/menu", "sway/workspaces", "sway/mode", "custom/mpd"],
     "modules-center": ["clock", "custom/tasks", "custom/nightandday"],
-    "modules-right": ["idle_inhibitor", "pulseaudio", "backlight", "custom/system", "custom/fs" , "battery", "custom/ping",  "custom/arch", "tray"],
+    "modules-right": ["idle_inhibitor", "pulseaudio", "backlight", "custom/system", "custom/fs", "battery", "custom/ping",  "custom/arch", "tray"],
     // Modules configuration
     "sway/workspaces": {
         "format": "{name}"
@@ -14,13 +14,13 @@
     "idle_inhibitor": {
         "format": "<big>{icon}</big>",
         "format-icons": {
-            "activated": "",
-            "deactivated": ""
+            "activated": "󰈈",
+            "deactivated": "󰈉"
         },
         "on-click": "bash ~/.config/waybar/wakescreen.sh {arg}"
     },
     "mpd": {
-        "format": "{stateIcon}{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ",
+        "format": "{stateIcon}{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title}",
         "format-disconnected": "",
         "format-stopped": "{stateIcon}",
         "max-length": 80,
@@ -60,8 +60,8 @@
     },
     "clock": {
         "tooltip-format": "{:%c}",
-        "format": "{:%a %d %b <big><span rise='-2000' font_desc='Material Design Icons'>肋</span></big> %H:%M}",
-        "format-alt": "{:%a %d %b <big><span rise='-2000' font_desc='Material Design Icons'>肋</span></big> %H:%M}",
+        "format": "{:%a %d %b <big><span rise='-2000' font_desc='Material Design Icons'>󰸗</span></big> %H:%M}",
+        "format-alt": "{:%a %d %b <big><span rise='-2000' font_desc='Material Design Icons'>󰸗</span></big> %H:%M}",
         "on-click": "termite --class 'ikhal float' --exec ikhal"
     },
     "custom/cpu": {
@@ -85,7 +85,7 @@
         "format": "{percent}% <big><span rise='-2000' font_desc='Material Design Icons'>{icon}</span></big>",
         "on-scroll-up" : "light -A 1 && light -G | cut -d'.' -f1 > $SWAYSOCK.wob",
         "on-scroll-down" : "light -U 1 && light -G | cut -d'.' -f1 > $SWAYSOCK.wob",
-        "format-icons": ["", ""]
+        "format-icons": ["󰌶", "󰌵"]
     },
     "battery": {
         "states": {
@@ -93,17 +93,17 @@
             "warning": 30,
             "critical": 15
         },
-        "format": "{capacity}% <big><span rise='-2000' font_desc='Material Design Icons'>{icon}</span></big>",
-        "format-charging": "{capacity}% <big><span rise='-2000' font_desc='Material Design Icons'>{icon}</span></big>",
+        "format": "<big><span rise='-2000' font_desc='Material Design Icons'>{icon}</span></big>{capacity}%",
+        "format-charging": "<big><span rise='-2000' font_desc='Material Design Icons'>{icon}</span></big>{capacity}%",
         // "format-good": "", // An empty format will hide the module
         "format-full": "",
-        "format-icons": ["", "", "", "", "", "", "", "", "", "", ""]
+        "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹", "󰁹"]
     },
     "network": {
         // "interface": "wlp2s0", // (Optional) To force the use of this interface
-        "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "{ipaddr}/{cidr} ",
-        "format-disconnected": ""
+        "format-wifi": "{essid} ({signalStrength}%) 󰖩",
+        "format-ethernet": "{ipaddr}/{cidr} 󰈀",
+        "format-disconnected": "󰖪"
     },
     "custom/ping": {
         "exec": "ping -c 1 -q -w 4 195.10.195.195 | tail -1 | awk -F / '{if ($5 > 100) {printf(\"P:%.0f ms\" , $5)}}'",
@@ -113,14 +113,14 @@
         "scroll-step": 1,
         "format": "{volume}% <big><span rise='-2000' font_desc='Material Design Icons'>{icon}</span></big>",
         "format-bluetooth": "{volume}% <big><span rise='-2000' font_desc='Material Design Icons'></span></big>",
-        "format-muted": "<big><span rise='-2000' font_desc='Material Design Icons'></span></big>",
+        "format-muted": "<big><span rise='-2000' font_desc='Material Design Icons'>󰖁</span></big>",
         "format-icons": {
-            "headphones": "",
-            "handsfree": "",
-            "headset": "",
-            "phone": "陋",
-            "portable": "陋",
-            "default": ["", "", ""]
+            "headphone": "󰋋",
+            "hands-free": "󰋋",
+            "headset": "󰋎",
+            "phone": "󰠕",
+            "portable": "󰠕",
+            "default": ["󰕿", "󰖀", "󰕾"]
         },
         "on-click": "pactl set-sink-mute 0 toggle",
         "on-click-right": "pavucontrol",
@@ -128,17 +128,17 @@
         "on-scroll-down" : "pamixer -ud 1 && pamixer --get-volume > $SWAYSOCK.wob"
     },
     "custom/menu": {
-        "format": "<big><span rise='-2000' font_desc='Material Design Icons'></span></big>",
+        "format": "<big><span rise='-2000' font_desc='Material Design Icons'>󰚌</span></big>",
         "tooltip-format": "MENU",
-        "on-click": "jgmenu"
+        "on-click": "sgtk-menu -y 28 -o 0.5 -s 24"
     },
     "custom/tasks": {
-        "format": "<big><span rise='-2000' font_desc='Material Design Icons'></span></big>",
+        "format": "<big><span rise='-2000' font_desc='Material Design Icons'>󰗇</span></big>",
         "tooltip-format": "TASKS",
         "on-click": "termite --title 'taskell-full' --exec taskell ~/taskell.md"
     },
     "custom/arch": {
-        "format": "<big><span rise='-2000' font_desc='Material Design Icons'></span></big> {}",
+        "format": "<big><span rise='-2000' font_desc='Material Design Icons'>󰣇</span></big> {}",
         "tooltip-format": "Arch Updates",
         "exec": "pamac checkupdates -a -q | wc -l | sed 's/^0$//'",
         "on-click": "pkill -SIGRTMIN+8 waybar", // update system
@@ -146,12 +146,12 @@
         "interval": 3600
     },
     "custom/nightandday": {
-        "format": "<big><span rise='-2000' font_desc='Material Design Icons'></span></big> {}",
+        "format": "<big><span rise='-2000' font_desc='Material Design Icons'>󰖔</span></big> {}",
         "tooltip-format": "Night and Day modes",
-        "on-click": "~/.local/bin/nighttime"
+        "on-click": "~/.local/bin/day2night toggle"
     },
     "custom/fs": {
-        "format": "<big><span rise='-2000' font_desc='Material Design Icons'></span></big>: {}",
+        "format": "<big><span rise='-2000' font_desc='Material Design Icons'>󰺺</span></big>{}",
         "exec": "df --human-readable --output=avail /home | tail -1",
         "interval": 60
     }

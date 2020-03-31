@@ -37,6 +37,11 @@ window#waybar {
 
 #workspaces button.focused {
         background: @background-alt;
+        border-bottom: 2px solid @alarm;
+}
+
+#workspaces button.visible {
+        background: @background-alt;
         border-bottom: 2px solid @foreground;
 }
 
@@ -53,6 +58,7 @@ window#waybar {
 #clock,
 #battery,
 #memory,
+#network,
 #custom-system,
 #pulseaudio {
         color: @foreground;
@@ -61,7 +67,6 @@ window#waybar {
 }
 
 #battery,
-#network,
 #mode,
 #cpu,
 #custom-cpu,
