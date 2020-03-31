@@ -59,7 +59,7 @@ case $HOST in
   "susto") hostColor="%F{green}"  ;;
   "moma")      hostColor="%F{green}"  ;;
   "spin")      hostColor="%F{blue}"   ;;
-  "dingo")     hostColor="%F{yellow}"   ;;
+  "dingo")     hostColor="%F{magenta}"   ;;
   *)           hostColor="%F{red}"    ;;
 esac
 function virtualenv_prompt() {
@@ -199,7 +199,7 @@ key[Delete]=${terminfo[kdch1]}
 # print the current directory in the terminal title
 # {{{
 case $TERM in
-  (*xterm* | *rxvt* | *st* )
+  (*xterm* | *rxvt* | *st* | *alacritty* )
 
     # Write some info to terminal title.
     # This is seen when the shell prompts for input.
