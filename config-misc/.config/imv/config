@@ -16,4 +16,5 @@ bb = background 000000
 bg = background 888888
 i = overlay
 
-
+# p = exec print_file.sh $imv_current_file
+# p = exec notify-send $(lpstat -s | dmenu)

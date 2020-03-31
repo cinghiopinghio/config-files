@@ -121,10 +121,12 @@ set scrolloff=5  " never reach the top or bottom of the page
 " Plug 'liuchengxu/vista.vim'
 " nmap <F8> :Vista!!<CR>
 
-Plug 'voldikss/vim-floaterm'
-let g:floaterm_keymap_toggle = '<F12>'
-let g:floaterm_winblend=20
-let g:floaterm_position='center'
+if has('terminal') || has('nvim')
+    Plug 'voldikss/vim-floaterm'
+    let g:floaterm_keymap_toggle = '<F12>'
+    let g:floaterm_winblend=20
+    let g:floaterm_position='center'
+endif
 
 " Plug 'camspiers/lens.vim'
 " let g:lens#animate = 0
@@ -172,8 +174,10 @@ let $FZF_DEFAULT_COMMAND =  "fd --hidden --ignore-case --type f --type l 2> /dev
 let $FZF_DEFAULT_OPTS=' --layout=reverse  --margin=1,2'
 " let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 " load lua functions for navigation
-lua require("navigation")
-let g:fzf_layout = { 'window': 'lua NavigationFloatingWin()' }
+if has('nvim')
+    lua require("navigation")
+    let g:fzf_layout = { 'window': 'lua NavigationFloatingWin()' }
+endif
 
 function! FloatingFZF()
   let buf = nvim_create_buf(v:false, v:true)
@@ -246,6 +250,7 @@ Plug 'andreypopp/vim-colors-plain'
 Plug 'pgdouyon/vim-yin-yang'
 Plug 'axvr/photon.vim'
 Plug 'freeo/vim-kalisi'
+Plug 'tomasr/molokai'
 
 " my colorscheme
 let g:mangroove_transparent_bg = 1
@@ -437,7 +442,9 @@ set smartcase           " upper-case sensitive search
 set shiftwidth=4 softtabstop=4 expandtab smarttab
 set autochdir
 " show command output as-you-type
-set inccommand=nosplit
+if has('nvim')
+    set inccommand=nosplit
+endif
 
 set textwidth=0
 set wrapmargin=0
@@ -526,7 +533,7 @@ endif
 
 if s:host == 'spin'
     colorscheme seoul256
-elseif s:host == 'dingo'
+elseif s:host == 'dingo' && has('nvim')
     let g:futon_transp_bg=1
     colorscheme futon
 else
