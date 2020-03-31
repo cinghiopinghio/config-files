@@ -242,12 +242,14 @@ Plug 'FooSoft/vim-argwrap'
 nnoremap <silent> <localleader>a :ArgWrap<CR>
 
 " A vim plugin to display the indention levels with thin vertical lines
-Plug 'Yggdroot/indentLine'
-let g:indentLine_fileTypeExclude = ['tex', 'markdown']
-" let g:indentLine_setColors = 0
-let g:indentLine_defaultGroup = 'Comment'
-let g:indentLine_setConceal = 0
-let g:indentLine_char = '▏'
+if has('nvim') || v:version > 800
+    Plug 'Yggdroot/indentLine'
+    let g:indentLine_fileTypeExclude = ['tex', 'markdown']
+    " let g:indentLine_setColors = 0
+    let g:indentLine_defaultGroup = 'Comment'
+    let g:indentLine_setConceal = 0
+    let g:indentLine_char = '▏'
+endif
 
 "{{{ Colorschemes
 
