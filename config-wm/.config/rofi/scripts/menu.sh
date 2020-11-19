@@ -11,15 +11,18 @@ menu="\
 5. LaTeX manuals\x0icon\x1ftext-x-tex
 6. Kill'em All\x0icon\x1fstop
 7. Screenshot\x0icon\x1fgscreenshot
-8. Printers queue\x0icon\x1fprinter\
+8. Printers queue\x0icon\x1fprinter
+9. Open installed pkgs web-pages\x0icon\x1fpackage
+A. Open installed Plugs web-pages\x0icon\x1fnvim
+B. Open python docs\x0icon\x1fapplications-python
+C. Add new bookmark from Firefox history\x0icon\x1fbookmarks\
 "
 
 choice=$(echo -e "$menu" | rofi -dmenu -i -p '' -mesg 'What are you looking for?' -show-icons)
 
 case $choice in
   1*)
-    # ${LOCATION}/bufi-nobuku 2>>/dev/null
-    jb.lua
+    jbofi.sh
     ;;
   2*)
     rofi -show docufi -modi "docufi:${LOCATION}/docufi.sh"
@@ -38,10 +41,21 @@ case $choice in
     ;;
   7*)
     grim ~/Downloads/$(date +'screenshot-%Y-%m-%d-%H%M%S.png')
-    # grim -g "$(slurp)" ~/Downloads/$(date +'screenshot-%Y-%m-%d-%H%M%S.png')
     ;;
   8*)
     system-config-printer --show-jobs --embedded
+    ;;
+  9*)
+    ropkgs.sh
+    ;;
+  A*)
+    roplug.sh
+    ;;
+  B*)
+    ${BROWSER:-firefox} /usr/share/doc/python/html/library/index.html
+    ;;
+  C*)
+    jbofi_add.sh
     ;;
   *)
     ;;

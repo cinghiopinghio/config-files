@@ -9,11 +9,16 @@ if [[ $1 == "" ]]; then
   if [ -f ${HISTFILE} ]; then
     sed "s/$/\x0icon\x1ftimer/" ${HISTFILE}
   fi
+
+  # nvim/vim history
   sed '1d' ${HOME}/.cache/neomru/file | sed -e "s/$/\x0icon\x1fnvim/"
+
+  # zathura history
+  sed -e "/^\[.home.*\]$/!d" -e "s/^\[\(.*\)\]$/\1\x0icon\x1fapplication-pdf/" .local/share/zathura/history
 
   if command -v fd >>/dev/null 2>&1;
   then
-    /usr/bin/fd --extension pdf --extension ps --extension docx --extension tex "" ${HOME} | \
+    /usr/bin/fd --extension pdf --extension ps --extension docx --extension tex --color never "" ${HOME} | \
       sed -e "s/pdf$/pdf\x0icon\x1fapplication-pdf/" \
         -e "s/ps$/ps\x0icon\x1fapplication-postscript/" \
         -e "s/tex$/tex\x0icon\x1ftext-x-tex/" \
