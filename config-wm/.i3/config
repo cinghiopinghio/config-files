@@ -2,6 +2,9 @@
 # this file and re-run i3-config-wizard(1).
 #
 
+### Variables
+#
+# Logo key. Use Mod1 for Alt.
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -35,16 +38,15 @@ focus_follows_mouse yes
 
 ### gaps
 # Examples
-gaps inner 0
-gaps outer 0
-smart_gaps on
-smart_borders on
+# gaps inner 0
+# gaps outer 0
+# smart_gaps on
+# smart_borders on
 
 # start a terminal
-bindsym $mod+Return exec termite
-bindsym $mod+Shift+Return exec "~/.i3/i3newworkspace", exec --no-startup-id "termite"
-bindsym $mod+Shift+underscore splitv, exec termite
-bindsym $mod+Shift+bar splith, exec termite
+bindsym $mod+Return exec alacritty
+bindsym $mod+Shift+underscore splitv, exec alacritty
+bindsym $mod+Shift+bar splith, exec alacritty
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -261,8 +263,9 @@ mode "resize" {
 #    mode invisible
 #}
 
-exec_always --no-startup-id ~/.config/polybar/startup
+# exec_always --no-startup-id ~/.config/polybar/startup
 # exec_always --no-startup-id mate-panel
+exec_always --no-startup-id ukui-panel
 # exec_always --no-startup-id xfce4-panel
 exec --no-startup-id ~/.config/openbox/autostart
 
