@@ -1,17 +1,31 @@
 setlocal shiftwidth=2 softtabstop=2 expandtab smarttab
-"setlocal formatoptions+=w
+set wrap linebreak nolist textwidth=0 wrapmargin=0
 
 imap <C-p> <C-O>gqip
+
+inoremap <expr> <c-x><c-a> fzf#vim#complete(fzf#wrap({
+            \ 'source': 'bibtex-ls *.bib',
+            \ 'options': '--multi --reverse --ansi --prompt "cite> "',
+            \ 'reducer': { lines -> system("bibtex-cite -prefix='' -postfix='' -separator=', ' ", lines) }},
+            \ ))
 
 "{{{  VimCompletesMe
 let b:vcm_tab_complete='omni'
 "}}}
 
+"{{{ Deoplete
+if exists('g:deoplete#enable_at_startup')
+	call deoplete#custom#var('omni',
+				\'input_patterns',
+				\{
+				\'tex': g:vimtex#re#deoplete
+				\})
+endif
+"}}}
+
 "{{{ auto-pairs
 let b:AutoPairs={'(':')','[':']','{':'}',"'":"'",'"':'"','$':'$'}
 "}}}
-
-let g:completor_tex_omni_trigger = g:vimtex#re#deoplete
 
 "{{{ delimitMate
 let b:delimitMate_matchpairs = "(:),[:],{:},<:>"
@@ -20,20 +34,47 @@ let b:delimitMate_quotes = "\" ' $"
 
 "{{{ VIMTEX
 
+let g:vimtex_view_method='zathura'
+if has('nvim')
+        let g:vimtex_compiler_progname='nvr'
+endif
 let g:vimtex_fold_enabled=1
-nnoremap <localleader>lp :call PdflatexToggle()<cr>
+let g:vimtex_fold_manual=0
+let g:vimtex_view_forward_search_on_start = 1
+" cleanup on quit
+augroup vimtex_event_1
+        au!
+        au User VimtexEventQuit call vimtex#compiler#clean(0)
+augroup END
 
-let g:vimtex_latexmk_options = "-pdfps"
-function! PdflatexToggle()
-    if g:vimtex_latexmk_options == "-pdfps"
-        let g:vimtex_latexmk_options="-pdf"
-        echo 'use pdflatex'
-    elseif g:vimtex_latexmk_options == "-pdf"
-        let g:vimtex_latexmk_options="-lualatex"
-        echo 'use lualatex'
-    else
-        let g:vimtex_latexmk_options="-pdfps"
-        echo 'use latex/ps2pdf'
-    endif
-endfunction
+
+set omnifunc=vimtex#complete#omnifunc
+let g:vimtex_quickfix_mode=2
+" let g:vimtex_quickfix_method = 'pplatex'
+let g:vimtex_quickfix_latexlog = {
+                        \ 'overfull' : 0,
+                        \ 'underfull' : 0,
+                        \}
+let g:vimtex_complete_bib = {
+                        \ 'abbr_fmt' : '@author_all (@year)',
+                        \ 'menu_fmt' : '@title',
+                        \}
+
+let g:vimtex_compiler_latexmk = {
+        \ 'options' : [
+        \   '-shell-escape' ,
+        \   '-file-line-error',
+        \   '-synctex=1' ,
+        \   '-interaction=nonstopmode' ,
+        \ ],
+        \}
+
 "}}}
+"
+
+" let g:neoformat_tex_latexindent = {
+"         \ 'exe': 'latexindent',
+"         \ 'args': [],
+"         \ 'stdin': 0,
+"         \ 'replace': 1
+"         \ }
