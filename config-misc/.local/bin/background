@@ -58,7 +58,11 @@ esac
 
 case ${ACTION} in
   background|update)
-    feh --no-fehbg --bg-fill ${LOCATION}/${FNAME}.*
+    if [[ "${SWAYSOCK}" ]]; then
+        swaymsg "output \* bg ${LOCATION}/${FNAME}.* fill"
+    else
+        feh --no-fehbg --bg-fill ${LOCATION}/${FNAME}.*
+    fi
     ;;
   lock)
     # i3lock -c 444444 -t -i ${LOCATION}/${FNAME}.png
