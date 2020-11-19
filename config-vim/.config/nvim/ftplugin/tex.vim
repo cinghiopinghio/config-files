@@ -9,6 +9,12 @@ inoremap <expr> <c-x><c-a> fzf#vim#complete(fzf#wrap({
             \ 'reducer': { lines -> system("bibtex-cite -prefix='' -postfix='' -separator=', ' ", lines) }},
             \ ))
 
+nnoremap <localleader>lc "zyiw:exe "FloatermSend bibtool -X ".@z." -x ".expand('%:r').".aux"<CR>
+
+"{{{  VimCompletesMe
+let b:vcm_tab_complete='omni'
+"}}}
+
 "{{{ Deoplete
 if exists('g:deoplete#enable_at_startup')
 	call deoplete#custom#var('omni',
@@ -64,6 +70,8 @@ let g:vimtex_compiler_latexmk = {
         \   '-interaction=nonstopmode' ,
         \ ],
         \}
+
+let g:vimtex_compiler_latexmk_engines = { '_': '-pdf' }
 
 "}}}
 "

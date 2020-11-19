@@ -3,7 +3,7 @@ autocmd CursorMoved,CursorMovedI <buffer> if IsSpecialLine() | setlocal textwidt
 
 inoremap <expr> <c-x><c-a> fzf#vim#complete(fzf#wrap({
             \ 'source': 'notmuch address "*"',
-            \ 'options': '--multi --reverse --ansi --prompt "Addresses> "',
+            \ 'options': '--multi --reverse --tiebreak=index --ansi --prompt "Addresses> "',
             \ 'reducer': { lines -> join(lines, ', ') }},
             \ ))
 

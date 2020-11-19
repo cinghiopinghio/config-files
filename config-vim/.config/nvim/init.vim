@@ -38,40 +38,148 @@ set complete+=k         " enable dictionary completion
 set dictionary+=/usr/share/dict/words
 
 if has('nvim') || v:version > 800
-    set completeopt=noinsert,menuone,noselect,preview
+    set completeopt=noinsert,menuone,noselect
 else
-    set completeopt=menuone,preview
+    set completeopt=menuone
 endif
 set cmdheight=2
 
 " comment uncomment with gcc
 Plug 'tpope/vim-commentary'
 
-Plug 'dense-analysis/ale'
-if has('nvim')
-    Plug 'neovim/nvim-lsp'
-    " Plug 'haorenW1025/diagnostic-nvim'
-    let g:diagnostic_enable_virtual_text = 1
-    Plug 'haorenW1025/completion-nvim'
+" Linter and grammar
+" {{{
+if ! has('nvim-0.5')
+    Plug 'dense-analysis/ale'
+    let g:ale_lint_on_insert_leave=1
+    let g:ale_linters = {
+                \ 'python': ['pylint']
+                \}
 endif
 
-"  autocompletion
-Plug 'lifepillar/vim-mucomplete'
-if has('nvim')
-    let g:mucomplete#enable_auto_at_startup = 0
+" Plug 'rhysd/vim-grammarous'
+" Plug 'vigoux/LanguageTool.nvim'
+" let g:languagetool_server_jar='/usr/share/java/languagetool/languagetool-server.jar'
+Plug 'reedes/vim-wordy'
+Plug 'davidbeckingsale/writegood.vim'
+" }}}
+
+" Completion
+" {{{
+if has('nvim-0.5')
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'nvim-lua/completion-nvim'
+    let g:completion_enable_snippet = 'UltiSnips'
+    let g:completion_enable_auto_paren = 0
+    " let g:completion_enable_auto_hover = 1
+    let g:completion_enable_auto_signature = 1
+    " let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+    let g:completion_matching_strategy_list = ['exact', 'substring']
+    let g:completion_auto_change_source = 1
+    let g:completion_matching_ignore_case = 1
+    " " Configure the completion chains
+    " imap <c-j> <cmd>lua require'source'.prevCompletion()<CR>
+    " imap <c-k> <cmd>lua require'source'.nextCompletion()<CR>
+
+    Plug 'steelsojka/completion-buffers'
+
+    Plug 'nvim-treesitter/nvim-treesitter'
+    Plug 'romgrk/nvim-treesitter-context'
+    " Plug 'vigoux/completion-treesitter'
+    Plug 'nvim-treesitter/completion-treesitter' " New home
+    " let g:completion_chain_complete_list = {
+    "             \ 'default' : [
+    "             \     {'complete_items' : ['lsp', 'snippet']},
+    "             \     {'mode' : 'file'}
+    "             \ ],
+    "             \ 'vim' : [
+    "             \     {'complete_items': ['snippet']},
+    "             \     {'mode' : 'cmd'}
+    "             \     ],
+    "             \ 'python' : [
+    "             \     {'complete_items': ['ts', 'snippet']},
+    "             \     {'mode' : 'file'}
+    "             \     ],
+    "             \ 'lua' : [
+    "             \     {'complete_items': ['ts']}
+    "             \     ],
+    "             \ }
+    let g:completion_chain_complete_list = [
+                \ {'complete_items': ['lsp', 'snippet', 'buffers']},
+                \ {'complete_items': ['ts']},
+                \ {'mode': 'file'},
+                \ {'mode': 'dict'},
+                \ {'mode': '<c-p>'},
+                \ {'mode': '<c-n>'}
+                \ ]
+
+    " " Use completion-nvim in every buffer
+    autocmd BufEnter * lua require'completion'.on_attach()
+
+elseif has('nvim')
+    Plug 'autozimu/LanguageClient-neovim', {
+                \ 'branch': 'next',
+                \ 'do': 'bash install.sh',
+                \ }
+
+    let g:LanguageClient_serverCommands = {
+                \ 'rust': ['rls'],
+                \ 'javascript': ['javascript-typescript-stdio'],
+                \ 'python': ['jedi-language-server'],
+                \ 'lua': ['lua-language-server'],
+                \ 'latex': ['texlab'],
+                \ 'vim': ['vim-language-server'],
+                \ 'sh': ['bash-language-server'],
+                \ }
+    nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+    nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+    nnoremap <silent> <F2> :call LanguageClient#textDocument_signatureHelp()<CR>
+
+    " Plug 'Shougo/echodoc.vim'
+    " let g:echodoc#enable_at_startup = 1
+    " let g:echodoc#type = 'floating'
+
+    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    " Plug 'deoplete-plugins/deoplete-jedi'
+    " Plug 'paretje/deoplete-notmuch', {'for': 'mail'}
+    let g:deoplete#enable_at_startup = 1
+
 else
-    let g:mucomplete#enable_auto_at_startup = 1
+    Plug 'davidhalter/jedi-vim'
+    let g:jedi#popup_on_dot = 0  " It may be 1 as well
+    " autocompletion
+    Plug 'lifepillar/vim-mucomplete'
+    let g:mucomplete#enable_auto_at_startup = 0
+    let g:mucomplete#completion_delay = 500
+
+    " Compatibily issues
+    let g:AutoPairsMapSpace = 0
+    imap <silent> <expr> <space> pumvisible()
+        \ ? "<space>"
+        \ : "<c-r>=AutoPairsSpace()<cr>"
+    " let g:AutoPairsMapCR = 0
+    " imap <Plug>MyCR <Plug>(MUcompleteCR)<Plug>AutoPairsReturn
+    " imap <cr> <Plug>MyCR
 endif
-let g:mucomplete#chains = {
-            \ 'default' : ['path', 'incl', 'dict', 'uspl', 'nsnp'],
-            \ 'vim'     : ['path', 'cmd', 'incl'],
-            \ }
+" }}}
+
+" Snippets
+" {{{
+" Track the engine.
+Plug 'SirVer/ultisnips'
+
+" Snippets are separated from the engine. Add this if you want them:
+Plug 'honza/vim-snippets'
+let g:UltiSnipsExpandTrigger = "<c-k>"        " Do not use <tab>
+let g:UltiSnipsJumpForwardTrigger = "<c-k>"  " Do not use <c-j>
+" }}}
 
 "  complete parenthesis
 Plug 'jiangmiao/auto-pairs'
 let g:AutoPairs= {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '`':'`'}
 
-"  word editing
+"  word editing (ctrl-A)
+"  {{{
 Plug 'bootleq/vim-cycle'
 let g:cycle_no_mappings = 1    " just set my keys
 let g:cycle_max_conflict = 1   " do not handle conflicts (better performance)
@@ -116,14 +224,13 @@ let g:cycle_default_groups_for_tex = [
             \   [['\big\l:\big\r', '\Big\l:\Big\r', '\bigg\l:\bigg\r', '\Bigg\l:\Bigg\r'], 'sub_pairs', 'hard_case', 'match_case'],
             \   [['\big', '\Big', '\bigg', '\Bigg'], 'hard_case', 'match_case'],
             \ ]
-
-set scrolloff=5  " never reach the top or bottom of the page
+"  }}}
 
 " navigate tags
 " Plug 'majutsushi/tagbar'
 " nmap <F8> :TagbarToggle<CR>
-" Plug 'liuchengxu/vista.vim'
-" nmap <F8> :Vista!!<CR>
+Plug 'liuchengxu/vista.vim'
+nmap <localleader>ft :Vista finder<cr>
 
 if has('terminal') || has('nvim')
     Plug 'voldikss/vim-floaterm'
@@ -134,19 +241,24 @@ if has('terminal') || has('nvim')
     tnoremap <Esc> <C-\><C-n>
 endif
 
-" Plug 'camspiers/lens.vim'
-" let g:lens#animate = 0
-" let g:lens#width_resize_max = 80
-" let g:lens#width_resize_min = 20
-
 " keep folds as is until save of fold/unfold (save time)
 Plug 'Konfekt/FastFold'
 " " window splits control
-" Plug 'zhaocai/GoldenView.Vim'
-" Plug 'justincampbell/vim-eighties'
-" Plug 'roman/golden-ratio'
 " plugin to remove search highlight once the cursor moved
 Plug 'romainl/vim-cool'
+" find and replace with s {substitute, search}
+Plug 'hauleth/sad.vim'
+" highlight coursos on jumps
+Plug 'DanilaMihailov/beacon.nvim'
+" A vim plugin to display the indention levels with thin vertical lines
+if has('nvim') || v:version > 800
+    Plug 'Yggdroot/indentLine'
+    let g:indentLine_fileTypeExclude = ['tex', 'markdown']
+    " let g:indentLine_setColors = 0
+    let g:indentLine_defaultGroup = 'Comment'
+    let g:indentLine_setConceal = 0
+    let g:indentLine_char = '▏'
+endif
 """""""""""""""""""""""""""""""""""""
 "{{{ FZF
 Plug 'junegunn/fzf', { 'dir': '~/codes/fzf', 'do': './install --all' }
@@ -158,53 +270,26 @@ let g:fzf_action = {
             \ 'ctrl-v': 'vsplit' }
 let g:fzf_colors = {
             \ 'fg':      ['fg', 'Normal'],
-            \ 'bg':      ['bg', 'Normal'],
-            \ 'hl':      ['fg', 'Comment'],
-            \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-            \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-            \ 'hl+':     ['fg', 'Statement'],
+            \ 'bg':      ['bg', 'Pmenu'],
+            \ 'hl':      ['fg', 'Warning'],
+            \ 'fg+':     ['fg', 'PmenuSel', 'CursorColumn', 'Normal'],
+            \ 'bg+':     ['bg', 'PmenuSel', 'CursorColumn'],
+            \ 'hl+':     ['fg', 'Error'],
             \ 'info':    ['fg', 'PreProc'],
-            \ 'border':  ['fg', 'Ignore'],
+            \ 'border':  ['fg', 'Pmenu'],
             \ 'prompt':  ['fg', 'Conditional'],
             \ 'pointer': ['fg', 'Exception'],
             \ 'marker':  ['fg', 'Keyword'],
             \ 'spinner': ['fg', 'Label'],
-            \ 'header':  ['fg', 'Comment'] }
+            \ 'header':  ['fg', 'PmenuSel'] }
 
-" Default fzf layout
-" - down / up / left / right
-" let g:fzf_layout = { 'down': '~40%' }
-" let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
-let $FZF_DEFAULT_COMMAND =  "fd --hidden --ignore-case --type f --type l 2> /dev/null"
-" let $FZF_DEFAULT_OPTS=' --layout=reverse  --margin=1,2 --preview "bat --color always --theme ansi-dark {}"'
-let $FZF_DEFAULT_OPTS=' --layout=reverse  --margin=1,2'
-" let g:fzf_layout = { 'window': 'call FloatingFZF()' }
-" load lua functions for navigation
 if has('nvim')
+    " load lua functions for navigation
     lua require("navigation")
     let g:fzf_layout = { 'window': 'lua NavigationFloatingWin()' }
+else
+    let g:fzf_layout = { 'down': '~40%' }
 endif
-
-function! FloatingFZF()
-  let buf = nvim_create_buf(v:false, v:true)
-  call setbufvar(buf, '&signcolumn', 'no')
-
-  let height = float2nr(20)
-  let width = float2nr(80)
-  let horizontal = float2nr((&columns - width) / 2)
-  let vertical = 1
-
-  let opts = {
-        \ 'relative': 'editor',
-        \ 'row': vertical,
-        \ 'col': horizontal,
-        \ 'width': width,
-        \ 'height': height,
-        \ 'style': 'minimal'
-        \ }
-
-  call nvim_open_win(buf, v:true, opts)
-endfunction
 
 " get most recent files with preview
 nmap <localleader>ff :Files .<CR>
@@ -221,6 +306,7 @@ command! -bang History
 nmap <localleader>fr :History<cr>
 nmap <localleader>fl :Lines<cr>
 au FileType fzf silent! tunmap <Esc>
+
 "}}}
 
 " Align blocks
@@ -241,16 +327,6 @@ nnoremap <m-right> :SidewaysRight<cr>
 Plug 'FooSoft/vim-argwrap'
 nnoremap <silent> <localleader>a :ArgWrap<CR>
 
-" A vim plugin to display the indention levels with thin vertical lines
-if has('nvim') || v:version > 800
-    Plug 'Yggdroot/indentLine'
-    let g:indentLine_fileTypeExclude = ['tex', 'markdown']
-    " let g:indentLine_setColors = 0
-    let g:indentLine_defaultGroup = 'Comment'
-    let g:indentLine_setConceal = 0
-    let g:indentLine_char = '▏'
-endif
-
 "{{{ Colorschemes
 
 Plug 'lifepillar/vim-colortemplate'
@@ -270,21 +346,18 @@ else
 endif
 "}}}
 
-" find and replace with s {substitute, search}
-Plug 'hauleth/sad.vim'
-
 " {{{ lightline
 Plug 'itchyny/lightline.vim'
 let g:lightline = {
             \ 'colorscheme': 'jellybeans',
             \ 'active': {
-            \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
+            \   'left': [ [ 'mode', 'paste' ], [ 'git', 'filename' ] ],
             \ 'right': [ [ 'lineinfo' ],
             \            [ 'percent' ],
             \            [ 'filetype', 'spell' ] ]
             \ },
             \ 'component_function': {
-            \   'fugitive': 'GitHead',
+            \   'git': 'LightlineGitHead',
             \   'filename': 'LightlineFilename'
             \ },
             \ 'separator': {'left': '', 'right': ''}
@@ -304,20 +377,14 @@ function! LightlineFilename()
                 \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
 endfunction
 
-function! GitHead()
-    let l:head = ' ' . system("git rev-parse --abbrev-ref HEAD")
+function! LightlineGitHead()
+    let l:head = ' ' . system("git rev-parse --abbrev-ref HEAD")
     if v:shell_error
         let l:head = ''
     endif
     return substitute(l:head, '\n', '', 'g')
 endfunction
 
-function! LightlineFugitive()
-    if &ft !~? 'vimfiler' && exists('*fugitive#head')
-        return ' ' . fugitive#head()
-    endif
-    return ''
-endfunction
 let g:lightline.mode_map = {
             \ 'n' : 'N',
             \ 'i' : 'I',
@@ -334,77 +401,51 @@ let g:lightline.mode_map = {
 " }}}
 
 Plug 'AndrewRadev/linediff.vim'
-" Plug 'rhysd/vim-grammarous'
-Plug 'vigoux/LanguageTool.nvim'
-let g:languagetool_server_jar='/usr/share/java/languagetool/languagetool-server.jar'
-Plug 'reedes/vim-wordy'
 
 "{{{ Filetype
+
 Plug 'cespare/vim-toml'
 
-Plug 'lervag/vimtex'   ", { 'for': ['tex', 'bib'] }
-" There is no reason to lazily load vimtex. Vimtex is a filetype plugin that
-" uses the autoload feature, and it does not load or source any vimscript file
-" until you open a tex file/buffer.
-" https://github.com/lervag/vimtex/issues/885
+Plug 'freitass/todo.txt-vim'
+
+Plug 'lervag/vimtex'
 
 Plug 'othree/html5.vim'
 Plug 'pangloss/vim-javascript'
 
-" Plug 'RRethy/vim-hexokinase'
-" Enable for css and xml
-" let g:Hexokinase_ftAutoload = ['css', 'xml', 'scss', 'dosini', 'sass']
-" let g:Hexokinase_virtualText = '██'
 if has('nvim')
     Plug 'norcalli/nvim-colorizer.lua'
 else
     Plug 'ap/vim-css-color'
 endif
+
+Plug 'goerz/jupytext.vim'
+let g:jupytext_fmt = 'py'
+
+if has('nvim')
+    Plug 'mcchrish/info-window.nvim'
+    command! InfoWindowCustomToggle call infowindow#toggle({} , { default_lines -> extend(default_lines, [['words', split(system('wc -w '. expand('%')))[0]]]) })
+    nnoremap <silent> <c-g> :InfoWindowCustomToggle<cr>
+endif
+if (v:version > 810) || has('nvim')
+    Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+endif
+Plug 'ferrine/md-img-paste.vim'
+" Plug '~/codes/md-img-paste.vim'
+
 " }}}
 call plug#end()
 "}}}
 
-
 if has ("nvim")
-    "lua require'nvim_lsp'.pyls.setup{on_attach=require'diagnostic'.on_attach}
-    lua require'nvim_lsp'.pyls.setup{
-                \ on_attach=require'completion'.on_attach;
-                \ capabilities = {
-                \   textDocument = {
-                \     completion = {
-                \       completionItem = {
-                \         snippetSupport = true
-                \       }
-                \     }
-                \   }
-                \ },
-                \ init_options = {
-                \   usePlaceholders = true,
-                \   completeUnimported = true
-                \ }
-                \ }
-    lua require'nvim_lsp'.bashls.setup{on_attach=require'completion'.on_attach}
-    lua require'nvim_lsp'.sumneko_lua.setup{
-                \ on_attach=require'completion'.on_attach;
-                \ cmd = { "/usr/bin/lua-language-server" };
-                \ }
     set termguicolors
-    " let DEFAULT_OPTIONS = {
-    "             \ RGB      = true;         " #RGB hex codes
-    "             \ RRGGBB   = true;         " #RRGGBB hex codes
-    "             \ names    = true;         " "Name" codes like Blue
-    "             \ RRGGBBAA = false;        " #RRGGBBAA hex codes
-    "             \ rgb_fn   = false;        " CSS rgb() and rgba() functions
-    "             \ hsl_fn   = false;        " CSS hsl() and hsla() functions
-    "             \ css      = false;        " Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-    "             \ css_fn   = false;        " Enable all CSS *functions*: rgb_fn, hsl_fn
-    "             \ mode     = 'background'; " Set the display mode.
-    "             \ }
-    lua require'colorizer'.setup (
-                \ { '*'; '!vim-plug'; 'lua'; },
-                \ { rgb_fn=true; RRGGBBAA=true; }
-                \ )
-    " autocmd FileType scss lua require'colorizer/sass'.attach_to_buffer()
+    if has ("nvim-0.5")
+        lua require('init')
+
+    else
+        " Use smartcase.
+        call deoplete#custom#option('smart_case', v:true)
+    endif
 endif
 
 "----------------------------------------------------------------------
@@ -424,10 +465,13 @@ if has("autocmd") " only with autocommands
                     \   exe "normal! g`\"" |
                     \ endif
     augroup END
-
-else
-    set autoindent    " always set autoindenting on
 endif " has("autocmd")}}}
+set autoindent    " always set autoindenting on
+set smartindent
+
+if &diff
+    setlocal wrap
+endif
 
 "-------------------------------------------------------------------------
 " SET
@@ -439,6 +483,10 @@ set backspace=indent,eol,start " allow backspacing over everything in insert mod
 set history=100                 " keep 100 lines of command line history
 " set ruler                      " show the cursor position all the time
 " set showcmd                    " display incomplete commands
+"
+
+" The isfname setting specifies the set of characters that can appear in file names. It does not include { and } by default.
+set isfname+={,}
 
 set clipboard+=unnamed  " yank and copy to X clipboard
 
@@ -461,6 +509,8 @@ set cursorline
 
 set nonumber
 set norelativenumber
+
+set scrolloff=5  " never reach the top or bottom of the page
 
 "wrapping
 set wrap
@@ -504,14 +554,6 @@ function! TransparentBG() abort
     highlight NonText guibg=none ctermbg=none
 endfunction
 
-" if !empty($NOGUI)
-"     call TransparentBG()
-"     augroup transparent_background
-"         autocmd!
-"         autocmd ColorScheme * call TransparentBG()
-"         autocmd ColorScheme * call TransparentBG()
-"     augroup END
-" endif
 nnoremap <F9> :call ToggleBackground()<CR>
 
 if has('conceal')
@@ -525,6 +567,7 @@ if has('conceal')
     "   g = Greek
     "   s = superscripts/subscripts
 endif
+let g:tex_flavor = 'latex'
 
 " function! ReadableConceals() abort
 "     if &background == 'dark'
@@ -552,7 +595,7 @@ endif
 
 set makeprg=make
 set grepprg=grep\ -nH\ $*
-set pastetoggle=<F2>
+" set pastetoggle=<F2>
 set showmode
 " Wildmenu
 if has("wildmenu")
@@ -567,6 +610,7 @@ if has('nvim')
     set wildoptions=pum
     set pumblend=20
     hi PmenuSel blend=0
+    set winblend=20
 endif
 set ls=2  " show statusline always
 set dir=/tmp//,/var/tmp//,.
@@ -604,6 +648,9 @@ augroup END
 "}}}
 
 command! Top call Runnit("top")
+
+" avoid calling :Windows each time
+command! W :w
 
 "-------------------------------------------------------------------------
 " MAP
@@ -661,9 +708,6 @@ function! CycleLang()
     else
         set spell
         echo 'Using: "'.&spelllang.'" spell language'
-        for dict in g:local_dictionaries[&spelllang]
-            exe 'set dictionary+='.dict
-        endfor
     endif
 endfunction
 nnoremap <F6> :call CycleLang()<CR>
@@ -678,37 +722,3 @@ map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name")
 
 "}}}
 "
-"
-
-"
-" DEOPLETE
-"
-" call deoplete#custom#source('vim',           'mark', 'V')
-" call deoplete#custom#source('around',        'mark', '[]')
-" call deoplete#custom#source('buffer',        'mark', 'B')
-" call deoplete#custom#source('syntax',        'mark', '#')
-" call deoplete#custom#source('member',        'mark', '.')
-
-
-" LanguageClient
-" Automatically call highlight and hover
-function! LspMaybeHover(is_running) abort
-  if a:is_running.result
-    call LanguageClient_textDocument_hover()
-  endif
-endfunction
-
-function! LspMaybeHighlight(is_running) abort
-  if a:is_running.result
-    call LanguageClient_clearDocumentHighlight()
-    call LanguageClient#textDocument_documentHighlight()
-  endif
-endfunction
-
-augroup lsp_aucommands
-  au!
-  " au CursorHold * call LanguageClient#isAlive(function('LspMaybeHover'))
-  " au CursorMoved * call LanguageClient#isAlive(function('LspMaybeHighlight'))
-augroup END
-
-" inoremap <C-i> <esc>:call LanguageClient#textDocument_signatureHelp()<cr>a
