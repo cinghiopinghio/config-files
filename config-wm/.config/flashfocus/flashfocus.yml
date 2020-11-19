@@ -93,5 +93,7 @@ rules:
       flash-on-focus: False
     - app-id: waybar
       flash-on-focus: False
+    - app-id: swaylock
+      flash-on-focus: False
     - app_id: wob
       default-opacity: 0.5
