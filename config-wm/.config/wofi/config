@@ -1,5 +1,7 @@
 allow_images=true
 image_size=42
+location=2
+width=1000
 
 allow_markup=true
 
@@ -8,4 +10,7 @@ mode=drun
 
 insensitive=true
 halign=fill
+content_halign=fill
 valign=start
+
+; vim: ft=dosini

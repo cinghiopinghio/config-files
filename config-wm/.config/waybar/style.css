@@ -1,29 +1,35 @@
 @define-color background rgba(40, 40, 40, 0.6);
-@define-color background-alt rgba(80, 80, 80, 0.6);
-@define-color foreground #ebdbb2;
-@define-color foreground-alt #a89984;
+@define-color background-alt rgba(82, 82, 82, 0.8);
+@define-color foreground #eeeeee;
+@define-color foreground-alt #aaaaaa;
 @define-color alarm #cc241d;
+@define-color good #557711;
+@define-color accent #af87d7;
 
 * {
-        border: none;
-        border-radius: 0;
-        font-family: Fira Sans, Helvetica, Arial, sans-serif;
+        border-radius: 0 0 12px 12px;
+        font-family: Fira Sans, "FontAwesome 5 Free Solid", sans-serif;
         font-size: 14px;
-        min-height: 0;
-        padding: 0 5px;
+        padding: 0px 3px;
         margin: 0;
+        color: @foreground;
 }
 
 #window {
-        padding: 0;
-        background: red;
+        background-color: @background-alt;
+        border-radius: 1px;
+        padding: 0 6px 0 6px;
+        border: none;
+}
+
+window#waybar.empty #window{
+    background-color: transparent;
 }
 
 window#waybar {
-        background: rgba(40, 40, 40, 0.5);
-        border-bottom: 2px rgba(50, 50, 50, 0.7);
-        color: @foreground;
+        background-color: rgba(40, 40, 40, 0.);
         padding: 0;
+        border: none;
 }
 
 #workspaces {
@@ -42,40 +48,27 @@ window#waybar {
 
 #workspaces button.visible {
         background: @background-alt;
-        border-bottom: 2px solid @foreground;
+        border-bottom: 2px solid @accent;
+        border-right: 2px solid @accent;
 }
 
 #workspaces button.urgent {
         background: @alarm;
-        border-bottom: 2px solid @foreground;
+        border-bottom: 2px solid @background;
+        border-right: 2px solid @background;
 }
 
 #mode {
         background: @background-alt;
-        border-bottom: 2px solid @foreground;
+        border-bottom: 2px solid @background;
+        border-right: 2px solid @background;
 }
 
-#clock,
-#battery,
-#memory,
-#network,
-#custom-system,
-#pulseaudio {
-        color: @foreground;
+#clock {
         background-color: @background-alt;
         border-bottom: 2px solid @background;
-}
-
-#battery,
-#mode,
-#cpu,
-#custom-cpu,
-#custom-fs,
-#backlight,
-#idle_inhibitor.activated {
-        color: @foreground;
-        background-color: @background;
-        border-bottom: 2px solid @background-alt;
+        border-right: 2px solid @background;
+        padding: 4px 10px;
 }
 
 #idle_inhibitor {
@@ -90,12 +83,16 @@ window#waybar {
 #network.disconnected,
 #custom-ping,
 #custom-arch {
-        background: #f53c3c;
+        background: @alarm;
+        border-bottom: 2px solid @background;
+        border-right: 2px solid @background;
 }
 
 #battery.charging {
         color: @foreground;
-        background-color: #557711;
+        background-color: @good;
+        border-bottom: 2px solid @background;
+        border-right: 2px solid @background;
 }
 
 @keyframes blink {
@@ -108,6 +105,8 @@ window#waybar {
 #battery.critical.discharging {
         background: @alarm;
         color: @foreground;
+        border-bottom: 2px solid @background;
+        border-right: 2px solid @background;
         animation-name: blink;
         animation-duration: 0.5s;
         animation-timing-function: linear;
@@ -118,6 +117,8 @@ window#waybar {
 #battery.warning.discharging {
         background: @alarm;
         color: @foreground;
+        border-bottom: 2px solid @background;
+        border-right: 2px solid @background;
 }
 
 #tray {}
