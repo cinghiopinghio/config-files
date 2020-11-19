@@ -56,3 +56,10 @@ set notification-bg             "#90A959"
 set recolor-lightcolor          "#282828"
 set recolor-darkcolor           "#AAAAAA"
 set recolor                     "false"
+
+
+####################
+# key maps
+####################
+
+map <C-a> feedkeys ":exec qpdfview %<Return>"
