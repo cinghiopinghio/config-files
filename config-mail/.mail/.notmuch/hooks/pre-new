@@ -1,3 +1,2 @@
 #!/usr/bin/env bash
-
 pgrep astroid && astroid --start-polling || exit 0
