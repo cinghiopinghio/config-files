@@ -1,0 +1,115 @@
+#!/bin/env bash
+
+# gtk
+LIGHT_GTK_THEME="oomox-pinko_light"
+NIGHT_GTK_THEME="oomox-pinko"
+
+# termite
+LIGHT_TERMITE="config-light"
+NIGHT_TERMITE="config-dark"
+TERMCONFIG=${XDG_CONFIG_HOME:-${HOME}/.config}/termite
+
+# actual gtk theme
+ACTUAL_THEME=$(gsettings get org.gnome.desktop.interface gtk-theme)
+case "${ACTUAL_THEME}" in
+    \'${LIGHT_GTK_THEME}\')
+        ACTUAL_THEME=light
+        ;;
+    \'${NIGHT_GTK_THEME}\')
+        ACTUAL_THEME=dark
+        ;;
+    *)
+        ACTUAL_THEME=dark
+        ;;
+esac
+
+echo $ACTUAL_THEME
+
+case $1 in
+    'check')
+        echo The actual theme is $ACTUAL_THEME
+        exit 0
+        ;;
+    'dark')
+        if [[ ${ACTUAL_THEME} == 'dark' ]]; then exit; fi
+        NEW_THEME=dark
+        ;;
+    'light')
+        if [[ ${ACTUAL_THEME} == 'light' ]]; then exit; fi
+        NEW_THEME=light
+        ;;
+    'toggle')
+        ;;
+    *)
+        exit 1
+        ;;
+esac
+
+case ${ACTUAL_THEME} in
+    'dark')
+        NEW_THEME='light'
+        GTK_THEME=${LIGHT_GTK_THEME}
+        ;;
+    'light')
+        NEW_THEME='dark'
+        GTK_THEME=${NIGHT_GTK_THEME}
+        ;;
+    *)
+        exit 2
+        ;;
+esac
+
+echo I will change $ACTUAL_THEME to $NEW_THEME
+
+if [[ $1 == 'check' ]]; then
+    echo $ACTUAL_THEME
+    exit
+fi
+
+nvim_background() {
+    for servername in $(nvr --serverlist); do
+        nvr --servername ${servername} --nostart -s -c ":set background=$1"
+    done
+}
+
+vifm_background() {
+    case $1 in
+        light)
+            colorscheme=new_light
+            old=new
+            ;;
+        dark)
+            colorscheme=new
+            old=new_light
+            ;;
+        *)
+            echo Error on vifm scheme
+            exit 1
+            ;;
+    esac
+    for servername in $(vifm --server-list); do
+        vifm --server-name ${servername} --remote +"colorscheme ${colorscheme}"
+    done
+    sed -i "s/^colorscheme ${old}$/colorscheme ${colorscheme}/" ~/.vifm/vifmrc
+}
+
+# Alacritty
+ALACRITTYCONF=${XDG_CONFIG_HOME:-${HOME}/.config}/alacritty/alacritty.yml
+sed -i "s/^colors: .${ACTUAL_THEME}$/colors: *${NEW_THEME}/" ${ALACRITTYCONF}
+
+# neovim
+nvim_background ${NEW_THEME}
+
+# vifm
+vifm_background ${NEW_THEME}
+
+
+# termite
+cat ${TERMCONFIG}/config-root \
+    ${TERMCONFIG}/config-${NEW_THEME} >${TERMCONFIG}/config
+killall -q -USR1 termite
+
+# gtk
+gsettings set org.gnome.desktop.interface gtk-theme ${GTK_THEME}
+sed -i "s/^gtk-theme-name=.*/gtk-theme-name=\"${GTK_THEME}\"/" ~/.gtkrc-2.0
+sed -i "s/^gtk-theme-name=.*/gtk-theme-name=${GTK_THEME}/" ${XDG_CONFIG_HOME:-${HOME}/.config}/gtk-3.0/settings.ini
