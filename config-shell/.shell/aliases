@@ -13,7 +13,7 @@ alias l='ls -lFh'
 alias l1='ls -1'
 
 # calendar
-alias k="khal calendar; echo; todo; echo; bat ~/casolin/cindroid/markor/tasks.md"
+alias k="khal calendar; echo; todo; echo; todo.sh ls"
 
 alias yy="yay && pkill -SIGRTMIN+8 waybar"
 alias yyd="yay -Syu --devel && pkill -SIGRTMIN+8 waybar"
@@ -21,9 +21,9 @@ alias yyd="yay -Syu --devel && pkill -SIGRTMIN+8 waybar"
 alias scr='save-vars; screen -dRR'
 
 if [ -e '/usr/bin/nvim' ]; then
-    alias v='NOGUI=1 nvim'
-    alias vdiff='NOGUI=1 nvim -d'
-    alias vrc='NOGUI=1 nvim ~/.config/nvim/init.vim'
+    alias v='nvim'
+    alias vdiff='nvim -O +"windo diffthis"'
+    alias vrc='nvim ~/.config/nvim/init.vim'
 else
     alias v='vim'
     alias vdiff='vim -d'

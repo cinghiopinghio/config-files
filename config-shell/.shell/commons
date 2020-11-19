@@ -2,7 +2,7 @@
 
 [ -f ~/.shell/vars ] && . ~/.shell/vars
 
-host=`hostname`
+host=`cat /etc/hostname`
 host=${host%%.*}
 [ -f ~/.shell/hosts/${host} ] && . ~/.shell/hosts/${host}
 

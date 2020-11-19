@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 # svn editor variable:
-export SVN_EDITOR=/usr/bin/vim
+export SVN_EDITOR=/usr/bin/nvim
+
 # editor variable:
 if hash nvim 2>/dev/null; then
     export EDITOR="nvim"
@@ -10,11 +11,22 @@ elif hash vim 2>/dev/null; then
     export EDITOR='vim'
     export DIFFPROG="vimdiff"
 fi
+
 export BROWSER=firefox
 # add to PATH .local/bin and subdirectories
-export PATH=$PATH:$(find -L ~/.local/bin -type d | tr '\n' ':' | sed 's/:$//'):~/go/bin
+export PATH=$PATH:~/.local/bin:~/go/bin
+
 # nice java fonts
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+
+# the terminal
+if hash alacritty 2>/dev/null; then
+    export TERMINAL=alacritty
+elif hash kitty 2>/dev/null; then
+    export TERMINAL=kitty
+elif hash termite 2>/dev/null; then
+    export TERMINAL=termite
+fi
 
 PERL_MB_OPT="--install_base \"$HOME/perl5\""
 export PERL_MB_OPT
@@ -24,12 +36,17 @@ export PERL_MM_OPT
 export GPG_TTY=$(tty)
 export GPG_AGENT_INFO=$HOME/.gnupg/S.gpg-agent
 
-# change look in qt5
-export QT_QPA_PLATFORMTHEME="gtk2"
-# export QT_STYLE_OVERRIDE=kvantum
-
-# use wayland
-# export MOZ_ENABLE_WAYLAND=1
-
 # fzf should look also for hidden files
-export FZF_DEFAULT_COMMAND="find . -path '*' ! -path '*.svn*' ! -path '*.git*' -type f"
+if hash fd 2>>/dev/null; then
+    export FZF_DEFAULT_COMMAND="fd --hidden --ignore-case --type f --type l 2> /dev/null"
+else
+    # export FZF_DEFAULT_COMMAND="find . -path '*' ! -path '*.svn*' ! -path '*.git*' -type f"
+    export FZF_DEFAULT_COMMAND="find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 2> /dev/null"
+fi
+export FZF_DEFAULT_OPTS=' --layout=reverse --border'
+
+# change look in qt5
+# export QT_QPA_PLATFORMTHEME="gtk2"
+export QT_QPA_PLATFORMTHEME="qt5ct"
+# export QT_STYLE_OVERRIDE=kvantum
+# export QT_QPA_PLATFORMTHEME="gnome"
