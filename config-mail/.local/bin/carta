@@ -40,7 +40,7 @@ case $1 in
     MSMTP_OPTS=" -a ${ACCOUNT} --user ${USER} --from ${FROM} -t "
 
     # send pipe stdin to smtp
-    cat /dev/stdin | ${MSMTP_CMD} ${MSMTP_OPTS}
+    cat /dev/stdin | ${MSMTP_CMD} ${MSMTP_OPTS} 2>>~/mail.log
     ;;
   e|empty-basket)
     # tags to delete
@@ -73,6 +73,7 @@ case $1 in
     ;;
   f|fetch)
     if ! $(check_connection); then echo "No Internet Connection"; exit 1; fi
+
 
     # ensure gpg-agent is running
     # echo RELOADAGENT | gpg-connect-agent >> /dev/null
