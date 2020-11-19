@@ -2,7 +2,7 @@
 
 $dvips_pdf_switch='';
 #output is pdf through ps2pdf
-$pdf_mode=2;
+# $pdf_mode=2;
 
 #use this pdf previewer
 $pdf_previewer="start zathura %O %S";
