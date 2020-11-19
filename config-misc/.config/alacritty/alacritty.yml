@@ -3,16 +3,19 @@
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
 # set by alacritty itself.
-#env:
+env:
   # TERM variable
   #
   # This value is used to set the `$TERM` environment variable for
   # each instance of Alacritty. If it is not present, alacritty will
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
-  #TERM: xterm-256color
+  TERM: xterm-256color
 
 window:
+  # Allow terminal applications to change Alacritty's window title.
+  dynamic_title: true
+
   # Window dimensions (changes require restart)
   #
   # Specified in number of columns/lines, not pixels.
@@ -49,7 +52,7 @@ window:
   # Values for `decorations` (macOS only):
   #     - transparent: Title bar, transparent background and title bar buttons
   #     - buttonless: Title bar, transparent background, but no title bar buttons
-  #decorations: full
+  # decorations: full
 
   # Startup Mode (changes require restart)
   #
@@ -109,7 +112,7 @@ font:
     #   - (macOS) Menlo
     #   - (Linux) monospace
     #   - (Windows) Consolas
-    family: Fira Code
+    family: Iosevka Slab
 
     # The `style` can be specified to pick a specific face.
     # style: Light
@@ -131,7 +134,7 @@ font:
     #
     # If the italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: Hack
+    family: Iosevka
 
     # The `style` can be specified to pick a specific face.
     style: Italic
@@ -142,7 +145,7 @@ font:
     #
     # If the bold italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: Hack
+    family: Iosevka
 
     # The `style` can be specified to pick a specific face.
     style: Bold Italic
@@ -153,7 +156,7 @@ font:
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
   offset:
-    x: -1
+    x: 0
     y: -1
 
   # Glyph offset determines the locations of the glyphs within their cells with
@@ -182,83 +185,55 @@ font:
 # If `true`, bold text is drawn using the bright color variants.
 #draw_bold_text_with_bright_colors: true
 
+schemes:
+    light: &light
+        primary:
+            foreground: '#282828'
+            background: '#ffffff'
+        normal:
+            black:      '#282828'
+            red:        '#cc241d'
+            green:      '#98971a'
+            yellow:     '#d79921'
+            blue:       '#458588'
+            magenta:    '#b16286'
+            cyan:       '#689d6a'
+            white:      '#a89984'
+        bright:
+            black:      '#7c6f64'
+            red:        '#fb4934'
+            green:      '#b8bb26'
+            yellow:     '#fabd2f'
+            blue:       '#83a598'
+            magenta:    '#d3869b'
+            cyan:       '#8ec07c'
+            white:      '#fbf1c7'
+
+    dark: &dark
+        primary:
+            background: '#282828'
+            foreground: '#eeeeee'
+        normal:
+            black:      '#282828'
+            red:        '#cc241d'
+            green:      '#98971a'
+            yellow:     '#d79921'
+            blue:       '#458588'
+            magenta:    '#b16286'
+            cyan:       '#689d6a'
+            white:      '#a89984'
+        bright:
+            black:      '#7c6f64'
+            red:        '#fb4934'
+            green:      '#b8bb26'
+            yellow:     '#fabd2f'
+            blue:       '#83a598'
+            magenta:    '#d3869b'
+            cyan:       '#8ec07c'
+            white:      '#fbf1c7'
+
 # Colors (Tomorrow Night Bright)
-colors:
-  # Default colors
-  primary:
-    background: '0x282828'
-    foreground: '0xfbf1c7'
-
-    # Bright and dim foreground colors
-    #
-    # The dimmed foreground color is calculated automatically if it is not present.
-    # If the bright foreground color is not set, or `draw_bold_text_with_bright_colors`
-    # is `false`, the normal foreground color will be used.
-    #dim_foreground: '0x9a9a9a'
-    #bright_foreground: '0xffffff'
-
-  # Cursor colors
-  #
-  # Colors which should be used to draw the terminal cursor. If these are unset,
-  # the cursor color will be the inverse of the cell color.
-  #cursor:
-  #  text: '0x000000'
-  #  cursor: '0xffffff'
-
-  # Selection colors
-  #
-  # Colors which should be used to draw the selection area. If selection
-  # background is unset, selection color will be the inverse of the cell colors.
-  # If only text is unset the cell text color will remain the same.
-  #selection:
-  #  text: '0xeaeaea'
-  #  background: '0x404040'
-
-  # Normal colors
-  normal:
-    black:   '0x282828'
-    red:     '0xcc241d'
-    green:   '0x98971a'
-    yellow:  '0xd79921'
-    blue:    '0x458588'
-    magenta: '0xb16286'
-    cyan:    '0x689d6a'
-    white:   '0xa89984'
-
-  # Bright colors
-  bright:
-    black:   '0x7c6f64'
-    red:     '0xfb4934'
-    green:   '0xb8bb26'
-    yellow:  '0xfabd2f'
-    blue:    '0x83a598'
-    magenta: '0xd3869b'
-    cyan:    '0x8ec07c'
-    white:   '0xfbf1c7'
-
-  # Dim colors
-  #
-  # If the dim colors are not set, they will be calculated automatically based
-  # on the `normal` colors.
-  #dim:
-  #  black:   '0x000000'
-  #  red:     '0x8c3336'
-  #  green:   '0x7a8530'
-  #  yellow:  '0x97822e'
-  #  blue:    '0x506d8f'
-  #  magenta: '0x80638e'
-  #  cyan:    '0x497e7a'
-  #  white:   '0x9a9a9a'
-
-  # Indexed Colors
-  #
-  # The indexed colors include all colors from 16 to 256.
-  # When these are not set, they're filled with sensible defaults.
-  #
-  # Example:
-  #   `- { index: 16, color: '0xff00ff' }`
-  #
-  #indexed_colors: []
+colors: *dark
 
 # Visual Bell
 #
@@ -297,9 +272,6 @@ background_opacity: 0.9
 
   # When set to `true`, selected text will be copied to the primary clipboard.
   #save_to_clipboard: false
-
-# Allow terminal applications to change Alacritty's window title.
-#dynamic_title: true
 
 #cursor:
   # Cursor style
@@ -428,8 +400,8 @@ background_opacity: 0.9
 # And optionally:
 #
 # - `mods` (see key bindings)
-#mouse_bindings:
-#  - { mouse: Middle, action: PasteSelection }
+mouse_bindings:
+  - { mouse: Middle, action: PasteSelection }
 
 # Key bindings
 #
@@ -531,10 +503,10 @@ background_opacity: 0.9
 # be mapped to the `ReceiveChar` action. Alternatively, you can use `None` for
 # a no-op if you do not wish to receive input characters for that binding.
 key_bindings:
-  - { key: T,        mods: Control, action: SpawnNewInstance                 }
+  - { key: T, mods: Control, action: SpawnNewInstance }
+  - { key: V, mods: Control|Shift, action: Paste }
+  - { key: C, mods: Control|Shift, action: Copy }
   # (Windows/Linux only)
-  #- { key: V,        mods: Control|Shift, action: Paste            }
-  #- { key: C,        mods: Control|Shift, action: Copy             }
   #- { key: Insert,   mods: Shift,         action: PasteSelection   }
   #- { key: Key0,     mods: Control,       action: ResetFontSize    }
   #- { key: Equals,   mods: Control,       action: IncreaseFontSize }
