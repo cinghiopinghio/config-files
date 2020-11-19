@@ -49,7 +49,7 @@ verify = false
 
 # {{{ Calendar
 [pair calendar]
-a = "calendar_local" 
+a = "calendar_local"
 b = "calendar_remote"
 collections = ["from a", "from b"]
 
