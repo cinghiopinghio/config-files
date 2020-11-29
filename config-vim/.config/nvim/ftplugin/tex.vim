@@ -57,6 +57,10 @@ let g:vimtex_quickfix_latexlog = {
                         \ 'overfull' : 0,
                         \ 'underfull' : 0,
                         \}
+let g:vimtex_quickfix_ignore_filters = [
+      \ 'Marginpar on page',
+      \ 'A float is stuck',
+      \]
 let g:vimtex_complete_bib = {
                         \ 'abbr_fmt' : '@author_all (@year)',
                         \ 'menu_fmt' : '@title',
