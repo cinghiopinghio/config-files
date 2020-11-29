@@ -338,22 +338,16 @@ bar {
 }
 
 for_window [shell=".*"] title_format "%title :: %shell"
-for_window [window_role="About"] floating enable
 for_window [urgent="latest"] focus
-for_window [title="Authentication*"] floating enabled
-for_window [title="Launch Application"] floating enabled
-for_window [title="ikhal cal"] floating enabled
-for_window [title="Gnuplot*"] floating enabled
-for_window [title="Waydisplay*"] floating enabled
-for_window [title="Choose*"] floating enabled
-for_window [title="Connect to*"] floating enabled
-for_window [app_id="zenity"] floating enabled
+for_window [window_role="About"] floating enable
+for_window [title="^Authentication.*$|^Launch Application$|^wdisplays$|^Gnuplot.*$|^Choose.*$|^Connect to.*$"] floating enabled
+for_window [title="^ikhal cal$|^zenity$"] floating enabled
 for_window [app_id="waybar" floating] {
     move position cursor
     exec python ~/.config/sway/movemenu.py
 }
-no_focus [title="Skype"]
-for_window [title="Skype"] floating enabled, move position 80 80, sticky enable
+no_focus [title="^Skype$"]
+for_window [title="^Skype$"] floating enabled, move position 80 80, sticky enable
 
 ## inhibit idle for any fullscreen window
 # xwayland version
@@ -390,4 +384,6 @@ exec swayidle -w \
 exec_always flashfocus --no-flash-fullscreen
 bindsym $mod+shift+return exec flash_window
 exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
+
 exec kanshi
+exec_always pkill kanshi; kanshi
