@@ -4,7 +4,7 @@
 LOCATION=${XDG_CONFIG_HOME:-${HOME}/.config}/rofi/scripts
 
 menu="\
-1. Bookmarks\x0icon\x1fbookmarks
+1. Bookmarks\x0icon\x1fuser-bookmarks
 2. Documents\x0icon\x1fdocument
 3. Search the web\x0icon\x1fweb-browser
 4. Password Store\x0icon\x1fpassword
@@ -12,13 +12,14 @@ menu="\
 6. Kill'em All\x0icon\x1fstop
 7. Screenshot\x0icon\x1fgscreenshot
 8. Printers queue\x0icon\x1fprinter
-9. Open installed pkgs web-pages\x0icon\x1fpackage
-A. Open installed Plugs web-pages\x0icon\x1fnvim
-B. Open python docs\x0icon\x1fapplications-python
-C. Add new bookmark from Firefox history\x0icon\x1fbookmarks\
+9. Open installed Archlinux pkgs web-pages\x0icon\x1farchlinux
+A. Open installed Nvim Plugs web-pages\x0icon\x1fnvim
+B. Open Python docs\x0icon\x1fapplications-python
+C. Add new bookmark from Firefox history\x0icon\x1fbookmark-add
+D. Search into installed icons\x0icon\x1fimage-x-icon\
 "
 
-choice=$(echo -e "$menu" | rofi -dmenu -i -p '' -mesg 'What are you looking for?' -show-icons)
+choice=$(echo -e "$menu" | rofi -dmenu -i -p '' -mesg 'What are you looking for?' -show-icons -auto-select)
 
 case $choice in
   1*)
@@ -56,6 +57,9 @@ case $choice in
     ;;
   C*)
     jbofi_add.sh
+    ;;
+  D*)
+    icons.sh
     ;;
   *)
     ;;
