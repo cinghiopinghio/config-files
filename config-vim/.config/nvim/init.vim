@@ -85,8 +85,8 @@ if has('nvim-0.5')
 
     Plug 'nvim-treesitter/nvim-treesitter'
     Plug 'romgrk/nvim-treesitter-context'
-    " Plug 'vigoux/completion-treesitter'
     Plug 'nvim-treesitter/completion-treesitter' " New home
+    Plug 'nvim-treesitter/nvim-treesitter-refactor'
     " let g:completion_chain_complete_list = {
     "             \ 'default' : [
     "             \     {'complete_items' : ['lsp', 'snippet']},
@@ -329,6 +329,7 @@ nnoremap <silent> <localleader>a :ArgWrap<CR>
 
 "{{{ Colorschemes
 
+Plug 'rktjmp/lush.nvim'
 Plug 'lifepillar/vim-colortemplate'
 Plug 'andreypopp/vim-colors-plain'
 Plug 'pgdouyon/vim-yin-yang'
@@ -347,35 +348,51 @@ endif
 "}}}
 
 " {{{ lightline
-Plug 'itchyny/lightline.vim'
-let g:lightline = {
-            \ 'colorscheme': 'jellybeans',
-            \ 'active': {
-            \   'left': [ [ 'mode', 'paste' ], [ 'git', 'filename' ] ],
-            \ 'right': [ [ 'lineinfo' ],
-            \            [ 'percent' ],
-            \            [ 'filetype', 'spell' ] ]
-            \ },
-            \ 'component_function': {
-            \   'git': 'LightlineGitHead',
-            \   'filename': 'LightlineFilename'
-            \ },
-            \ 'separator': {'left': '', 'right': ''}
-            \ }
-function! LightlineModified()
-    return &ft =~ 'help\|vimfiler' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-endfunction
-function! LightlineReadonly()
-    return &ft !~? 'help\|vimfiler' && &readonly ? 'RO' : ''
-endfunction
-function! LightlineFilename()
-    return ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
-                \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
-                \  &ft == 'unite' ? unite#get_status_string() :
-                \  &ft == 'vimshell' ? vimshell#get_status_string() :
-                \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
-                \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
-endfunction
+Plug 'bluz71/vim-moonfly-statusline'
+let g:moonflyIgnoreDefaultColors = 0
+let g:moonflyWithNvimLspIndicator = 0
+
+" Plug 'cocopon/shadeline.vim'
+" let g:shadeline = {}
+" let g:shadeline.active = {
+"       \   'left':  ['fname', 'LightlineGitHead', 'flags'],
+"       \   'right': ['ruler']
+"       \ }
+" let g:shadeline.inactive = {
+"       \   'left':  ['fname', 'flags']
+"       \ }
+
+" Plug 'adelarsq/neoline.vim'
+
+" Plug 'itchyny/lightline.vim'
+" let g:lightline = {
+"             \ 'colorscheme': 'jellybeans',
+"             \ 'active': {
+"             \   'left': [ [ 'mode', 'paste' ], [ 'git', 'filename' ] ],
+"             \ 'right': [ [ 'lineinfo' ],
+"             \            [ 'percent' ],
+"             \            [ 'filetype', 'spell' ] ]
+"             \ },
+"             \ 'component_function': {
+"             \   'git': 'LightlineGitHead',
+"             \   'filename': 'LightlineFilename'
+"             \ },
+"             \ 'separator': {'left': '', 'right': ''}
+"             \ }
+" function! LightlineModified()
+"     return &ft =~ 'help\|vimfiler' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+" endfunction
+" function! LightlineReadonly()
+"     return &ft !~? 'help\|vimfiler' && &readonly ? 'RO' : ''
+" endfunction
+" function! LightlineFilename()
+"     return ('' != LightlineReadonly() ? LightlineReadonly() . ' ' : '') .
+"                 \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+"                 \  &ft == 'unite' ? unite#get_status_string() :
+"                 \  &ft == 'vimshell' ? vimshell#get_status_string() :
+"                 \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+"                 \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
+" endfunction
 
 function! LightlineGitHead()
     let l:head = ' ' . system("git rev-parse --abbrev-ref HEAD")
@@ -385,20 +402,20 @@ function! LightlineGitHead()
     return substitute(l:head, '\n', '', 'g')
 endfunction
 
-let g:lightline.mode_map = {
-            \ 'n' : 'N',
-            \ 'i' : 'I',
-            \ 'R' : 'R',
-            \ 'v' : 'V',
-            \ 'V' : 'VL',
-            \ "\<C-v>": 'VB',
-            \ 'c' : 'C',
-            \ 's' : 'S',
-            \ 'S' : 'SL',
-            \ "\<C-s>": 'SB',
-            \ 't': 'T',
-            \ }
-" }}}
+" let g:lightline.mode_map = {
+"             \ 'n' : 'N',
+"             \ 'i' : 'I',
+"             \ 'R' : 'R',
+"             \ 'v' : 'V',
+"             \ 'V' : 'VL',
+"             \ "\<C-v>": 'VB',
+"             \ 'c' : 'C',
+"             \ 's' : 'S',
+"             \ 'S' : 'SL',
+"             \ "\<C-s>": 'SB',
+"             \ 't': 'T',
+"             \ }
+" " }}}
 
 Plug 'AndrewRadev/linediff.vim'
 

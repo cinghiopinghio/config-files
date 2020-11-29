@@ -8,14 +8,9 @@ local on_attach = function(_, bufnr)
 
     -- Mappings.
     local opts = { noremap=true, silent=true }
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
 end
 
 local servers = {
@@ -24,7 +19,8 @@ local servers = {
     'tsserver',
     'vimls',
     'texlab',
-    'anakin_language_server'
+    -- 'pyls'
+    'anakin_language_server',
     -- 'jedi_language_server'
 }
 
@@ -59,6 +55,17 @@ require'nvim-treesitter.configs'.setup {
     indent = {
         enable = true
     },
+    refactor = {
+        highlight_definitions = { enable = true },
+        highlight_current_scope = { enable = false },
+        navigation = {
+            enable = true,
+            keymaps = {
+                goto_definition = "gd",
+                goto_definition_lsp_fallback = "gD",
+            },
+        },
+    },
 }
 
 -- Diagnostics
@@ -77,9 +84,14 @@ vim.lsp.diagnostic.on_publish_diagnostics, {
 }
 )
 
+-- Colorizer
 require 'colorizer'.setup (
     { '*'; '!vim-plug'; 'lua'; },
-    { rgb_fn=true; RRGGBBAA=true; }
+    {
+        rgb_fn   = true;
+        RRGGBBAA = true;
+        hsl_fn   = true;
+    }
 )
 
 -- vim: fdm=indent
