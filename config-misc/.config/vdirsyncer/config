@@ -8,44 +8,44 @@
 # A folder where vdirsyncer can store some metadata about each pair.
 status_path = "~/.config/vdirsyncer/status/" 
 
-# {{{ Contacts
-[pair contacts]
-# A `[pair <name>]` block defines two storages `a` and `b` that should be
-# synchronized. The definition of these storages follows in `[storage <name>]`
-# blocks. This is similar to accounts in OfflineIMAP.
-a = "contacts_local" 
-b = "contacts_remote" 
+## {{{ Contacts
+#[pair contacts]
+## A `[pair <name>]` block defines two storages `a` and `b` that should be
+## synchronized. The definition of these storages follows in `[storage <name>]`
+## blocks. This is similar to accounts in OfflineIMAP.
+#a = "contacts_local" 
+#b = "contacts_remote" 
 
-# Synchronize all collections that can be found.
-# You need to run `vdirsyncer discover` if new calendars/addressbooks are added
-# on the server.
+## Synchronize all collections that can be found.
+## You need to run `vdirsyncer discover` if new calendars/addressbooks are added
+## on the server.
 
-collections = ["from a", "from b"]
+#collections = ["from a", "from b"]
 
-# Synchronize the "display name" property into a local file (~/.contacts/displayname).
-metadata = ["displayname"]
+## Synchronize the "display name" property into a local file (~/.contacts/displayname).
+#metadata = ["displayname"]
 
-# To resolve a conflict the following values are possible:
-#   `null` - abort when collisions occur (default)
-#   `"a wins"` - assume a's items to be more up-to-date
-#   `"b wins"` - assume b's items to be more up-to-date
-#conflict_resolution = null
+## To resolve a conflict the following values are possible:
+##   `null` - abort when collisions occur (default)
+##   `"a wins"` - assume a's items to be more up-to-date
+##   `"b wins"` - assume b's items to be more up-to-date
+##conflict_resolution = null
 
-[storage contacts_local]
-# A storage references actual data on a remote server or on the local disk.
-# Similar to repositories in OfflineIMAP.
-type = "filesystem" 
-path = "~/casolin/casolin/dav/contacts"
-fileext = ".vcf"
+#[storage contacts_local]
+## A storage references actual data on a remote server or on the local disk.
+## Similar to repositories in OfflineIMAP.
+#type = "filesystem" 
+#path = "~/casolin/casolin/dav/contacts"
+#fileext = ".vcf"
 
-[storage contacts_remote]
-type = "carddav"
-url = "http://130.104.236.212:32779/dav.php"
-username.fetch = ["command", "~/.local/bin/pass-data", "brancamenta/baikal", "user"]
-password.fetch = ["command", "~/.local/bin/pass-data", "brancamenta/baikal", "PWD"]
-verify_fingerprint = "e227a18ceae4e605bdc86ee2b4fb0dd4fae4bfcb"
-verify = false
-# }}}
+#[storage contacts_remote]
+#type = "carddav"
+#url = "http://130.104.236.212:32779/dav.php"
+#username.fetch = ["command", "~/.local/bin/pass-data", "brancamenta/baikal", "user"]
+#password.fetch = ["command", "~/.local/bin/pass-data", "brancamenta/baikal", "PWD"]
+#verify_fingerprint = "e227a18ceae4e605bdc86ee2b4fb0dd4fae4bfcb"
+#verify = false
+## }}}
 
 # {{{ Calendar
 [pair calendar]
@@ -63,10 +63,10 @@ fileext = ".ics"
 
 [storage calendar_remote]
 type = "caldav"
-url = "http://130.104.236.212:32779/dav.php"
-username.fetch = ["command", "~/.local/bin/pass-data", "brancamenta/baikal", "user"]
-password.fetch = ["command", "~/.local/bin/pass-data", "brancamenta/baikal", "PWD"]
-verify_fingerprint = "e227a18ceae4e605bdc86ee2b4fb0dd4fae4bfcb"
+url = "https://192.168.1.89:5001/caldav"
+username.fetch = ["command", "~/.local/bin/pass-data", "brancamenta/ciribi-caldav", "user"]
+password.fetch = ["command", "~/.local/bin/pass-data", "brancamenta/ciribi-caldav", "PWD"]
+verify_fingerprint = "2111F61B2166DFA18F0BA846E4BF301A083B39EB"
 verify = false
 # }}}
 
