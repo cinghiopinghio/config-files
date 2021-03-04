@@ -14,4 +14,5 @@ pgrep astroid && astroid --stop-polling
 
 # Update alot
 killall -SIGUSR1 alot 2>/dev/null
+pkill -SIGRTMIN+9 waybar
 exit 0

@@ -148,4 +148,6 @@ case $1 in
     ;;
 esac
 
+pkill -SIGRTMIN+9 waybar
+
 # vim: fdm=indent shiftwidth=2
