@@ -9,7 +9,7 @@ rofi_cdm = ['wofi', '--dmenu']
 rofi_cdm = ['rofi', '-dmenu', '-i', '-sync']
 
 
-class Rofi(object):
+class Rofi():
     """Docstring for Rofi. """
 
     def __init__(
@@ -67,7 +67,6 @@ class Rofi(object):
         prc.stdin.close()
         prc.wait()
         out = prc.stdout.read()
-        # out = prc.communicate(input=self._sep.join(self._list).encode())[0]
         prc.terminate()
         return out.decode().strip(), prc.returncode
 
