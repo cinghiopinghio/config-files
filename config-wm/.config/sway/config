@@ -21,11 +21,12 @@ set $term alacritty
 # set $menu dmenu_run
 # set $menu "albert show"
 # exec "albert"
+
 set $menu "~/.config/rofi/scripts/rofimodi"
 # set $menu "~/.local/bin/swaywin.sh $(~/.local/bin/swaywin.sh | wofi --no-actions --show dmenu,drun)"
 # set $menu2 "wofi --show drun"
 set $menu2 "wldash"
-set $altmenu "~/.config/rofi/scripts/menu.sh"
+set $altmenu "~/.local/bin/mefi.py mainmenu"
 
 ### Output configuration
 #
@@ -89,7 +90,7 @@ input "1:1:AT_Translated_Set_2_keyboard" {
 # is used in the bar {} block below.
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:Iosevka 11
+font pango:Fira Sans Compressed 11
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 set $primaryCol   #ffffffaa
@@ -221,7 +222,10 @@ smart_gaps on
     bindsym $mod+o workspace next_on_output
     bindsym $mod+z workspace back_and_forth
 
-    bindsym $mod+n exec swaymsg workspace `swaymsg -p -t get_workspaces |grep "^Workspace" | sort | awk 'BEGIN{ws=1}{if (ws!=$2){print ws; exit}; ws+=1}ENDFILE{print ws}'`
+    # bindsym $mod+n exec swaymsg workspace `swaymsg -p -t get_workspaces |grep "^Workspace" | sort | awk 'BEGIN{ws=1}{if (ws!=$2){print ws; exit}; ws+=1}ENDFILE{print ws}'`
+    # bindsym $mod+Shift+n exec swaymsg move container to workspace `swaymsg -p -t get_workspaces |grep "^Workspace" | sort | awk 'BEGIN{ws=1}{if (ws!=$2){print ws; exit}; ws+=1}ENDFILE{print ws}'`
+    bindsym $mod+n exec NWS=`swaymsg -p -t get_workspaces |grep "^Workspace" | sort | awk 'BEGIN{ws=1}{if (ws!=$2){print ws; exit}; ws+=1}ENDFILE{print ws}'` && swaymsg workspace $NWS
+    bindsym $mod+Shift+n exec NWS=`swaymsg -p -t get_workspaces |grep "^Workspace" | sort | awk 'BEGIN{ws=1}{if (ws!=$2){print ws; exit}; ws+=1}ENDFILE{print ws}'` && swaymsg move container to workspace $NWS && swaymsg workspace $NWS
 #
 # Layout stuff:
 #
@@ -336,11 +340,13 @@ bar {
     # note: no 'status_command', as the entire bar is replaced with waybar
     swaybar_command waybar
 }
+exec "~/.config/waybar/waybar-launcher.sh"
 
 for_window [shell=".*"] title_format "%title :: %shell"
 for_window [urgent="latest"] focus
 for_window [window_role="About"] floating enable
 for_window [title="^Authentication.*$|^Launch Application$|^wdisplays$|^Gnuplot.*$|^Choose.*$|^Connect to.*$"] floating enabled
+for_window [title="^File Operation Progress$"] floating enabled
 for_window [title="^ikhal cal$|^zenity$"] floating enabled
 for_window [app_id="waybar" floating] {
     move position cursor
@@ -357,6 +363,7 @@ for_window [app_id="^.*$"] inhibit_idle fullscreen
 
 for_window [app_id="qalculate-gtk"] floating enabled
 for_window [app_id="firefox" title="^Picture-in-Picture$"] floating enable, move position 80 80, sticky enable
+for_window [title="Firefox — Sharing Indicator"] kill
 
 # workaround to tell gtk which theme to pick from
 set $gnome-schema org.gnome.desktop.interface
@@ -364,7 +371,9 @@ exec_always {
     gsettings set $gnome-schema gtk-theme 'oomox-pinko'
     gsettings set $gnome-schema icon-theme 'Numix-Circle'
     gsettings set $gnome-schema cursor-theme 'Breeze_Amber'
-    # gsettings set org.gnome.GWeather temperature-unit "'centigrade'"
+    gsettings set $gnome-schema font-name 'Fira Sans Compressed 12'
+    gsettings set $gnome-schema document-font-name 'Fira Sans 12'
+    gsettings set $gnome-schema monospace-font-name 'Iosevka Term 12'
     sed -i 's/^colors: .light$/colors: *dark/' ~/.config/alacritty/alacritty.yml
 }
 
@@ -385,5 +394,4 @@ exec_always flashfocus --no-flash-fullscreen
 bindsym $mod+shift+return exec flash_window
 exec mkfifo $SWAYSOCK.wob && tail -f $SWAYSOCK.wob | wob
 
-exec kanshi
 exec_always pkill kanshi; kanshi
