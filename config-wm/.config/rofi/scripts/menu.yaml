@@ -1,0 +1,39 @@
+
+menu:
+    - title: Bookmarks
+      icon: user-bookmarks
+      cmd: jbofi.sh
+    - title: Documents
+      icon: document
+      cmd: rofi -show docufi -modi "docufi:${LOCATION}/docufi.sh"
+    - title: Search the web
+      icon: web-browser
+      cmd: . ${LOCATION}/web-search
+    - title: Password Store
+      icon: password
+      cmd: ${LOCATION}/rofi-pass
+    - title: LaTeX manuals
+      icon: text-x-tex
+      cmd: ${LOCATION}/texgetdoc
+    - title: Kill'em All
+      icon: stop
+      cmd: ${LOCATION}/killbill
+    - title: Screenshot
+      icon: gscreenshot
+      cmd: grim ~/Downloads/$(date +'screenshot-%Y-%m-%d-%H%M%S.png')
+    - title: Printers queue
+      icon: printer
+      cmd: system-config-printer --show-jobs --embedded
+    - title: Open installed Archlinux pkgs web-pages
+      icon: archlinux
+      cmd: ropkgs.sh
+    - title: Open installed Nvim Plugs web-pages
+      icon: nvim
+      cmd: roplug.sh
+    - title: Open Python docs
+      icon: applications-python
+      cmd: bash -c "${BROWSER:-firefox} /usr/share/doc/python/html/library/index.html"
+    - title: Add new bookmark from Firefox history
+      icon: bookmark-add
+      cmd: jbofi_add.sh
+
