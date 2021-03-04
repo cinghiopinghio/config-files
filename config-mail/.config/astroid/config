@@ -1,177 +1,177 @@
 {
-	"astroid": {
-		"config": {
-			"version": 11
-		},
-		"notmuch_config": "\/home\/mauro\/.notmuch-config",
-		"debug": {
-			"dryrun_sending": false
-		},
-		"hints": {
-			"level": 0
-		},
-		"log": {
-			"syslog": false,
-			"stdout": true,
-			"level": "info"
-		}
-	},
-	"accounts": {
-		"gmail": {
-			"name": "Mauro Faccin",
-			"email": "mauro.fccn@gmail.com",
-			"gpgkey": "",
-			"always_gpg_sign": false,
-			"sendmail": "msmtp --read-envelope-from -i -t --user mauro.fccn@gmail.com --account=gmail",
-			"default": true,
-			"save_sent": true,
-			"save_sent_to": "\/home\/mauro\/.mail\/gmail\/Sent\/cur\/",
-			"additional_sent_tags": "sent",
-			"save_drafts_to": "\/home\/mauro\/.mail\/gmail\/Drafts\/cur\/",
-			"signature_separate": false,
-			"signature_file": "",
-			"signature_file_markdown": "",
-			"signature_default_on": false,
-			"signature_attach": false,
-			"select_query": ""
-		},
-		"ucl": {
-			"name": "Mauro Faccin",
-			"email": "mauro.faccin@uclouvain.be",
-			"gpgkey": "",
-			"always_gpg_sign": false,
-			"sendmail": "msmtp --read-envelope-from -i -t --user mauro.faccin@uclouvain.be --account=ucl",
-			"default": false,
-			"save_sent": true,
-			"save_sent_to": "\/home\/mauro\/.mail\/ucl\/Sent Items\/cur\/",
-			"additional_sent_tags": "sent",
-			"save_drafts_to": "\/home\/mauro\/.mail\/ucl\/Drafts\/cur\/",
-			"signature_separate": false,
-			"signature_file": "",
-			"signature_file_markdown": "",
-			"signature_default_on": false,
-			"signature_attach": false,
-			"select_query": ""
-		},
-		"linux": {
-			"name": "Cinghio Pinghio",
-			"email": "cinghio@linuxmail.org",
-			"gpgkey": "",
-			"always_gpg_sign": false,
-			"sendmail": "msmtp --read-envelope-from -i -t --user cinghio@linuxmail.org --account=linux",
-			"default": false,
-			"save_sent": true,
-			"save_sent_to": "\/home\/mauro\/.mail\/linux\/Sent\/cur\/",
-			"additional_sent_tags": "sent",
-			"save_drafts_to": "\/home\/mauro\/.mail\/linux\/Drafts\/cur\/",
-			"signature_separate": false,
-			"signature_file": "",
-			"signature_file_markdown": "",
-			"signature_default_on": false,
-			"signature_attach": false,
-			"select_query": ""
-		}
-	},
-	"startup": {
-		"queries": {
-			"inbox": "tag:inbox and not tag:killed"
-		}
-	},
-	"terminal": {
-		"height": 10,
-		"font_description": "Fira Code 10"
-	},
-	"thread_index": {
-		"page_jump_rows": 6,
-		"sort_order": "newest",
-		"cell": {
-			"font_description": "Fira Sans 12",
-			"line_spacing": 0,
-			"date_length": 10,
-			"message_count_length": 4,
-			"authors_length": 25,
-			"subject_color_selected": "#ffffff",
-			"subject_color": "#888888",
-			"background_color_marked": "#584584",
-			"background_color_marked_selected": "#458458",
-			"tags_length": 80,
-			"tags_upper_color": "#e5e5e5",
-			"tags_lower_color": "#333333",
-			"tags_alpha": 100,
-			"hidden_tags": "attachment,flagged,unread"
-		}
-	},
-	"general": {
-		"time": {
-			"clock_format": "local",
-			"same_year": "%e %b",
-			"diff_year": "%F"
-		}
-	},
-	"editor": {
-		"cmd": "nvim-qt --nofork %1 -- -c 'colorscheme kalisi' -c 'set filetype=mail'",
-		"external_editor": true,
-		"charset": "utf-8",
-		"save_draft_on_force_quit": false,
-		"attachment_words": "attach,send,sending,invio,mando,allegato",
-		"attachment_directory": "~",
-		"markdown_processor": "cmark"
-	},
-	"mail": {
-		"reply": {
-			"quote_line": "Excerpts from %1's message of %2:",
-			"mailinglist_reply_to_sender": true
-		},
-		"forward": {
-			"quote_line": "Forwarding %1's message of %2:",
-			"disposition": "inline"
-		},
-		"sent_tags": "sent,inbox",
-		"message_id_fqdn": "",
-		"message_id_user": "",
-		"user_agent": "default",
-		"send_delay": 2,
-		"close_on_success": false,
-		"format_flowed": false
-	},
-	"poll": {
-		"interval": 60,
-		"always_full_refresh": false
-	},
-	"attachment": {
-		"external_open_cmd": "xdg-open"
-	},
-	"thread_view": {
-		"open_html_part_external": false,
-		"preferred_type": "plain",
-		"preferred_html_only": true,
-		"allow_remote_when_encrypted": false,
-		"open_external_link": "xdg-open",
-		"default_save_directory": "~\/Downloads",
-		"indent_messages": false,
-		"code_prettify": {
-			"enable": true,
-			"for_tags": "",
-			"code_tag": "```",
-			"enable_for_patches": true
-		},
-		"gravatar": {
-			"enable": false
-		},
-		"mark_unread_delay": 2.0,
-		"expand_flagged": true
-	},
-	"crypto": {
-		"gpg": {
-			"path": "gpg2",
-			"always_trust": true,
-			"enabled": true
-		}
-	},
-	"saved_searches": {
-		"show_on_startup": false,
-		"save_history": true,
-		"history_lines_to_show": 15,
-		"history_lines": 1000
-	}
+    "astroid": {
+        "config": {
+            "version": 11
+        },
+            "notmuch_config": "\/home\/mauro\/.notmuch-config",
+            "debug": {
+                "dryrun_sending": false
+            },
+            "hints": {
+                "level": 0
+            },
+            "log": {
+                "syslog": false,
+                "stdout": true,
+                "level": "info"
+            }
+    },
+    "accounts": {
+        "gmail": {
+            "name": "Mauro Faccin",
+            "email": "mauro.fccn@gmail.com",
+            "gpgkey": "",
+            "always_gpg_sign": false,
+            "sendmail": "msmtp --read-envelope-from -i -t --user mauro.fccn@gmail.com --account=gmail",
+            "default": true,
+            "save_sent": true,
+            "save_sent_to": "\/home\/mauro\/.mail\/gmail\/Sent\/cur\/",
+            "additional_sent_tags": "sent",
+            "save_drafts_to": "\/home\/mauro\/.mail\/gmail\/Drafts\/cur\/",
+            "signature_separate": false,
+            "signature_file": "",
+            "signature_file_markdown": "",
+            "signature_default_on": false,
+            "signature_attach": false,
+            "select_query": ""
+        },
+        "ucl": {
+            "name": "Mauro Faccin",
+            "email": "mauro.faccin@uclouvain.be",
+            "gpgkey": "",
+            "always_gpg_sign": false,
+            "sendmail": "msmtp --read-envelope-from -i -t --user mauro.faccin@uclouvain.be --account=ucl",
+            "default": false,
+            "save_sent": true,
+            "save_sent_to": "\/home\/mauro\/.mail\/ucl\/Sent Items\/cur\/",
+            "additional_sent_tags": "sent",
+            "save_drafts_to": "\/home\/mauro\/.mail\/ucl\/Drafts\/cur\/",
+            "signature_separate": false,
+            "signature_file": "",
+            "signature_file_markdown": "",
+            "signature_default_on": false,
+            "signature_attach": false,
+            "select_query": ""
+        },
+        "linux": {
+            "name": "Cinghio Pinghio",
+            "email": "cinghio@linuxmail.org",
+            "gpgkey": "",
+            "always_gpg_sign": false,
+            "sendmail": "msmtp --read-envelope-from -i -t --user cinghio@linuxmail.org --account=linux",
+            "default": false,
+            "save_sent": true,
+            "save_sent_to": "\/home\/mauro\/.mail\/linux\/Sent\/cur\/",
+            "additional_sent_tags": "sent",
+            "save_drafts_to": "\/home\/mauro\/.mail\/linux\/Drafts\/cur\/",
+            "signature_separate": false,
+            "signature_file": "",
+            "signature_file_markdown": "",
+            "signature_default_on": false,
+            "signature_attach": false,
+            "select_query": ""
+        }
+    },
+    "startup": {
+        "queries": {
+            "inbox": "tag:inbox and not tag:killed"
+        }
+    },
+    "terminal": {
+        "height": 10,
+        "font_description": "Iosevka Term 12"
+    },
+    "thread_index": {
+        "page_jump_rows": 6,
+        "sort_order": "newest",
+        "cell": {
+            "font_description": "Fira Sans 12",
+            "line_spacing": 0,
+            "date_length": 11,
+            "message_count_length": 4,
+            "authors_length": 25,
+            "subject_color_selected": "#ffffff",
+            "subject_color": "#888888",
+            "background_color_marked": "#584584",
+            "background_color_marked_selected": "#458458",
+            "tags_length": 80,
+            "tags_upper_color": "#e5e5e5",
+            "tags_lower_color": "#333333",
+            "tags_alpha": 90,
+            "hidden_tags": "attachment,flagged,unread"
+        }
+    },
+    "general": {
+        "time": {
+            "clock_format": "local",
+            "same_year": "%e %b",
+            "diff_year": "%F"
+        }
+    },
+    "editor": {
+        "cmd": "nvim-qt --nofork %1 -- -c 'set filetype=mail'",
+        "external_editor": true,
+        "charset": "utf-8",
+        "save_draft_on_force_quit": false,
+        "attachment_words": "attach,send,sending,invio,mando,allegato",
+        "attachment_directory": "~",
+        "markdown_processor": "cmark"
+    },
+    "mail": {
+        "reply": {
+            "quote_line": "Excerpts from %1's message of %2:",
+            "mailinglist_reply_to_sender": true
+        },
+        "forward": {
+            "quote_line": "Forwarding %1's message of %2:",
+            "disposition": "inline"
+        },
+        "sent_tags": "sent,inbox",
+        "message_id_fqdn": "",
+        "message_id_user": "",
+        "user_agent": "default",
+        "send_delay": 2,
+        "close_on_success": false,
+        "format_flowed": false
+    },
+    "poll": {
+        "interval": 60,
+        "always_full_refresh": false
+    },
+    "attachment": {
+        "external_open_cmd": "xdg-open"
+    },
+    "thread_view": {
+        "open_html_part_external": false,
+        "preferred_type": "plain",
+        "preferred_html_only": true,
+        "allow_remote_when_encrypted": false,
+        "open_external_link": "xdg-open",
+        "default_save_directory": "~\/Downloads",
+        "indent_messages": false,
+        "code_prettify": {
+            "enable": true,
+            "for_tags": "",
+            "code_tag": "```",
+            "enable_for_patches": true
+        },
+        "gravatar": {
+            "enable": false
+        },
+        "mark_unread_delay": 2.0,
+        "expand_flagged": true
+    },
+    "crypto": {
+        "gpg": {
+            "path": "gpg2",
+            "always_trust": true,
+            "enabled": true
+        }
+    },
+    "saved_searches": {
+        "show_on_startup": false,
+        "save_history": true,
+        "history_lines_to_show": 15,
+        "history_lines": 1000
+    }
 }
