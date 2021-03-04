@@ -87,5 +87,12 @@ function remark() {
 function marks() {
     ls -l "$MARKPATH" | sed 's/  / /g' | cut -d' ' -f9- | sed 's/ -/\t-/g' && echo
 }
+
+# cd to fff folder:
+f() {
+    fff "$@"
+    cd "$(cat "${XDG_CACHE_HOME:=${HOME}/.cache}/fff/.fff_d")"
+}
+
 # vim: set ft=sh:
 # vim: set fdm=indent:
