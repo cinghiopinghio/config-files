@@ -32,7 +32,7 @@ replaygain:
     backend: command
 
 import:
-    move: yes
+    move: no
     copy: yes
     write: yes
 
