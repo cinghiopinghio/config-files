@@ -1,39 +1,81 @@
 #!/usr/bin/env bash
 
-BASE=${HOME}
-VERBOSE=false
+# ------------------------------
+# Functions
 
-NEWFILE=$(realpath "$1")
-SCRIPTPATH=$(realpath "$0")
-SCRIPTDIR=$(dirname "${SCRIPTPATH}")
+repo_list(){
+    echo config-* | sed 's/ /\n/g'
+}
+
+choose_repo(){
+    # Select from which repo to save to
+
+    if command -v fzf &>/dev/null
+    then
+        repo=$(repo_list | fzf)
+    else
+        # this is not POSIX (Bash!)
+        select repo in $(repo_list)
+        do
+            break
+        done
+    fi
+
+    # check if choice has been made
+    [ $repo ] || exit 0
+    echo $repo
+}
 
 # print to stderr
 echoerr() { echo "$@" 1>&2; }
 
+# ------------------------------
+# Constants
+
+VERBOSE=false
+
+# get location of the repos
+SCRIPTPATH=$(realpath "$0")
+SCRIPTDIR=$(dirname "${SCRIPTPATH}")
+
+# get file path
+NEWFILE=$(realpath -s "$1")
+
+# ----------------------------
+# Sanity Checks
+
 [ ! -f "${NEWFILE}" ] && echo "no such file" && exit 1
 
-if [[ "${NEWFILE#$SCRIPTDIR}" != ${NEWFILE} ]]; then
-  echoerr "No! You cannot swallow from this folder"
-  exit 2
-elif [[ "${NEWFILE#$HOME}" == ${NEWFILE} ]]; then
-  echoerr "Please swallow from your home"
-  exit 3
+if [ "${NEWFILE#$SCRIPTDIR}" != "${NEWFILE}" ]; then
+    # file inside repo
+    echoerr "No! You cannot swallow from this folder"
+    exit 2
+elif [ "${NEWFILE#$HOME}" = "${NEWFILE}" ]; then
+    # file not in HOME
+    echoerr "Please swallow from your home"
+    exit 3
 fi
 
-TO_PKG=$(for f in ${SCRIPTDIR}/config-*; do echo $f; done | fzf)
-TO=$(dirname "${TO_PKG}/${NEWFILE#${BASE}/}")
+# ----------------------------
+# Actual script
 
-echo Moving ${NEWFILE}
-echo to ${TO}
+TARGET_PKG=`choose_repo`
+TARGET=$(dirname "${TARGET_PKG}/${NEWFILE#${HOME}/}")
+
+${VERBOSE} && echo Moving ${NEWFILE} to ${TARGET}
 
 read -p "Are you sure? [yN]" -n 1 -r USERINPUT
 echo
 
-if [[ "${USERINPUT}" =~ ^[yY]$ ]]; then
-  ${VERBOSE} && echo OK, kidnapping it
-else
-  ${VERBOSE} && exit 0
-fi
+case "${USERINPUT}" in
+    y|Y)
+        ${VERBOSE} && echo OK, kidnapping it
+        ;;
+    *)
+        ${VERBOSE} && exit 0
+        ;;
+esac
 
-mkdir -p "${TO}"
-mv "${NEWFILE}" "${TO}"
+# make dir and move file
+mkdir -p "${TARGET}"
+mv "${NEWFILE}" "${TARGET}"
