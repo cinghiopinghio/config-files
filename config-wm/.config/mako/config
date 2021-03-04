@@ -67,4 +67,8 @@ text-color=#333333
 [app-name="Syncthing GTK"]
 background-color=#147394cc
 border-color=#147394
+
+[app-name="Vorta"]
+background-color=#cc241dcc
+
 # vim ft=dosini
