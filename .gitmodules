@@ -1,6 +1,3 @@
 [submodule "gnuplotting/gcb"]
 	path = config-misc/.gnuplotting/gcb
 	url = https://github.com/aschn/gnuplot-colorbrewer.git
-[submodule "stowsh"]
-	path = stowsh
-	url = git@github.com:cinghiopinghio/stowsh.git
