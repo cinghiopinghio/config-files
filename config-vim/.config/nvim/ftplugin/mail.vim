@@ -7,6 +7,13 @@ inoremap <expr> <c-x><c-a> fzf#vim#complete(fzf#wrap({
             \ 'reducer': { lines -> join(lines, ', ') }},
             \ ))
 
+function CleanQuotes(depth)
+    " delete matching lines and place them to the black hole register '_'
+    execute 'global/^>\{' . a:depth . '}/delete_'
+endfunction
+
+command! CleanQuotes call CleanQuotes(1)
+
 function IsSpecialLine()
     return getline('.') =~ '^\(to:\|cc:\|ccn:\|subject\).*'
 endfunction
