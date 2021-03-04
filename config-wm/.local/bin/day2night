@@ -3,6 +3,8 @@
 # gtk
 LIGHT_GTK_THEME="oomox-pinko_light"
 NIGHT_GTK_THEME="oomox-pinko"
+# LIGHT_GTK_THEME="Adwaita"
+# NIGHT_GTK_THEME="Adwaita-dark"
 
 # termite
 LIGHT_TERMITE="config-light"

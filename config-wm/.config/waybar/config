@@ -2,8 +2,20 @@
     "layer": "top",
     "height": 30,
     "modules-left": ["custom/menu", "sway/workspaces", "sway/mode", "sway/window"],
-    "modules-center": ["clock", "custom/nightandday"],
-    "modules-right": ["idle_inhibitor", "pulseaudio", "custom/fs", "battery", "custom/email", "custom/ping",  "custom/arch", "tray"],
+    "modules-center": ["clock"],
+    "modules-right": [
+        "idle_inhibitor",
+        "custom/nightandday",
+        "pulseaudio",
+        "custom/system",
+        "battery",
+        "custom/email",
+        "custom/ping",
+        "custom/arch",
+        "custom/pip",
+        "custom/deconflictualize",
+        "tray"
+    ],
     // Modules configuration
     "sway/workspaces": {
         "format": "{icon}",
@@ -20,12 +32,12 @@
         "format": "{}"
     },
     "idle_inhibitor": {
-        "format": "<big>{icon}</big>",
+        "format": "{icon}",
         "format-icons": {
             "activated": "",
             "deactivated": ""
         },
-        "on-click": "bash ~/.config/waybar/wakescreen.sh {arg}"
+        "on-click": "sh ~/.config/waybar/wakescreen.sh {arg}"
     },
     "mpd": {
         "format": "{stateIcon}{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title}",
@@ -63,20 +75,13 @@
         "on-click-right": "cantata"
     },
     "tray": {
-        "icon-size": 22,
-        "spacing": 0
+        "icon-size": 22
     },
     "clock": {
-        "tooltip-format": "{:%c}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format": "{:%a %d %b <big></big> %H:%M}",
-        "format-alt": "{:%a %d %b <big></big> %H:%M}",
+        "tooltip-format": "{:%Y %B}\n<tt><small>{calendar}</small></tt>",
+        "format": "{:%a %d %b  %H:%M}",
+        "format-alt": "{:%a %d %b  %H:%M}",
         "on-click": "alacritty --title 'ikhal cal' --command ikhal"
-    },
-    "custom/cpu": {
-        "format": "<span font_desc='Fira Mono'>{}</span>",
-        "interval": 3,
-        "exec": "psuinfo -Cg"
     },
     "custom/system": {
         "format": "<span font_desc='Fira Mono'>{}</span>",
@@ -85,7 +90,7 @@
     },
     "backlight": {
         // "device": "acpi_video1",
-        "format": "{percent}% <big><span rise='-2000' font_desc='Material Design Icons'>{icon}</span></big>",
+        "format": "{percent}% <span rise='-2000' font_desc='Material Design Icons'>{icon}</span>",
         "on-scroll-up" : "light -A 1 && light -G | cut -d'.' -f1 > $SWAYSOCK.wob",
         "on-scroll-down" : "light -U 1 && light -G | cut -d'.' -f1 > $SWAYSOCK.wob",
         "format-icons": ["󰌶", "󰌵"]
@@ -96,8 +101,8 @@
             "warning": 30,
             "critical": 15
         },
-        "format": "<big>{icon}</big> {capacity}%",
-        "format-charging": "<big>{icon}</big> {capacity}%",
+        "format": "{icon} {capacity}%",
+        "format-charging": "{icon} {capacity}%",
         // "format-good": "", // An empty format will hide the module
         "format-full": "",
         "format-icons": ["", "", "", "", "", ""]
@@ -109,13 +114,13 @@
         "format-disconnected": ""
     },
     "custom/ping": {
-        "exec": "ping -c 1 -q -w 4 195.10.195.195 | tail -1 | awk -F / '{if ($5 > 100) {printf(\"P:%.0f ms\" , $5)}}'",
+        "exec": "ping -c 1 -q -w 4 195.10.195.195 | tail -1 | awk -F / '{if ($5 > 100) {printf(\"P:%.0f ms\\nPing\\nwarning\" , $5)}}'",
         "interval": 60
     },
     "pulseaudio": {
         "scroll-step": 1,
-        "format": "<big>{icon}</big>{format_source} {volume}%",
-        "format-bluetooth": "{volume}% <big></big>",
+        "format": "{icon}{format_source}",
+        "format-bluetooth": "{volume}% ",
         "format-muted": "",
         "format-source": "",
         "format-source-muted": "",
@@ -132,37 +137,61 @@
         "on-scroll-up" : "pamixer -ui 1 && pamixer --get-volume > $SWAYSOCK.wob",
         "on-scroll-down" : "pamixer -ud 1 && pamixer --get-volume > $SWAYSOCK.wob"
     },
+    "custom/sep": {
+        "format": "|",
+        "tooltip": false
+    },
     "custom/menu": {
-        "format": "<big></big>",
+        "format": "",
         "tooltip-format": "MENU",
         "on-click": "nwggrid -o 0.8"
     },
     "custom/tasks": {
-        "format": "<big></big>",
+        "format": "",
         "tooltip-format": "TASKS",
         "on-click": "termite --title 'taskell-full' --exec taskell ~/taskell.md"
     },
     "custom/email": {
-        "format": "<big></big> {}",
-        "tooltip-format": "Email",
-        "exec": "notmuch count tag:unread",
-        "interval": 60
+        "format": " {}",
+        "exec": "sh ~/.config/waybar/checkemails.sh",
+        "return-type": "json",
+        "on-click": "echo ciao",
+        "exec-on-event": true,
+        "signal": 9,
+        "interval": 15
     },
     "custom/arch": {
-        "format": "<big></big>{}",
-        "tooltip-format": "Arch Updates",
-        "exec": "pamac checkupdates -a -q | wc -l | sed 's/^0$//'",
-        "on-click": "pkill -SIGRTMIN+8 waybar", // update system
+        "format": " {}",
+        "tooltip": "Arch Updates",
+        "exec": "sh ~/.config/waybar/checkupdates.sh",
+        "return-type": "json",
+        "on-click": "pkill -SIGRTMIN+8 waybar",
         "signal": 8,
         "interval": 3600
     },
+    "custom/pip": {
+        "format": " {}",
+        "exec": "sh ~/.config/waybar/checkpip.sh",
+        "return-type": "json",
+        "signal": 7,
+        "interval": 3600
+    },
     "custom/nightandday": {
-        "format": "<big></big>",
-        "tooltip-format": "Night and Day modes",
-        "on-click": "~/.local/bin/day2night toggle"
+        "format": "{icon}",
+        "format-icons": "",
+        "exec": "echo \"\nNight and Day modes\"",
+        "interval": "once",
+        "on-click": "~/.local/bin/day2night toggle",
+        "on-scroll-up" : "light -A 1 && light -G | cut -d'.' -f1 > $SWAYSOCK.wob",
+        "on-scroll-down" : "light -U 1 && light -G | cut -d'.' -f1 > $SWAYSOCK.wob"
+    },
+    "custom/deconflictualize": {
+        "format": "⚡",
+        "tooltip-format": "You have conflicts",
+        "exec": "~/.local/bin/deconflictualize"
     },
     "custom/fs": {
-        "format": "<big></big>{}",
+        "format": "{}",
         "exec": "df --human-readable --output=avail /home | tail -1",
         "interval": 60
     }

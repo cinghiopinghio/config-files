@@ -1,124 +1,115 @@
-@define-color background rgba(40, 40, 40, 0.6);
-@define-color background-alt rgba(82, 82, 82, 0.8);
-@define-color foreground #eeeeee;
-@define-color foreground-alt #aaaaaa;
-@define-color alarm #cc241d;
-@define-color good #557711;
-@define-color accent #af87d7;
+@define-color background alpha(@theme_bg_color, 0.7);
+@define-color foreground @theme_text_color;
+@define-color dumped_foreground alpha(mix(@background, @foreground, 0.2), 0.5);
+@define-color alarm @error_color;
+@define-color warning @warning-color;
+@define-color good @success_color;
+@define-color accent @theme_selected_bg_color;
+
+/* see: https://gitlab.gnome.org/GNOME/gtk/-/blob/gtk-3-22/gtk/theme/Adwaita/_colors-public.scss */
 
 * {
-        border-radius: 0 0 12px 12px;
-        font-family: Fira Sans, "FontAwesome 5 Free Solid", sans-serif;
-        font-size: 14px;
-        padding: 0px 3px;
-        margin: 0;
-        color: @foreground;
+    font-family: Fira Sans Condensed, "FontAwesome 5 Free Solid", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: @foreground;
 }
 
-#window {
-        background-color: @background-alt;
-        border-radius: 1px;
-        padding: 0 6px 0 6px;
-        border: none;
-}
 
-window#waybar.empty #window{
+window#waybar,
+window#waybar.empty {
     background-color: transparent;
+    padding: 0px 0px;
+    margin: 0px;
 }
 
-window#waybar {
-        background-color: rgba(40, 40, 40, 0.);
-        padding: 0;
-        border: none;
+.modules-right {
+    border-radius: 4px 0px 0px 24px;
+    padding: 0px 0px 0px 24px;
+    border-bottom: 1px solid @dumped_foreground;
+    border-left: 1px solid @dumped_foreground;
+    background-color: @background;
+    background-image: linear-gradient(60deg, @background, @dumped_foreground);
 }
 
-#workspaces {
-        padding-left: 0;
+.modules-left {
+    border-radius: 0px 4px 24px 0px;
+    padding: 0px 24px 0px 0px;
+    border-bottom: 1px solid @dumped_foreground;
+    border-right: 1px solid @dumped_foreground;
+    background-color: @background;
+    background-image: linear-gradient(60deg, @background, @dumped_foreground);
 }
 
-#workspaces button {
-        color: @foreground;
-        border-bottom: 2px solid transparent;
+.modules-center {
+    padding: 0px 24px 0px 24px;
+    border-radius: 4px 4px 24px 24px;
+    border-bottom: 1px solid @dumped_foreground;
+    border-left: 1px solid @dumped_foreground;
+    border-right: 1px solid @dumped_foreground;
+    /* border: none; */
+    background-color: @background;
+    background-image: linear-gradient(60deg, @background, @dumped_foreground);
+    /* box-shadow: 1px 0px 2px 0px @dumped_foreground; */
+    /* margin: 0px 0px 5px 0px; */
 }
 
-#workspaces button.focused {
-        background: @background-alt;
-        border-bottom: 2px solid @alarm;
-}
-
-#workspaces button.visible {
-        background: @background-alt;
-        border-bottom: 2px solid @accent;
-        border-right: 2px solid @accent;
-}
-
-#workspaces button.urgent {
-        background: @alarm;
-        border-bottom: 2px solid @background;
-        border-right: 2px solid @background;
-}
-
-#mode {
-        background: @background-alt;
-        border-bottom: 2px solid @background;
-        border-right: 2px solid @background;
+.modules-left *,
+.modules-right * {
+    padding: 0px 5px;
 }
 
 #clock {
-        background-color: @background-alt;
-        border-bottom: 2px solid @background;
-        border-right: 2px solid @background;
-        padding: 4px 10px;
+    box-shadow: none;
 }
 
-#idle_inhibitor {
-        background-color: transparent;
+#idle_inhibitor.activated {
+    background-color: @foreground;
+    color: @background
 }
 
-#pulseaudio.muted {
-        background-color: transparent;
-        border-bottom: 0px;
+#workspaces button {
+    color: @foreground;
+}
+
+#workspaces button.focused {
+    background: @good;
+}
+
+#workspaces button.visible {
+    background: @accent;
+}
+
+#workspaces button.urgent {
+    background: @alarm;
 }
 
 #network.disconnected,
-#custom-ping,
-#custom-arch {
-        background: @alarm;
-        border-bottom: 2px solid @background;
-        border-right: 2px solid @background;
+.warning{
+    background: @alarm;
 }
 
 #battery.charging {
-        color: @foreground;
-        background-color: @good;
-        border-bottom: 2px solid @background;
-        border-right: 2px solid @background;
+    background-color: @good;
 }
 
 @keyframes blink {
-        to {
-                background-color: @foreground;
-                color: @alarm;
-        }
+    to {
+        background-color: @foreground;
+        color: @alarm;
+    }
 }
 
 #battery.critical.discharging {
-        background: @alarm;
-        color: @foreground;
-        border-bottom: 2px solid @background;
-        border-right: 2px solid @background;
-        animation-name: blink;
-        animation-duration: 0.5s;
-        animation-timing-function: linear;
-        animation-iteration-count: infinite;
-        animation-direction: alternate;
+    background: @alarm;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
 }
 
 #battery.warning.discharging {
-        background: @alarm;
-        color: @foreground;
-        border-bottom: 2px solid @background;
-        border-right: 2px solid @background;
+    background: @alarm;
+    color: @foreground;
 }
-
-#tray {}
