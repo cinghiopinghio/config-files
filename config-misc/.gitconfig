@@ -1,18 +1,18 @@
 [alias]
-  ci = commit -a
-  cim = commit -a -m
-  cif = commit -m
-  co = checkout
-  st = status -b -s
-  br = branch
-  unstage = reset HEAD --
-  last = log -1 HEAD
-  hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
-  lg = log --pretty=format:'%C(auto)%h - %<(55,trunc)%s %Cblue%<(18,trunc)%an%Creset %Cgreen%<(15)%ad%Creset %C(auto)%d' --abbrev-commit --date=relative
+    ci = commit -a
+    cim = commit -a -m
+    cif = commit -m
+    co = checkout
+    st = status -b -s
+    br = branch
+    unstage = reset HEAD --
+    last = log -1 HEAD
+    hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+    lg = log --pretty=format:'%C(auto)%h - %<(55,trunc)%s %Cblue%<(18,trunc)%an%Creset %Cgreen%<(15)%ad%Creset %C(auto)%d' --abbrev-commit --date=relative
 
 [core]
     editor = nvim
-	excludesfile = ~/.gitignore
+    excludesfile = ~/.gitignore
 [color]
     diff = auto
     status = auto
@@ -22,16 +22,16 @@
 
 ; diff and merge
 [diff]
-  tool = vimdiff
-  submodule = log
+    tool = vimdiff
+    submodule = log
 [difftool]
-  prompt = false
+    prompt = false
 [merge]
-  tool = vimdiff
+    tool = vimdiff
 
 
 [status]
-  submoduleSummary = true
+    submoduleSummary = true
 
 #; user identification
 #[github]
@@ -59,4 +59,6 @@
 #    keepBackup = false
 #    prompt = false
 [push]
-	default = current
+    default = current
+[pull]
+    rebase = false
