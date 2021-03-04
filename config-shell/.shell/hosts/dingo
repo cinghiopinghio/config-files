@@ -5,6 +5,7 @@
 
 # xcalib -d :0  ${HOME}/.color/icc/Dell_XPS_15_2016_FHD_matt__1203M_LQ156M1_.icm
 export SDL_VIDEODRIVER=wayland
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 if [[ $XDG_SESSION_TYPE == 'wayland' ]]; then
 	# check
