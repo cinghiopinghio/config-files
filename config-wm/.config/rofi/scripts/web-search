@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-echo $0 >> ~/log
+# echo $0 >> ~/log
 
 PROMPT='🌍'
-echo $PROMPT >> ~/log
+# echo $PROMPT >> ~/log
 
 QUERY="$(echo '' | rofi -dmenu -p ${PROMPT} -mesg 'Insert string query')"
-echo $QUERY >> ~/log
+# echo $QUERY >> ~/log
 
 [[ "${QUERY}" == "" ]] && exit 0;
 
