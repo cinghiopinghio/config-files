@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-choice=$(grep "Plug " ~/.config/nvim/init.vim |\
+choice=$(grep "Plug " ~/.config/nvim/config/plugins.vim |\
     cut -d\' -f2 |\
     sed 's/$/\x00icon\x1fnvim/' |\
     rofi -dmenu)

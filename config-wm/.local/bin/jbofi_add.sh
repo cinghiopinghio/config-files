@@ -11,6 +11,9 @@ URL=$(lz4jsoncat ${RECOVERY_FILE} |\
     rofi -dmenu -i -markup-rows -format "p" |\
     awk '{print $NF}')
 
+# exit is no choise is made
+if [[ ${#URL} == 0 ]]; then exit; fi
+
 buku -a "${URL}"
 
 AN_ID=$(buku -s "${URL}" -j | jq '.[0] | .index')
