@@ -2,6 +2,12 @@
 
 outdated=( `pip list --user --outdated --format=freeze  | grep -v '^\-e' | cut -d = -f 1` )
 
+if [[ "${1}" = '-n' ]];
+then
+    [[ ${#outdated[@]} == 0 ]] || echo "${#outdated[@]}"
+    exit 0
+fi
+
 if [[ ${#outdated[@]} == 0 ]];
 then
     echo No updates
