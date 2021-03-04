@@ -5,7 +5,11 @@ let s:fontsize = s:default_fontsize
 " let s:font = "Hack"
 " let s:font = "Source Code Pro"
 " let s:font = "Fira Code"
-let s:font = "Iosevka Slab"
+let s:font = 'Iosevka\ Term'
+
+let g:neovide_transparency=0.8
+let g:neovide_cursor_animation_length=0.1
+let g:neovide_cursor_antialiasing=v:true
 
 function! SetFont() abort
 	if exists('g:GtkGuiLoaded')
@@ -13,12 +17,16 @@ function! SetFont() abort
 		call rpcnotify(1, 'Gui', 'Option', 'Tabline', 1)
 		call rpcnotify(1, 'Gui', 'Option', 'Cmdline', 1)
 		call rpcnotify(1, 'Gui', 'Option', 'Linespace', 0)
+        elseif exists('g:neovide')
+                exec "set guifont=" . s:font . ":h" . (s:fontsize + 4)
 	else
 		exec "GuiFont! " . s:font . ":h" . s:fontsize
 
 		GuiLinespace 0
 	endif
 endfunction
+
+" set guifont='Iosevka\ Term:h12'
 
 call SetFont()
 

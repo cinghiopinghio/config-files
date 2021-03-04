@@ -8,6 +8,8 @@ function NavigationFloatingWin(cmd)
     vim.api.nvim_buf_set_option(buf, 'buftype', 'nofile')
 
     -- if the editor is big enough
+    local win_width
+    local win_height
     if (height > 35) then
         win_height = math.min(math.ceil(height * 3 / 4), 30)
     else
@@ -32,7 +34,7 @@ function NavigationFloatingWin(cmd)
     }
 
     -- create a new floating window, centered in the editor
-    local win = vim.api.nvim_open_win(buf, true, opts)
+    vim.api.nvim_open_win(buf, true, opts)
     vim.api.nvim_win_set_option(0, "winblend", 20)
 
     if cmd then

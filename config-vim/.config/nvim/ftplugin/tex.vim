@@ -5,7 +5,7 @@ imap <C-p> <C-O>gqip
 
 inoremap <expr> <c-x><c-a> fzf#vim#complete(fzf#wrap({
             \ 'source': 'bibtex-ls *.bib',
-            \ 'options': '--multi --reverse --ansi --prompt "cite> "',
+            \ 'options': '--multi --reverse --ansi --prompt "cite> " --preview "echo {} \| bibtex-markdown *.bib \| sed -e \"s/\([,&\*\s]\)\s\+/\1\n/g\""',
             \ 'reducer': { lines -> system("bibtex-cite -prefix='' -postfix='' -separator=', ' ", lines) }},
             \ ))
 
@@ -53,13 +53,11 @@ augroup END
 set omnifunc=vimtex#complete#omnifunc
 let g:vimtex_quickfix_mode=2
 " let g:vimtex_quickfix_method = 'pplatex'
-let g:vimtex_quickfix_latexlog = {
-                        \ 'overfull' : 0,
-                        \ 'underfull' : 0,
-                        \}
 let g:vimtex_quickfix_ignore_filters = [
       \ 'Marginpar on page',
       \ 'A float is stuck',
+      \ 'Underfull',
+      \ 'Overfull',
       \]
 let g:vimtex_complete_bib = {
                         \ 'abbr_fmt' : '@author_all (@year)',

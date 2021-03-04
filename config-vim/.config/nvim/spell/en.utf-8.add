@@ -51,3 +51,8 @@ partite
 stochasticity
 autoinformation
 gyres
+eigenmodes
+GenPCCA
+DCSBM
+overfit
+SBM
